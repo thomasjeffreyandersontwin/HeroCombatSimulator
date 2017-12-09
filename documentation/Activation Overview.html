@@ -1,0 +1,361 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Trevor Walker">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>Ability Activation Overview</title>
+</head>
+<body>
+
+<h1>
+Ability Activation Overview</h1>
+The following is the basic outline of events that occur when an ability
+is activated.&nbsp; This list represents the most common sequence of event
+that occur during ability activation.&nbsp; Depending on the ability, some
+or all of the list may be skipped.&nbsp; Source refers to the Character
+activating the ability.&nbsp; Target refers to the Character(s) being affected
+by the ability.&nbsp; Both must be a subclass of type Target.
+<ol>
+<li>
+<u>Ability Preactivation Check</u> - preactivation Both Powers and all
+Advantages/Limitations for the ability are executed.&nbsp; If any of the
+<b>preactivation()</b>
+methods return false, the power will not activate.&nbsp; However, END will
+be charged for the power itself (but not for END for Strength use).&nbsp;
+If all preactivation suceeds, proceed to next step.</li>
+
+<li>
+<u>Set Ability's ACTIVATED value/pair to TRUE</u> - The Ability's <i>Ability.ACTIVATED</i>
+will be set to TRUE.</li>
+
+<li>
+<u>AbilityIsActivating Notification to Effects</u> - All Effects currently
+applied to the Source will have their <b>abilityIsActivating()</b> method
+executed.&nbsp; <b>AbilityIsActivating()</b> can be used to make effects
+take particular actions whenever an ability starts activation, ie Combat
+Skill Levels.</li>
+
+<li>
+<u>Ability OCV/DCV Modifiers Applied</u> - Any OCV/DCV modifiers attached
+directly to the Ability are applied.&nbsp; An effectCombatModifier effect
+is applied to Source, based upon the Ability.OCVMOD/Ability.DCVMOD value/pairs.</li>
+
+<li>
+<u>Maneuver Preactivation Check</u> - If the ability is being activated
+along with a maneuver, the maneuver's preactivation() method is executed
+for the maneuver's power and advantages/limitations.&nbsp; Failure will
+deactivate both the maneuver and the ability.</li>
+
+<li>
+<u>Maneuver OCV/DCV Modifiers Applied</u> - If the is being activated along
+with a maneuver, any OCV/DCV modifiers attached directly to the manuever
+are applied.&nbsp; An effectCombatModifier effect is applied to Source.</li>
+
+<li>
+<u>Setup Knockback</u> - Knockback is setup in the BattleEvent via the
+<b>setupKnockback()</b>
+method.</li>
+
+<li>
+<u>Display Inline Attack and Targeting Panel</u> - The Inline Attack and
+Targeting Panel are displayed.&nbsp; The Attack panel will set value/pairs
+in the BattleEvent according to user input.&nbsp; The Targeting Panel will
+set the Target[].TARGET value/pair in the Ability.</li>
+
+<li>
+<u>Add Strength Information</u> - Strength Information for the Source will
+be added to the BattleEvent's Normal.STR value/pair.</li>
+
+<li>
+<u>Copy Dice Information to BattleEvent</u> - Dice Information is copied
+to the BattleEvent from the Ability, and Maneuver if one is being used.&nbsp;
+Dice copied into the BattleEvent are realized later in the activation process.</li>
+
+<li>
+<u>Add Ability Damage Class Information</u> - Execute Ability's <b>adjustDice()</b>
+method.&nbsp; AdjustDice should add base damage class information to the
+battleEvent.</li>
+
+<li>
+<u>Add Manuever Damage Class Information</u> - If a manuever is being used,
+execute maneuver's <b>adjustDice()</b> method.&nbsp; AdjustDice for the
+maneuver should add manuever damage class information to the battleEvent.</li>
+
+<li>
+<u>Add Effect Damage Class Modifiers</u> - For each effect of the Source,
+the <b>adjustDice()</b> method will be executed.</li>
+
+<li>
+<u>Calculate Final Damage Class</u> - Execute the ChampionsUtilities method
+<b>calculateDCs().</b>&nbsp;
+CalculateDCs will examine the DC information provided in the battleEvent,
+as well as the Normal and Pushed Strength information, and generate a final
+damage class for the attack.&nbsp; CalculateDCs will also adjust the Normal
+and Pushed Strength information to represent the actual strength used and
+will adjust the <i>DamageDie.DIE</i> value/pair appropriately for the attack
+type.</li>
+
+<li>
+<u>Dispatch to Attack Processing Code</u> - The BattleEvent will then be
+dispatched for the appropriate attack processing code for the type of attack
+it is, i.e. Autofire, Spread, Area Effect, or single.&nbsp; All attack
+processing code basically leads back to the <b>processSingle()</b> method,
+which processes an attack on a single target.</li>
+
+<li>
+<u>Determine if Target(s) were hit</u> - For each Target identified by
+the Attack Processing Code, the following steps occur to determine if a
+Target is hit:</li>
+
+<ol>
+<li>
+<u>Detemine if Ability always hits</u> - If <b>ability.isAutoHit()</b>
+returns true, the attack hits the Target.&nbsp; IsAutoHit can be used to
+force a particular ability to automatically hit.&nbsp; Jump to <u>Add Hit
+Information to BattleEvent</u> if attack is AutoHit.</li>
+
+<li>
+<u>Create Combat Value List</u> - Create's a new CVList object and populates
+the object with the Source and Target names, and Generic CV modifiers.&nbsp;
+Add Range CV Modifier if <b>ability.isRangedAttack()</b> returns true.</li>
+
+<li>
+<u>Copy OCVModifier from BattleEvent to CVList</u> - OCV Modifiers stored
+in the OCVModifier[] index of the BattleEvent are copied to the CVList.</li>
+
+<li>
+<u>Copy DCVModifier from BattleEvent to CVList</u> - DCV Modifiers stored
+in the DCVModifier[] index of the BattleEvent are copied to the CVList.</li>
+
+<li>
+<u>Setup Base CV Information</u> - Base CVs for both Source and Target
+are copied into CVList.&nbsp; If the attack is an ego attack ( <i>Ability.CVTYPE</i>
+== EGO ), CVs are based on ECV.&nbsp; Otherwise, CVs are based on normal
+OCV/DCV values.</li>
+
+<li>
+<u>Setup Source CV Modifiers</u> - For each Effect of the Source, execute
+effect's <b>addECVAttackModifiers()</b> method (if Ego attack) or effect's
+<b>addOCVAttackModifiers()</b>
+method (for normal attacks).</li>
+
+<li>
+<u>Setup Target CV Modifiers</u> - For each Effect of the Target, execute
+effect's <b>addECVDefenseModifiers()</b> method (if Ego attack) or effect's
+<b>addDCVDefenseModifiers()</b>
+method (for normal attacks).</li>
+
+<li>
+<u>Display Inline ToHit Panel</u> - The Inline Panel for determining ToHit
+is displayed to the User.&nbsp; The ToHit panel will calculate the final
+Attack roll necessary and return either Hit or Miss, according to the user's
+input and any dice rolls made automatically. The <i>Target[].ROLLNEEDED</i>
+and <i>Target[].HITROLL</i> value/pair indexes will be populated approriately.</li>
+
+<li>
+<u>Add Hit Information to BattleEvent</u> - The <i>Target[].HIT</i> value/pair
+index will be set to either TRUE or FALSE, as appropriate.</li>
+</ol>
+
+<li>
+<u>Process Hit for Target(s)</u> - For any Target(s) that were hit, the
+following steps occur:</li>
+
+<ol>
+<li>
+<u>Realize Dice</u> - For each Die listed in the <i>Die[]</i> index of
+the BattleEvent, the Inline Die Panel is displayed.&nbsp; The Inline Die
+Panel populates the BattleEvent with the actual dice values, according
+to user input and automatic die rolls.</li>
+
+<li>
+<u>Build Triggered Effects List</u> - The Following steps are taken to
+generate a list of effects to be applied to the Source or Target depending
+on the ability/manuever of the Effect:</li>
+
+<ol>
+<li>
+<u>Generate Effect from Ability</u> - The Ability's <b>triggerPower()</b>
+method is executed.&nbsp; TriggerPower should populate the effects list
+appropriately.&nbsp; After triggerPower is executed, the Ability's <b>generateDefaultEffects()</b>
+method is executed.&nbsp; If <b>generateDefaultEffects()</b> returns false,
+the Effect List is finished and the next two steps should be skipped.</li>
+
+<li>
+<u>Generate Effect from Maneuver</u> - If a maneuver is being used, the
+Maneuver's <b>triggerPower()</b> method is executed.&nbsp; TriggerPower
+should populate the effects list appropriately.&nbsp; After triggerPower
+is executed, the Maneuver's <b>generateDefaultEffects()</b> method is executed.&nbsp;
+If <b>generateDefaultEffects()</b> returns false, the Effect List is finished
+and the next step should be skipped.</li>
+
+<li>
+<u>Generate Default Effect</u> - If both the Ability's and Maneuver's <b>generateDefaultEffects()</b>
+returns True, default attack effects are added to the effects list.&nbsp;
+Default effects include the standard killing or normal attack damage and
+knockback effects.&nbsp; If either the Ability or Maneuver returns False
+from <b>generateDefaultEffects()</b>, the Ability and/or Maneuver will
+have to generate all necessary damage/knockback effects.</li>
+</ol>
+
+<li>
+<u>Process Effects</u> - For Each Effect in the Triggered Effects List,
+the following process occurs.&nbsp; Note, each triggered effect can be
+applied to either the Target of the attack or the Source of the attack,
+according to the <i>Effect.TTYPE</i> value/pair.&nbsp; If the effect is
+to be applied to the Source, the following is the same with the exception
+that all occurances of Target should be replaced with Source.</li>
+
+<ol>
+<li>
+<u>Gather Target Defense Information</u> - The Target's PD, rPD, ED, and
+rED are copied into the effect's <i>xx.DEFENSE</i> value/pairs, where xx
+is PD, rPD, ED, and rED, appropriately.</li>
+
+<li>
+<u>Process Pre-Defense Methods</u> - The Following list of methods are
+processed prior to the Target's defenses being applied.&nbsp; Each effect/advantage/limitation
+in the list below has a priority from 0 to 5.&nbsp; This list is run 6
+times, starting with priority 0 effects/advantages/limitations, followed
+by 1, 2, 3, 4, and 5 priority effect/advantage/limitation.</li>
+
+<ol>
+<li>
+<u>Target Effects Predefense Methods</u> - The Target's <b>predefense()
+</b>method
+is executed for each effect of the currently running priority.</li>
+
+<li>
+<u>Source Effects Preattack Methods</u> - The Sources's <b>preattack()
+</b>method
+is executed for each effect of the currently running priority.</li>
+
+<li>
+<u>Ability Advantages Prepower Methods</u> - For each Advantage of the
+Ability which has the current priority, the advantage's <b>prepower()</b>
+method is executed.</li>
+
+<li>
+<u>Ability Limitation Prepower Methods</u> - For each Limitation of the
+Ability which has the current priority, the Limitation's <b>prepower()</b>
+method is executed.</li>
+
+<li>
+<u>Maneuver Advantages Prepower Methods</u> - If a maneuver is being used,
+for each Advantage of the maneuver which has the current priority, the
+Advantage's <b>prepower()</b> method is executed.</li>
+
+<li>
+<u>Maneuver Limitation Prepower Methods</u> - If a maneuver is being used,
+for each Limitation of the maneuver which has the current priority, the
+Limitation's <b>prepower()</b> method is executed.</li>
+</ol>
+
+<li>
+<u>Apply Target Defenses</u> - The Effect is modified according to the
+defenses of the target.&nbsp; If the Effect is NND or AVLD, appropriate
+User input is requested and defenses applied accordingly.</li>
+
+<li>
+<u>Process Post-Defense Methods</u> - The Following list of methods are
+processed after the Target's defenses were applied.&nbsp; Each effect/advantage/limitation
+in the list below has a priority from 0 to 5.&nbsp; This list is run 6
+times, starting with priority 0 effects/advantages/limitations, followed
+by 1, 2, 3, 4, and 5 priority effect/advantage/limitation.</li>
+
+<ol>
+<li>
+<u>Target Effects Postdefense Methods</u> - The Target's <b>postdefense()
+</b>method
+is executed for each effect of the currently running priority.</li>
+
+<li>
+<u>Source Effects Postattack Methods</u> - The Sources's <b>postattack()
+</b>method
+is executed for each effect of the currently running priority.</li>
+
+<li>
+<u>Ability Advantages Postpower Methods</u> - For each Advantage of the
+Ability which has the current priority, the advantage's <b>postpower()</b>
+method is executed.</li>
+
+<li>
+<u>Ability Limitation Postpower Methods</u> - For each Limitation of the
+Ability which has the current priority, the Limitation's <b>postpower()</b>
+method is executed.</li>
+
+<li>
+<u>Maneuver Advantages Postpower Methods</u> - If a maneuver is being used,
+for each Advantage of the maneuver which has the current priority, the
+Advantage's <b>postpower()</b> method is executed.</li>
+
+<li>
+<u>Maneuver Limitation Postpower Methods</u> - If a maneuver is being used,
+for each Limitation of the maneuver which has the current priority, the
+Limitation's <b>postpower()</b> method is executed.</li>
+
+<li>
+<u>Process Killing Attack Modification</u> - If the effect being processed
+is part of a killing attack, the final amount of stun applied to the Target
+should be at minimum the amount of BODY which is applied to the Target.&nbsp;
+At priority 2, the processKilling() method of the BattleEngine code will
+guarantee this criteria.</li>
+</ol>
+
+<li>
+<u>Apply Effect to Target</u> - Once the above processing is completed,
+the effect will be added to the Target.</li>
+
+<li>
+<u>Process Knockback</u> - If the TTYPE of the effect is Target and not
+Source, Knockback information for the attack will be calculated and the
+BattleEvent will be populated appropriately.</li>
+</ol>
+
+<li>
+<u>Ability PostTrigger</u> - Once all effects have been applied the Ability's
+<b>posttrigger()</b>
+method will be executed.</li>
+
+<li>
+<u>Maneuver PostTrigger</u> - If a maneuver is being used, the maneuver's<b>
+posttrigger()</b> method will be executed.</li>
+
+<li>
+<u>Special MoveThrough processing</u> - If the ability or maneuver being
+used is a Move Through attack, the damage to the source will be calculated.&nbsp;
+The MoveThrough processing will do final knockback generation for the Target
+and generate appropriate source damage and apply it to the source using
+the same process used above for applying an effect.</li>
+
+<li>
+<u>Clear Dice Information</u> - Any Dice modification made to the Ability
+are cleared.&nbsp; This step is deprecated as no changes should ever be
+made to the ability dice.</li>
+</ol>
+
+<li>
+<u>Generate and Apply Knockback</u> - The Inline Knockback panel is displayed
+and the user rolls final knockback values.&nbsp; Knockback damage is applied
+to the Target of the Knockback.&nbsp; Note: This step may have occured
+in part during the Special MoveThrough processing.</li>
+
+<li>
+<u>Generate and Pay END</u> - The Endurance for the ability is calculated
+and removed from the source character.&nbsp; Endurance for normal and pushed
+strength is also removed here.</li>
+
+<li>
+<u>Deactivate Ability</u> - If the Ability is an instant ability, the ability
+must be immediately deactivated.&nbsp; If it is constant/persistant this
+step is skipped.&nbsp; The Ability's <b>shutdownPower()</b> method is executed,
+and if a maneuver is being used, the Maneuver's <b>shutdownPower()</b>
+method is executed.</li>
+
+<br><u>Adjust Source Combat State</u> - The Combat State of the Source
+is adjusted according to the ability which was used.&nbsp; The current
+active target and/or segment is advanced as appropriate.</ol>
+
+</body>
+</html>

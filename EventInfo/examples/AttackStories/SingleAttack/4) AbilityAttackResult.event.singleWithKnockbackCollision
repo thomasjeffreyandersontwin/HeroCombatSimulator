@@ -1,0 +1,32 @@
+{
+	"Ability": "Spider Strike",
+	"Type": "AttackSingleTargetResult",
+	"Target": {
+		"STUN": {
+			"Max": 10,
+			"Current": 5
+		},
+		"BODY": {
+			"Max": 10,
+			"Current": 5
+		},
+		"Name": "Ogun"
+	},
+	"Results": {
+		"Hit": true,
+		"Knockback": {
+			"Obstacle Collision": {
+				"Obstacle Damage Results:": {
+					"Effects": ["Partially Destroyed"]
+				},
+				"BODY": {
+					"Max": 7,
+					"Current": 0
+				},
+				"Name": "test"
+			},
+			"Distance": "6"
+		},
+		"Effects": []
+	}
+}

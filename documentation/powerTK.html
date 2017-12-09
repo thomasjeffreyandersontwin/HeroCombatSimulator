@@ -1,0 +1,167 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Power Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Power Telekinesis</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+Implements the Telekinesis Power.&nbsp; Amount of strength the TK can apply
+is configurable.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<dl>
+<dd>
+TK is implemented as a standard Hand-To-Hand attack power, which happens
+to have ranged abilities.&nbsp; It uses a Strength type of RANGED, so that
+normal strength is not applied.&nbsp; TK Strength is applied as Base DC
+for the attack, not as actual strength, and will not automatically be adjusted
+by the BattleEngine when too much TK stength is use (ie. beyond the max
+strength for a particular attack).</dd>
+
+<dd>
+TK is setup to be able to use Melee maneuvers and to not be able to use
+Ranged maneuvers.</dd>
+</dl>
+
+<h3>
+Known Caveats</h3>
+
+<dl>
+<dd>
+Strength is not applied as normal strength, but rather as Base.DCs.</dd>
+
+<dd>
+TK Strength is not adjusted by BattleEngine with regards to max strength
+for an attack.</dd>
+
+<dd>
+Although TK Strength can be used with standard Melee maneuvers, it currently
+can't be used to pick up a weapon, and strike an opponent at a distance.</dd>
+</dl>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Power Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td><font size=-1>champions.powers.powerTK</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Power Type</font></b></td>
+
+<td><font size=-1>Power</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Attack Type</font></b></td>
+
+<td><font size=-1>Single</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Persistence Type</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Instant</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Time</font></b></td>
+
+<td><font size=-1>Attack</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>PPDC</font></b></td>
+
+<td><font size=-1>7.5</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Strength Type</font></b></td>
+
+<td><font size=-1>RANGED</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Killing Type</font></b></td>
+
+<td><font size=-1>NORMAL</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Generic Damage</font></b></td>
+
+<td><font size=-1>TRUE</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Strength</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Integer</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Power.STRENGTH</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Points of strength
+which can be used for TK attack.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="7"><b>Dice Information</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>DamageDie</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Attack Damage.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="2"><b>Trigger Effects</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+</table>
+
+</body>
+</html>

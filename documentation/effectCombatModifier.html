@@ -1,0 +1,123 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Effect Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Effect CombatModifier</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+Implements a generic modifier to the OCV/DCV of the target.&nbsp; The modifier
+is persistent, but only last until the beginning of the characters next
+phase.</dd>
+
+<dd>
+This effect is used by all abilities to apply the "built-in" OCV/DCV modifiers
+for abilities and maneuvers.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<dl>
+<dd>
+Uses addDCVDefenseModifiers and addOCVAttackModifiers to apply OCV/DCV
+modifiers to character.</dd>
+
+<dd>
+Returns true from the prephase method, causing the effect to be removed
+at the beginning of the characters phase.</dd>
+
+<dd>
+The OCV/DCV values are static and can't be changed once set.</dd>
+</dl>
+
+<h3>
+Known Caveats</h3>
+
+<dl>
+<dd>
+None.</dd>
+</dl>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Effect Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td><font size=-1>champions.powers.effectCombatModifier</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Persistence Type</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Persistent</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>OCVBonus</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Integer</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Effect.OCVBONUS</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Amount of
+OCV to add or subtract from character.</font></td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>DCVBonus</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Integer</font></tt></td>
+
+<td><b><font size=-1>Effect.DCVBONUS</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Amount of
+OCV to add or subtract from character.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="7"><b>Subeffects</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1><a href="effectCombatLevel.html">effectCombatLevel</a></font></b></td>
+</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Power Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Power Flash</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+Implements the power flash.&nbsp; Senses and sense groups are not implemented
+yet, so flash currently is configurable with just a description of the
+sense (normal sight) and whether the sense is a targeting sense.&nbsp;
+The D6 of the attack is also configurable.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<dl>
+<dd>
+Flash creates an effectFlashed, which reduces OCV/DCV of the target appropriately
+and degrades as phases pass.</dd>
+</dl>
+
+<h3>
+Known Caveats</h3>
+
+<dl>
+<dd>
+Currently no sense are implemented.</dd>
+</dl>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Power Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td><font size=-1>champions.powers.powerFlash</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Power Type</font></b></td>
+
+<td><font size=-1>Power</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Attack Type</font></b></td>
+
+<td><font size=-1>Single</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Persistence Type</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Instant</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Time</font></b></td>
+
+<td><font size=-1>Attack</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>PPDC</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Strength Type</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Killing Type</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Generic Damage</font></b></td>
+
+<td><font size=-1>FALSE</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>DamageDie</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>String</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Power.DAMAGEDIE</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Amount of
+flash dice in D6 notation.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><b><font size=-1>Sense</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>String</font></tt></td>
+
+<td><b><font size=-1>Power.SENSE</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Arbitrary
+sense which will be flashed.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><b><font size=-1>Targeting</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>boolean</font></tt></td>
+
+<td><b><font size=-1>Power.TARGETING</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates
+whether the sense is normally the primary targeting sense.&nbsp; Typically,
+only normal sight should be marke d as targeting.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="7"><b>Dice Information</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>DamageDie</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Flash Die</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="2"><b>Trigger Effects</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Flash</font></b></td>
+
+<td><font size=-1>An effectFlashed is created by the power when triggered.&nbsp;
+effectFlashed knowns how to process flash effects.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1><a href="effectFlash.html">effectFlash</a></font></b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1><a href="effectFlashDefense.html">effectFlashDefense</a></font></b></td>
+</tr>
+</table>
+
+</body>
+</html>

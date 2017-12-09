@@ -1,0 +1,156 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>powerMentalDefense</TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<P><!doctype html public "-//w3c//dtd html 4.0 transitional//en">&nbsp; </P>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE">
+<P><B><FONT SIZE=5>Power Overview</B></FONT></TD>
+</TR>
+</TABLE>
+
+<H3>Power MentalDefense</H3>
+<H3>Description</H3>
+<DL>
+<DD>Implements Mental Defense.&nbsp; Number of points of MD are configurable.</DD>
+</DL>
+<H3>Functional Overview</H3>
+<DL>
+<DD>When activated Mental Defense executes a subeffect of "aid" to add the number of points of mental defense plus EGO/5 to the MD stat.</DD>
+</DL>
+<H3>Known Caveats</H3>
+<DL>
+<DD>-Since powerMentalDefense handles adding EGO/5 to the MD stat, activating an instance of powerCharacteristic with EGO will not add to the source's MD. Deactivating and reactivating the Mental Defense will force the MD to be calculated correctly. </DD>
+</DL>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=3>
+<P><B>Power Information</B></TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Class</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<P>champions.powers.powerMentalDefense</TD>
+<TD VALIGN="MIDDLE">
+<P>&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Power Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>Power</FONT></TD>
+<TD VALIGN="MIDDLE">
+<P>&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Attack Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>Self</FONT></TD>
+<TD VALIGN="MIDDLE">
+<P>&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="24%" VALIGN="TOP">
+<B><FONT SIZE=2><P>Persistence Type</B></FONT></TD>
+<TD VALIGN="TOP">
+<FONT SIZE=2><P>Persistent</FONT></TD>
+<TD VALIGN="MIDDLE">
+<P>&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Time</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>Instant</FONT></TD>
+<TD VALIGN="MIDDLE">
+<P>&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>PPDC</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>n/a</FONT></TD>
+<TD VALIGN="MIDDLE">
+<P>&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Strength Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>n/a</FONT></TD>
+<TD VALIGN="MIDDLE">
+<P>&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Killing Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>n/a</FONT></TD>
+<TD VALIGN="MIDDLE">
+<P>&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Generic Damage</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>FALSE</FONT></TD>
+<TD VALIGN="MIDDLE">
+<P>&nbsp;</TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=629>
+<TR><TD VALIGN="MIDDLE" COLSPAN=3>
+<P><B>Parsed Parameters</B></TD>
+</TR>
+<TR><TD WIDTH="14%" VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Level</B></FONT></TD>
+<TD WIDTH="10%" VALIGN="MIDDLE">
+<TT><P ALIGN="RIGHT">Integer</TT></TD>
+<TD WIDTH="76%" VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Power.LEVEL</B></FONT> <BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates the number of points that should be added to MD.</FONT></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=3>
+<P><B>Other Value/Pairs</B></TD>
+</TR>
+<TR><TD WIDTH="7%" VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Md</B></FONT></TD>
+<TD WIDTH="17%" VALIGN="MIDDLE">
+<TT><P ALIGN="RIGHT">Integer</TT></TD>
+<TD WIDTH="76%" VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Power.MD </B></FONT><BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates the total number of points that should be added to MD which is a total of Power.LEVEL and EGO/5..</FONT></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=7>
+<P><B>Dice Information</B></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=623>
+<TR><TD VALIGN="MIDDLE" COLSPAN=2>
+<P><B>Trigger Effects</B></TD>
+</TR>
+<TR><TD WIDTH="14%" VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Mental Defense Effect</B></FONT></TD>
+<TD WIDTH="86%" VALIGN="MIDDLE">
+<FONT SIZE=2><P>This is a object of type effect which contains one subeffect.&nbsp; The subeffect contains the information necessary to AID MD set in the parameters.</FONT></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE">
+<P><B>Related Classes</B></TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

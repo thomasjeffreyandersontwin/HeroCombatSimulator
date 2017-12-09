@@ -1,0 +1,192 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Power Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Power Combat Levels</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+This class implements the skill Combat Levels.&nbsp; The Combat Levels
+can be configured to work whenever the character uses a specific set of
+abilities, each of which has to be added to the "active" abilities, or
+it can be configured to always be active.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<dl>
+<dd>
+Combat Levels works by adding an effect called Combat Level Watcher to
+the source character.&nbsp; The watch sits and looks for any ability in
+it's "active" list to be activated (via the abilityIsActivating() effect
+method).&nbsp; When it sees that ability, it adds a effect CombatModifier
+to the source, which lasts until the characters next phase.</dd>
+
+<dd>
+This power is mark as persistent, since it needs to be activated during
+all combat, even if the combat modifiers are currently applied.</dd>
+
+<dd>
+This power adds an action/menu item to allow for reconfiguration of the
+combat levels.&nbsp; Currently, the combat levels are all applied to the
+OCV of the source when initially configured.</dd>
+</dl>
+
+<h3>
+Known Caveats</h3>
+
+<dl>
+<dd>
+None.</dd>
+</dl>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Power Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td><font size=-1>champions.powers.powerCombatLevels</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Power Type</font></b></td>
+
+<td><font size=-1>Power</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Attack Type</font></b></td>
+
+<td><font size=-1>Self</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Persistence Type</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Persistent</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Time</font></b></td>
+
+<td><font size=-1>Instant</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>PPDC</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Strength Type</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Killing Type</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Generic Damage</font></b></td>
+
+<td><font size=-1>FALSE</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Level</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Integer</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Power.LEVEL</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates
+the number of combat levels the source has.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><b><font size=-1>Overall</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Boolean</font></tt></td>
+
+<td><b><font size=-1>Power.OVERALL</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates
+that the combat level is an overall combat level and should be applied
+all of the time.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>CanUseCL</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Ability[]</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>CanUseCL[].ABILITY</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Index containing
+a list of all the abilities which should trigger the combat levels.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="7"><b>Dice Information</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="2"><b>Trigger Effects</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>effectCombatLevel</font></b></td>
+
+<td><font size=-1>An effectCombatLevel is created and added to the source.&nbsp;
+effectCombatLevel watches for appropriate abilities to become active and
+adds effectCombatModifiers when necessary.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1><a href="effectCombatLevel.html">effectCombatLevel</a></font></b></td>
+</tr>
+</table>
+
+</body>
+</html>

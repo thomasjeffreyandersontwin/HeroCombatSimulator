@@ -1,0 +1,156 @@
+/*
+ * ApplyEffectNode.java
+ *
+ * Created on November 20, 2001, 2:44 PM
+ */
+
+package champions.attackTree;
+
+import champions.Battle;
+import champions.BattleEngine;
+import champions.Target;
+import champions.exception.BattleEventException;
+import champions.exceptionWizard.ExceptionWizard;
+import javax.swing.UIManager;
+
+/**
+ *
+ * @author  twalker
+ * @version
+ */
+public class ApplyEffectNode extends DefaultAttackTreeNode {
+    
+    protected Target target;
+    
+    private int startMessageCount;
+    private int endMessageCount;
+    
+    private boolean firstPass = true;
+    
+    /** Holds value of property targetReferenceNumber. */
+    private int targetReferenceNumber;
+    
+    /** Creates new ApplyEffectNode */
+    public ApplyEffectNode(String name) {
+        this.name = name;
+        //setVisible(true);
+        icon = UIManager.getIcon("AttackTree.summaryIcon");
+    }
+    
+    public boolean activateNode(boolean manualOverride) {
+        boolean activateNode = false;
+        
+        if ( AttackTreeModel.DEBUG > 0 ) System.out.println("Node " + name + " activated.");
+        
+        // The root node should never accept active node status, since
+        // It isn't really a real node.
+        // Build a ToHit node and add it
+        startMessageCount = battleEvent.getMessageCount();
+        
+       
+        
+        
+        try {
+            BattleEngine.processEffectsForTarget(getBattleEvent(), getTargetGroup(), targetReferenceNumber);
+        }
+        catch (BattleEventException bee) {
+            ExceptionWizard.postException(bee);
+        }
+        
+        endMessageCount = battleEvent.getMessageCount();
+        
+      /*  if ( startMessageCount == endMessageCount ) {
+            battleEvent.addBattleMessage( new champions.battleMessage.SimpleBattleMessage( target.getName() + " was not affected.", MSG_COMBAT)); // .addBattleMessage( new champions.battleMessage.SimpleBattleMessage( target.getName() + " was not affected.", MSG_COMBAT)); // .addMessage( target.getName() + " was not affected.", MSG_COMBAT);
+            endMessageCount = battleEvent.getMessageCount();
+        } */
+        
+        if ( nodeRequiresInput() || manualOverride == true ) {
+            MessagePanel mp = MessagePanel.getDefaultPanel(battleEvent, target, startMessageCount, endMessageCount);
+            attackTreePanel.showInputPanel(this,mp);
+            attackTreePanel.setInstructions("Hit Okay to Continue...");
+            
+            activateNode = true;
+        }
+        
+        return activateNode;
+    }
+    
+    private boolean nodeRequiresInput(){
+        boolean requiresInput = false;
+        
+        if ( startMessageCount < endMessageCount ) {
+            requiresInput = true;
+        }
+        
+        return requiresInput && firstPass && getAutoBypassValue();
+    }
+    
+    /**
+     * Causes node to process an advance and perform any work that it needs to do.
+     *
+     * This is a method introduced by DefaultAttackTreeNode.  DefaultAttackTreeNode
+     * delegates to this method if advanceNode node is called and this is the active
+     * node.  This method should do all the work of advanceNode whenever it can, since
+     * the next node processing and buildNextChild methods depend on the existing
+     * DefaultAttackTreeNode advanceNode method.
+     *
+     * Returns true if it is okay to leave the node, false if the node should
+     * be reactivated to gather more information.
+     */
+    public boolean processAdvance() {
+        
+        firstPass = false;
+        
+        return true;
+    }
+    
+    
+    public AttackTreeNode buildNextChild(AttackTreeNode activeChild) {
+        
+        AttackTreeNode nextNode = null;
+        
+        return nextNode;
+    }
+    
+    public void setTarget(Target target) {
+        if ( this.target != target ) {
+            this.target = target;
+        }
+    }
+    
+    public Target getTarget() {
+        return this.target;
+    }
+    
+    public String toString() {
+        //return getName() + " - " + getTarget();
+        return "Damage/Effects for " + getTarget().getName();
+    }
+    
+    /** Getter for property targetReferenceNumber.
+     * @return Value of property targetReferenceNumber.
+     */
+    public int getTargetReferenceNumber() {
+        return targetReferenceNumber;
+    }
+    
+    /** Setter for property targetReferenceNumber.
+     * @param targetReferenceNumber New value of property targetReferenceNumber.
+     */
+    public void setTargetReferenceNumber(int targetReferenceNumber) {
+        this.targetReferenceNumber = targetReferenceNumber;
+    }
+    
+    public String getAutoBypassOption() {
+        if ( Battle.getCurrentBattle().getTime().isTurnEnd() ) {
+            return "SHOW_APPLY_EFFECTS_POSTTURN_PANEL";
+        }
+        else {
+            return "SHOW_APPLY_EFFECTS_PANEL";
+        }
+    }
+    
+    public Target getAutoBypassTarget() {
+        return target;
+    }
+}

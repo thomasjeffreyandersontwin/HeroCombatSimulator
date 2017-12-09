@@ -1,0 +1,126 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Effect Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Effect CombatLevel</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+Implements effect which automatically applied OCV, DCV, and DC modifications
+when appropraite.&nbsp; Used with the Combat Level skill.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<dl>
+<dd>
+Uses abilityIsActivating method to watch for ability/maneuver activation.&nbsp;
+When an appropriate ability is activated (as determined by the CanUseCL[]
+index attached to the Combat Level skill), effectCombatLevel creates and
+adds an effectCombatModifier with the appropriate OCV/DCV modifications
+to the source.</dd>
+
+<dd>
+Uses adjustDice method to watch for ability/maneuver activation.&nbsp;
+When an appropriate ability is activated (as determined by the CanUseCL[]
+index attached to the Combat Level skill), effectCombatLevel adds to the
+battleEvents <i>Combat.DC</i> value/pair.</dd>
+
+<dd>
+</dd>
+
+<dd>
+The effectCombatLevel is linked to an ability and values are dynmically
+implemented.&nbsp; It expects the ability to have <i>CanUseCL[] index</i>,
+<i>Power.OVERALL</i>, <i>CombatLevel.DCBONUS</i>,
+<i>CombatLevel.OCVBONUS</i>,
+and <i>CombatLevel.DCBONUS</i> value/pairs.</dd>
+</dl>
+
+<h3>
+Known Caveats</h3>
+
+<dl>
+<dd>
+In the case of an overall level, that level is still only triggered when
+an ability is activated.&nbsp; Situations may exist where the character
+does not get the benifit of the level even though it should be activated.</dd>
+</dl>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Effect Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td><font size=-1>champions.powers.effectCombatLevel</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Persistence Type</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Linked</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Hidden</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>TRUE</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Effect.ISHIDDEN</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hides the
+effect from main effects list view.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="7"><b>Subeffects</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1><a href="powerCombatLevels.html">powerCombatLevels</a></font></b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1><a href="effectCombatModifier.html">effectCombatModifier</a></font></b></td>
+</tr>
+</table>
+
+</body>
+</html>

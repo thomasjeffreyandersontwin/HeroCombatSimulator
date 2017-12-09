@@ -1,0 +1,8 @@
+{
+	"Type": "SweepTarget",
+	"Abilities":[
+		{"Ability":"Martial Strike", "Target":"Light machinery"},
+		{"Ability":"Sacrifice Strike", "Target":"test"},
+		{"Ability":"Martial Strike","Target":"City gates, small"}
+	]
+}

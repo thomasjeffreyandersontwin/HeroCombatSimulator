@@ -1,0 +1,61 @@
+/*
+ * BattleEventList.java
+ *
+ * Created on September 17, 2000, 11:12 AM
+ */
+
+package champions;
+
+import java.util.*;
+
+import champions.event.*;
+/**
+ *
+ * @author  unknown
+ * @version 
+ */
+public class BattleEventList extends Object {
+
+    public LinkedList linkedList = new LinkedList();
+    /** Creates new BattleEventList */
+    public BattleEventList() {
+    }
+    
+    public int size() { 
+        return linkedList.size();
+    }
+    
+    public synchronized void addEvent(BattleEvent be) {
+        this.addEvent(be, false);
+    }
+    
+    public synchronized void addEvent(BattleEvent be, boolean first) {
+
+        if ( first) {
+            linkedList.addFirst(be);
+        }
+        else {
+            linkedList.addLast(be);
+        }
+    }
+    
+    public synchronized void removeEvent(BattleEvent be) {
+        linkedList.remove(be);
+    }
+    
+    public synchronized BattleEvent getEvent() {
+        return (BattleEvent)linkedList.removeFirst();
+    }
+    
+    public synchronized BattleEvent peekAtFirstEvent() {
+        BattleEvent be = null;
+        if ( linkedList.size() > 0 ) {
+            be = (BattleEvent)linkedList.getFirst();
+        }
+        return be;
+    }
+    
+    public boolean hasEvents() {
+        return size() > 0;
+    }
+}

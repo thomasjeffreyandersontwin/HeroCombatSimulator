@@ -1,0 +1,161 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Power Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Pass action</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+Implements a character passing their turn.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<dl>
+<dd>
+The power is marked as a attack time, so the battleEngine automatically
+passes the rest of the sources turn when triggered.&nbsp; No other effects
+are applied.</dd>
+
+<dd>
+The power is marked as autosource, so the currently active characters turn
+is alway passed.&nbsp; The power is also marked as isRecovery, so that
+a character can pass their post-12 recovery if desired.</dd>
+</dl>
+
+<h3>
+Known Caveats</h3>
+
+<dl>
+<dd>
+None.</dd>
+</dl>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Power Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td><font size=-1>champions.powers.powerPass</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Power Type</font></b></td>
+
+<td><font size=-1>Power</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Attack Type</font></b></td>
+
+<td><font size=-1>Self</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Persistence Type</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Instant</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Time</font></b></td>
+
+<td><font size=-1>Attack</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>PPDC</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Strength Type</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Killing Type</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Generic Damage</font></b></td>
+
+<td><font size=-1>FALSE</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Autosource</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt>TRUE</tt></td>
+
+<td><b><font size=-1>Ability.AUTOSOURCE</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates
+the ability is an autosource ability.&nbsp; When triggered, the source
+of the ability will always be the currently active character.</font></td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>IsRecovery</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt>TRUE</tt></td>
+
+<td><b><font size=-1>Ability.ISRECOVERY</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates
+the ability can be used during the post-12 recovery phase.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="7"><b>Dice Information</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="2"><b>Trigger Effects</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+</table>
+
+</body>
+</html>

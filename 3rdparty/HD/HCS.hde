@@ -1,0 +1,89 @@
+<!--TEMPLATE_NAME-->Text - HCS Template (modified) <!--/TEMPLATE_NAME--><!--TEMPLATE_DESCRIPTION-->This HeroDesigner Export Template is used to save character information from HeroDesinger in a format that Hero Combat Simulator can read.<P>Written by Kevin Richard<!--/TEMPLATE_DESCRIPTION--><!--TEMPLATE_DESCRIPTION-->txt<!--/TEMPLATE_DESCRIPTION-->Name: <!--CHARACTER_NAME-->
+*STATS*
+<!--STR-->STR: <!--STR_TOTAL--><!--/STR-->
+<!--DEX-->DEX: <!--DEX_TOTAL--><!--/DEX-->
+<!--CON-->CON: <!--CON_TOTAL--><!--/CON-->
+<!--BODY-->BOD: <!--BODY_TOTAL--><!--/BODY-->
+<!--INT-->INT: <!--INT_TOTAL--><!--/INT-->
+<!--EGO-->EGO: <!--EGO_TOTAL--><!--/EGO-->
+<!--PRE-->PRE: <!--PRE_TOTAL--><!--/PRE-->
+<!--COM-->COM: <!--COM_TOTAL--><!--/COM-->
+<!--PD-->PD : <!--PD_TOTAL--><!--/PD-->
+<!--ED-->ED : <!--ED_TOTAL--><!--/ED-->
+<!--SPD-->SPD: <!--SPD_TOTAL--><!--/SPD-->
+<!--REC-->REC: <!--REC_TOTAL--><!--/REC-->
+<!--END-->END: <!--END_TOTAL--><!--/END-->
+<!--STUN-->STN: <!--STUN_TOTAL--><!--/STUN-->
+MD : <!--MENTAL_DEFENSE_TOTAL-->
+rPD: 
+rED: 
+DCV: <!--DCV-->
+OCV: <!--OCV-->
+ECV: <!--ECV-->
+*ENDSTATS*
+
+*ABILITIES: Skills*
+
+
+<!--SKILLS-->
+BEGINPOWER:
+Power: <!--XMLID-->
+Name: <!--SKILL_ALIAS-->
+<!--IFLIST--><!--LISTPREFIX--><!--/IFLIST--><!--SKILL_TEXT--><!--IFNOTES--> [Notes: <!--SKILL_NOTES-->]<!--/IFNOTES-->
+ENDPOWER:
+<!--/SKILLS-->
+
+
+<!--IFMARTIAL_ARTS-->
+<!--MARTIAL_ARTS-->
+BEGINPOWER:
+Power: <!--XMLID-->
+Name: <!--MA_DISPLAY-->
+<!--IF_MANEUVER--><!--MANEUVER_NAME--> (OCV <!--MANEUVER_OCV-->, DCV <!--MANEUVER_DCV-->,<!--MANEUVER_EFFECT-->)
+<!--/IF_MANEUVER-->
+<!--/MARTIAL_ARTS-->
+<!--/IFMARTIAL_ARTS-->
+BEGINPOWER:
+
+
+*ENDABILITIES: Skills*
+
+*ABILITIES: Powers*
+
+<!--IFPOWERS--><!--POWERS-->
+BEGINPOWER:
+Power: <!--XMLID-->
+Name: <!--IFNAME--><!--NAME--><!--/IFNAME-->
+Level: <!--POWER_DMG--><!--MODIFIERS-->
+<!--MODIFIER_XMLID--> <!--MODIFIER_VALUE-->
+<!--/MODIFIERS-->
+<!--IFNOTES--><!--POWER_NOTES--><!--/IFNOTES-->
+<!--ADDERS-->
+<!--XMLID-->
+<!--ADDER_XMLID-->
+<!--/ADDERS-->ENDPOWER:
+<!--IF_COMPOUND_POWER-->
+<!--COMPONENT_POWERS-->
+BEGINPOWER:
+Power: <!--XMLID-->
+Name: <!--IFNAME--><!--NAME--><!--/IFNAME-->
+Level: <!--POWER_DMG--><!--MODIFIERS-->
+<!--MODIFIER_XMLID--> <!--MODIFIER_VALUE-->
+<!--OPTION_ID--><!--/MODIFIERS-->
+<!--IFNOTES--><!--POWER_NOTES--><!--/IFNOTES-->
+<!--ADDERS--><!--ADDER_TEXT-->
+<!--/ADDERS-->ENDPOWER:<!--/COMPONENT_POWERS-->
+<!--/IF_COMPOUND_POWER-->
+<!--/POWERS--><!--/IFPOWERS-->
+
+
+<!--IFEQUIPMENT--><!--EQUIPMENT-->
+BEGINPOWER:
+Power: <!--XMLID-->
+Name: <!--IFNAME--><!--NAME--><!--/IFNAME-->
+<!--EQUIPMENT_TEXT--><!--MODIFIERS-->
+<!--MODIFIER_TEXT--><!--/MODIFIERS-->
+ENDPOWER:
+<!--/EQUIPMENT--><!--/IFEQUIPMENT-->
+
+*ENDABILITIES: Powers*

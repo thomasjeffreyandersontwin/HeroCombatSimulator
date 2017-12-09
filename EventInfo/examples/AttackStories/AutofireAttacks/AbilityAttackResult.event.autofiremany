@@ -1,0 +1,49 @@
+{
+	"Ability": "Flurry",
+	"Type": "AttackSingleTargetResult",
+	"Targets": [{
+		"Target": {
+			"STUN": {
+				"Max": 10,
+				"Current": 7
+			},
+			"Name": "Ogun"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Distance": "4"
+			},
+			"Effects": []
+		}
+	}, {
+		"Target": {
+			"STUN": {
+				"Max": 13,
+				"Current": 13
+			},
+			"Name": "Blind Justice"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Breakfall Successful": true,
+				"Distance": "6"
+			},
+			"Effects": []
+		}
+	}, {
+		"Target": {
+			"STUN": {
+				"Max": 20,
+				"Current": 20
+			},
+			"Name": "Pre-Emptive Strike"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {},
+			"Effects": []
+		}
+	}]
+}

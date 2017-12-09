@@ -1,0 +1,81 @@
+{
+	"Type": "AttackSweepTargetsResult",
+	"Attacks": [{
+		"Ability": "Sacrifice Strike",
+		"Type": "AttackSingleTargetResult",
+		"Target": {
+			"STUN": {
+				"Max": 10,
+				"Current": 10
+			},
+			"BODY": {
+				"Max": 10,
+				"Current": 10
+			},
+			"Name": "Ogun"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Obstacle Collision": {
+					"BODY": {
+						"Max": 10,
+						"Current": 6
+					},
+					"Name": "City gates, small"
+				},
+				"Distance": "10"
+			},
+			"Effects": ["Stunned", "Unconscious"]
+		}
+	}, {
+		"Ability": "Martial Strike",
+		"Type": "AttackSingleTargetResult",
+		"Target": {
+			"STUN": {
+				"Max": 20,
+				"Current": 20
+			},
+			"BODY": {
+				"Max": 20,
+				"Current": 20
+			},
+			"Name": "Pre-Emptive Strike"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Obstacle Collision": {
+					"BODY": {
+						"Max": 4,
+						"Current": 0
+					},
+					"Name": "Light machinery"
+				},
+				"Distance": "7"
+			},
+			"Effects": ["Unconscious"]
+		}
+	}, {
+		"Ability": "Counterstrike",
+		"Type": "AttackSingleTargetResult",
+		"Target": {
+			"STUN": {
+				"Max": 20,
+				"Current": 20
+			},
+			"BODY": {
+				"Max": 20,
+				"Current": 20
+			},
+			"Name": "Pre-Emptive Strike"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Distance": "6"
+			},
+			"Effects": ["Unconscious"]
+		}
+	}]
+}

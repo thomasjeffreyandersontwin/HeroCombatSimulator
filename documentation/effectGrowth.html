@@ -1,0 +1,163 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Win98; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Effect Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Effect Growth</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+Implements Growth.&nbsp; Used by power Growth.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<ul>
+<li>
+<font size=-1>Uses predefense to add Knockback.RESISTANCE to the battleEvent.&nbsp;
+The battleEngine handles the resistance processing beyond that The Knockback.RESISTANCE
+parameter is set when the effect is created.&nbsp; If the ability changes,
+the effect must be recreated.</font></li>
+
+<li>
+<font size=-1>Uses the addDCVDefenseModifiers&nbsp; method to apply a DCV
+penaltyto the character.&nbsp; The DCV penalty is static, so the effect
+must be removed and reapplied to change values.</font></li>
+
+<li>
+<font size=-1>Uses 3 subeffects of type&nbsp; AID to add STR, BODY and
+STUN to the character.</font></li>
+</ul>
+
+<h3>
+Known Caveats</h3>
+
+<dl>
+<dd>
+Does not track mass, +2 to others PER rolls, height, width or reach at
+this time.</dd>
+</dl>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Effect Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td><font size=-1>champions.powers.effectGrowth</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Persistence Type</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Linked</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Priority</font></b></td>
+
+<td><font size=-1>2</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Level</font></b></td>
+
+<td><b><font size=-1>Integer</font></b></td>
+
+<td><b><font size=-1>Power.LEVEL</font></b>
+<br>&nbsp;&nbsp;&nbsp; Specifies the number of levels of Growth the character
+has.</td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Resistance</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Integer</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Knockback.RESISTANCE</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specifies
+the inches of knockback resistance to apply.&nbsp; This is set from Power.LEVEL.</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Dcvbonus</font></b></td>
+
+<td><b><font size=-1>integer</font></b></td>
+
+<td><b><font size=-1>Power.DCVBONUS</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specifies the number
+of DCV to remove from the character based on increments of 3 levels of
+growth.&nbsp; This is calculated from Power.LEVEL.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="99%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="7"><b>Subeffects</b></td>
+</tr>
+
+<tr>
+<td>Aid</td>
+
+<td ALIGN=LEFT WIDTH="100%">Uses the subeffect of AID to add STR to character
+based on growth level specificiation</td>
+</tr>
+
+<tr>
+<td>Aid</td>
+
+<td>Uses the subeffect of AID to add BODY to character based on grwoth
+level specificiation</td>
+</tr>
+
+<tr>
+<td>Aid</td>
+
+<td>Uses the subeffect of AID to add STUN to character based on growth
+level specificiation</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<br>&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1><a href="powerGrowth.html">powerGrowth</a></font></b></td>
+</tr>
+</table>
+
+</body>
+</html>
+

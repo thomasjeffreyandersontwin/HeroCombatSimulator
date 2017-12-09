@@ -1,0 +1,49 @@
+Event: 
+	Name:Expand Character Node
+character:
+	name:Spyder
+	costume:
+	model:
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:48
+	CurrEndurance:44
+	Crowd: 
+		Name:heroes
+		Characters:
+			Ogun:
+				name:Ogun
+				costume:
+				model:
+			Spyder:
+				name:Spyder
+				costume:
+				model:
+			Off-Road:
+				name:Off-Road
+				costume:
+				model:
+			New Object:
+				name:New Object
+				costume:
+				model:
+			test:
+				name:test
+				costume:
+				model:
+			Blind Justice:
+				name:Blind Justice
+				costume:
+				model:
+			Pre-Emptive Strike:
+				name:Pre-Emptive Strike
+				costume:
+				model:
+			Light machinery:
+				name:Light machinery
+				costume:
+				model:
+			City gates, small:
+				name:City gates, small
+				costume:
+				model:

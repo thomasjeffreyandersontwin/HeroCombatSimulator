@@ -1,0 +1,192 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Power Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Power Energy Blast</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+Implements power energy blast.&nbsp; D6, defense(PD/ED), and stun only
+are configurable.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<dl>
+<dd>
+If configured for stun only, the damage effect is generated.&nbsp; Otherwise,
+the generic damage generation from the battleEngine is used.</dd>
+
+<dd>
+The Ability.CANSPREAD value/pair is set to True, to indicate that the EB
+can be spread.</dd>
+</dl>
+
+<h3>
+Known Caveats</h3>
+
+<dl>
+<dd>
+None.</dd>
+</dl>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Power Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td><font size=-1>champions.powers.powerEB</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Power Type</font></b></td>
+
+<td><font size=-1>Power</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Attack Type</font></b></td>
+
+<td><font size=-1>Single</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Persistence Type</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Instant</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Time</font></b></td>
+
+<td><font size=-1>Attack</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>PPDC</font></b></td>
+
+<td><font size=-1>5</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Strength Type</font></b></td>
+
+<td><font size=-1>RANGED</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Killing Type</font></b></td>
+
+<td><font size=-1>NORMAL</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Generic Damage</font></b></td>
+
+<td><font size=-1>Configuration Dependent</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>DamageDie</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>String</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Power.DAMAGEDIE</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number of
+dice of damage in D6 notation.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><b><font size=-1>Defense</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>String</font></tt></td>
+
+<td><b><font size=-1>Power.DEFENSE</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Type of defense
+to be used by attack, either PD or ED.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><b><font size=-1>StunOnly</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>boolean</font></tt></td>
+
+<td><b><font size=-1>Power.StunOnly</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates
+only stun damage should be generated.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>CanSpread</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>TRUE</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Ability.CANSPREAD</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates
+that the Ability can be spread to the BattleEngine.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="7"><b>Dice Information</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>DamageDie</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Energy Blash Damage Die.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="2"><b>Trigger Effects</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>stun effect</font></b></td>
+
+<td><font size=-1>If the attack is configured as stun only, the stun is
+generated inside the trigger method.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+</table>
+
+</body>
+</html>

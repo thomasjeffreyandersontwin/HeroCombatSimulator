@@ -1,0 +1,189 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>powerEgoAttack</TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<P><!doctype html public "-//w3c//dtd html 4.0 transitional//en">&nbsp; </P>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE">
+<P><B><FONT SIZE=5>Power Overview</B></FONT></TD>
+</TR>
+</TABLE>
+
+<H3>Power EgoAttack</H3>
+<H3>Description</H3>
+<DL>
+<DD>Implements power Ego Attack.&nbsp; D6 is configurable.</DD>
+</DL>
+<H3>Functional Overview</H3>
+<DL>
+<DD>Stun only attack vs MD.  Otherwise acts like powerEnergyBlast.</DD>
+</DL>
+<H3>Known Caveats</H3>
+<DL>
+<DD>None.</DD>
+</DL>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=3>
+<P><B>Power Information</B></TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Class</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>champions.powers.powerEgoAttack</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Power Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>Power</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Attack Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>Single</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="32%" VALIGN="TOP">
+<B><FONT SIZE=2><P>Persistence Type</B></FONT></TD>
+<TD VALIGN="TOP">
+<FONT SIZE=2><P>Instant</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Time</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>Attack</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>PPDC</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>10</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Strength Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>RANGED</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Killing Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>NORMAL</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Generic Damage</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>Configuration Dependent</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=623>
+<TR><TD VALIGN="MIDDLE" COLSPAN=3>
+<P><B>Parsed Parameters</B></TD>
+</TR>
+<TR><TD WIDTH="11%" VALIGN="TOP">
+<B><FONT SIZE=2><P>DamageDie</B></FONT></TD>
+<TD WIDTH="9%" VALIGN="TOP">
+<TT><P ALIGN="RIGHT">String</TT></TD>
+<TD WIDTH="80%" VALIGN="TOP">
+<B><FONT SIZE=2><P>Power.DAMAGEDIE</B></FONT> <BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number of dice of damage in D6 notation.</FONT></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=623>
+<TR><TD VALIGN="MIDDLE" COLSPAN=4>
+<P><B>Other Value/Pairs</B></TD>
+</TR>
+<TR><TD WIDTH="12%" VALIGN="TOP" COLSPAN=2>
+<B><FONT SIZE=2><P>CanSpread</B></FONT></TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<TT><P ALIGN="RIGHT">TRUE</TT></TD>
+<TD WIDTH="79%" VALIGN="TOP">
+<B><FONT SIZE=2><P>Ability.CANSPREAD</B></FONT> <BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set to FALSE.</FONT></TD>
+</TR>
+<TR><TD WIDTH="12%" VALIGN="TOP" COLSPAN=2>
+<B><FONT SIZE=2><P>Defense</B></FONT></TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<TT><P ALIGN="RIGHT">String</TT></TD>
+<TD WIDTH="79%" VALIGN="TOP">
+<B><FONT SIZE=2><P>Power.DEFENSE</B></FONT> <BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set to MD</FONT></TD>
+</TR>
+<TR><TD WIDTH="12%" VALIGN="TOP" COLSPAN=2>
+<B><FONT SIZE=2><P>StunOnly</B></FONT></TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<TT><P ALIGN="RIGHT">boolean</TT></TD>
+<TD WIDTH="79%" VALIGN="TOP">
+<B><FONT SIZE=2><P>Power.StunOnly</B></FONT> <BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set to FALSE.</FONT></TD>
+</TR>
+<TR><TD WIDTH="12%" VALIGN="TOP" COLSPAN=2>
+<B><FONT SIZE=2><P>CVType</B></FONT></TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<TT><P ALIGN="RIGHT">boolean</TT></TD>
+<TD WIDTH="79%" VALIGN="TOP">
+<B><FONT SIZE=2><P>Ability.CVTYPE</B></FONT><BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set to EGO.</FONT></TD>
+</TR>
+<TR><TD WIDTH="12%" VALIGN="TOP" COLSPAN=2>
+<B><FONT SIZE=2><P>DoesBody</B></FONT></TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<TT><P ALIGN="RIGHT">boolean</TT></TD>
+<TD WIDTH="79%" VALIGN="TOP">
+<B><FONT SIZE=2><P>Ability.DOESBODY</B></FONT><BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set to FALSE.</FONT></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=7>
+<P><B>Dice Information</B></TD>
+</TR>
+<TR><TD WIDTH="9%" VALIGN="TOP">
+<B><FONT SIZE=2><P>DamageDie</B></FONT></TD>
+<TD VALIGN="TOP">
+<FONT SIZE=2><P>Energy Blash Damage Die.</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=2>
+<P><B>Trigger Effects</B></TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>stun effect</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>No trigger seems to be necessary.  Damage handled directly by the BattleEngine.</FONT></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE">
+<P><B>Related Classes</B></TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

@@ -1,0 +1,110 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Advantage Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Advantage Penetrating</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+Implements the advantage penetrating.&nbsp; The number of levels of penetrating
+are configured.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<dl>
+<dd>
+Uses postpower method to guarantee that a minimum amount of damage penetrates
+the targets defenses.&nbsp; Specifically, it looks up the roll of the first
+die listing in the DIE[] index, then makes sure the value of the first
+subeffect is at minimum equal to the body value of the first dice.&nbsp;
+Before adjusting the subeffects, it check if there is an index Defense[].NAME
+equal to "Hardened", and if so, it check on Defense[].LEVELS for that index
+to make sure there are more Penetrating levels then hardened levels.</dd>
+</dl>
+
+<h3>
+Known Caveats</h3>
+
+<dl>
+<dd>
+Hardened Defenses are not properly used.&nbsp; Currently having 1 point
+of hardened defenses allows all defense to be hardened to that level.&nbsp;
+If multiple defense exist, only the first one will be considered, and that
+may not be the best one.</dd>
+
+<dd>
+Since penetrating can't tell the difference between power generated effects
+and effect generated elsewhere (such as END), it will trigger penetrating
+in places it shouldn't (such as END).</dd>
+</dl>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Advantage Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td><font size=-1>champions.powers.advantangePenetrating</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Affects DC</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>TRUE</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Priority</font></b></td>
+
+<td><font size=-1>2</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>PenetratingLevels</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Integer</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>PenetratingLevels.LEVELS</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number of
+Levels of penetrating.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+</table>
+
+</body>
+</html>

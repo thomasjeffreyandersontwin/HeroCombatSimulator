@@ -1,0 +1,840 @@
+/*
+ * DefaultTreeTableNode.java
+ *
+ * Created on February 27, 2002, 7:53 PM
+ */
+package treeTable;
+
+import java.awt.Color;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DnDConstants;
+import java.util.Comparator;
+import java.util.Vector;
+import javax.swing.Icon;
+import javax.swing.SwingUtilities;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import tjava.Destroyable;
+
+/**
+ *
+ * @param <N> Supertype of all node that will be used with the DefaultTreeTableNode.
+ * @author  twalker
+ * @version
+ */
+@SuppressWarnings("serial")
+public class DefaultTreeTableNode<N extends DefaultTreeTableNode> extends DefaultMutableTreeNode
+        implements TreeTableNode, TreeNode, Destroyable,
+                   ColumnColorProvider, ColumnTooltipProvider,
+                   SortableTreeTableNode<N>, TreeTableDnDNode {
+
+    /** Holds the Model Property. */
+    protected TreeTableModel model;
+
+    /** Holds the Tree Porperty. */
+    protected TreeTable tree;
+
+    /** Holds value of property icon. */
+    protected Icon icon;
+
+    protected Vector rendererVector;
+
+    protected Vector editorVector;
+
+    /** Creates new DefaultTreeTableNode */
+    public DefaultTreeTableNode() {
+    }
+
+    /** Setter for property model.
+     *
+     * Sets the model for this node to be the specified model.  Typically, all nodes in a particular tree
+     * should be set to the same model.  Thus, set model usually should result in the model of all children
+     * being set appropriately.
+     *
+     * @param model New value of property model.
+     */
+    @Override
+    public void setModel(TreeTableModel model) {
+        if (this.model != model) {
+            this.model = model;
+
+            //sortNode(true);
+
+            int index = (children != null) ? children.size() - 1 : -1;
+            for (; index >= 0; index--) {
+                ((DefaultTreeTableNode) children.get(index)).setModel(model);
+            }
+        }
+    }
+
+    /** Gets the nodes preferred CellRenderer for the column <code>columnIndex</code>.
+     *
+     * Returns the Nodes preferred CellRenderer for the indicated column.  Null can be returned to
+     * indicate that a default renderer can be used.
+     *
+     * @param columnIndex The Index of the column being rendered.
+     * @return The TreeTableCellRenderer to use rendering the indicated column of this node.
+     */
+    @Override
+    public TreeTableCellRenderer getTreeTableCellRenderer(int columnIndex) {
+        if (rendererVector != null) {
+            return (TreeTableCellRenderer) rendererVector.get(columnIndex);
+        }
+        return null;
+    }
+
+    /** Notifies the node that it should start a drag.
+     *
+     * startDrag is called when the TreeTable detects a gesture which would normally start the drag and drop
+     * process.  If this node is capable of participating in drag and drop, it should create the appropriate
+     * transferrable and call startDrag on the DragGestureEvent.
+     * 
+     * @param treeTable Indicates the TreeTable which is currently displaying the node.
+     * @param dragPath Indicates the TreePath at which the drag gesture occurred.
+     * @param listener The source listener which should be specified in the startDrag method.
+     * @param dge The drag gesture event which occurred.  This can be used to start
+     * the drag by calling the method <code>dge.startDrag()</CODE>.
+     * @return True if the node started a drag.
+     * @deprecated This method is used by the legacy DefaultTreeTable implementation of drag-n-drop.  Use the
+     * newer createTransferrable method if your tree is going to use the new Java 1.4 Swing DnD implementation.
+     */
+    @Override
+    public boolean startDrag(TreeTable treeTable, TreePath dragPath, java.awt.dnd.DragSourceListener listener, java.awt.dnd.DragGestureEvent dge) {
+        return false;
+    }
+
+    /** Getter for property expandDuringDrag.
+     *
+     * Indicates that the node should be expanded, after a suitable amount of time, if the cursor is
+     * over this node during the indicated drag.
+     * @return Value of property expandDuringDrag.
+     * @param treeTable Indicates the TreeTable which is currently displaying the node.
+     * @param dropPath Indicates the TreePath at which may be expanded.
+     * @param event The DropTargetDragEvent event which is current being processed.
+     * @deprecated This method is used by the legacy DefaultTreeTable implementation of drag-n-drop.  Currently,
+     * the new Java 1.4 Swing DnD implementation always expands the node during a drop.
+     */
+    @Override
+    public boolean expandDuringDrag(TreeTable treeTable, TreePath dropPath, java.awt.dnd.DropTargetDragEvent event) {
+        return false;
+    }
+
+    /** Notifies Node of a drop event occuring in or below the node.
+     * The Node can use the handleDrop method to perform actions based on the drop of a DetailList on
+     * the Node Jtree.  If the node wishes to handles the event, it should call acceptDrop and dropComplete
+     * on the event, then return true to indicate the event was handled.
+     * @returns True if event was handled.  False if additional handling
+     * should be done.
+     * @return True if the event was handled, false if it wasn't.
+     * @param treeTable Indicates the TreeTable which is currently displaying the node.
+     * @param dropPath Indicates the location of the drop in the Tree hierarchy.
+     * @param event The Drop event that is being handled.
+     * @deprecated This method is used by the legacy DefaultTreeTable implementation of drag-n-drop.  Use the
+     * newer importData method if your tree is going to use the new Java 1.4 Swing DnD implementation.
+     */
+    @Override
+    public boolean handleDrop(TreeTable treeTable, TreePath dropPath, java.awt.dnd.DropTargetDropEvent event) {
+        return false;
+    }
+
+    /** Called to check if a node would handle a drop if it occurred.
+     * @return Returns the TreePath after which a feedback line could be drawn indicating where the drop will be placed.
+     * @param treeTable Indicates the TreeTable which is currently displaying the node.
+     * @param dropPath Indicates the location of the drop in the Tree hierarchy.
+     * @param event The Drop event that is being handled.
+     *
+     * @deprecated This method is used by the legacy DefaultTreeTable implementation of drag-n-drop.  Use the
+     * newer canImport method if your tree is going to use the new Java 1.4 Swing DnD implementation.
+     */
+    @Override
+    public TreePath willHandleDrop(TreeTable treeTable, TreePath dropPath, java.awt.dnd.DropTargetDragEvent event) {
+        return null;
+    }
+
+    /** Causes the node to perform a paste, getting data from the indicated transferable.
+     *
+     * This method triggers the node, if possible, to perform a paste.
+     * @param treeTable The TreeTable which is currently displaying the node.
+     * @param path The TreePath which is receiving the paste request.
+     * @param transferable The transferable which should be pasted.
+     * @deprecated This method is used by the legacy DefaultTreeTable copy/paste implementation.  Use the
+     * newer importData method if your tree is going to use the new Java 1.4 Swing DnD implementation.
+     */
+    @Override
+    public void pasteData(TreeTable treeTable, TreePath path, java.awt.datatransfer.Transferable transferable) {
+    }
+
+    /** Causes the node to perform a copy or cut.
+     *
+     * This method triggers the node, if possible, to perform a copy/cut.  It should place the
+     * copy/cut information onto the global clipboard.
+     * @param treeTable The TreeTable which is currently displaying the node.
+     * @param path The TreePath which should be copied or cut.
+     * @param cut If True, indicates the node should be cut.  If false, indicates the node should be copied.
+     * @deprecated This method is used by the legacy DefaultTreeTable copy/paste implementation.  Use the
+     * newer createTransferrable and exportDone methods if your tree is going to use the new Java 1.4
+     * Swing DnD implementation.
+     */
+    @Override
+    public void copyOrCutNode(TreeTable treeTable, TreePath path, boolean cut) {
+    }
+
+    /** Returns whether the node is able to accept the data indicated in the transferable as a past operation.
+     *
+     * If the node returns true, it will be able to support the requested data.
+     * @param treeTable The TreeTable which is currently displaying the node.
+     * @param path The TreePath which is receiving the paste request.
+     * @param transferable The transferable which would be pasted.
+     * @return True if the node will accept the paste, False if it won't.
+     * @deprecated This method is used by the legacy DefaultTreeTable copy/paste implementation.  Use the
+     * newer importData methods if your tree is going to use the new Java 1.4 Swing DnD implementation.
+     */
+    @Override
+    public boolean isPasteEnabled(TreeTable treeTable, TreePath path, java.awt.datatransfer.Transferable transferable) {
+        return false;
+    }
+
+    /** Returns whether the node has data which can be cut/copied.
+     *
+     * If the node returns true, it will be able to provide data for the requested operation.
+     * @return True if the node can execute a <CODE>copyOrCutNode</CODE> successfully.
+     * @param treeTable The TreeTable which is currently displaying the node.
+     * @param path The TreePath which is going to copied or cut.
+     * @param cut If True, indicates the node will be cut.  If false, indicates the node will be copied.
+     * @deprecated This method is used by the legacy DefaultTreeTable copy/paste implementation.  Use the
+     * newer createTransferable method if your tree is going to use the new Java 1.4 Swing DnD implementation.
+     */
+    @Override
+    public boolean isCopyOrCutEnabled(TreeTable treeTable, TreePath path, boolean cut) {
+        return false;
+    }
+
+    /** Returns the number of columns the <code>column</code> should span.
+     *
+     * If the node wishes a column to span multiple columns, it can indicate a columnSpan greater then
+     * 1.  However, since the node often doesn't know the order in which the columns are currently arranged,
+     * it may span columns it does not intend too.
+     * @param column The column of the node which is being rendered.
+     * @param columnModel
+     * @return The maximum number of columns this node/column should span.
+     */
+    @Override
+    public int getColumnSpan(int column, TreeTableColumnModel columnModel) {
+        return 1;
+    }
+
+    /**
+     * Returns the value to be displayed for node <code>node</code>,
+     * at column number <code>column</code>.
+     * @param column The column of the node for which a value should be returned.
+     * @return The Value of the column.
+     */
+    @Override
+    public Object getValueAt(int column) {
+        return (column == 0) ? toString() : null;
+    }
+
+    /** Allows the node to provide context menu feedback.
+     *
+     * invokeMenu is called whenever an event occurs which would cause a context menu to be displayed.
+     * If the node has context menu items to display, it should add them to the JPopupMenu <code>popup</code>
+     * and return true.
+     * @param treeTable Indicates the TreeTable which is currently displaying the node.
+     * @param path The TreePath which the cursor was over when the context menu
+     * event occurred.
+     * @param popup The JPopupMenu which is being built.  Always non-null and initialized.
+     * @return True if menus where added, False if menus weren't.
+     */
+    @Override
+    public boolean invokeMenu(TreeTable treeTable, TreePath path, javax.swing.JPopupMenu popup) {
+        return false;
+    }
+
+    /** Getter for property model.
+     *
+     * Returns the model that is using this node.  Depending on the usage of the node, it is possible
+     * that this model will not be set.  The model should always be checked to make sure it isn't null
+     * prior to use.
+     *
+     * @return Value of property model.
+     */
+    @Override
+    public TreeTableModel getModel() {
+        return model;
+    }
+
+    /** Called to check if a node would handle a drop or paste for new Dnd support.
+     *
+     * Note: the support should be check to see if this is a drag or a copy/cut.
+     *
+     * @param destinationTree Indicates the TreeTable which is currently displaying the node.
+     * @param support TransferSupport with information about the drag or paste.  This
+     * is the target of the TransferSupport will be a JTree so getDropLocation() will
+     * return a JTree.DropLocation object, although you will have to cast to use it.
+     * @return True if the node can import the data.
+     *
+     */
+    @Override
+    public boolean canImport(TreeTable destinationTree, TreeTableTransferSupport support) {
+        return false;
+    }
+
+    /** Imports the data into the target node.
+     *
+     * The DefaultTreeTableModel simply passes control off to the last node
+     * to accept the data via canImport.  It is up to this node to adjust
+     * the TransferSupport information if needed...ie setDropAction
+     * should be called if the drop action changes (only if this is a drop).
+     * <p>
+     * This is for the new dnd support.
+     *
+     * @param destinationTree Tree receiving the drop (or paste).
+     * @param support Transfer support information.
+     * @return True if data was imported into the tree, false otherwise.
+     */
+    @Override
+    public boolean importData(TreeTable destinationTree, TreeTableTransferSupport support) {
+        return false;
+    }
+
+    /** Creates the transferable for the selected node.
+     *
+     * This method should create the transferable for the node for a paste/drag
+     * operation.  This method is called for each of the currently selected nodes
+     * in the tree when the drag starts.  Selected nodes are processed in display 
+     * order, so if both a parent and a child are selected, the parent will always 
+     * be processed prior to the child.
+     * <p>
+     * If multiple nodes are selected, the allSelectedPaths array will contain all of the
+     * selected paths in display order.
+     * <p>
+     * This method should return the transferable for the node, if the node can be copied/moved.
+     * It should return null if the isn't any data that can be transferred from this node.
+     * If multiple paths are selected and multiple nodes return transferable, the model decides
+     * how to combine them.  The DefaultTreeTableModel simply takes the first transferable that
+     * isn't null.
+     *
+     * @param sourceTree Tree table the node resides in.
+     * @param thisPath Tree path of this node.
+     * @param allSelectedPaths Tree paths of all selected nodes, in display order.
+     * @return Transferable for this node or null if there is no transferable data.
+     */
+    @Override
+    public Transferable createTransferable(TreeTable sourceTree, TreePath thisPath, TreePath[] allSelectedPaths) {
+        return null;
+    }
+
+    /** Returns the set of drag actions allowed for the current selection.
+     *
+     * These should come from the set of actions defined in DnDConstants.
+     *
+     * Like createTransferable, specially handling is needed when more than one path is selected.
+     * By default DefaultTreeTableModel simply returns the first constant that isn't ACTION_NONE.
+     * Additionally, it is assumed that an node which returns a value other than ACTION_NONE will
+     * also return a non-null transferable from createTransferable.
+     *
+     * @param sourceTree Tree table the node resides in.
+     * @param thisPath Tree path of this node.
+     * @param allSelectedPaths Tree paths of all selected nodes, in display order.
+     * @return DnDconstants for allowed source actions.
+     */
+    @Override
+    public int getDragSourceActions(TreeTable sourceTree, TreePath thisPath, TreePath[] allSelectedPaths) {
+        return DnDConstants.ACTION_NONE;
+    }
+
+    /** Allows a data source node a chance to perform some action based upon the result of a drag/copy/paste data transfer.
+     *
+     * This method allows a node to react to the completion of a data transfer.  The node doesn't need to do anything.
+     * However, in drag/cut situations, it allows the data to be removed if necessary.
+     * <p>
+     * Note, this method is called even when the action is NONE, so that should be check and the data should
+     * not be removed in that case.
+     *
+     * @param sourceTree treeTable where the data originated.
+     * @param path Specific path from transferred paths completing export.  This node will be in the
+     * path, but may not be the last component.
+     * @param transferredPaths paths originally selected when data transfer originated.
+     * @param data data that was transferred.
+     * @param action Final action taken by the drop/paste target.
+     * @return True if the node has handle all of the data transfer export for this node and all children
+     * of this node in the transferred paths.  False otherwise.
+     */
+    @Override
+    public boolean exportDone(TreeTable sourceTree, TreePath path, TreePath[] transferredPaths, Transferable data, int action) {
+        return false;
+    }
+
+    /** Getter for property TableTree.
+     *
+     * Returns the tree that is using this node.  Depending on the usage of the node, it is possible
+     * that this tree will not be set.  The tree should always be checked to make sure it isn't null
+     * prior to use.
+     *
+     * @return Value of property tree.
+     */
+    @Override
+    public TreeTable getTree() {
+        return tree;
+    }
+
+    /** Setter for property TableTree.
+     *
+     * Sets the tree for this node to be the specified tree.  Typically, all nodes in a particular tree
+     * should return the same tree.  Thus, setTree usually should result in the tree of all children
+     * being set appropriately.
+     *
+     * @param tree The TreeTable which is currently displaying the node.
+     */
+    @Override
+    public void setTree(TreeTable tree) {
+        if (this.tree != tree) {
+            this.tree = tree;
+
+            int index = (children != null) ? children.size() - 1 : -1;
+            for (; index >= 0; index--) {
+                ((DefaultTreeTableNode) children.get(index)).setTree(tree);
+            }
+        }
+    }
+
+    /**
+     * Returns the Icon to be used when drawing this node.
+     *
+     * If the Icon is null, the standard open, closed, leaf icons will be used.
+     * @param treeTable The treeTable which is currently displaying the node.
+     * @param isSelected Whether this node is currently selected.
+     * @param expanded Whether this node is currently expanded.
+     * @param leaf Whether this node is currently considered a leaf.
+     * @param row The row at which the node is current displayed in the TreeTable.
+     * @return An Icon which should be used for this node.  Null if default icons should be used.
+     */
+    @Override
+    public javax.swing.Icon getIcon(TreeTable treeTable, boolean isSelected, boolean expanded, boolean leaf, int row) {
+        return icon;
+    }
+
+    /**
+     * Sets the value for node <code>node</code>,
+     * at column number <code>column</code>.
+     * @param column The column of the node for which a value should be set.
+     * @param aValue The value which the node/column should be set to.
+     */
+    @Override
+    public void setValueAt(int column, Object aValue) {
+        if (column == 0) {
+            setUserObject(aValue);
+        }
+    }
+
+    /** Returns the Nodes custom input map.
+     * This method should return a custom input map of action the Node can perform and has key bindings for.
+     * When this node is selected, the Tree will load this input map and bind the keys appropriately.
+     *
+     * MenuItems returned by invokeMenu which have key bindings should populate an input map and return it.
+     * @return An InputMap which will be added to the current input map.
+     * @param treeTable The TreeTable which is currently displaying the node.
+     * @param path The path of the active tree node.  This is not necessarily the path
+     * of the node being queried.
+     */
+    @Override
+    public javax.swing.InputMap getInputMap(TreeTable treeTable, TreePath path) {
+        return null;
+    }
+
+    /** Returns the Nodes custom action map.
+     * This method should return a custom action map of action the Node can perform and has key bindings for.
+     * When this node is selected, the Tree will load this action map and bind the keys appropriately.
+     *
+     * MenuItems returned by invokeMenu which have key bindings should populate an action map and return it.
+     * @return An ActionMap which will be merged with the TreeTables action map.
+     * @param treeTable The TreeTable which is currently displaying the node.
+     * @param path The path of the active tree node.  This is not necessarily the path
+     * of the node being queried.
+     */
+    @Override
+    public javax.swing.ActionMap getActionMap(TreeTable treeTable, TreePath path) {
+        return null;
+    }
+
+    /** Gets the nodes preferred CellEditor for the column <code>columnIndex</code>.
+     *
+     * Returns the Nodes preferred CellEditor for the indicated column.  Null can be returned to
+     * indicate that a default editor can be used.
+     *
+     * @param columnIndex The Index of the column being rendered.
+     * @return The TreeTableCellEditor to use editing the indicated column of this node.
+     */
+    @Override
+    public TreeTableCellEditor getTreeTableCellEditor(int columnIndex) {
+        if (editorVector != null) {
+            return (TreeTableCellEditor) editorVector.get(columnIndex);
+        }
+        return null;
+    }
+
+    /** Called to destroy the object.  All references should be set to null.
+     * Once destroy has been called, the object will not be used anymore.
+     */
+    @Override
+    public void destroy() {
+        this.tree = null;
+        this.model = null;
+
+        int index = (children != null) ? children.size() - 1 : -1;
+        for (; index >= 0; index--) {
+            ((DefaultTreeTableNode) children.get(index)).destroy();
+        }
+
+        removeAllChildren();
+    }
+
+    /**
+     * Removes all of this node's children, setting their parents to null.
+     * If this node has no children, this method does nothing.
+     */
+    public void removeAndDestroyAllChildren() {
+        for (int i = getChildCount() - 1; i >= 0; i--) {
+            DefaultTreeTableNode child = (DefaultTreeTableNode) children.get(i);
+            remove(i);
+            if (child != null) {
+                child.destroy();
+            }
+        }
+    }
+
+    /**
+     * Indicates whether the the value for node <code>node</code>,
+     * at column number <code>column</code> is editable.
+     * @param column The column of the node which is being checked for editability.
+     * @return True if the node can be edited, false if it is non-editable.
+     */
+    @Override
+    public boolean isCellEditable(int column) {
+        return false;
+    }
+
+    /** Overrides the DefaultMutableTreeNode's insert to set the tree and model properties appropriately.
+     */
+    @Override
+    public void insert(MutableTreeNode newChild, int childIndex) {
+        super.insert(newChild, childIndex);
+
+        if (newChild instanceof DefaultTreeTableNode) {
+            ((DefaultTreeTableNode) newChild).setModel(getModel());
+            ((DefaultTreeTableNode) newChild).setTree(getTree());
+        }
+    }
+
+    /** Getter for property icon.
+     * @return Value of property icon.
+     */
+    public Icon getIcon() {
+        return icon;
+    }
+
+    /** Setter for property icon.
+     * @param icon New value of property icon.
+     */
+    public void setIcon(Icon icon) {
+        this.icon = icon;
+    }
+
+    public void setTreeTableCellEditor(int column, TreeTableCellEditor editor) {
+        if (editorVector == null) {
+            editorVector = new Vector(column + 1);
+        }
+
+        if (editorVector.size() <= column) {
+            editorVector.setSize(column + 1);
+        }
+        editorVector.setElementAt(editor, column);
+    }
+
+    public void setTreeTableCellRenderer(int column, TreeTableCellRenderer renderer) {
+        if (rendererVector == null) {
+            rendererVector = new Vector(column + 1);
+        }
+
+        if (rendererVector.size() <= column) {
+            rendererVector.setSize(column + 1);
+        }
+        rendererVector.setElementAt(renderer, column);
+    }
+
+    @Override
+    public void add(MutableTreeNode node) {
+        super.add(node);
+
+        if (node instanceof DefaultTreeTableNode) {
+            ((DefaultTreeTableNode) node).setModel(getModel());
+            ((DefaultTreeTableNode) node).setTree(getTree());
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (userObject == null) {
+            return getClass().toString();
+        }
+        else {
+            return userObject.toString();
+        }
+    }
+
+    /** Returns an integer indicating its preferred order when sorted.
+     *
+     * The more negative a node's preferred order is, the more it prefers to be at the
+     * front of the list.  The more positive, the more it prefers to
+     * be at the back.
+     * <P>
+     * The preferred order is always strictly enforced, regardless of
+     * the sorting criteria and direction.  Only nodes with the same
+     * preferred orders are reordered relative to the sorting criteria.
+     * @return Preferred order, lower indicating earlier in the list.
+     */
+    public int getPreferredSortOrder() {
+        return 0;
+    }
+
+//    /** Utility method returning the current sorting column.
+//     *
+//     * @return
+//     * @deprecated
+//     */
+//    public int getSortColumn() {
+//        if (model instanceof DefaultTreeTableModel) {
+//            return ((DefaultTreeTableModel) model).getSortColumnIndex();
+//        }
+//        else {
+//            return -1;
+//        }
+//    }
+//
+//    /** Utility method returning the current sorting direction.
+//     *
+//     * @return
+//     * @deprecated
+//     */
+//    public boolean isSortAscending() {
+//        if (model instanceof DefaultTreeTableModel) {
+//            return ((DefaultTreeTableModel) model).isSortAscending();
+//        }
+//        else {
+//            return true;
+//        }
+//    }
+//    /**
+//     *
+//     * @param sortColumn
+//     * @param forward
+//     * @deprecated
+//     */
+//    public void setSortColumn(int sortColumn, boolean forward) {
+////
+////        sortNode(true);
+////
+////        int index = (children != null) ? children.size() - 1 : -1;
+////        for (; index >= 0; index--) {
+////            ((DefaultTreeTableNode) children.get(index)).setSortColumn(sortColumn, forward);
+////        }
+//    }
+//    /**
+//     *
+//     * @param fireChange
+//     * @deprecated
+//     */
+//    public final void sortNode(boolean fireChange) {
+////        if (getSortColumn() != -1 && children != null && children.size() > 1) {
+////            sortNode(getSortComparator(), fireChange);
+////        }
+//    }
+//    /**
+//     *
+//     * @param comparator
+//     * @param fireChange
+//     * @deprecated
+//     */
+//    public final void sortNode(Comparator<N> comparator, boolean fireChange) {
+////        if (comparator != null && getSortColumn() != -1 && children != null && children.size() > 1) {
+////            Vector v = (Vector) children.clone();
+////
+////            Map<Object, Boolean> open = null;
+////            TreePath myPath = new TreePath(getPath());
+////            TreeTable treeTable = getTree();
+////
+////            if (treeTable != null && fireChange) {
+////                open = new HashMap<Object, Boolean>();
+////                for (Object object : children) {
+////                    TreePath path = myPath.pathByAddingChild(object);
+////                    if (treeTable.isExpanded(path)) {
+////                        open.put(object, true);
+////                    }
+////                }
+////            }
+////
+////            Collections.sort(children, new PreferredOrderNodeComparator(comparator));
+////
+////            if (v.equals(children) == false && fireChange && model instanceof DefaultTreeTableModel) {
+////                ((DefaultTreeTableModel) model).nodeStructureChanged(this);
+////
+////                if (treeTable != null && open != null) {
+////                    for (Object object : open.keySet()) {
+////                        TreePath path = myPath.pathByAddingChild(object);
+////                        treeTable.expandPath(path);
+////                    }
+////                }
+////            }
+////        }
+//    }
+    /** Schedules a expansion or collapse of this node.
+     *
+     * This schedules an expansion or collapse of this node.
+     * As a side effect, the node will become viewable (independent
+     * of whether the node was expanded or collapsed).
+     *
+     * @param expand If true, the node will be expanded, otherwise collapsed.
+     */
+    public void expandNodeLater(final boolean expand) {
+        final TreeTable treeTable = getTree();
+
+        if (treeTable != null) {
+            SwingUtilities.invokeLater(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    TreePath path = new TreePath(getPath());
+                    if (treeTable.isExpanded(path) != expand) {
+                        if (expand) {
+                            treeTable.expandPath(path);
+                        }
+                        else {
+                            treeTable.collapsePath(path);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+//    /** Returns the Comparator to use while sorting the children of this node.
+//     *
+//     * @return
+//     * @deprecated
+//     */
+//    public final Comparator<N> getSortComparator() {
+//        //return new DefaultTreeTableNodeComparator<N>(getSortColumn(), isSortAscending());
+//        return null;
+//    }
+    /** Returns a sort comparator for this nodes children.
+     *
+     * Subclasses should wrap their desired comparator in a PreferredOrderNodeComparator
+     * if they wish to support the preferred ordering support.
+     *
+     * @param columnIndex Column to sort on.
+     * @param ascending True if the sort is ascending.
+     * @return
+     */
+    @Override
+    public Comparator<N> getSortComparator(int columnIndex, boolean ascending) {
+        return new PreferredOrderNodeComparator<N>(new DefaultTreeTableNodeComparator<N>(columnIndex, ascending));
+    }
+
+    /**
+     * Returns the preferred display color for the node and column.
+     *
+     * This is only a suggestion.  Depending on the renderer, this may be ignored
+     * or modified.
+     * 
+     * @param column Column being displayed.
+     * @return Preferred color for the column, or null if no color is preferred.
+     */
+    @Override
+    public Color getColumnColor(int column) {
+        return null;
+    }
+
+    @Override
+    public String getToolTipText(int column) {
+        Object value = getValueAt(column);
+        return value == null ? null : value.toString();
+    }
+
+    private static class DefaultTreeTableNodeComparator<N extends DefaultTreeTableNode> implements Comparator<N> {
+
+        protected int sortColumn;
+
+        protected boolean sortAscending;
+
+        public DefaultTreeTableNodeComparator(int sortColumn, boolean sortAscending) {
+            this.sortColumn = sortColumn;
+            this.sortAscending = sortAscending;
+        }
+
+        @Override
+        public int compare(N that1, N that2) {
+
+            int direction = 1;
+            if (sortAscending == false) {
+                direction = -1;
+            }
+            if (sortColumn == -1) {
+                return 0;
+            }
+            Object v1 = that1.getValueAt(sortColumn);
+            Object v2 = that2.getValueAt(sortColumn);
+            if (v1 instanceof String && v2 instanceof String) {
+                return ((String) v1).compareToIgnoreCase((String) v2) * direction;
+            }
+            else if (v1 instanceof Integer && v2 instanceof Integer) {
+                return ((Integer) v1).compareTo((Integer) v2) * direction;
+            }
+            else if (v1 instanceof Double && v2 instanceof Double) {
+                return ((Double) v1).compareTo((Double) v2) * direction;
+            }
+            else {
+                return 0;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "DefaultTreeTableNodeComparator [column = " + sortColumn + ", " + (sortAscending ? "ascending" : "descending") + "]";
+        }
+    }
+
+    public static class PreferredOrderNodeComparator<N extends DefaultTreeTableNode> implements Comparator<N> {
+
+        private Comparator<N> delegate;
+
+        public PreferredOrderNodeComparator(Comparator<N> delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public int compare(N that1, N that2) {
+            int p1 = that1.getPreferredSortOrder();
+            int p2 = that2.getPreferredSortOrder();
+            if (p1 < p2) {
+                return -1;
+            }
+            if (p1 > p2) {
+                return 1;
+            }
+
+            if (delegate != null) {
+                return delegate.compare(that1, that2);
+            }
+
+            return 0;
+        }
+
+        @Override
+        public String toString() {
+            return "PreferredOrderNodeComparator [ " + delegate + " ]";
+        }
+    }
+}

@@ -1,0 +1,137 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Effect Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Effect Delayed</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+Generic effect used whenever an ability has a delay during activation.&nbsp;
+effectDelayed adjusts the DCV of the character and watches the character
+for anything that might disrupt the delay.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<dl>
+<dd>
+Uses the posteffect method, which is called ever time a new ability is
+added to a character, to watch for effects which would cause the delay
+to be disrupted.&nbsp; After it sees one of those events, it returns true
+from posteffect, triggering it's own removal.</dd>
+
+<dd>
+</dd>
+
+<dd>
+The removeEffect method takes care of all cleanup responsibilities, while
+the addDCVDefenseModifiers method is used to apply defense modifiers.</dd>
+</dl>
+
+<h3>
+Known Caveats</h3>
+
+<dl>
+<dd>
+Doesn't seem to always work.</dd>
+</dl>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Effect Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td><font size=-1>champions.powers.effectDelayed</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Persistence Type</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Persistent</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Priority</font></b></td>
+
+<td><font size=-1>5</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>INTERRUPTLEVEL</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Integer</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Effect.INTERRUPTLEVEL</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specifies
+what effects will interrupt the delay:&nbsp; 0) Nothing, 1) Body/Stun damage
+or drain, 2) Body/Stun damage or drain and knockback, 3) any damage, drain,
+or knockback.</font></td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>DCVMod</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Double</font></tt></td>
+
+<td><b><font size=-1>Effect.DCVMOD</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specifies
+the multiplier applied to the character.&nbsp; 1 indicates no DCV changes.&nbsp;
+0 indicates the DCV should be set to 0.&nbsp; Anything in between is treated
+as a percentage modification.</font></td>
+</tr>
+
+<tr>
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Event</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-2>BattleEvent</font></tt></td>
+
+<td><b><font size=-1>Effect.EVENT</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specifies
+the event which will be triggered once the delay is over.</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="7"><b>Subeffects</b></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+</table>
+
+</body>
+</html>

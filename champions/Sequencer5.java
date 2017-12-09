@@ -1,0 +1,430 @@
+/*
+ * Sequencer.java
+ *
+ * Created on September 13, 2000, 10:46 PM
+ */
+
+package champions;
+
+import java.util.*;
+
+import champions.interfaces.Sequencer;
+import champions.interfaces.ChampionsConstants;
+
+/**
+ *
+ * @author  unknown
+ * @version
+ */
+public class Sequencer5 implements Sequencer, ChampionsConstants {
+    
+    protected Chronometer imaginaryTime;
+    /** Holds value of property battle. */
+    protected Battle battle;
+    
+    static public int sequenceCount = 0;
+    static public long sequenceTime = 0;
+    
+    private static final int DEBUG = 0;
+    
+    public Sequencer5(Battle b) {
+        battle = b;
+    }
+    
+    
+    
+    public BattleSequence getBattleSequence(int lookAhead) {
+        BattleSequence bs = new BattleSequence();
+        return getBattleSequence(bs, lookAhead, true);
+    }
+    
+    public BattleSequence getBattleSequence(int lookAhead, boolean advanceSegment) {
+        BattleSequence bs = new BattleSequence();
+        return getBattleSequence(bs, lookAhead, advanceSegment);
+    }
+    
+    public BattleSequence getBattleSequence(BattleSequence battleSequence, int lookAhead) {
+        return getBattleSequence(battleSequence, lookAhead, true);
+    }
+    
+    /** getBattleSequence returns a ordered Vector contain
+     * the next <I>lookAhead</I> combatants.  getBattleSequence
+     * will cross segment and turn bonderies appropriately.
+     * @return Ordered Vector of upcoming combatants
+     * @param lookAhead number of combatant phases to look ahead
+     */
+    
+    public BattleSequence getBattleSequence(BattleSequence battleSequence, int lookAhead, boolean advanceSegment) {
+        long startTime = 0;
+        if ( DEBUG > 0 ) {
+            startTime = System.currentTimeMillis();
+        }
+        
+        
+        synchronized(battle) {
+            
+            if ( battleSequence == null ) battleSequence = new BattleSequence();
+            
+            battleSequence.clear();
+            
+            imaginaryTime = (Chronometer)battle.getTime().clone();
+            
+            Set<Target> combatants = battle.getCombatants();
+            Set<BattleEvent> delayEvents = battle.getDelayedEvents();
+            Set<BlockEntry> blockList = battle.getBlockList();
+            
+            // Make sure there are combatants so we don't loop forever
+            if ( combatants.size() == 0 ) return battleSequence;
+            
+            // First Reset all of the Temporary Combat State Variables.
+            for(Target t : combatants ) {
+                t.setTempState();
+            }
+            
+            int timeCount = 0;
+            // Loop until we find enough combatants to fill vector to lookAhead capacity
+            // but only look for a max of 1 turn ahead.
+            while ( battleSequence.size() < lookAhead && timeCount < 13) {
+                // Find all of the currently active combatants
+                int start, count, index;
+                
+                // Set start and count to keep track of evenly SPDed characters for later
+                // sorting according to DEX.
+                start = battleSequence.size();
+                count = 0;
+                
+                // Run through the DelayedEvents, checking for events which will occur during this phase...and cause
+                // currently DELAY state targets to switch to STATE_ACTIVE targets.
+                //i = delayEvents.iterator();
+                for(BattleEvent be : delayEvents ) {
+                    //BattleEvent be = (BattleEvent)i.next();
+                    Chronometer eventTime = be.getTimeParameter();
+                    if ( eventTime != null && eventTime.equals( imaginaryTime ) && be.getDex() == SEQUENCE_BEFORE_TARGET ) {
+                        Target t = be.getDelayTarget();
+                        if ( t != null
+                                && Chronometer.isActiveSegment( t.getEffectiveSpeed(imaginaryTime), imaginaryTime.getSegment() )
+                                && t.getTempState() == CombatState.STATE_DELAYED) {
+                            // Change the target state from STATE_DELAYED to STATE_FIN
+                            t.setTempState(CombatState.STATE_ACTIVE);
+                        }
+                    }
+                }
+                
+                //i = combatants.iterator();
+                for(Target c : combatants) {
+                    //Target c = (Target)i.next();
+                    CombatState state = c.getTempState();
+                    if ( c.hasStat("SPD") ) {
+                        if (state == CombatState.STATE_ACTIVE
+                        || state == CombatState.STATE_HALFFIN
+                        || ( state == CombatState.STATE_INACTIVE == false && c.isTempPostTurn() ) ) {
+                            // Character is in an ACTIVE state, so add to sequence
+                            battleSequence.add(c, imaginaryTime);
+                            count ++;
+                            if ( c.isTempPostTurn() ) {
+                                // Character is eligible for POST TURN recovery, now remove the
+                                // POSTTURN flag
+                                c.setTempPostTurn(false);
+                                
+                            } else {
+                                // The state was not POSTTURN, so it must have been active
+                                // Set to Finished
+                                c.setTempState(CombatState.STATE_FIN);
+                            }
+                        }
+                    }
+                }
+                
+                // Run through the DelayedEvents, checking for events which will occur during this phase...
+                //i = delayEvents.iterator();
+                for(BattleEvent be : delayEvents) {
+                    //BattleEvent be = (BattleEvent)i.next();
+                    Chronometer eventTime = be.getTimeParameter();
+                    if ( eventTime != null && eventTime.equals( imaginaryTime ) && be.getDex() >= 0 ) {
+                        battleSequence.add(be, imaginaryTime);
+                        count++;
+                    }
+                }
+                
+                // Sort by dex if there is more then one event for this particular phase...
+                if ( count >= 2 ) {
+                    doDexSort(battleSequence, start, count, imaginaryTime);
+                }
+                
+                // Process Delayed events with End of Segment execution
+                //i = delayEvents.iterator();
+                for(BattleEvent be : delayEvents) {
+                    Chronometer eventTime = be.getTimeParameter();
+                    if ( eventTime != null && eventTime.equals( imaginaryTime ) && be.getDex() == SEQUENCE_END_OF_SEGMENT ) {
+                        battleSequence.add(be, imaginaryTime);
+                        count++;
+                    }
+                }
+                
+                // Process Delayed Events with Before Target execution...
+                for(BattleEvent be : delayEvents) {
+                    //BattleEvent be = (BattleEvent)i.next();
+                    Chronometer eventTime = be.getTimeParameter();
+                    if ( eventTime != null && eventTime.equals( imaginaryTime ) && be.getDex() == SEQUENCE_BEFORE_TARGET ) {
+                        Target delayTarget = be.getDelayTarget();
+                        int delayTargetIndex = -1;
+                        
+                        // Find the index of the delay target, if the delay Target actually has
+                        // a turn this time...
+                        for(index = start; index < start + count; index++) {
+                            BattleSequencePair bsp = battleSequence.get(index);
+                            if ( bsp.getTarget() == delayTarget ) {
+                                delayTargetIndex = index;
+                                break;
+                            }
+                        }
+                        
+                        if ( delayTargetIndex != -1 ) {
+                            // Delay Target was found, so insert the battleEvent before the Delay target...
+                            for(index = start + count - 1; index >= delayTargetIndex; index--) {
+                                BattleSequencePair bsp = battleSequence.get(index);
+                                battleSequence.set(index+1, bsp);
+                            }
+                            
+                            // Now actually do the insert
+                            battleSequence.set(delayTargetIndex, new BattleSequencePair(be, imaginaryTime) );
+                            
+                            // Increase the count appropriately
+                            count++;
+                        } else {
+                            // The indicated target did not actually go this time, so just append the event at End of Segment.
+                            battleSequence.add(be, imaginaryTime);
+                            count ++;
+                        }
+                    }
+                }
+                
+                // Reorder Blocked Targets
+                for(BlockEntry entry : blockList ) {
+                    if ( entry.getTime().equals(imaginaryTime) ) {
+                        // This is a reorder for the current segment...
+                        Target blockingTarget = entry.getBlockingTarget();
+                        Target blockedTarget = entry.getBlockedTarget();
+                        int blockedTargetIndex = -1;
+                        int blockingTargetIndex = -1;
+                        
+                        
+                        for(index = start; index < start + count; index++) {
+                            BattleSequencePair bsp = battleSequence.get(index);
+                            if ( bsp.getTarget() == blockedTarget ) {
+                                blockedTargetIndex = index;
+                            } else if ( bsp.getTarget() == blockingTarget ) {
+                                blockingTargetIndex = index;
+                            }
+                        }
+                        
+                        // Reorder the Targets if necessary
+                        if ( blockedTargetIndex != -1 && blockingTargetIndex != -1 && blockedTargetIndex < blockingTargetIndex ) {
+                            // The Blocked Target should be placed immediately after the blocking target index...
+                            BattleSequencePair blockedBSP = battleSequence.get(blockedTargetIndex);
+                            for(index = blockedTargetIndex; index < blockingTargetIndex; index++) {
+                                battleSequence.set( index, battleSequence.get(index+1));
+                            }
+                            battleSequence.set(blockingTargetIndex, blockedBSP);
+                        }
+                    }
+                }
+                
+                // Jump out now, if you have enough
+                if ( battleSequence.size() >= lookAhead || advanceSegment == false) break;
+                
+                // Proceed to the next segment and do it all again...
+                imaginaryTime.incrementSegment();
+                if ( imaginaryTime.isTurnEnd() ) {
+                    for(Target c : combatants ) {
+                        //Target c = (Target)i.next();
+                        if ( c.isCombatActive() ) {
+                            c.setTempPostTurn(true);
+                        }
+                    }
+                } else {
+                    // This is a normal Segment.  Make everybody active that should be
+                    for(Target c : combatants ) {
+                        if ( c.isCombatActive() && imaginaryTime.isActivePhase( c.getCurrentStat("SPD") ) ) {
+                            if ( c.getTempState() == CombatState.STATE_FIN || c.getTempState() == CombatState.STATE_HALFFIN){
+                                // Set the state to Active
+                                c.setTempState( CombatState.STATE_ACTIVE);
+                            } else if ( c.getTempState() == CombatState.STATE_HELD || c.getTempState() == CombatState.STATE_HALFHELD) {
+                                // Maintain Held status
+                                // c.setTempState( CombatState.STATE_HELD);
+                                c.setTempState( CombatState.STATE_ACTIVE);
+                            } else if ( c.getTempState() == CombatState.STATE_ABORTED) {
+                                // Steal this action phase for prior Aborted action
+                                c.setTempState( CombatState.STATE_FIN );
+                            }
+                        }
+                    }
+                }
+                // Repeat to top and find more.
+                timeCount ++;
+            }
+            
+            if ( DEBUG > 0 ) {
+                sequenceTime += System.currentTimeMillis() - startTime;
+            }
+            sequenceCount++;
+        }
+        
+        return battleSequence;
+        
+    }
+    
+    public BattleSequence getBattleEligible() {
+        return getBattleEligible( new BattleSequence() );
+    }
+    /** Returns an unordered vector of combatants that are eligible to take their action at any time.
+     * @return unordered Vector of currently eligible combatants
+     */
+    public BattleSequence getBattleEligible(BattleSequence bs) {
+        if ( bs == null ) bs = new BattleSequence();
+        bs.clear();
+        
+        Iterator i;
+        Chronometer time = battle.getTime();
+        
+        //   if ( !time.isTurnEnd() ) {
+        
+        Set<Target> combatants = battle.getCombatants();
+        for(Target c : combatants) {
+            
+            if ( c.hasStat("SPD") &&
+                    (c.getCombatState() == CombatState.STATE_HELD ||
+                    c.getCombatState() == CombatState.STATE_HALFHELD ||
+                    c.getCombatState() == CombatState.STATE_ABORTING)
+                    )  {
+                // Character is in an ACTIVE state, so add to sequence
+                bs.add(c, time);
+            }
+        }
+        doDexSort( bs, 0, bs.size(), time );
+        //   }
+        
+       /* HashSet delayEvents = battle.getDelayedEvents();
+        i = delayEvents.iterator();
+        while ( i.hasNext() ) {
+            bs.add(i.next(), time);
+        } */
+        return bs;
+    }
+    
+    private void doDexSort(BattleSequence bs, int start, int count, Chronometer time) {
+        Vector tempV, tempBS;
+        
+        int i,j, sorted, dex, tempCount,lowestIndex, position;
+        float lowest;
+        Object targetRandom;
+        java.util.Random random;
+        //Target c;
+        DetailList target;
+        BattleSequencePair c;
+        int foundDex;
+        
+        long timeKey =  time.getTime() ;
+        String randomKey = "SequencerRandom" + Long.toString( time.getTime() );
+        random = new Random();
+        sorted = 0;
+        dex = 0;
+        
+        position = start + count -1;
+        
+        //bs.setSize(position);
+        tempV = new Vector(position+1);
+        tempBS = new Vector(count);
+        
+        while ( sorted < count ) {
+            // Find all the characters in bs between start and start + count - 1
+            // and compare their dex to the current dex beign tested
+            tempCount = 0;
+            for (i=start; i< start+count; i++) {
+                c = bs.elementAt(i);
+                target = (DetailList) c.getTarget();
+                if ( target instanceof BattleEvent ) {
+                    foundDex = ((BattleEvent)target).getDex();
+                } else {
+                    foundDex = ((Target)target).getEffectiveDex();
+                }
+                //c = (Target)bs.elementAt(i);
+                if (  foundDex == dex ) {
+                    // It is equal.  Add to start of tempV.
+                    tempV.add(0, c);
+                    tempCount++;
+                    sorted++;
+                }
+            }
+            
+            if ( tempCount > 0) {
+                // Randomly decide who goes first
+                // Create array of random numbers
+                float[] randoms = new float[tempCount];
+                for ( i=0; i<tempCount; i++) {
+                    c = (BattleSequencePair)tempV.get(i);
+                    target = (DetailList) c.getTarget();
+                    
+                    if ( target instanceof Target) {
+                        Target t = (Target)target;
+                        if ( t.hasRandomSequenceNumber(timeKey) ) {
+                            randoms[i] = t.getRandomSequenceNumber(timeKey);
+                        } else {
+                            randoms[i] = random.nextFloat();
+                            t.setRandomSequenceNumber(timeKey, randoms[i]);
+                        }
+                    } else {
+                        if (  (targetRandom = target.getValue( randomKey ) ) != null ) {
+                            randoms[i] = ((Float)targetRandom).floatValue();
+                        } else {
+                            randoms[i] = random.nextFloat();
+                            target.add( randomKey, new Float(randoms[i]), false, false);
+                        }
+                    }
+                }
+                
+                // Do the actual sort (I know this is lame, but I am lazy)
+                for (i=0; i<tempCount; i++) {
+                    lowest = randoms[0];
+                    lowestIndex = 0;
+                    for ( j=1; j<tempCount; j++) {
+                        if ( randoms[j] < lowest ) {
+                            // This is the new lowest
+                            lowest = randoms[j];
+                            lowestIndex = j;
+                        }
+                    }
+                    // lowest and lowestIndex should be set properly now
+                    // Add the lowest to the bs[position]
+                    //tempBS.set(position--, tempV.get(lowestIndex));
+                    tempBS.add(0, tempV.get(lowestIndex));
+                    randoms[lowestIndex] = 1.1f; // Make it ineligible for lowest index
+                }
+            }
+            // Increase the dex we are looking for
+            dex++;
+        }
+        
+        // All done.  Copy results into original bs
+        for (i=start,j=0;i<start+count;i++,j++) {
+            bs.set( i, (BattleSequencePair) tempBS.get(j) );
+        }
+    }
+    
+    /** Getter for property battle.
+     * @return Value of property battle.
+     */
+    public Battle getBattle() {
+        return battle;
+    }
+    /** Setter for property battle.
+     * @param battle New value of property battle.
+     */
+    public void setBattle(Battle battle) {
+        this.battle = battle;
+    }
+    
+    private class SequenceEntry {
+        
+    }
+}

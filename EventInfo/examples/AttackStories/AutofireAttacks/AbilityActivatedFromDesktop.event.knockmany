@@ -1,0 +1,17 @@
+{
+	"Type": "KnockbackCollisionMultiTarget"
+	Targets:
+	[
+		{
+			"Target":"Spyder",
+			,
+			"Knockback Target":"Door (1)"
+		},
+		{
+			"Target":"Off-Road",
+			,
+			"Knockback Target":"Car (2)"
+		},
+	]
+}
+

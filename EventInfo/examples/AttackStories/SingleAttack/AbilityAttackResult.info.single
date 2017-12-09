@@ -1,0 +1,44 @@
+	
+{
+	"Type": "AttackSingleTargetResult",
+	"Ability":"Loa Blast",
+	"Target":{
+		Name:"Blind Justice",
+		Crowd:"Heroes",
+		Stats:{
+			"Stun":
+			{
+				"Current":0,
+				"Max":48
+			},
+			"Body":
+			{
+				"Current":10,
+				"Max":10
+			},
+			"End":
+			{
+				"Current":60,
+				"Max":46
+			},
+		"Result":
+		{
+			"Hit":true
+			,	
+			"Damage Results":{
+				"Stun":35,
+				"Body":22
+			}
+			,
+			"Effects":[
+				"Stunned",
+				"Unconsious"
+			]
+			'
+			"Knockback":12
+		}
+}
+		
+	
+	
+	

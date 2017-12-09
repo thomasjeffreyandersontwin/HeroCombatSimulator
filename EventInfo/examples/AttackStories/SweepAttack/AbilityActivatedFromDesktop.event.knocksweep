@@ -1,0 +1,19 @@
+{
+	"Type": "KnockbackCollisionSweepTargets",
+	"Targets": [{
+			"Target": "Light machinery",
+
+			"Knockback Target": "Hex"
+		},
+		{
+			"Target": "test",
+
+			"Knockback Target": "Spyder"
+		},
+		{
+			"Target": "City gates, small",
+
+			"Knockback Target": "Ogun"
+		}
+	]
+}

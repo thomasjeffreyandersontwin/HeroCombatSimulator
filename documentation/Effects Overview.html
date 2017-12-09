@@ -1,0 +1,450 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Trevor Walker">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>Effects Overview</title>
+</head>
+<body>
+
+<h1>
+Effects Overview</h1>
+This page details the creation and use of Effects in the Hero Combat System.&nbsp;
+Effects are objects which can be applied to any target object to modify
+the attribute, abilities, and actions of the Target.
+<br>&nbsp;
+<h2>
+Contents</h2>
+
+<ul>
+<li>
+<a href="#Understand Effects Objects">Understand Effects Objects</a></li>
+
+<li>
+<a href="#Writing Effects Code">Writing Effects Code</a></li>
+</ul>
+
+<h2>
+<a NAME="Understand Effects Objects"></a>Understand Effects Objects</h2>
+Effects are one of the most versitile objects in HCS.&nbsp; The following
+section details many of the options which are available when creating effects
+of any time.
+<h3>
+<a NAME="Standard vs Custom Effects"></a>Standard vs Custom Effects</h3>
+Generally speaking, any effect in HCS can be catogorized as either a standard
+effect or a custom effect.&nbsp; A standard effect is an effect which modifies
+target attributes or abilities in through either damage, aid, drain, or
+setting an absolute value.&nbsp; A custom effect is an effect which does
+anything which does not fall under the standard effect type.&nbsp; Custom
+effects include everything from knockdown to blindness to death.
+<p>Standard effects are almost always implemented by creating a direct
+instance of the effect class.&nbsp; Standard effects do their job via the
+use of subeffects.&nbsp; See Subeffect below for more information.&nbsp;
+All of the mechanism to create and apply a standard effect to a target
+is implemented in the base effect class.
+<p>Custom effects are implemented by creating a subclass of the effect
+class.&nbsp; Although custom effects can use subeffects like Standard effects,
+they generally do not, instead relying on custom methods to modify the
+way a target behaves.
+<h3>
+<a NAME="Subeffects"></a>Subeffects</h3>
+Subeffects are a way of modifying a targets attributes in a predefined
+set of ways.&nbsp; Any effect can contain subeffects.&nbsp; The effects
+class handles all known subeffect types automatically.&nbsp; The following
+table list the standard set of subeffects the base effect class implements
+and applies to targets:
+<br>&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=0 WIDTH="100%" >
+<tr>
+<td><b>Type</b></td>
+
+<td><b>Description</b></td>
+</tr>
+
+<tr>
+<td>Aid</td>
+
+<td>Aid adds points to the attribute being modified.&nbsp; There is no
+maximum to the number of point which aid will apply to the attribute.</td>
+</tr>
+
+<tr>
+<td>Limited_Aid</td>
+
+<td>Limited_Aid adds points to attribute being modified.&nbsp; Unlike Aid,
+Limited_Aid will only increase the attribute up to the targets normal maximum
+for the attribute.&nbsp; Limited_Aid will have not effect against attributes
+which have not previously been reduces by damage, drain, or set.</td>
+</tr>
+
+<tr>
+<td>Damage</td>
+
+<td>Damage removes points from the attribute being modified.&nbsp; There
+is no limit to the minimum value of the attribute being damaged.</td>
+</tr>
+
+<tr>
+<td>Drain</td>
+
+<td>Drain removes points from the attribute being modified.&nbsp; There
+is no limit to the minimum value of the attribute being drained.&nbsp;
+Damage and Drain work in the exact same way.</td>
+</tr>
+
+<tr>
+<td>Limited_Drain</td>
+
+<td>Limited_Drain removes point from the attribute being modified.&nbsp;
+Unlike Drain, Limited_Drain will not decrease an attribute below zero.</td>
+</tr>
+
+<tr>
+<td>Set</td>
+
+<td>Set sets the attribute being modified to some value, regardless of
+what it was to start with.</td>
+</tr>
+</table>
+
+<p>A subeffect can modify either a character stat or an ability.&nbsp;
+If a stat is being modified, the amount of subeffect applied can be specified
+in either character points or stat point.&nbsp; If an ability is being
+modified, the amount of subeffect applied must be specified in character
+point.&nbsp; Currently, modifying the character points of an ability produces
+no effect.
+<p>For more information on using Subeffects, see <a href="#Creating Subeffects">Creating
+Subeffects</a> below.
+<h3>
+<a NAME="Instant, Constant, and Linked Effects"></a>Instant, Persistent,
+and Linked Effects</h3>
+Whether an effect is a standard effect or a custom effect, it can be catogorized
+as either Instant, Persistent, or Linked.
+<p>Instant effects are applied to the target, and then thrown away.&nbsp;
+The changes that the effect causes are retained, but the target does not
+maintain any information about the effect object inself.&nbsp; Examples
+of instant effects include the damage from an attack or the aid from a
+healing ability.
+<p>Persistent effects, once applied to the target, stay attached to the
+target until some event removes them.&nbsp; Persistent effects can be used
+to maintain information about the state of a target, such as dead, unconscious,
+or knocked down.&nbsp; They can also be used to watch the target in some
+way, so additional effects can be triggered at a later point in time.
+<p>Linked effects are a subclass of persistent effects.&nbsp; Linked effects
+are associated with an ability.&nbsp; As long as the ability is activated,
+the effect remains attached to the target.&nbsp; When the ability is deactivated,
+linked effects associated with that ability are removed.&nbsp; Linked effects
+can be used with effects that only occur while a power is active, such
+as force field or armor.
+<p>The effects class contains all the necessary code to automatically handle
+instant, persistent, and linked effects.&nbsp; Once an effect is specified
+as a certain type, it will behave appropriately for that type.
+<h3>
+<a NAME="Undoability"></a>Undoability</h3>
+Like most things in HCS, effects are completely undoable.&nbsp; The majority
+of the work necessary to undo the application of an effect to a target
+is taken care of by the base effect class.&nbsp; However, if you implement
+custom effects and override methods from the effects class, you may need
+to make sure the effect is still completely undoable and redoable.
+<h3>
+<a NAME="Unique Effects"></a>Unique Effects</h3>
+Effects are either unique or not unique.&nbsp; If an effect is unique,
+only one instance of the effect can be applied to any one target.&nbsp;
+Uniqueness only matters with constant and linked effects, since instant
+effect disappear immediately.
+<h3>
+<a NAME="Hidden Effects"></a>Hidden Effects</h3>
+Effects can be marked as hidden.&nbsp; If an effect is marked as hidden,
+it will not be shown in the Effects list of the target it is applied to.
+All house keeping effects, such as combat level watchers, should be set
+to hidden.
+<h2>
+<a NAME="Writing Effects Code"></a>Writing Effect Code</h2>
+This section covers the writing of effects.&nbsp; If you are creating standard
+effects, you will probably only need to look at the <a href="#Creating Effects">Creating
+Effects</a> and&nbsp; <a href="#Creating Subeffects">Creating Subeffects</a>.&nbsp;
+If you are creating a custom effects, look at the <a href="#Creating Effects">Creating
+Effects</a> and <a href="#Creating Custom Effects">Creating Custom Effects</a>
+sections.
+<h3>
+<a NAME="Creating Effects"></a>Creating Effects</h3>
+A standard effect can be created with any of the effect class constructors.&nbsp;
+Nothing special needs to be done to construct and effect.
+<p>A custom effect will typically be a subclass of the effect class.&nbsp;
+The subclass constructor should call one of the effect class constructors
+to complete construction.
+<h3>
+<a NAME="Creating Subeffects"></a>Creating Subeffects</h3>
+Once either a standard or custom effect has been created, subeffects can
+be added to that effect.&nbsp; The effect method <b>addSubeffectInfo()</b>
+can be used to add subeffects to an effect.&nbsp; <b>AddSubeffectInfo()</b>
+requires the following parameter:
+<br>&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=0 >
+<tr>
+<td><b>Parameter</b></td>
+
+<td><b>Description</b></td>
+</tr>
+
+<tr>
+<td>Name</td>
+
+<td>This is a unique name for the subeffect.&nbsp; This name is often used
+as a lookup index by advatnages, limitations, and other effects.</td>
+</tr>
+
+<tr>
+<td>Type</td>
+
+<td>This indicates what type of subeffect it is: Aid, Limited_Aid, Damage,
+Drain, Limited_Drain, Set.</td>
+</tr>
+
+<tr>
+<td>Defense Type</td>
+
+<td>This indicates the type of defense the target gets against this subeffect:
+ED, PD, rPD, rED, None.&nbsp; Note: Killing attacks should be specified
+as PD or ED, not rPD or rED.&nbsp; The BattleEngine converts the defense
+to rPD/rED appropriately.</td>
+</tr>
+
+<tr>
+<td>Defense Special</td>
+
+<td>This indicates if the subeffects should be applied in a non-standard
+way.&nbsp; Currently implemented ways are: Normal, Killing, NND, AVLD.&nbsp;
+Note: The stun of a killing attack should be specified as Killing Special.</td>
+</tr>
+
+<tr>
+<td>Versus Type</td>
+
+<td>Indicates what target attribute the subeffect should be applied against:
+STAT, STATCP, ABILITY.&nbsp; STAT indicates the attribute is a stat, and
+the value metric is in stat points.&nbsp; STATCP indicates the attribute
+is a stat, but the value metric is in character points.&nbsp; Ability indicates
+the attribute is an ability, with a character point metric.</td>
+</tr>
+
+<tr>
+<td>Versus Stat</td>
+
+<td>Indicates the attribute to apply subeffect to.&nbsp; If VersusType
+== STAT or STATCP, Versus Stat should be the string abbreviate of the Stat,
+such as STR, DEX, CON.&nbsp; If the VersusType == ability, the versus stat
+should be an ability object belonging to the target.</td>
+</tr>
+
+<tr>
+<td>Value</td>
+
+<td>Amount to change attribute of target.&nbsp; Metric is determined by
+versus type.</td>
+</tr>
+</table>
+
+<p>Example:
+<p>In the following code, a new standard effect is created and two subeffects
+are added to the effect.
+<pre><tt>Effect effect = new Effect( "HA Damage", "INSTANT" );
+
+effect.addSubeffectInfo( "HAStun", "DAMAGE", "PD", "NORMAL", "STAT", "STUN", new Integer(10) );
+effect.addSubeffectInfo( "HABody", "DAMAGE", "PD", "NORMAL", "STAT", "BODY", new Integer(5) );</tt></pre>
+The first subeffect is a 10 point Damage subeffect, applied with normal
+PD defense against the Stun stat of the target..
+<br>The second subeffect is a 5 point Damage subeffect, applied with normal
+PD defense against the Body stat of the target.
+<h3>
+<a NAME="Creating Custom Effects"></a>Creating Custom Effects</h3>
+Custom effects are typically more complicated to implement then standard
+effects, but can perform a wide variety of tasks.&nbsp; Before you can
+understand how custom effects work, it is important that you understant
+the <a href="Activation Overview.html">Ability Activation Overview</a>.
+<p>The sections below explain the typical steps necessary to create a custom
+effect.
+<h4>
+Custom Constructor</h4>
+The first step in creating a custom effect is to write a constructor.&nbsp;
+The constructor can do whatever initialization is necessary for the effect,
+but it should call one of the effect superclass constructors to initialize
+the standard effect parameters.
+<h4>
+Custom AddEffect Method (Optional)</h4>
+Whenever an effect is applied to a target, the effect's<b> addEffect()</b>
+method is called with the target as a parameter.&nbsp; The <b>addEffect()</b>
+method can be overriden to provide custom functionality when the effect
+is applied.
+<p>The <b>AddEffect()</b> code can perform a variety of tasks, including:
+<ul>
+<li>
+Check Target for prerequisites or restrictions on this effect.&nbsp; For
+example, the Unconscious effect first checks to make sure the target doesn't
+have the effect dead already and won't apply itself if the target is already
+dead.</li>
+
+<li>
+Remove Conflicting Effects.&nbsp; For example, the Dead effect removes
+the Unconscious effect from a target before applying the dead effect.</li>
+
+<li>
+Apply custom subeffects.&nbsp; For example, the END effect is built using
+subeffects.&nbsp; However, the subeffects are of type END instead of damage.&nbsp;
+The END effect knows how to specifically apply END to a target.</li>
+</ul>
+Sometime during the <b>addEffect()</b> code, make sure the superclass <b>addEffect()</b>
+method is called.&nbsp; The inherited method contains code to actually
+maintain the effect list of the target and apply known subeffects to the
+target.
+<h4>
+Custom RemoveEffect Method (Optional)</h4>
+Whenever an effect is remove from a target, the effect's <b>removeEffect()</b>
+method is called.&nbsp; The <b>removeEffect()</b> method can be overriden
+to provide custom removal functionality.&nbsp; Like <b>addEffect()</b>,
+make sure the superclass <b>removeEffect()</b> method is always called
+somewhere within <b>removeEffect()</b>.
+<h4>
+Other Custom Methods</h4>
+The following table details the other methods that can be overriden to
+provide additional functionality.&nbsp; Most of these methods are called
+in the course of ability activation and can greatly affect the way abilities
+function.
+<br>&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=0 WIDTH="100%" >
+<tr>
+<td><b>Method</b></td>
+
+<td><b>Description</b></td>
+</tr>
+
+<tr>
+<td>preattack()</td>
+
+<td>The preattack method is run for every effect applied to the source
+of an attack.&nbsp; preattack is called when processing a new effect to
+be applied to the target.&nbsp; Preattack is called just after defenses
+have been determined but prior to defenses being applied to the new effect.</td>
+</tr>
+
+<tr>
+<td>predefense()</td>
+
+<td>The predefense method is run for every effect applied to the target
+of an attack.&nbsp; predefense is called when processing a new effect to
+be applied to the target.&nbsp; Predefense is called just after defenses
+have been determined but prior to defenses being applied to the new effect.</td>
+</tr>
+
+<tr>
+<td>postattack()</td>
+
+<td>The preattack method is run for every effect applied to the source
+of an attack.&nbsp; preattack is called when processing a new effect to
+be applied to the target.&nbsp; Preattack is called just after defenses
+have been applied to the new effect, but prior the new effect being applied
+to the target.</td>
+</tr>
+
+<tr>
+<td>postdefense()</td>
+
+<td>The predefense method is run for every effect applied to the target
+of an attack.&nbsp; predefense is called when processing a new effect to
+be applied to the target.&nbsp; Predefense is called just after defenses
+have been applied to the new effect, but prior the new effect being applied
+to the target.</td>
+</tr>
+
+<tr>
+<td>prephase()</td>
+
+<td>The prephase method is run for every effect a character has whenever
+that character starts a new phase.&nbsp; Prephase must return a boolean.&nbsp;
+If it returns false, the effect this method belong to will be removed.&nbsp;
+Prephase can be used to perform prephase tasks, such as flash or drain
+aging, or can be used to remove effect which expire at the beginning of
+a characters phase.</td>
+</tr>
+
+<tr>
+<td>postturn()</td>
+
+<td>The postturn method is run for every effect a character has at the
+end of a turn.&nbsp; Postturn must return a boolean.&nbsp; If it returns
+false, the effect this method belong to will be removed.&nbsp;</td>
+</tr>
+
+<tr>
+<td>getDescription()</td>
+
+<td>The getDescription() method returns a string that is displayed when
+the user open an effect.</td>
+</tr>
+
+<tr>
+<td>addECVAttackModifiers()</td>
+
+<td>The addECVAttackModifiers() method is called for every effect of the
+source when the attack is an EGO based attack.&nbsp; AddECVAttackModifiers
+should add CV modifiers for the source.</td>
+</tr>
+
+<tr>
+<td>addECVDefenseModifiers()</td>
+
+<td>The addECVDefenseModifiers() method is called for every effect of the
+target when the attack is an EGO based attack.&nbsp; AddECVDefenseModifiers
+should add CV modifiers for the target.</td>
+</tr>
+
+<tr>
+<td>addOCVAttackModifiers()</td>
+
+<td>The addOCVAttackModifiers() method is called for every effect of the
+source when the attack is NOT an EGO based attack.&nbsp; AddOCVAttackModifiers
+should add CV modifiers for the source.</td>
+</tr>
+
+<tr>
+<td>addDCVDefenseModifiers()</td>
+
+<td>The addDCVDefenseModifiers() method is called for every effect of the
+target when the attack is NOT an EGO based attack.&nbsp; AddDCVDefenseModifiers
+should add CV modifiers for the target.</td>
+</tr>
+
+<tr>
+<td>abilityIsActivating()</td>
+
+<td>The abilityIsActivating() method is called for every effect of the
+source when an ability has started to activate.&nbsp; This method is commonly
+used to trigger certain actions when particular abilities are activate.&nbsp;
+For example, Combat Levels implement this method to watch for an ability
+which can use combat level to activate.</td>
+</tr>
+
+<tr>
+<td>adjustDice()</td>
+
+<td>The adjustDice() method is called for every effect of the source when
+the damage class of an attack is being calculated.&nbsp; AdjustDice() can
+modify the Martial.DC or Combat.DC value/pairs to change the damage class
+of an attack.</td>
+</tr>
+
+<tr>
+<td>addActions()</td>
+
+<td>The addActions() method is called whenever a new character becomes
+the active character.&nbsp; The addActions() method is passed a Vector.&nbsp;
+Any effect can add Action objects to that Vector and those additional actions
+will be displayed in the Special Action section of the GUI.</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

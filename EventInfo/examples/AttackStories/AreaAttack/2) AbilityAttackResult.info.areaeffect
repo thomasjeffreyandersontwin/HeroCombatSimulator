@@ -1,0 +1,114 @@
+	
+{
+	"Type": "AttackAreaTargetsResult",
+	"Ability":"Loa Blast",
+	"Targets":
+	[
+	{	
+		"Target":
+		{
+			Name:"Spyder",
+			Crowd:"Heroes",
+			Stats:{
+				"Stun":
+				{
+					"Current":35,
+					"Max":48
+				},
+				"Body":
+				{
+					"Current":10,
+					"Max":10
+				},
+				"End":
+				{
+					"Current":60,
+					"Max":46
+				},
+			
+			"Result":
+			{
+				"Hit":true
+				,	
+				"Damage Results":{
+					"Stun":35,
+					"Body":22
+				}
+				,
+				"Effects":[
+					"Stunned",
+					"Unconsious"
+				]
+				'
+				"Knockback":
+				{
+					distance:12
+				}
+			}
+		}
+	},
+	{	
+		"Target":{
+			Name:"Off-road",
+			Crowd:"Heroes",
+			Stats:{
+				"Stun":
+				{
+					"Current":22,
+					"Max":33
+				},
+				"Body":
+				{
+					"Current":10,
+					"Max":10
+				},
+				"End":
+				{
+					"Current":60,
+					"Max":46
+				},
+			
+			"Result":
+			{
+				"Hit":true
+				,	
+				"Damage Results":{
+					"Stun":11,
+					"Body":22
+				}
+				,
+				"Effects":[
+					"Stunned",
+				]
+				'
+				"Knockback":5
+			}
+		}
+	},
+	{	
+		"Target":{
+			Name:"Ogun",
+			Crowd:"Heroes",
+			Stats:{
+				"Stun":
+				{
+					"Current":22,
+					"Max":33
+				},
+				"Body":
+				{
+					"Current":10,
+					"Max":10
+				},
+				"End":
+				{
+					"Current":60,
+					"Max":46
+				},
+			
+			"Result":
+			{
+				"Hit":false
+			}
+		}
+}

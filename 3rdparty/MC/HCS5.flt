@@ -1,0 +1,73 @@
+@gamesystem Hero5th
+@description Basic Hero System Copy Filter
+@margins 720 720 720 1080
+@tabwidth 0
+@columns 1 0
+@face Times New Roman
+@fontinfo 200 0 12 0
+@parinfo 0 0
+@leftindent 720
+@deftab 720
+$$include HCSPrint.inc
+@if @SheetType != "Generic" and @sheetType != "Character"
+@fail This copy filter may be used only with character sheet types Generic and Character.
+@endif
+@parinfo 0 0
+@leftindent 720
+@need 4ln
+@font "Arial" 12pt b
+Name: %@Characteristics.name%
+@keepnext
+@font "Times New Roman" 10pt b
+@font "Times New Roman" 10pt
+@if (@SheetType = "Generic")
+@foreach(Primary Characteristic)
+@assign _nf=split(@item,"	", "_level", "_name", "_cost")
+%_level%	%_name%	%_cost%
+@endfor
+@foreach(Derived Characteristic)
+@assign _nf=split(@item,"	", "_level", "_name", "_cost")
+%_level%	%_name%	%_cost%
+@endfor
+@else
+*STATS*
+STR: %str%%t_str%
+DEX: %dex%%t_dex%
+CON: %con%%t_con%
+BOD: %body%%t_body%
+INT: %int%%t_int%
+EGO: %ego%%t_ego%
+PRE: %pre%%t_pre%
+COM: %com%%t_com%
+PD : %pd%%t_pd%
+ED : %ed%%t_ed%
+SPD: %integer(spd)%%t_spd%
+REC: %rec%%t_rec%
+END: %end%%t_end%
+STN: %stun%%t_stun%
+DCV: %round(total_dex/3)%
+OCV: %round(total_dex/3)%
+ECV: %round(total_ego/3)%
+*ENDSTATS*
+
+@endif
+@if @powers>0
+@keepnext
+@bold
+@tabs 0 .5" 1 5"
+#@wraptab 1
+@plain
+*ABILITIES: Powers*
+$$powers2()\
+*ENDABILITIES: Powers*
+@endif # if @powers
+@if @skills>0
+@keepnext
+@bold
+@tabs 0 .5" 1 5"
+#@wraptab 1
+@plain
+*ABILITIES: Skills*
+$$skills()\
+*ENDABILITIES: Skills*
+@endif # if @skills

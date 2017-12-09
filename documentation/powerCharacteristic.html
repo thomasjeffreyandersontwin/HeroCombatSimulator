@@ -1,0 +1,170 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<P><!doctype html public "-//w3c//dtd html 4.0 transitional//en">&nbsp; </P>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE">
+<P><B><FONT SIZE=5>Power Overview</B></FONT></TD>
+</TR>
+</TABLE>
+
+<H3>Power Characteristic</H3>
+<H3>Description</H3>
+<DL>
+<DD>Implements characteristics as a power.&nbsp; Currently, the Stat and number of points are configurable, as well as whether the power is persistent or constant, and whether the changes affect figured characteristics.</DD>
+</DL>
+<H3>Functional Overview</H3>
+<DL>
+<DD>When triggered, the power generates a standard effect, with one subeffect of type aid to increase the specified stat the configured amount.&nbsp; The affects figured subeffect parameter is set when the effect is generated.</DD>
+<DD>The configurePAD() code configures the PTYPE of the ability according to user input.</DD>
+</DL>
+<H3>Known Caveats</H3>
+<DL>
+<DD>-stat modification with affects figured are broken and incorrect results sometimes occur, especially when a affects figured and non-affects figured characteristic modification is used together.</DD>
+<DD>-adding advantages to characteristics needs to be evaluated.</DD>
+<DD>-characteristics in a mulitpower CANNOT add to figured but since MPs aren't implemented yet this option isn't implemented.</DD>
+<DD>-figured characteristics can be bought back when gained from the primary characteristic.  Also, this can be done if the power has a limitation but then the value needs to be proportionate to the limitation value.  One of these per character only.</DD>
+<DD>-need to create a limitation of -1/2 that will turn off affect of figured characteristics.  When this is implemented the figured characteristic option for powerCharacteristic should be removed.</DD>
+<DD>-constant option should be removed and be available as constant if "uses END" limitation is added.</DD>
+<DT></DT>
+</DL>
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=3>
+<P><B>Power Information</B></TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Class</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<P>champions.powers.powerCharacteristic</TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Power Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>Power</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Attack Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>Self</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="22%" VALIGN="TOP">
+<B><FONT SIZE=2><P>Persistence Type</B></FONT></TD>
+<TD VALIGN="TOP">
+<FONT SIZE=2><P>Persistent or Constant (Configurable)</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Time</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>Instant</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>PPDC</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>n/a</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Strength Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>n/a</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Killing Type</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>n/a</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Generic Damage</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>FALSE</FONT></TD>
+<TD VALIGN="MIDDLE">&nbsp;</TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=3>
+<P><B>Parsed Parameters</B></TD>
+</TR>
+<TR><TD WIDTH="9%" VALIGN="TOP">
+<B><FONT SIZE=2><P>Stat</B></FONT></TD>
+<TD VALIGN="TOP">
+<TT><P ALIGN="RIGHT">String</TT></TD>
+<TD VALIGN="TOP">
+<B><FONT SIZE=2><P>Power.STAT</B></FONT> <BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A string indicating the stat which is going to be modified.&nbsp; This should be a standard stat abbreviation, all in uppercase, such as STR, END, BODY.</FONT></TD>
+</TR>
+<TR><TD VALIGN="TOP">
+<B><FONT SIZE=2><P>Ptype</B></FONT></TD>
+<TD VALIGN="TOP">
+<TT><P ALIGN="RIGHT">String</TT></TD>
+<TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Power.PTYPE</B></FONT> <BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String indicating whether the power is persistent or constant.</FONT></TD>
+</TR>
+<TR><TD VALIGN="TOP">
+<B><FONT SIZE=2><P>Affectsfigured</B></FONT></TD>
+<TD VALIGN="TOP">
+<TT><P ALIGN="RIGHT">Boolean</TT></TD>
+<TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Power.AFFECTSFIGURED</B></FONT> <BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates that figured statistics should be modified when stat modifications occur.</FONT></TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Level</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<TT><P ALIGN="RIGHT">Integer</TT></TD>
+<TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Power.LEVEL</B></FONT> <BR>
+<FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates the number of points the stat should be modified by.&nbsp; This can be either positive or negative.</FONT></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=3>
+<P><B>Other Value/Pairs</B></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=7>
+<P><B>Dice Information</B></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE" COLSPAN=2>
+<P><B>Trigger Effects</B></TD>
+</TR>
+<TR><TD VALIGN="MIDDLE">
+<B><FONT SIZE=2><P>Characteristic Effect</B></FONT></TD>
+<TD VALIGN="MIDDLE">
+<FONT SIZE=2><P>This is a object of type effect which contains one subeffect.&nbsp; The subeffect contains the information necessary to AID the stat set in the parameters.</FONT></TD>
+</TR>
+</TABLE>
+
+
+<TABLE BORDER CELLSPACING=1 CELLPADDING=3 WIDTH=624>
+<TR><TD VALIGN="MIDDLE">
+<P><B>Related Classes</B></TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>
+

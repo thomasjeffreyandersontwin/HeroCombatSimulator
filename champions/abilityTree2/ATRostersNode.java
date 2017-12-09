@@ -1,0 +1,514 @@
+/*
+ * PADTargetNode.java
+ *
+ * Created on February 27, 2002, 11:43 PM
+ */
+package champions.abilityTree2;
+
+import champions.Battle;
+import champions.BattleChangeEvent;
+import champions.BattleChangeType;
+import champions.BattleEvent;
+import champions.DetailList;
+import champions.Roster;
+import champions.Target;
+import champions.event.SegmentAdvancedEvent;
+import champions.event.SequenceChangedEvent;
+import champions.event.TargetSelectedEvent;
+import champions.interfaces.BattleListener;
+import java.util.Comparator;
+import tjava.Filter;
+import java.awt.event.ActionEvent;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JMenu;
+import javax.swing.JPopupMenu;
+import javax.swing.event.ChangeEvent;
+import javax.swing.tree.TreePath;
+import treeTable.DefaultTreeTableModel;
+import treeTable.TreeTable;
+
+/**
+ *
+ * @author  twalker
+ * @version
+ *
+ * The ATTargetNode is the root node for a list of all possible abilities
+ * and disadvantages that can be used by the target.  This includes the
+ * abilities owned by the target and the default abilities.
+ *
+ * The ATTargetNode2 should be used in situations where listing of the abilities
+ * of a target, not including the default abilities, and any target specific
+ * actions are needed.
+ */
+public class ATRostersNode extends ATNode implements BattleListener {
+
+    private static Action openRosterAction,  newRosterAction;
+    private static HealRosterAction healRosterAction;
+    private static HealRosterNoBODYAction healRosterNoBODYAction;
+    private static HealAllAction healAllAction;
+    private static HealAllNoBODYAction healAllNoBODYAction;
+    private static JMenu healMenu;
+//    /** Creates new PADTargetNode */
+//    public ATRostersNode() {
+//        this(null, false);
+//    }
+    public ATRostersNode(ATNodeFactory nodeFactory, Filter<Object> nodeFilter, boolean pruned) {
+        super(nodeFactory, nodeFilter, pruned);
+        setup();
+    }
+
+    public void setup() {
+
+        Battle.addBattleListener(this);
+
+        setupActions();
+
+        buildNode();
+
+    }
+
+    public void setupActions() {
+        if (openRosterAction == null) {
+            openRosterAction = new AbstractAction("Open Roster...") {
+
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    // Add your handling code here:
+//                Roster roster = Roster.open();
+//                if ( roster != null ) {
+//                    Battle.currentBattle.addRoster(roster);
+//                }
+
+                    Roster[] rosters = Roster.openMultiple();
+                    for (Roster roster : rosters) {
+                        if (roster != null) {
+                            Battle.currentBattle.addRoster(roster);
+                        }
+                    }
+                    VirtualDesktop.MessageExporter.exportRosterEvent("Open Roster",rosters);
+                   
+                }
+            };
+        }
+
+        if (newRosterAction == null) {
+            newRosterAction = new AbstractAction("New Roster") {
+
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    // Add your handling code here:
+                    Roster roster = new Roster();
+                    Battle.currentBattle.addRoster(roster);
+
+                }
+            };
+        }
+        if (healRosterAction == null) {
+            healRosterAction = new HealRosterAction();
+        }
+        if (healRosterNoBODYAction == null) {
+            healRosterNoBODYAction = new HealRosterNoBODYAction();
+        }
+        if (healAllAction == null) {
+            healAllAction = new HealAllAction();
+        }
+        if (healAllNoBODYAction == null) {
+            healAllNoBODYAction = new HealAllNoBODYAction();
+        /*  addRosterAction = new AbstractAction( "Add Roster..." ) {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        
+        Roster roster = Roster.open();
+        if ( roster != null ) {
+        Battle.currentBattle.addRoster(roster);
+        addRoster(roster);
+        }
+        }
+        };  */
+        }
+    }
+
+    public void buildNode() {
+        removeAndDestroyAllChildren();
+
+        if (Battle.currentBattle != null) {
+
+            ATNode atn = nodeFactory.createActiveTargetNode(nodeFilter, pruned);
+            if (atn != null) {
+                add(atn);
+            }
+
+            Set<Roster> rosters = Battle.currentBattle.getRosters();
+
+            if (rosters.size() > 0) {
+                for (Roster r : rosters) {
+                    if (nodeFilter == null || nodeFilter.includeElement(r)) {
+                        ATNode n = nodeFactory.createRosterNode(r, nodeFilter, pruned);
+                        if (isPruned() == false || n.getChildCount() > 0) {
+                            add(n);
+                        } else {
+                            n.destroy();
+                        }
+
+                    }
+                }
+            } else {
+                ATNode n = nodeFactory.createMessageNode("No roster open (Select 'Open Roster...' or 'New Roster' from the Roster menu)", nodeFilter, pruned);
+                add(n);
+            }
+
+            //sortNode(getSortComparator(), false);
+
+            if (model instanceof DefaultTreeTableModel) {
+                ((DefaultTreeTableModel) model).nodeStructureChanged(this);
+            }
+
+        }
+    }
+
+    public Object getValueAt(
+            int column) {
+        if (column == ATColumn.NAME_COLUMN.ordinal()) {
+            return "Rosters";
+        }
+
+        return null;
+    }
+
+    /** Allows the node to provide context menu feedback.
+     *
+     * invokeMenu is called whenever an event occurs which would cause a context menu to be displayed.
+     * If the node has context menu items to display, it should add them to the JPopupMenu <code>popup</code>
+     * and return true.
+     * @param treeTable Indicates the TreeTable which is currently displaying the node.
+     * @param path The TreePath which the cursor was over when the context menu
+     * event occurred.
+     * @param popup The JPopupMenu which is being built.  Always non-null and initialized.
+     * @return True if menus where added, False if menus weren't.
+     */
+    public boolean invokeMenu(TreeTable treeTable,TreePath tp, JPopupMenu popup) {
+        boolean rv = false;
+
+        if (popup.getComponentCount() > 0) {
+            popup.addSeparator();
+        }
+
+        popup.add(newRosterAction);
+        popup.add(openRosterAction);
+
+        boolean addHeal = false;
+
+        healMenu =
+                new JMenu("Roster Heal Options");
+
+        Roster r = null;
+        while (tp != null && tp.getPathCount() != 0) {
+            if (tp.getLastPathComponent() instanceof ATRosterNode) {
+                r = ((ATRosterNode) tp.getLastPathComponent()).getRoster();
+                break;
+
+            }
+
+
+
+            tp = tp.getParentPath();
+        }
+
+        if (r != null) {
+            //healMenu.add(healMenu);
+            healRosterAction.setRoster(r);
+            healMenu.add(healRosterAction);
+
+            //healMenu.add(healMenu);
+            healRosterNoBODYAction.setRoster(r);
+            healMenu.add(healRosterNoBODYAction);
+
+            addHeal =
+                    true;
+        }
+
+        if (Battle.currentBattle != null && Battle.currentBattle.getRosters().size() > 0) {
+            healMenu.add(healAllAction);
+            healMenu.add(healAllNoBODYAction);
+
+            addHeal =
+                    true;
+        }
+
+        if (addHeal) {
+            popup.addSeparator();
+            popup.add(healMenu);
+        }
+
+        return true;
+    }
+
+    @Override
+    public Comparator getSortComparator(int columnIndex, boolean ascending) {
+        // Always sort the children in descending order?!?
+        return super.getSortComparator(columnIndex, false);
+    }
+
+    public void destroy() {
+        Battle.removeBattleListener(this);
+
+        super.destroy();
+
+
+
+    }
+
+    public void battleTargetSelected(TargetSelectedEvent event) {
+    }
+
+    public void battleSegmentAdvanced(SegmentAdvancedEvent event) {
+    }
+
+    public void battleSequenceChanged(SequenceChangedEvent event) {
+    }
+
+    public void stateChanged(BattleChangeEvent e) {
+        if (e.getType() == BattleChangeType.ROSTER_ADDED || e.getType() == BattleChangeType.ROSTER_REMOVED || e.getType() == BattleChangeType.BATTLE_CHANGED) {
+            rebuildNode();
+        }
+
+    }
+
+    public void eventNotification(ChangeEvent event) {
+    }
+
+    public void combatStateChange(ChangeEvent event) {
+    }
+
+    public void processingChange(BattleChangeEvent event) {
+    }
+
+    /** Generate the BattleEvent containing a ExecuteHealRosterAction.
+     */
+    public static class HealRosterAction extends AbstractAction {
+
+        Roster roster = null;
+
+        public HealRosterAction() {
+            super("Heal All in Roster");
+        }
+
+        public void setRoster(Roster roster) {
+            this.roster = roster;
+            if (roster != null) {
+                putValue(Action.NAME, "Heal All in " + roster.getName());
+            }
+        }
+
+        /** Invoked when an action occurs.
+         *
+         */
+        public void actionPerformed(ActionEvent e) {
+            if (roster != null) {
+                ExecuteHealRosterAction a = new ExecuteHealRosterAction();
+                BattleEvent battleEvent = new BattleEvent(a);
+                a.setRoster(roster);
+                a.setBattleEvent(battleEvent);
+
+                Battle.getCurrentBattle().addEvent(battleEvent);
+                VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster);
+            }
+        }
+    }
+
+    public static class ExecuteHealRosterAction extends AbstractAction {
+
+        BattleEvent battleEvent = null;
+        Roster roster = null;
+
+        public ExecuteHealRosterAction() {
+            super("Heal All in Roster");
+
+        }
+
+        public void setBattleEvent(BattleEvent be) {
+            battleEvent = be;
+        }
+
+        public void setRoster(Roster roster) {
+            this.roster = roster;
+            if (roster != null) {
+                putValue(Action.NAME, "Heal All in " + roster.getName());
+            }
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            List<Target> targets = roster.getCombatants();
+            for (int index = 0; index < targets.size(); index++) {
+                Target t = (Target) targets.get(index);
+                t.healCompletely(battleEvent);
+                
+            }
+            VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster);
+        }
+    }
+
+    /** Generate the BattleEvent containing a ExecuteHealRosterAction.
+     */
+    public static class HealRosterNoBODYAction extends AbstractAction {
+
+        Roster roster = null;
+
+        public HealRosterNoBODYAction() {
+            super("Heal All in Roster (BODY Ignored)");
+        }
+
+        public void setRoster(Roster roster) {
+            this.roster = roster;
+            if (roster != null) {
+                putValue(Action.NAME, "Heal All in " + roster.getName() + " (BODY Ignored)");
+            }
+        }
+
+        /** Invoked when an action occurs.
+         *
+         */
+        public void actionPerformed(ActionEvent e) {
+            if (roster != null) {
+                ExecuteHealRosterNoBODYAction a = new ExecuteHealRosterNoBODYAction();
+                BattleEvent battleEvent = new BattleEvent(a);
+                a.setRoster(roster);
+                a.setBattleEvent(battleEvent);
+
+                Battle.getCurrentBattle().addEvent(battleEvent);
+                VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster);
+            }
+        }
+    }
+
+    public static class ExecuteHealRosterNoBODYAction extends AbstractAction {
+
+        BattleEvent battleEvent = null;
+        Roster roster = null;
+
+        public ExecuteHealRosterNoBODYAction() {
+            super("Heal All in Roster (BODY Ignored)");
+
+        }
+
+        public void setBattleEvent(BattleEvent be) {
+            battleEvent = be;
+        }
+
+        public void setRoster(Roster roster) {
+            this.roster = roster;
+            if (roster != null) {
+                putValue(Action.NAME, "Heal All in " + roster.getName() + " (BODY Ignored)");
+            }
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            List<Target> targets = roster.getCombatants();
+            for (int index = 0; index < targets.size(); index++) {
+                Target t = targets.get(index);
+                t.healNoBODY(battleEvent);
+            }
+            VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster);
+        }
+    }
+
+    public static class HealAllAction extends AbstractAction {
+
+        public HealAllAction() {
+            super("Heal All Rosters");
+        }
+
+        /** Invoked when an action occurs.
+         *
+         */
+        public void actionPerformed(ActionEvent e) {
+            ExecuteHealAllAction a = new ExecuteHealAllAction();
+            BattleEvent battleEvent = new BattleEvent(a);
+            a.setBattleEvent(battleEvent);
+
+            Battle.getCurrentBattle().addEvent(battleEvent);
+            
+        }
+    }
+
+    public static class ExecuteHealAllAction extends AbstractAction {
+
+        BattleEvent battleEvent = null;
+
+        public ExecuteHealAllAction() {
+            super("Heal All Rosters");
+
+        }
+
+        public void setBattleEvent(BattleEvent be) {
+            battleEvent = be;
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            Set<Roster> rosters = Battle.getCurrentBattle().getRosters();
+            Iterator<Roster> i = rosters.iterator();
+            while (i.hasNext()) {
+                Roster roster = i.next();
+                if (roster != null) {
+                    List<Target> targets = roster.getCombatants();
+                    for (int index = 0; index < targets.size(); index++) {
+                        Target t = targets.get(index);
+                        t.healCompletely(battleEvent);
+
+
+                    }
+                    VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster);
+                }
+            }
+        }
+    }
+
+    public static class HealAllNoBODYAction extends AbstractAction {
+
+        public HealAllNoBODYAction() {
+            super("Heal All Rosters (BODY Ignored)");
+        }
+
+        /** Invoked when an action occurs.
+         *
+         */
+        public void actionPerformed(ActionEvent e) {
+            ExecuteHealAllNoBODYAction a = new ExecuteHealAllNoBODYAction();
+            BattleEvent battleEvent = new BattleEvent(a);
+            a.setBattleEvent(battleEvent);
+
+            Battle.getCurrentBattle().addEvent(battleEvent);
+        }
+    }
+
+    public static class ExecuteHealAllNoBODYAction extends AbstractAction {
+
+        BattleEvent battleEvent = null;
+
+        public ExecuteHealAllNoBODYAction() {
+            super("Heal All Rosters (BODY Ignored");
+
+        }
+
+        public void setBattleEvent(BattleEvent be) {
+            battleEvent = be;
+        }
+
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            Set<Roster> rosters = Battle.getCurrentBattle().getRosters();
+            Iterator<Roster> i = rosters.iterator();
+            while (i.hasNext()) {
+                Roster roster = i.next();
+                if (roster != null) {
+                    List<Target> targets = roster.getCombatants();
+                    for (int index = 0; index < targets.size(); index++) {
+                        Target t = targets.get(index);
+                        t.healNoBODY(battleEvent);
+                    }
+                    VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster); 
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+	"Type": "AreaEffectTargets",
+	"Ability": "Air - Strike",
+	"Center": "Hex",
+	"Targets": [{
+			"Range":4
+			"Target": "Spyder",
+			"Obstruction": "test",
+			"Encumbrance": -3
+		},
+		{
+			"Target": "Off-Road",
+			"Obstruction": "test",
+			"From Behind": true,
+			"Surprised": true,
+			"Surprise Move": 2,   
+			"Encumbrance": -2,
+		}, {
+			"Target": "Ogun",
+			"Obstruction": "test",
+			"Encumbrance": -3,
+		}
+	]
+}

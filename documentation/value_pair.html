@@ -1,0 +1,1471 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 WIDTH="100%" >
+<tr VALIGN=TOP>
+<td><b><font size=-1>Object</font></b></td>
+
+<td><b><font size=-1>Key</font></b></td>
+
+<td><b><font size=-1>Type</font></b></td>
+
+<td><b><font size=-1>Value</font></b></td>
+
+<td><b><font size=-1>Description</font></b></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.AUTOSOURCE</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>If TRUE BattleEvents generated from the ability will
+have their source set to the current active target.&nbsp; If FALSE, Ability.SOURCE
+must be set to the appropriate Target.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.SOURCE</font></td>
+
+<td><font size=-1>Target</font></td>
+
+<td><font size=-1>Target</font></td>
+
+<td><font size=-1>Source used for BattleEvents if Ability.AUTOSOURCE ==
+FALSE.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Target</font></td>
+
+<td><font size=-1>Target.DELAYEDATTACK</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>If TRUE the target is currently in the process of making
+a delayed attack and cannot take another action until the delayed attack
+completes.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Target[]</font></td>
+
+<td><font size=-1>Index</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>List of targets targeted by an ability during an attack.&nbsp;
+A minimum of 1 target must be specifies for any completed attack.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Target[].TARGET</font></td>
+
+<td><font size=-1>Target</font></td>
+
+<td><font size=-1>Target</font></td>
+
+<td><font size=-1>Instance of target class.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Target[].HITROLL</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Attack Roll made during BattleEngine attack processing.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Target[].ROLLNEEDED</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Attack roll necessary for source to hit target during
+attack processing.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Target[].HIT</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Indicates wheather the target was sucessfully hit by
+the attack.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISAUTOFIRE</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>If True, indicates the attack is an autofire attack.&nbsp;
+Note: This is an ability value/pair, so it is set outside the attack processing.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISAE</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>If True, indicates attack is an area effect attack.&nbsp;
+Note: This is an ability value/pair, so it is set outside the attack processing
+loop, typically by the advantage AE.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Attack.ISSPREAD</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>If True, indicates attack should be spread.&nbsp; Should
+only be set when ability is EnergyBlast.&nbsp; Not useable with Area Effect.&nbsp;
+Note: This is a battleEvent value/pair and is typically set by the attack
+inline panel.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Attack.ISMOVEBY</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>If Ture, indicates attack should be a moveby.&nbsp; Only
+set when ability or maneuver is a moveby.&nbsp; Not compatible with Autofire
+attacks or Area Effect.&nbsp; Note: This is a battleEvent value/pair and
+is typically set by the attack inline panel.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Abiilty.NAME</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Name of the ability.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Power.POWER</font></td>
+
+<td><font size=-1>Power</font></td>
+
+<td><font size=-1>Power</font></td>
+
+<td><font size=-1>Object of type power.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Power.NAME</font></td>
+
+<td><font size=-1>Stirng</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Name of Power.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Normal.STR</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>Strength of attacking target.&nbsp; Initially set to
+strength of target.&nbsp; Modified to the maximum amount of usable strength
+for that ability/maneuver combination by calculatedDCs.&nbsp; Used to determine
+STR based END use.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Target</font></td>
+
+<td><font size=-1>Effect[].EFFECT</font></td>
+
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>Instance of type effect.&nbsp; Represents the effects
+currently applied to the target.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.DESCRIPTION</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Description of the ability.&nbsp; Used by ability.getLongDescription()
+to generate ability description text.&nbsp; Contains only the Power description
+information.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.SPECIALEFFECT</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Special Effect of power. Used by ability.getLongDescription()
+to generate ability description text.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Advantage[].NAME</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Name of advantage</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Advantage[].LEVELS</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Number of levels configured for advantage.&nbsp; Use
+of this value/pair is deprecated in most advantages.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Advantage[].DESCRIPTION</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Description of advantage applied to ability.&nbsp; Used
+by ability.getLongDescription() to generate ability description text.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Advantage[].ADVANTAGE</font></td>
+
+<td><font size=-1>Advantage</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Instance of Advantage.&nbsp; Must be non-null.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Advantage[].PRIORITY</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>0 to 5</font></td>
+
+<td><font size=-1>Priority of advantage when applying advantage effects.&nbsp;
+See BattleEvent documentation for additional information. Defaults to 2.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Limitation[].NAME</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Name of Limitation</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Limitation[].LEVELS</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Number of levels configured for limitation.&nbsp; Use
+of this value/pair is deprecated in most limitation.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Limitation[].DESCRIPTION</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Description of limitation applied to ability. Used by
+ability.getLongDescrption() to generate ability description text.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Limitation[].LIMITATION</font></td>
+
+<td><font size=-1>Limitation</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Instance of Limitation.&nbsp; Must be non-null.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Limitation[].PRIORITY</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>0 to 5</font></td>
+
+<td><font size=-1>Priority of limitation when applying limitation effects.&nbsp;
+See BattleEvent documentaiotn for additional information. Defaults to 2.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISRECOVERY</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Parameter to control whether ability is usable during
+post-12 phase.&nbsp; If Ability.ISRECOVERY is FALSE, the ability will be
+disabled during post-12.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.TIME</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>FULLMOVE, ATTACK, HALFMOVE, INSTANT</font></td>
+
+<td><font size=-1>Parameter which determines amount of time necessary to
+activate ability.</font>
+<br><font size=-1>FULLMOVE: requires complete phase</font>
+<br><font size=-1>ATTACK: requires remainder of phase to complete.</font>
+<br><font size=-1>HALFMOVE: requires half a phase to complete.</font>
+<br><font size=-1>INSTANT: completes instantly.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ACTIVATED</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Determines whether the ability is currently activated.&nbsp;
+Used in the battleEngine to determine whether an ability should be activated
+or deactivated when the user triggers an ability.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.PTYPE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>PERSISTENT, CONSTANT,&nbsp;</font>
+<br><font size=-1>INSTANT</font></td>
+
+<td><font size=-1>Determines how, when, duration of ability activation.&nbsp;
+Currently incorrectly implemented.&nbsp; PTYPE currently has the following
+effects:</font>
+<br><font size=-1>PERSISTENT: Power which remains on when target is unconscious.&nbsp;
+Persistent powers are currently automatically triggered when a target becomes
+active.</font>
+<br><font size=-1>CONSTANT: Power which remains on once triggered, until
+it is either turned off or target goes unconscious.</font>
+<br><font size=-1>INSTANT: Power which is activated only momentarily before
+being immediately switched off.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.OCVBONUS</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>OCV combat modifier applied to source target when ability
+is triggered.&nbsp; May be positive or negative. May exist on both normal
+abilities and maneuvers.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.OCVBONUS</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>DCV combat modifier applied to source target when ability
+is triggered. May be positive or negative.&nbsp; May exist on both normal
+abilities and maneuvers.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.FIXEDCP</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>>=0</font></td>
+
+<td><font size=-1>Character Point value used for ability if Ability.FIXEDCPENABLED
+== TRUE.&nbsp; When enabled, controls appropriate calculations, such as
+END.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.FIXEDCPENABLED</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Enables Ability.FIXEDCP for character point calculations.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ATYPE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td></td>
+
+<td><font size=-1>Attack type</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Die[].DIENAME</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Name of Die necessary to complete attack.&nbsp; Corresponding
+&lt;DIENAME>... information must exist.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>&lt;DIENAME>.DIE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>D6 notation</font></td>
+
+<td><font size=-1>Size of Die in D6 notation.&nbsp; DIENAME is an string
+indexed by Die[].DIENAME.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>&lt;DIENAME>.DIEDESC</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Description of die displayed when requesting die rolls.
+DIENAME is an string indexed by Die[].DIENAME.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.MTYPE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>MELEE, RANGED</font></td>
+
+<td><font size=-1>Parameter required for attack abilities.&nbsp; Indicates
+type of attack, either Melee or Ranged.&nbsp; Used to determine if strength
+can be used to add damage to attack.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.KTYPE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>NORMAL, KILLING, SPECIAL</font></td>
+
+<td><font size=-1>Parameter required for attack abilities.&nbsp; Indicates
+type of damage, either Normal or killing.&nbsp; Used to determine type
+of damage generated by the battleEngine for a normal attack.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISRANGED</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Parameter specifying whether attack can hit ranged targets.&nbsp;
+If ISRANGED is TRUE, the range OCV modify will be added to the OCV/DCV
+modifier dialog.&nbsp; Not all ranged attacks require ISRANGED, but it
+is set by default to true for RANGED MTYPE attacks.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability. CANUSERANGEDMANEUVER</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Parameter specifying whether attack can use Ranged maneuvers.&nbsp;
+If TRUE, the maneuvers menu will contain the appropriate ranged maneuvers
+for this ability.&nbsp; Set to TRUE by default for RANGED MTYPE attacks.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability. CANUSEMELEEMANEUVER</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Parameter specifying whtehr attack can use Melee maneuvers.&nbsp;
+If TRUE, the maneuvers menu will contain the appropriate melee maneuvers
+for thsi ability. Set to TRUE by default for MELEE MTYPE attacks.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.TARGETSELF</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>If set to true, attacks automatically target the source
+of the ability.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ADVCOST</font></td>
+
+<td><font size=-1>Double</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Cost of all the advantages applied to ability.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Abiltiy.ADVDCCOST</font></td>
+
+<td><font size=-1>Double</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Cost of DC effecting advantages.&nbsp; Used to calculated
+D6 modifiers.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.LIMCOST</font></td>
+
+<td><font size=-1>Double</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Cost of all the limitation applied to ability.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>ReducedEndurance.LEVEL</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>"1/2 END","0 END"</font></td>
+
+<td><font size=-1>Level of reduced endurance advantage applied to power.&nbsp;
+Used to calculate the endurance cost of activating or maintaining an ability.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability. DELAYEDACTIVATE</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Indicates that activation of this ability takes extra
+time.&nbsp; BattleEngine uses this to determine if a two stage activation
+is necessary.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.DELAYEXCLUSIVE</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>If the ability is a delayed activation ability, DELAYEXCLUSIVE
+specifies that the target can not perform any other actions until the ability
+finishes activating.&nbsp; All attacks which require targeting rolls should
+be delay exclusive.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.DELAYCOUNT</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Specifies the number of periods necessary to delay before
+the ability finishes activating.&nbsp; Periods length is defined by DELAYTIME.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.DELAYTIME</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>0 to 6</font></td>
+
+<td><font size=-1>Specifies the delay period in DELAYEDACTIVATE ability.&nbsp;
+Period length =&nbsp;</font>
+<br><font size=-1>0) segment</font>
+<br><font size=-1>1) phase</font>
+<br><font size=-1>2) turn</font>
+<br><font size=-1>3) minute</font>
+<br><font size=-1>4) 5 minutes</font>
+<br><font size=-1>5) 1 hour</font>
+<br><font size=-1>6) 5 hours</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.DELAYTILLLAST</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>IF DELAYTILLLAST is TRUE, a delayed activation ability
+will be the last ability activated during the appropriate segment.&nbsp;
+If it is false, the ability will be activated according to the activating
+target's dexerity.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.DELAYINTERRUPTLEVEL</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>...</font></td>
+
+<td><font size=-1>...</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.DELAYDCVMOD</font></td>
+
+<td><font size=-1>Double</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>If the ability is a delayed activation ability, the DCV
+of the activating target is multiplied by the DELAYDCVMOD value.&nbsp;
+Default multiplier is 1.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.DELAYREASON</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Reason for the activation delay.&nbsp; Used in effectDelayed
+description.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.CTYPE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>POWER, SKILL, TELENT</font></td>
+
+<td><font size=-1>Type of ability.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISMOVEMENT</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Ability is based on a movement power.&nbsp; Movement
+powers are currently treated differently then normal powers by the battleEngine.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISMELEEMANEUVER</font></td>
+
+<td><font size=-1>Boolean&nbsp;</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Indicates whether an ability is a melee maneuver.&nbsp;
+Melee maneuvers can be used by any ability which has the CANUSEMELEEMANEUVER
+v/p set to True.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISRANGEDMANEUVER</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Indicates whether an ability is a ranged maneuver.&nbsp;
+Ranged maneuvers can be used by any ability which has the CANUSERANGEDMANEUVER
+v/p set to True.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Power.DEFENSE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>PD,ED</font></td>
+
+<td><font size=-1>Indicates the type of defense to be applied agaist this
+ability during an attack.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISAUTOHIT</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Indicates whether this ability always hits.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Knockback[]</font></td>
+
+<td><font size=-1>Index</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Index with information necessary to determine knockback
+done by attack.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Knockback[].TARGET</font></td>
+
+<td><font size=-1>Target</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Indicates which target knockback will be applied to.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Knockback[].AMOUNT</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>>=0</font></td>
+
+<td><font size=-1>Indicates the number of inches of knockback to be applied.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>KnockbackRoll[]</font></td>
+
+<td><font size=-1>Index</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Index with Knockback roll modification parameters.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>KnockbackRoll[].TYPE&nbsp;</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>MOD</font></td>
+
+<td><font size=-1>Indexed of KB modifiers for ability.&nbsp; MOD is a straight
+modifier.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>KnockbackRoll[].</font>
+<br><font size=-1>DESCRIPTION</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Description of KB modifier.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>KnockbackRoll[].VALUE</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Amount of modification to the knockback roll.&nbsp; Depending
+on the value of type, value may indicate different things.</font></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>KnockbackRoll[].ACTIVE</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Indicates this KB modifier is currently active.&nbsp;
+By default, all knockback modifiers are active.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Attack.CURRENTSHOT</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Indicates the current shot of a series of autofire shots.&nbsp;
+Should only be set by battleEngine.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Attack.ISSPRAY</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>If set to True, indicates the attack is an autofire spray
+attack.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>OCVModifier[]</font></td>
+
+<td><font size=-1>Index</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Index containing OCV modifiers applied during an attack.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>OCVModifier[].NAME</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Name of OCV modifier.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>OCVModifier[].DESCRIPTION</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Description of OCV modifier.&nbsp; Displayed in OCV modifier
+dialog.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>OCVModifier[].VALUE</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Amount to modify OCV by.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Attack.SPRAYWIDTH</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>>=1</font></td>
+
+<td><font size=-1>Number of Hexes a Sprayed AF attack is spread across.&nbsp;
+Set by attack dialog.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Attack.SHOTS</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>>=1</font></td>
+
+<td><font size=-1>Number of shots to shoot in AF attack.&nbsp; Set by attack
+dialog.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Attack.SPREADWIDTH</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>>=1</font></td>
+
+<td><font size=-1>Number of Hexes an energy blast spreads against when
+it is spread.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Attack.ISSPREADM</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Indicates whether an EB spread attack is a multi-target
+attack or a single target attack.&nbsp;</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Attacl.MOVEBYTARGETS</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>>=1</font></td>
+
+<td><font size=-1>Indicates the number of targets being attacked in a multiple
+moveby.&nbsp; Set by Attack Inline panel.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISSELECTIVEAE</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Indicates an Area Attack ability is SELECTIVE.&nbsp;
+Set by AE advantage.&nbsp; When set, processAE makes a seperate to hit
+attack against each target in the AE area.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISNONSELECTIVEAE</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Indicates an Area Attack ability is Non-Selective.&nbsp;
+Set by AE advantage.&nbsp; When set, processAE makes a seperate to hit
+attack against each target in the AE area.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effectlist</font></td>
+
+<td><font size=-1>Effect[]</font></td>
+
+<td><font size=-1>Index</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Index added to effectlist.&nbsp; Contain informaiton
+about different effects to be applied to target or source of an attack.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effectlist</font></td>
+
+<td><font size=-1>Effect[].EFFECT</font></td>
+
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Effect Object to be applied by power.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>EffectList</font></td>
+
+<td><font size=-1>Effect[].TTYPE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>TARGET, SOURCE</font></td>
+
+<td><font size=-1>Indicates where an effect generated by an ability needs
+to be applied.&nbsp; TARGET indicates apply effect to target.&nbsp; SOURCE
+idicates apply effect to source.&nbsp; Defaults to TARGET if blank.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>Subeffect[]</font></td>
+
+<td><font size=-1>Index</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Index containing information regarding subeffects to
+be applied to target of effect.&nbsp; Every Effect can contain subeffect
+to be applied to target, however often custom effect do not define any
+subeffects.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>Subeffect[].VERSUS</font></td>
+
+<td><font size=-1>String/ Ability</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Indicates what is affected by subeffect.&nbsp; Type depends
+on VERSUSTYPE of subeffect.&nbsp; If VERSUSTYPE == STAT or STATCP, then
+VERSUS must be a string indicating the appropriate Stat such as BODY or
+CON.&nbsp; If VERSUSTYPE == ABILITY, the VERSUS must be a Ability object.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>Subeffect[].NAME</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Name of Subeffect.&nbsp; Typically used only for lookup
+purposes.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>Subeffect[].EFFECTTYPE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>DAMAGE, DRAIN, AID, LIMITED_AID, LIMITED_DRAIN, SET</font></td>
+
+<td><font size=-1>Indicates how the subeffect is applied to VERSUS.</font>
+<br><font size=-1>DAMAGE: Applies as unlimited reducation to appropriate
+value.</font>
+<br><font size=-1>DRAIN: Applied as unlimited reduction to appropriate
+value.</font>
+<br><font size=-1>AID: Applied as unlimited addition to appropriate value.</font>
+<br><font size=-1>LIMITED_DRAIN: Applied as reduction to appropriate value,
+limited to minimum of 0.</font>
+<br><font size=-1>LIMITED_AID: Applied as addition to appropriate value,
+limited to value maximum.</font>
+<br><font size=-1>SET: Changes appropriate value to subeffect value.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>Subeffect[].DEFTYPE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>PD,ED,NONE</font></td>
+
+<td><font size=-1>Indicates the type of defense to be used when applying
+the subeffect to a target.&nbsp; Defaults to NONE.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>Subeffect[].DEFSPECIAL</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>NORMAL, NONE, NND, AVLD, KILLING</font></td>
+
+<td><font size=-1>Indicates special methods of applying defenses to subeffect.&nbsp;</font>
+<br><font size=-1>NORMAL: apply defenses as usual.</font>
+<br><font size=-1>NONE: do not apply any defense.</font>
+<br><font size=-1>NND: treat attack as No Normal defense attack.</font>
+<br><font size=-1>AVLD: treat attack as Attack versus limited defense.</font>
+<br><font size=-1>KILLING: treat attack as killing attack.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>Subeffect[].VERSUSTYPE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>STAT,STATCP, ABILITY</font></td>
+
+<td><font size=-1>Indicates what subeffect is applied to and what value
+is measured in.</font>
+<br><font size=-1>STAT: apply to stat and value is in stat points.</font>
+<br><font size=-1>STATCP: apply to stat and value is in character points.</font>
+<br><font size=-1>ABILITY: apply to ability and valueis in character points.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>Subeffect[].VALUE</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Amount to apply.&nbsp; Metric indicated according to
+VERSUSTYPE.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Ability</font></td>
+
+<td><font size=-1>Ability.ISMOVETHROUGH</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE, FALSE</font></td>
+
+<td><font size=-1>Indicates ability is a movethrough.&nbsp; If either the
+ability or maneuver of an attack is a movethrough, special movethrough
+attack processing will occur.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>PD.DEFENSE</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>>=0</font></td>
+
+<td><font size=-1>Amount of PD Defense target of effect has.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>ED.DEFENSE</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>>=0</font></td>
+
+<td><font size=-1>Amount of ED Defense target of effect has.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>rPD.DEFENSE</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>>=0</font></td>
+
+<td><font size=-1>Amount of rPD Defense target of effect has.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>rED.DEFENSE</font></td>
+
+<td><font size=-1>Integer</font></td>
+
+<td><font size=-1>>=0</font></td>
+
+<td><font size=-1>Amount of rED Defense target of effect has.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>Effect</font></td>
+
+<td><font size=-1>NND.DEFENSE</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>*</font></td>
+
+<td><font size=-1>Description of defense which defeats no normal defense
+attack.&nbsp; Necessary for an effect with NND marked subeffects.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>BattleEvent.DCCALCULATED</font></td>
+
+<td><font size=-1>Boolean</font></td>
+
+<td><font size=-1>TRUE,FALSE</font></td>
+
+<td><font size=-1>Indicates the DC calculations for the battleEvent have
+been made.</font></td>
+</tr>
+
+<tr>
+<td><font size=-1>BattleEvent</font></td>
+
+<td><font size=-1>Ability.TEMPTIME</font></td>
+
+<td><font size=-1>String</font></td>
+
+<td><font size=-1>FULLMOVE, ATTACK, HALFMOVE, INSTANT</font></td>
+
+<td><font size=-1>Time required for attack/activation to complete.&nbsp;
+Overrides Ability.TIME from Ability.&nbsp; Values mean the same as Ability.TIME.</font></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+</table>
+
+</body>
+</html>

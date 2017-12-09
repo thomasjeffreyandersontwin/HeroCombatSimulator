@@ -1,0 +1,15 @@
+{
+	"Type": "AttackMoveThroughTarget",
+	"Distance":9
+	"Movement":"Leaping"
+	"Ability": "Loa Blast",
+	"Target": "Blind Justice",
+	"Range": 3,
+	"Obstruction": "test",
+	"PushedStr": 0,
+	"Generic": 3,
+	"Off Hand": true,
+	"Unfamiliar Weapon": true,
+	"Surprise Move": 2,
+	"Encumbrance": -3
+}

@@ -1,0 +1,12 @@
+{
+	"Type": "AutofireTargets",
+	"Ability": "Flurry",
+	"Width":5,
+	"Shots":3,
+	"Targets": [{
+			"Target": "Spyder",
+			"Obstruction": "test",
+			"Encumbrance": -3
+		}
+	]
+}

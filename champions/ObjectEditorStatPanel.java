@@ -1,0 +1,305 @@
+/*
+ * TargetEditorStatPanel.java
+ *
+ * Created on September 10, 2001, 11:42 AM
+ */
+
+package champions;
+
+import champions.ColumnList;
+import champions.ColumnLayout;
+import java.awt.*;
+import javax.swing.*;
+import java.beans.*;
+import java.util.*;
+import java.io.*;
+
+import champions.interfaces.*;
+import champions.event.*;
+import champions.interfaces.*;
+import tjava.*;
+/**
+ *
+ * @author  twalker
+ */
+public class ObjectEditorStatPanel extends javax.swing.JPanel implements PropertyChangeListener, PADValueListener, Destroyable {
+
+    private ColumnLayout statLayout;
+    
+    private ColumnList statHeaderDL = getStatHeaderDL();
+    
+    private boolean base = true;
+
+    Vector statEditorVector = new Vector();
+    
+    static public String[] statList = {"STR","DEX","CON","BODY","INT","EGO","PRE","COM","PD",
+    "ED","SPD","REC","END","STUN","MD","rPD","rED", "OCV", "DCV", "ECV"};
+    
+    /** Creates new form TargetEditorStatPanel */
+    public ObjectEditorStatPanel() {
+        initComponents();
+        
+        setupIcons();
+        
+        statLayout = new ColumnLayout(1,190,0,2);
+        statPanel.setLayout( statLayout );
+        statHeader.setColumnLayout( statLayout );
+        statHeader.setColumnList( statHeaderDL );
+        statHeader.setHeaderInsets( new Insets(2,2,0,0) );
+        statHeaderDL.addPropertyChangeListener(this);
+
+        tabControl.addTab("Base Stats");
+        tabControl.addTab("Current Stats");
+     //   ButtonGroup bg = new ButtonGroup();
+     //   bg.add(baseRadio);
+     //   bg.add(currentRadio);
+        tabControl.addIndexChangeListener( this );
+        
+        setupStats();
+        
+        // Setup Miscellanous fields.
+       // namePAD.addPADValueListener(this);
+    }
+    
+    public void updateUI() {
+        super.updateUI();
+        
+        setupIcons();
+    }
+    
+    private void setupIcons() {
+//        Icon portrait = UIManager.getIcon( "TargetEditor.editPortraitIcon" );
+//        if ( setPortrait != null && portrait != null ) {
+//            setPortrait.setIcon(portrait);
+//        }
+    }
+    
+    public ColumnList getStatHeaderDL() {
+        // Setup correct headers for abilityPanels
+        
+        //
+        // Note: The Width of the TargetEditorStatPanel are statically set in the ColumnLayout constructor above.
+        // Changes to the widths of these columns MUST be reflexed in the ColumnLayout constructor.
+        //
+        ColumnList statHeaderDL = new ColumnList();
+        int index = statHeaderDL.createIndexed( "Column","NAME","VALUE") ;
+        statHeaderDL.addIndexed(index,   "Column","TYPE", "SPECIAL" ,  true);
+        statHeaderDL.addIndexed(index,   "Column","SPECIAL", "VALUE" ,  true);
+        statHeaderDL.addIndexed(index,   "Column","WIDTH", new Integer(35) ,  true);
+
+        index = statHeaderDL.createIndexed( "Column","NAME","STAT") ;
+        statHeaderDL.addIndexed(index,   "Column","TYPE", "SPECIAL" ,  true);
+        statHeaderDL.addIndexed(index,   "Column","SPECIAL", "STAT" ,  true);
+        statHeaderDL.addIndexed(index,   "Column","WIDTH", new Integer(50) ,  true);
+
+//        index = statHeaderDL.createIndexed( "Column","NAME","COST") ;
+//        statHeaderDL.addIndexed(index,   "Column","TYPE", "SPECIAL" ,  true);
+//        statHeaderDL.addIndexed(index,   "Column","SPECIAL", "COST" ,  true);
+//        statHeaderDL.addIndexed(index,   "Column","WIDTH", new Integer(30) ,  true);
+//
+//        index = statHeaderDL.createIndexed( "Column","NAME","BASE") ;
+//        statHeaderDL.addIndexed(index,   "Column","TYPE", "SPECIAL" ,  true);
+//        statHeaderDL.addIndexed(index,   "Column","SPECIAL", "BASE" ,  true);
+//        statHeaderDL.addIndexed(index,   "Column","WIDTH", new Integer(40) ,  true);
+//
+//        index = statHeaderDL.createIndexed( "Column","NAME","CP") ;
+//        statHeaderDL.addIndexed(index,   "Column","TYPE", "SPECIAL" ,  true);
+//        statHeaderDL.addIndexed(index,   "Column","SPECIAL", "CP" ,  true);
+//
+//        statHeaderDL.addIndexed(index,   "Column","WIDTH", new Integer(35) ,  true);
+
+        return statHeaderDL;
+    }
+    
+    /**
+     * This method gets called when a bound property is changed.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *  	and the property that has changed.
+     */
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ( evt.getSource() == tabControl ) {
+            base = ( tabControl.getSelectedIndex() == 0 );
+            updatePanels();
+        }
+        else if ( evt.getSource() == statHeaderDL ) {
+            adjustColumns();
+        }
+        else if ( evt.getSource() == target ) {
+            updatePanels();
+        }
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    private void initComponents() {//GEN-BEGIN:initComponents
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        statGroup = new javax.swing.JPanel();
+        statHeader = new champions.ColumnHeaderPanel();
+        statPanel = new javax.swing.JPanel();
+        tabControl = new tjava.TabControl();
+
+        setLayout(new java.awt.GridBagLayout());
+
+        statGroup.setLayout(new java.awt.GridBagLayout());
+
+        statHeader.setFont(new java.awt.Font("Arial", 0, 9));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        statGroup.add(statHeader, gridBagConstraints);
+
+        statPanel.setFont(new java.awt.Font("Arial", 0, 11));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        statGroup.add(statPanel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        add(statGroup, gridBagConstraints);
+
+        tabControl.setDirection(TabControl.DIR_DOWN);
+        tabControl.setDrawHorizonalLine(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        add(tabControl, gridBagConstraints);
+
+    }//GEN-END:initComponents
+
+
+    /** Getter for property target.
+     * @return Value of property target.
+     */
+    public Target getTarget() {
+        return target;
+    }    
+
+    /** Setter for property target.
+     * @param target New value of property target.
+     */
+    public void setTarget(Target target) {
+        if ( this.target != null ) {
+            this.target.removePropertyChangeListener(this);
+        }
+
+        this.target = target;
+        //abilityPanel.setAbilityList(target);
+        //abilityTree.setTarget(target);
+        //padListPanel.setTarget(target);
+        setupStats();
+        updatePanels();
+
+        if ( this.target != null ) {
+            this.target.addPropertyChangeListener(this);
+        }
+    }    
+
+
+    public void setupStats() {
+        int index;
+        TargetStatEditor2 tse = null;
+        TargetStatEditor2 last_tse = null;
+
+        statEditorVector.removeAllElements();
+        statPanel.removeAll();
+
+        if ( target == null ) return;
+
+        for (index = 0; index < statList.length; index ++ ) {
+            if ( target.hasStat( statList[index] ) ) {
+                last_tse = tse;
+                tse = new TargetStatEditor2();
+                
+                statEditorVector.add(tse);
+                tse.setFont( getFont() );
+                tse.setForeground( getForeground() );
+                tse.setBackground( getBackground() );
+                tse.setTarget(target);
+                tse.setStat(statList[index]);
+                tse.setColumnList( statHeaderDL );
+               // tse.setBorder(new LineBorder( Color.red));
+                statPanel.add(tse);
+                
+                if ( last_tse != null ) {
+                    last_tse.setNextFocusableComponent( tse );
+                }
+            }
+        }
+    }
+
+    public void updatePanels() {
+        Iterator i = statEditorVector.iterator();
+        while ( i.hasNext() ) {
+            TargetStatEditor2 tse = (TargetStatEditor2) i.next();
+            tse.setBase(base);
+            tse.updatePanel();
+        }
+
+//        if ( target != null ) {
+//            namePAD.setValue( target.getName() );
+//        }
+    }
+
+    public void adjustColumns() {
+        Iterator i = statEditorVector.iterator();
+        while ( i.hasNext() ) {
+            TargetStatEditor2 tse = (TargetStatEditor2) i.next();
+            tse.adjustColumns();
+        }
+    }
+    
+    public boolean PADValueChanging(PADValueEvent evt) {
+        return true;
+    }
+    
+    public void PADValueChanged(PADValueEvent evt) {
+                if ( target != null) {
+            target.add( evt.getKey(), evt.getValue(), true);
+        }
+    }
+    
+    public boolean isManagingFocus() {
+        return true;
+    }
+    
+    public Dimension getMinimumSize()  {
+        return getPreferredSize();
+        
+    }
+    
+    public void destroy() {
+        removeAll();
+        
+        // Destroy the StatEditors
+        Iterator i = statEditorVector.iterator();
+        while ( i.hasNext() ) {
+            TargetStatEditor2 tse = (TargetStatEditor2) i.next();
+            tse.destroy();
+        }
+    }
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel statGroup;
+    private champions.ColumnHeaderPanel statHeader;
+    private javax.swing.JPanel statPanel;
+    private tjava.TabControl tabControl;
+    // End of variables declaration//GEN-END:variables
+
+    /** Holds value of property target. */
+    private Target target;    
+
+}

@@ -1,0 +1,1135 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Windows NT 5.0; U) [Netscape]">
+   <meta name="Author" content="Trevor Walker">
+   <title>PAL Overview</title>
+</head>
+<body>
+
+<h1>
+Power/Advantage/Limitation Creation Overview</h1>
+This document cover the creation Powers, Advantages, and Limitations (PAL).&nbsp;
+The step required to create a Power, Advantage, or Limitation are very
+similar regardless of what you are creating.&nbsp; However, the use of
+Powers are much different then an advantage or limitation.&nbsp; Note that
+throughout this document, many methods and classes are labelled with PAD
+not PAL.&nbsp; This is due to legacy code issues.&nbsp; However, in general,
+PAL and PAD are interchangable terms.
+<h2>
+Contents:</h2>
+
+<ul>
+<li>
+<a href="#Understanding the PAL code">Understanding the PAL code structure</a></li>
+
+<ul>
+<li>
+<a href="#PAL Configuration Code">PAL Configuration Code</a></li>
+
+<ul>
+<li>
+<a href="#Configuration">Configuration Process</a></li>
+
+<li>
+<a href="#Steps and Guidelines for Creating Configuration">Steps and Guidelines
+for Creating Configuration Code</a></li>
+
+<ul>
+<li>
+<a href="#Create the parameter">Create the parameter array</a></li>
+
+<li>
+<a href="#reate the configurePAD()">Create the configurePAD() method</a></li>
+
+<li>
+<a href="#Create the getName()">Create the getName() method</a></li>
+
+<li>
+<a href="#Create the getConfigSummary()">Create the getConfigSummary()
+method</a></li>
+
+<li>
+<a href="#Create the getParameters()">Create the getParameters() method</a></li>
+
+<li>
+<a href="#Create the checkParameter()">Create the checkParameter() method</a></li>
+
+<li>
+<a href="#create the calculateMultiplier()">Create the calculateMultiplier()
+method</a></li>
+</ul>
+</ul>
+
+<li>
+<a href="#PAL Functional Code">PAL Functional Code</a></li>
+
+<ul>
+<li>
+<a href="#Power Function Code">Power Functional Code</a></li>
+
+<ul>
+<li>
+<a href="#Writing Powers">Writing Power Functional Code</a></li>
+
+<ul>
+<li>
+<a href="#Writing Normal Damage Powers">Writing Normal Damage Powers</a></li>
+
+<li>
+<a href="#Writing Special Damage Powers">Writing Special Damage Powers</a></li>
+
+<li>
+<a href="#Writing Other Powers">Writing Other Powers</a></li>
+
+<li>
+<a href="#Generating Power Effects">Generating Power Effects</a></li>
+
+<li>
+<a href="#Other Functional Methods for Powers">Other Functional Methods
+for Powers</a></li>
+</ul>
+
+<li>
+<a href="#Writing Advantage/Limitation Functional Code">Writing Advantage/Limitation
+Functional Code</a></li>
+
+<ul>
+<li>
+<a href="#Advantage/Limitation Prepower Code">Writing Prepower and Postpower
+Functional Code</a></li>
+
+<li>
+<a href="#Advantage/Limitation Preactivate Code">Writing Preactivate Functional
+Code</a></li>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+
+<h2>
+<a NAME="Understanding the PAL code"></a>Understanding the PAL code structure</h2>
+To create a working PAL, three different sections of code must be written.&nbsp;
+The first section of code is the PAL configuration code.&nbsp; The configuration
+code provide information to Ability Editor detailing the parameters that
+are necessary to completely configure the PAL.&nbsp; The second section
+of code that much be written is the PAL functional code.&nbsp; The functional
+code is what actually makes the PAL useful.&nbsp; Various methods of the
+functional code are executed through the course of an ability being triggered.&nbsp;
+The third section of code is the import methods.&nbsp; Currently, the import
+framework is in development and PAL are not required to implement the import
+section.
+<h3>
+<a NAME="PAL Configuration Code"></a>PAL Configuration Code</h3>
+The PAL configuration code provides everything necessary to complete configure
+the PAL through the Ability Editor GUI.
+<h4>
+<a NAME="Configuration"></a>Configuration Process</h4>
+&nbsp;The following steps occur when an AbilityEditor is created:
+<ol>
+<li>
+The AbilityEditor examines the Ability and creates a PADEditor for each
+of Powers, Advantages, and Limitations.</li>
+
+<li>
+Each PADEditor Performs the following steps to initialize itself:</li>
+
+<ol>
+<li>
+A Parameter list is created reflecting all of the configurable parameters
+for the specific PAL.&nbsp; The Parameter list is created by calling the
+PAL's getParameter(ability, index) method.</li>
+
+<li>
+For each Parameter in the Parameter list, a parameter editor is created
+and displayed by the Ability Editor.</li>
+
+<li>
+For each Parameter in the Parameter list, a value/pair is added to this
+PADEditors current configuration DetailList.&nbsp; This DetailList contains
+all of the information necessary to completely configure one PAL.</li>
+
+<li>
+The Description for the PADEditor is set according to the PAL's getConfigSummary(ability,index)
+method.&nbsp; If the PAL is a advantage or a limitation, the value of the
+advantage or limitation is added in parathesis at the end of the description.&nbsp;
+Note: This desciption is the one that is displayed for each seperate PAL,
+not the one displayed at the top of the AbilityEditor.</li>
+</ol>
+
+<li>
+The AbilityEditor waits for the User to change a configuration parameter.</li>
+
+<li>
+Once a configuration parameter has been changed, the AbilityEditor determines
+the PADEditor the parameter belonged to and performs the following steps:</li>
+
+<ol>
+<li>
+The PAL's checkParameter(ability, parameter key, new value, old value)
+is called.&nbsp; If checkParameter returns false, the configuration change
+is ignored.</li>
+
+<li>
+If checkParameter returns true, the parameter key is changed in the PADEditor
+DetailList.</li>
+
+<li>
+The PAL's configurePAD(ability, DetailList) is called with the now modified
+DetailList.&nbsp; configurePAD makes any necessary configuration changes
+to the ability.</li>
+
+<li>
+The ability's calculateMultiplier method is called to adjust ability CP
+costs.</li>
+
+<li>
+The Description for the PADEditor is updated by calling the PAL's getConfigSummary(ability,index)
+method.</li>
+
+<li>
+Control is returned to the AbilityEditor.</li>
+</ol>
+</ol>
+To better understand exactly what is happening, lets take a simple example.&nbsp;
+Assume you have an ability with the power of Energy Blast and the advantage
+Penetrating.&nbsp; Here are the steps that occur when the AbilityEditor
+is created:
+<ol>
+<li>
+The AbilityEditor examines the Ability and creates two PADEditors, one
+for the Power: Energy Blast and one for the Advantage: Penetrating.</li>
+
+<ol>
+<li>
+The PADEditor for Energy Blast performs the following steps:</li>
+
+<ol>
+<li>
+The PADEditor for Energy Blast calls <b>powerEnergyBlast.getParameters(ability,0)</b>,
+which returns a parameter list:</li>
+</ol>
+
+<table BORDER CELLSPACING=0 CELLPADDING=0 WIDTH="400" >
+<tr>
+<td><b>Parameter</b></td>
+
+<td><b>Type</b></td>
+
+<td><b>Key</b></td>
+
+<td><b>Value</b></td>
+</tr>
+
+<tr>
+<td>Damage Dice</td>
+
+<td>Dice</td>
+
+<td>Power.DAMAGEDIE</td>
+
+<td>1d6</td>
+</tr>
+
+<tr>
+<td>Defense Type</td>
+
+<td>Combo</td>
+
+<td>Power.DEFENSE</td>
+
+<td>ED</td>
+</tr>
+
+<tr>
+<td>Stun Only</td>
+
+<td>Boolean</td>
+
+<td>Power.STUNONLY</td>
+
+<td>FALSE</td>
+</tr>
+</table>
+
+<ol>
+<li>
+The PADEditor for Energy Blast creates three parameter editors, of the
+appropriate types and displays them.</li>
+
+<li>
+The PADEditor for Energy Blast creates a DetailList contain the configuration
+parameters for EnergyBlast</li>
+</ol>
+
+<table BORDER CELLSPACING=0 CELLPADDING=0 COLS=1 WIDTH="400" >
+<tr>
+<td>Power.DAMAGEDIE=1d6
+<br>Power.DEFENSE=ED
+<br>Power.STUNONLY=FALSE</td>
+</tr>
+</table>
+
+<ol>
+<li>
+The PADEditor for Energy Blast calls <b>powerEnergyBlast.getConfigSummary(ability,
+0)</b> to get the description for the EnergyBlast PADEditor.</li>
+</ol>
+
+<li>
+The PADEditor for Penetrating performs the following steps:</li>
+
+<ol>
+<li>
+The PADEditor for Energy Blast calls <b>advantagePenetrating.getParameters(ability,0)</b>,
+which returns a parameter list:</li>
+</ol>
+
+<ol>&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=0 WIDTH="400" >
+<tr>
+<td><b>Parameter</b></td>
+
+<td><b>Type</b></td>
+
+<td><b>Key</b></td>
+
+<td><b>Value</b></td>
+</tr>
+
+<tr>
+<td>Levels</td>
+
+<td>Integer</td>
+
+<td>PenetratingLevels.LEVELS</td>
+
+<td>1</td>
+</tr>
+</table>
+</ol>
+
+<ol>
+<li>
+The PADEditor for Penetrating creates three parameter editors, of the appropriate
+types and displays them.</li>
+
+<li>
+The PADEditor for Penetrating creates a DetailList contain the configuration
+parameters for EnergyBlast</li>
+</ol>
+
+<ol>&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=0 COLS=1 WIDTH="400" >
+<tr>
+<td>PenetratingLevels.LEVELS=1</td>
+</tr>
+</table>
+</ol>
+
+<ol>
+<li>
+The PADEditor for Penetrating calls <b>advantagePenetrating.getConfigSummary(ability,
+0)</b> to get the description for the Penetrating PADEditor.</li>
+</ol>
+</ol>
+
+<li>
+The AbilityEditor waits for the user to change a parameter.&nbsp; Let's
+assume the user changed the number of damage dice on the Energy Blast from
+1d6 to 2d6.</li>
+
+<li>
+The AbilityEditor would tell the Energy Blast PADEditor that the user wants
+to change the value:</li>
+
+<ol>
+<li>
+The PADEditor for Energy Blast would call <b>powerEnergyBlast.checkParameter(ability,
+"Power.DAMAGEDIE", "1d6", "2d6")</b>.&nbsp; In this case, checkParameters
+would return true, since 2d6 is a valid value for damage die.</li>
+
+<li>
+The PADEditor for Energy Blast would update it's internal DetailList with
+the new value, resulting in this:</li>
+
+<table BORDER CELLSPACING=0 CELLPADDING=0 WIDTH="400" >
+<tr>
+<td><b>Parameter</b></td>
+
+<td><b>Type</b></td>
+
+<td><b>Key</b></td>
+
+<td><b>Value</b></td>
+</tr>
+
+<tr>
+<td>Damage Dice</td>
+
+<td>Dice</td>
+
+<td>Power.DAMAGEDIE</td>
+
+<td><i>2d6</i></td>
+</tr>
+
+<tr>
+<td>Defense Type</td>
+
+<td>Combo</td>
+
+<td>Power.DEFENSE</td>
+
+<td>ED</td>
+</tr>
+
+<tr>
+<td>Stun Only</td>
+
+<td>Boolean</td>
+
+<td>Power.STUNONLY</td>
+
+<td>FALSE</td>
+</tr>
+</table>
+
+<li>
+The PADEditor for Energy Blast would call <b>powerEnergyBlast.configurePAD(ability,
+DetailList)</b> which will update the ability appropriately.</li>
+
+<li>
+Ability.calculateMultiplier would be called to update the ability multiplies
+for advantages and limitation and recalculate CP values.</li>
+
+<li>
+The PADEditor for Energy Blast would update it's description by calling
+<b>powerEnergyBlast.getConfigSummary(ability,
+0)</b>.</li>
+</ol>
+
+<li>
+Control would then be returned to the AbilityEditor which will wait for
+the next user change.</li>
+</ol>
+
+<h4>
+<a NAME="Steps and Guidelines for Creating Configuration"></a>Steps and
+Guidelines for Creating Configuration Code</h4>
+The following are a list of step necessary to create the configuration
+code for a PAL:
+<ol><a NAME="Create the parameter"></a><u>Create the parameter array</u>.&nbsp;
+The parameter array contains information about the value pairs the PAL
+uses.&nbsp; Every configuration parameter should have at least one value/pair
+which is used to store configuration parameters.
+<p>The following array defines the parameterArray for a sample power:
+<p>static private Object[][] parameterArray = {
+<br>&nbsp;&nbsp;&nbsp; {"DamageDie","Power.DAMAGEDIE", String.class, "1d6"}
+<br>&nbsp;};
+<br>&nbsp;
+<ul>
+<li>
+<u>DamageDie</u> is the name of the parameter.&nbsp; This name should be
+unique within the parameterArray, but can be the same as other PALs.&nbsp;
+i.e. Both EnergyBlast and MartialStrike can use the same "DamageDie" parameter
+name.</li>
+
+<li>
+<u>Power.DAMAGEDIE</u> is the key associated with the parameter.&nbsp;
+This key must be unique within the ability.</li>
+
+<li>
+<u>String.class</u> indicates the parameter is a String object.&nbsp; Other
+common types include Integer.class and Double.class.</li>
+
+<li>
+<u>1d6</u> specifies the default value of the parameter if the key does
+not exist.</li>
+</ul>
+
+<p><br>There is no limit to the number of parameters that a PAL can use.&nbsp;
+Note: A PAL should be completely configurable using just the key/values
+from the parameterArray.
+<br>&nbsp;
+<li>
+<a NAME="Create the getName()"></a><u>Create the getName() method.</u>&nbsp;
+The getName() method should return a string contain the full name of the
+PAL.</li>
+
+<br>&nbsp;
+<li>
+<a NAME="reate the configurePAD()"></a><u>Create the configurePAD() method.</u>&nbsp;
+The configurePAD() method must completely configure all value pairs necessary
+for the PAL to work correctly.&nbsp; ConfigurePAD() has two parameters,
+the ability being configured and a detailList containing the configuration
+parameters.&nbsp; Parameters are read from the detailList, and then the
+ability is configured from those parameters.</li>
+
+<p><br>If the PAL is a Power, configurePAD() should call <b>ability.addPowerInfo(
+power, power name, attack type, persistence type, time )</b> where:
+<ul>
+<li>
+<u>power</u> is an object of type Power, typically "this".</li>
+
+<li>
+<u>power name</u> is the name of the power, usually the same as getName().</li>
+
+<li>
+<u>attack type</u> is a string containing SELF or SINGLE.&nbsp; SELF indicates
+the ability can be used only against the ability source.&nbsp; SINGLE indicates
+the ability can be used against targets other then the ability source.</li>
+
+<li>
+<u>persistence type</u> is a string containing INSTANT, CONSTANT, or PERSISTENT.</li>
+
+<li>
+<u>time</u> is a string indicating the amount of time necessary to perform
+this power.&nbsp; ATTACK indicates the power will take the remainder of
+the source's phase.</li>
+</ul>
+
+<p><br>See <a href="#Power Specific configurePAD() Method">Power Specific
+configurePAD()</a> Method below for more information on configuring Powers.
+<p>If the PAL is an Advantage, configurePAD() should call <b>ability.addAdvantageInfo(advantage,
+name, levels, desc) </b>where:
+<ul>
+<li>
+<u>advantage</u> is an object of type Advantage, typically "this".</li>
+
+<li>
+<u>name</u> is the name of the advantage, usually the same as getName().</li>
+
+<li>
+<u>levels</u> is an Integer containing the number of levels of this particular
+advantage this advantage has.&nbsp; This is an optional parameter and it's
+use is deprecated.</li>
+
+<li>
+<u>desc</u> is a String containing a description of the advantage.</li>
+</ul>
+
+<p><br>If the PAL is an Limitations, configurePAD() should call <b>ability.addLimitationsInfo(Limitations,
+name, levels, desc) </b>where:
+<ul>
+<li>
+<u>Limitations</u> is an object of type Limitations, typically "this".</li>
+
+<li>
+<u>name</u> is the name of the Limitations, usually the same as getName().</li>
+
+<li>
+<u>levels</u> is an Integer containing the number of levels of this particular
+Limitations this Limitations has.&nbsp; This is an optional parameter and
+it's use is deprecated.</li>
+
+<br><u>desc</u> is a String containing a description of the Limitations.</ul>
+After the Power/Advantage/Limitations add Info method is called, all custom
+configuration should be done.
+<p><b>NOTE: It is important that all parameters from the detailList are
+copied to the ability.&nbsp; If they are not copied properly, the ability
+may lose configuration information next time it is edited.</b>
+<br>&nbsp;
+<li>
+<a NAME="Create the getConfigSummary()"></a><u>Create the getConfigSummary()
+method.</u>&nbsp; The getConfigSummary method should return a string contain
+a full description of the PAL.&nbsp; The getConfigSummary() method is used
+when displaying the description for each individual PADEditor.&nbsp; It
+is typically longer and more verbose then the description added to the
+ability by the add Info methods in configurePAD().</li>
+
+<br>&nbsp;
+<li>
+<a NAME="Create the getParameters()"></a><u>Create the getParameters()
+method.</u>&nbsp; The getParameters() method returns a parameterList containing
+a list of parameters that make up the PAL configuration.&nbsp; Typically,
+the is one parameter returned for each parameter listed in the parameterArray.</li>
+
+<p><br>The following methods can be used to add parameters to the parameter
+list: <b>addIntegerParameter, addDoubleParameter, addStringParameter, addBooleanParameter,
+addIComboParameter, addDiceParameter.</b>&nbsp; Each parameter method requires
+different parameter.&nbsp; See parameterList documentation for further
+information.
+<br>&nbsp;
+<li>
+<a NAME="Create the checkParameter()"></a><u>Create the checkParameter()
+method</u><i>.</i>&nbsp; If the PAL does any error checking of it's parameter,
+it should implement the checkParameter() method and return false whenever
+a configuration change would not be allowed.&nbsp; If the checkParameter()
+method is not implemented, all configuration changes are allowed.</li>
+
+<br>&nbsp;
+<li>
+<u>If this is a Advantage or Limitations,&nbsp;<a NAME="create the calculateMultiplier()"></a>create
+the calculateMultiplier() method.</u>&nbsp; This method should return a
+double value indicating the amount of an advantage/limitations this PAL
+is, ie +1/2 advantage, -3/4 limitation.&nbsp; Advantages should return
+positive values, Limitations should return negative values.</li>
+</ol>
+
+<h4>
+<a NAME="Power Specific configurePAD() Method"></a>Power Specific configurePAD()
+Method</h4>
+The following section details additional actions which should be done in
+the <b>configurePAD()</b> method, if the PAL is of type Power:
+<h5>
+<b>Attack Info</b></h5>
+If the Power is an attack, ie it is used against someone and requires an
+attack roll, the attack information must be added to the ability.&nbsp;
+Use the <b>ability.addAttackInfo(MTYPE, KTYPE)</b> method to add the appropriate
+information to the ability.
+<p><b>MTYPE</b> can be either <i>MELEE</i> or <i>RANGED</i>.&nbsp; Melee
+attack automatically can use strength for additional damage, while Ranged
+attack cannot.&nbsp; Ranged attacks receive strength bonuses for damage
+should be defined as Melee attack and the <i>Ability.ISRANGED</i> value/pair
+should be set to true further on in <b>configurePAD()</b>.
+<p><b>KTYPE</b> can be <i>NORMAL</i>, <i>KILLING</i>, or <i>SPECIAL</i>.
+<b>KTYPE</b>
+determine what kind of damage is generated by the battleEngine.&nbsp; Attacks
+that don't cause normal damage, such as flash or drain, should set <b>KTYPE</b>
+to <i>SPECIAL</i>.
+<h5>
+<b>Die Information</b></h5>
+If the Power requires any dice to be rolled to determine the effects of
+the power, the dice information must be added to the ability using the
+<b>ability.addDiceInfo(
+DIENAME, DIESIZE, DESCRIPTION)</b> method.
+<p><b>DIENAME</b> refers to the index name of the Die.&nbsp; Typically,
+all attacks should define the <i>DamageDie</i> die.&nbsp; The <i>DamageDie</i>
+index is a special index which is used when calculating the final Damage
+Class of an attack.&nbsp; If <i>DamageDie</i> is not defined, Combat Levels
+and Damage Classes applied to the ability will not work correctly.
+<br><b>DIESIZE</b> refers to the number of Dice to be rolled to realize
+this die.&nbsp; This should be in the normal D6 format, ie 4d6, 3d6+1,
+1.5d6-1.
+<br><b>DESCRIPTION</b> is the description display in the GUI when realizing
+the die.
+<h5>
+<b>Attack Points Per DC</b></h5>
+If the Power is an attack, the Power should define the base Points Per
+Damage Class in the Ability.PPDC value/pair.&nbsp; This value should be
+a Double.&nbsp; This value can be determine for a Power by looking at the
+number of character points necessary to buy 1 Damage Class of effect for
+the Power.&nbsp; For example, Flash costs 10 CP per 1D6, so Flash's PPCD
+is 10.
+<p>Make sure this value reflects the cost of one damage class, not 1d6
+of cost.&nbsp; For example, killing attacks cost 5 CP per DC, but it costs
+15 CP to buy a 1D6 Killing attack.&nbsp; The correct PPDC value for a killing
+attack is 5, not 15.
+<h5>
+<b>Maneuver Definition</b></h5>
+If a Power can be used as a melee maneuver, it must set the <i>Ability.ISMELEEMANEUVER</i>
+value/pair to True, using <b>ability.setIs("MELEEMANEUVER",true)</b>.
+<p>If a Power can be used as a ranged maneuver, it must set the <i>Ability.ISRANGEDMANEUVER</i>
+value/pair to True, using <b>ability.setIs("RANGEDMANEUVER",true)</b>.
+<p>By default, if a power is marked as a melee maneuver or ranged maneuver,
+it will be included in the maneuver list for all melee and ranged attacks,
+respectively.&nbsp; If a power claims to be a maneuver, make sure it sets
+the <i>Maneuver.DC</i> and not the <i>Base.DC</i> in the <b>adjustDice()</b>
+method.
+<h4>
+<a NAME="Advantage/Limitation Specific configurePAD() code"></a>Advantage/Limitation
+Specific configurePAD() code</h4>
+The following section details additional actions which should be done in
+the <b>configurePAD()</b> method, if the PAL is an advantage or limitation.
+<h5>
+<b>Affects Damage Class (Advantages Only)</b></h5>
+When calculating the character points per damage class (PPDC), it is necessary
+to know which advantages "have an effect on how the victim takes damage."
+(BBB p158).&nbsp; Advantages that affect DC increase the PPDC of an ability.
+<p>If an advantage does affect DC, it must use advantage's <b>setAffectsDC()</b>
+method to set <u>Advantage[].AFFECTSDC</u> to true.&nbsp; The default is
+false, so advantages which don't affect DC need to nothing.<b></b>
+<p><b>Set Priority</b>
+<p>All advantages and limitation have a priority level.&nbsp; The priority
+level determines when, relative to other advantages, limitations, and effect,
+their functional code runs.&nbsp; See <a href="#Writing Advantage/Limitation Functional Code">Writing
+Advantage/Limitation functional Code</a> for more information about priority
+levels.
+<p>Priority levels must be set in the configurePAD() method.&nbsp; Use
+the <b>ability.setAdvatangePriority()</b> and <b>ability.setDisadvantagePriority()</b>
+methods to set the priority appropriately.&nbsp; The default priority is
+two, if left unset.
+<br>&nbsp;
+<h3>
+<a NAME="PAL Functional Code"></a>PAL Functional Code</h3>
+The PAL functional code is the code that is executed during the BattleEvent
+processing.&nbsp; Depending on the effects of the PAL, the functional code
+may implement some or all of the functional code methods.&nbsp; Methods
+which are not implemented typically default to empty methods in the PAL
+superclass.&nbsp; Power PALs have a specific set of functional methods
+unique to powers.&nbsp; Advantage and Limitations PALs have a different
+set of methods.
+<p>Before you can create functional code for Powers, Advantages, and Limitations,
+it is important to understand the basic series of event which occur during
+ability activation.&nbsp; Please refer to the <a href="activation overview.html">Ability
+Activation Overview</a> for more information.
+<h4>
+<a NAME="Writing Powers"></a>Writing Power Functional Code</h4>
+The Power functional code is the set of methods which powers can use to
+make the power do what it is supposed to do.&nbsp; The Power functional
+code is in charge of creating the Effects which will be applied to either
+the source or target of an attack.&nbsp; Powers can be categorized into
+four types.&nbsp; In general, the type of power being used determines how
+the power needs to be written and whether the power will work with or as
+a maneuver.
+<ol>
+<li>
+<u><a href="#Writing Normal Damage Powers">Normal Damage</a></u> - This
+type of power causes normal or killing damage to the Body and Stun of the
+target of the attack.&nbsp; No additional effects are generated by this
+type of power.&nbsp; Examples of Normal Damage Powers are RKA, HKA, martial
+strike, RA, and TK.&nbsp; Energy blasts which do body also fall under this
+category.&nbsp; Normal Damage powers can typically be used with a maneuver
+or can be used as a maneuver.&nbsp; Normal Damage powers don't generate
+any effects of their own, but rather rely on the BattleEngine to generate
+the effects which cause the damage.</li>
+
+<li>
+<u><a href="#Writing Special Damage Powers">Special Damage</a></u> - This
+type of power causes normal or killing damage to the target of the attack,
+but also cause additional, seperate effects.&nbsp; A good example of a
+Special Damage Power would be Martial Leg Sweep.&nbsp; Martial Leg Sweep
+causes the damage to Body/Stun, but additionally cause the target to automatically
+be knocked down.&nbsp; Special Damage power can typically be used with
+a maneuver or can be used as a maneuver.&nbsp; Special Damage powers don't
+generate the damage causing effect, but do generate any additional effects
+(such as knockDown).&nbsp; Damage effects are generated by the BattleEngine.</li>
+
+<li>
+<u><a href="#Writing Other Powers">Other</a></u> - This type of power covers
+all powers which are Normal/Special Damage Powers.&nbsp; Other type powers
+may cause damage, but typically it is done is such a way so that it doesn't
+follow standard rules.&nbsp; For Example, an Energy Blast with the Stun
+Only option would be considered an Other Type Power.&nbsp; Additional,
+other type powers may apply effects completely unrelated to damage, such
+as Force Field and Flash.&nbsp; Other type powers also include any powers
+which affect the source of the attack, such as Transfer Powers.&nbsp; Other
+type power must generate all the effects they want to cause.&nbsp; In general,
+Other type powers do not work well as or with maneuvers.</li>
+</ol>
+
+<h5>
+<a NAME="Writing Normal Damage Powers"></a>Writing Normal Damage Powers</h5>
+Normal damage powers are by far the simplest to implement.&nbsp; All of
+their work is done by the BattleEngine.
+<p>Normal damage power need to define the <b>adjustDice()</b> method.&nbsp;
+Powers should use this method to add information to the BattleEvent as
+to how many Damage Classes the attack should do.&nbsp; Normal, non-maneuver,
+powers should add the <i>Base.DC</i> value/pair.&nbsp; Maneuver powers
+should add the <i>Maneuver.DC</i> value/pair.&nbsp; Values should be of
+class Double.
+<p>Normal damage powers should set the <i>Ability.GENERATEDEFALUTEFFECTS</i>
+to TRUE when <b>configurePAD()</b> is executed.&nbsp; This can be done
+with the ability method <b>setGenerateDefaultEffects(true)</b>.
+<h5>
+<a NAME="Writing Special Damage Powers"></a>Writing Special Damage Powers</h5>
+Special Damage Power are generally simple to implement, although not as
+simple as Normal Damage powers.&nbsp; Special Damage powers need to implement
+the <b>triggerPower()</b> method.&nbsp; In the <b>triggerPower()</b> method,
+effect(s) should be generated for any non-normal damage the power wants
+to apply.&nbsp; In the example of Martial Leg Sweep, the Effect KnockDown
+would be generated, but the Body/Stun cause by the attack would not be
+generated.&nbsp; See <a href="#Generating Power Effects">Generating Power
+Effects</a> below for more information.
+<p>Special damage power need to define the <b>adjustDice()</b> method.&nbsp;
+Powers should use this method to add information to the BattleEvent as
+to how many Damage Classes the attack should do.&nbsp; Normal, non-maneuver,
+powers should add the <i>Base.DC</i> value/pair.&nbsp; Maneuver powers
+should add the <i>Maneuver.DC</i> value/pair.&nbsp; Values should be of
+class Double.
+<p>Special damage powers should set the <i>Ability.GENERATEDEFALUTEFFECTS</i>
+to TRUE when <b>configurePAD()</b> is executed.&nbsp; This can be done
+with the ability method <b>setGenerateDefaultEffects(true)</b>.
+<h5>
+<a NAME="Writing Other Powers"></a>Writing Other Powers</h5>
+Other powers are the most complicated to implement.&nbsp; Other Powers
+must always implement the <b>triggerPower()</b> method to generate any
+effects they want to apply.&nbsp; Although some other powers may actually
+generate no effects, most will.&nbsp; See <a href="#Generating Power Effects">Generating
+Power Effects</a> below for more information.
+<p>Other powers typically don't need to implement the <b>adjustDice()</b>
+method, unless they want to take advantage of the automatic attack Damage
+Class calculations that are performed by the BattleEvent during attack
+processing.
+<p>Other powers should set the <i>Ability.GENERATEDEFALUTEFFECTS</i> to
+FALSE when <b>configurePAD()</b> is executed.&nbsp; This can be done with
+the ability method <b>setGenerateDefaultEffects(true)</b>.
+<h5>
+<a NAME="Generating Power Effects"></a>Generating Power Effects</h5>
+Most of the work of a typical power is the generation of Effect to be applied
+to the source/target of an ability.&nbsp; The generation of Effects occurs
+in the <b>triggerPower()</b> method of the power code.
+<p>The triggerPower() method is passed in 3 parameters:
+<ul>
+<li>
+The battleEvent which triggered the Power.&nbsp; Almost all information
+about an ability activation can be found in the BattleEvent.</li>
+
+<li>
+A DetailList where new effects can be added.</li>
+
+<li>
+A Target indicating the target that the ability is being applied against.</li>
+</ul>
+The basic structure for any triggerPower() is:
+<ul>
+<li>
+<u>Parse Configuration Parameters</u> - Parse the configuration parameters
+that the configurePAD() method stored in the ability object and move the
+configuration parameters into variables which can be used later.</li>
+
+<li>
+<u>Check BattleEvent</u> - The BattleEvent should be checked for accuracy.&nbsp;
+Often, the check is as simple as making sure the right dice have been realized.</li>
+
+<li>
+<u>Generate Effect(s)</u> - The actual effect must be created and then
+setup.&nbsp; Some effects set themselves up when created with new, others
+require subeffects to be added in order to do anything useful.</li>
+
+<li>
+<u>Add Effect(s) to effectList</u> - Once created, the Effect(s) must be
+added to the effectList that was passed into <b>triggerPower()</b>.&nbsp;
+Effects should be added to the <i>Effect[].EFFECT</i> value/pair index.</li>
+</ul>
+Below is a simple example of the triggerPower() method for the Power Flash.&nbsp;
+In the example, the DamageDie, Sense, and Targeting parameters are first
+read into variables.&nbsp; Next, the BattleEvent is checked for the <i>DamageDie.DIEROLL</i>
+value/pair.&nbsp; And finally, the effectFlash is created and added to
+the effectList.
+<pre><tt>&nbsp;&nbsp;&nbsp; public void triggerPower(BattleEvent be,DetailList effectList,Target target) throws BattleEventException {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ability ability = be.getAbility();
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dice dice;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String die = (String)ability.parseParameter(parameterArray, "DamageDie");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String sense = (String)ability.parseParameter(parameterArray, "Sense");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String targeting = (String)ability.parseParameter(parameterArray, "Targeting");
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( (dice = be.getDiceValue( "DamageDie","DIEROLL" )) != null ) {
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Effect effect = new effectFlash( dice.getBody(),sense, targeting);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; effectList.createIndexed( new Detail("Effect","EFFECT",effect));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp; }</tt></pre>
+
+<h5>
+<a NAME="Other Functional Methods for Powers"></a>Other Functional Methods
+for Powers</h5>
+The majority of the work of powers is done in the triggerPower() method,
+or by the battleEngine itself.&nbsp; However, there are several other methods
+which can alter the behavior of an power.&nbsp; The following table details
+these methods:
+<br>&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=0 WIDTH="100%" >
+<tr VALIGN=TOP>
+<td VALIGN=TOP><b>Method</b></td>
+
+<td><b>Inherited Action</b></td>
+
+<td><b>Description</b></td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>generateDefaultEffects()</td>
+
+<td>Returns value of&nbsp;
+<br><i>Ability.GENERATESDEFAULTEFFECTS</i>.&nbsp;
+<br>Returns True if undefined.</td>
+
+<td>Used by the battleEngine to determine if the normal combat damage should
+be generated by the attack.&nbsp; Normal combat damage includes both Body
+and Stun and depends if the Power KTYPE is NORMAL or KILLING.&nbsp; Powers
+typically do not override this method.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>triggerPower()</td>
+
+<td>Empty Method.</td>
+
+<td>Called to generate the effects that make the power do what it is supposed
+to.&nbsp; See <a href="#Generating Power Effects">Generating Power Effects</a>
+above for more information.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>postTrigger()</td>
+
+<td>Empty Method.</td>
+
+<td>This is executed after all the effects generated by the ability/maneuver
+have been applied to the source/target of the attack.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>adjustDice()</td>
+
+<td>Empty Method.</td>
+
+<td>This method is executed whenever the battleEngine or GUI attempts to
+determine the DC of an Attack.&nbsp; Normal/Special powers much implement
+this method and add either the <i>Base.DC</i> or <i>Maneuver.DC</i> value/pair
+to the BattleEvent.</td>
+</tr>
+
+<tr>
+<td>shutdownPower()</td>
+
+<td>Empty Method.</td>
+
+<td>This method is executed whenever an ability is deactivated.&nbsp;</td>
+</tr>
+
+<tr>
+<td>calculateENDCost()</td>
+
+<td>Returns 0.</td>
+
+<td>This method is called whenever determining the amount of END the power
+will cost.&nbsp;</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>calculateCPCost()</td>
+
+<td>Returns 0.</td>
+
+<td>This method is called whenever determining the CP cost of an ability,
+according to it's current configuration.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>isEnabled()</td>
+
+<td>Returns True.</td>
+
+<td>This method is called whenever the GUI attempts to determine if an
+ability is currectly usable.&nbsp; Only Power specific checks need to be
+done by the Power.&nbsp; This method is called often, so isEnabled() code
+should be a quick as possible.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>preactivate()</td>
+
+<td>Return True.</td>
+
+<td>This method is called prior to the activation of an ability/maneuver.&nbsp;
+If this method returns false, the activation will fail.&nbsp; This method
+can also be used to perform preactivation initialization of the power.</td>
+</tr>
+
+<tr>
+<td>addECVAttackModifiers()</td>
+
+<td>Empty Method.</td>
+
+<td>Called when determining CV modifiers for the attacker when using an
+ego attack.</td>
+</tr>
+
+<tr>
+<td>addECVDefenseModifiers()</td>
+
+<td>Empty Method.</td>
+
+<td>Called when determining CV modifiers for the defender when using an
+ego attack.</td>
+</tr>
+
+<tr>
+<td>addOCVAttackModifiers()</td>
+
+<td>Empty Method.</td>
+
+<td>Called when determining CV modifiers for the attacker when using non-ego
+attack.</td>
+</tr>
+
+<tr>
+<td>addDCVDefenseModifiers()</td>
+
+<td>Empty Method.</td>
+
+<td>Called when determining CV modifiers for the defender when using non-ego
+attack.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>getDamagePrefix()</td>
+
+<td>Returns D6 of attack is DamageDie&nbsp;
+<br>dice information exists.</td>
+
+<td>Called to determine the "Damage Prefix" of an ability description.&nbsp;
+This can be implemented to return better ability names in the ability list.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>invokeMenu()</td>
+
+<td>Empty Method.</td>
+
+<td>Called when displaying the context sensitive right-click menu for an
+ability.&nbsp; Special actions pertaining just to this power can be added
+to the menu.&nbsp; The actions should generally be similar to the actions
+added by the addActions() method.</td>
+</tr>
+
+<tr VALIGN=TOP>
+<td>addActions()</td>
+
+<td>Empty Method.</td>
+
+<td>Called when GUI builds the Special Actions list.&nbsp; The actions
+should generally be similar to the actions added by the invokeMenu() method.</td>
+</tr>
+</table>
+
+<h4>
+<a NAME="Writing Advantage/Limitation Functional Code"></a>Writing Advantage/Limitation
+Functional Code</h4>
+Advantage/Limitation (ALs) functional code consists of a group of methods
+which modify the way an ability functions.&nbsp; Although ALs can't generate
+any effects to apply to the source or target of any ability, they can greatly
+modify the effects that are eventually applied.
+<h5>
+Advantage/Limitation Priority</h5>
+Since advantages/limitations are often used with other advantages and limitations,
+as well as the effects applied to both the source and target of an ability,
+it is important that they cooperate with other ALs and effects.&nbsp; This
+cooperation is primarily achieved through the use of priorities.&nbsp;
+The priority of an ALs can be set from 0 to 5.&nbsp; The following table
+details what each priority should be used from:
+<br>&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=0 >
+<tr>
+<td><b>Priority</b></td>
+
+<td><b>Name</b></td>
+
+<td><b>Description</b></td>
+</tr>
+
+<tr>
+<td>0</td>
+
+<td>Pre Read</td>
+
+<td>Advantages, Limitations, and Effects can examine the effects that are
+going to be applied, prior to any changes being made to the effects.</td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>Reserved</td>
+
+<td>Reserved for Internal System Use.</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>Normal Priority Write</td>
+
+<td>Advantages, Limitations, and Effects can make any changes they want
+to the effects.&nbsp; Most changes should be made at this level.</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>High Priority Write</td>
+
+<td>Advantages, Limitations, and Effects can make any changes they want
+to the effects.&nbsp; By the time level 3 priority changes are made, most
+advantages, limitations, and effects have already made any changes they
+needed to make.</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>Override Priority Write</td>
+
+<td>At this priority level, an AL can make whatever changes they need to
+and should have final say on all changes.&nbsp; Only one level 4 priority
+should ever affect a power.&nbsp; Use only when necessary.</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>Post Read</td>
+
+<td>Advantages, Limitations, and Effects can examine the effects after
+all changes have been made to them.</td>
+</tr>
+</table>
+
+<p>Typically, ALs which want to make changes to the effects that are going
+to be applied to a target, should have a priority of two.&nbsp; The Default
+priority of all ALs is two.
+<p>To set the priority of an AL, use the <b>ability.setAdvantagePriority()</b>
+method.&nbsp; This is typically called from within the<b> configurePAD()</b>
+method.
+<h5>
+<a NAME="Advantage/Limitation Prepower Code"></a>Advantage/Limitation Prepower
+and Postpower Code</h5>
+Two of the methods which can be used to modify effects generated by an
+ability is the <b>prepower()</b> and the <b>postpower()</b> method.&nbsp;
+The <b>prepower()</b> method is executed just prior to the defenses of
+a target being applied to effects generated by a power.&nbsp; <b>Prepower()</b>
+can be used to change the damage of an attack prior to defenses, change
+the defense that will be used, or even change the amount of defenses the
+target received.&nbsp; The <b>postpower()</b> method is executed after
+the defenses have been applied to the effects, but prior to the effects
+being applied to the target.&nbsp; This methods might be more aply named
+predefense() and postdefense().
+<p>To see how prepower() and postpower() work, lets take the simple example
+of an Energy Blast, with Armor Piercing and Penetrating.&nbsp; Assume the
+Source attacks, hits, and rolls 10 Stun, 4 Body.&nbsp; Also, assume the
+defender has 10ED.&nbsp; The power would generate the effect and pass it
+to the battleEngine.&nbsp; The battleEngine will then start to process
+the effect.&nbsp; So to start we have:
+<p>Effect:&nbsp; Damage 8S/4B.
+<br>Defense: 10ED.
+<p>The first step is to run all prepower() methods.&nbsp; Armor Piercing
+has one.&nbsp; Armor Piercing looks at the attack, see the defender has
+10ED.&nbsp; Armor Piercing would then replace that defense of 10ED with
+a defense of 5ED.&nbsp; Penetrating doesn't do anything cause it needs
+to know the final numbers, after defenses are applied.&nbsp; So after prepower()
+we have:
+<p>Effect: Damage 8S/4B.
+<br><i>Defense: 5ED.</i>
+<p>Now defenses are applied to the effect.&nbsp; So, 5ED is subtracted
+from 8stun, 4body to give us 3stun, 0body.&nbsp; So:
+<p><i>Effect: Damage 3S/0B.</i>
+<br>Defense: 5ED
+<p>Finally, all postpower() methods are run.&nbsp; Armor Piercing doesn't
+need one because it has done it job already.&nbsp; Penetrating, however,
+does need to change things.&nbsp; Penetrating looks at the damage and sees
+that it is 3stun.&nbsp; It then looks at the original die roll and notices
+the roll had 4 body.&nbsp; So Penetrating changes the 3stun to 4stun, since
+a minimum of 4 must get through.&nbsp; So, we have:
+<p><i>Effect: Damage 4S/0B.</i>
+<br>Defense: 5ED
+<p>At this point, the 4stun, 0body would be applied to the target.
+<h5>
+<a NAME="Advantage/Limitation Preactivate Code"></a>Advantage/Limitation
+Preactivate Code</h5>
+The Advantage/Limitation <b>preactivate()</b> method works in the exact
+same way, the power<b> preactivate()</b> method does.&nbsp; Prior to the
+ability being fully activated, the <b>preactivate()</b> methods are executed.&nbsp;
+If any of the preactivates return false, the activation of the ability
+will fail.&nbsp; <b>Preactivate()</b> can be used either to control activation,
+like in activation roll/skill roll.&nbsp; Or it can be used to perform
+tasks everytime the ability is activated, like request input.
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+	"Type": "AttackSweepTargetsResult",
+	"Attacks": [{
+		"Ability": "Offensive Strike",
+		"Type": "AttackSingleTargetResult",
+		"Target": {
+			"STUN": {},
+			"Name": "Light machinery"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Distance": "1"
+			},
+			"Effects": ["Dead"]
+		}
+	}, {
+		"Ability": "Sacrifice Strike",
+		"Type": "AttackSingleTargetResult",
+		"Target": {
+			"STUN": {},
+			"Name": "test"
+		},
+		"Results": {
+			"Hit": true,
+			"Effects": []
+		}
+	}, {
+		"Ability": "Martial Strike",
+		"Type": "AttackSingleTargetResult",
+		"Target": {
+			"STUN": {},
+			"Name": "City gates, small"
+		},
+		"Results": {
+			"Hit": true,
+			"Effects": []
+		}
+	}]
+}

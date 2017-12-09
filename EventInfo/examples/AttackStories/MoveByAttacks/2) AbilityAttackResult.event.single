@@ -1,0 +1,18 @@
+{
+	"Ability": "Loa Blast",
+	"Type": "AttackSingleTargetResult",
+	"Target": {
+		"STUN": {
+			"Max": 37,
+			"Current": -15
+		},
+		"Name": "Blind Justice"
+	},
+	"Results": {
+		"Hit": true,
+		"Knockback": {
+			"Distance": "4"
+		},
+		"Effects": ["Unconscious"]
+	}
+}

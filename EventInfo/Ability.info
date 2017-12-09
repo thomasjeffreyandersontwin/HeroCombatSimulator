@@ -1,0 +1,22 @@
+ability:
+	Name: Spider Strike
+character:
+	name:Spyder
+	Crowd:
+		name:heroes
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:48
+	CurrEndurance:36
+type: single
+target: 
+	name: Blind Justice
+
+	MaxStun:37
+	MaxEndurance:56
+	CurrStun:28
+	CurrEndurance:40
+	Roster:
+		name:heroes
+result: hit
+Effects: 

@@ -1,0 +1,136 @@
+    MessageGroup {
+        String getHitOrMissSummary();
+        
+        MessageGroup merge(MessageGroup, MessageGroup);
+
+        MessageGroup[] getChildren();
+        MessageGroup[] getSummaryChildren(Target relaventTarget);
+
+        MessageGroup[] getSummaryOfEffects();
+    }
+    
+
+
+
+    Blah activates Energy Blast.
+        Blah's activation roll for Energy Blast was successful.  Needed 8.  Got 8.
+
+        + {Shot 1 of {Center of AE Energy Blast hit Hex.  Aureole & Koua Vang affected}} --- Attack summary
+            Blah hit Hex. Blah needed roll <= 25. Rolled 10.
+            Blah hit Aureole. Normal Area Effect attack: Target hit automatically.
+            Blah hit Koua Vang. Normal Area Effect attack: Target hit automatically.
+
+            Blah rolled 6(2) for Damage.
+
+            + Aureole took no damage -- Damage Group
+                Aureole was hit in the STOMACH.
+                Aureole's defenses absorbed 6 Stun and 2 Body.
+
+            + Koua Vang took no damage -- Damage Group
+                Koua Vang was hit in the CHEST.
+                Koua Vang's defenses absorbed 6 Stun and 2 Body.
+
+        + {Shot 2 of {Center of AE Energy Blast hit Hex.  Aureole & Koua Vang affected}}
+            Blah hit Hex. Autofire Shot 2 ToHit based upon first shot roll.  Needed 23 and rolled 10.
+            Blah hit Aureole. Normal Area Effect attack: Target hit automatically.
+            Blah hit Koua Vang. Normal Area Effect attack: Target hit automatically.
+
+            Blah rolled 5(1) for Damage.
+
+            + Aureole took no damage
+                Aureole was hit in the THIGHS.
+                Aureole's defenses absorbed 5 Stun and 1 Body.
+
+            + Koua Vang took no damage
+                Koua Vang was hit in the CHEST.
+                Koua Vang's defenses absorbed 5 Stun and 1 Body.
+
+        + {Shot 3 of {Center of AE Energy Blast hit Hex.  Aureole & Koua Vang affected}}
+            Blah hit Hex. Autofire Shot 3 ToHit based upon first shot roll.  Needed 21 and rolled 10.
+            Blah hit Aureole. Normal Area Effect attack: Target hit automatically.
+            Blah hit Koua Vang. Normal Area Effect attack: Target hit automatically.
+
+            Blah rolled 3(1) for Damage.
+
+            + Aureole took no damage
+                Aureole was hit in the VITALS.
+                Aureole's defenses absorbed 3 Stun and 1 Body.
+
+            + Koua Vang took no damage
+                Koua Vang was hit in the ARMS.
+                Koua Vang's defenses absorbed 3 Stun and 1 Body.
+
+        + {Shot 4 of {Center of AE Energy Blast hit Hex.  Aureole & Koua Vang affected}}
+            Blah hit Hex. Autofire Shot 4 ToHit based upon first shot roll.  Needed 19 and rolled 10.
+            Blah hit Aureole. Normal Area Effect attack: Target hit automatically.
+            Blah hit Koua Vang. Normal Area Effect attack: Target hit automatically.
+
+            Blah rolled 1(0) for Damage.
+
+            + Aureole took no damage
+                Aureole was hit in the VITALS.
+                Aureole's defenses absorbed 1 Stun and 0 Body.
+
+            + Koua Vang took no damage
+                Koua Vang was hit in the SHOULDERS.
+                Koua Vang's defenses absorbed 1 Stun and 0 Body.
+
+        + {Shot 4 of {Center of AE Energy Blast hit Hex.  Aureole & Koua Vang affected}}
+            Blah hit Hex. Autofire Shot 5 ToHit based upon first shot roll.  Needed 17 and rolled 10.
+            Blah hit Aureole. Normal Area Effect attack: Target hit automatically.
+            Blah hit Koua Vang. Normal Area Effect attack: Target hit automatically.
+
+            Blah rolled 4(1) for Damage.
+
+            + Aureole took no damage
+                Aureole was hit in the VITALS.
+                Aureole's defenses absorbed 4 Stun and 1 Body.
+
+            + Koua Vang took no damage
+                Koua Vang was hit in the VITALS.
+                Koua Vang's defenses absorbed 4 Stun and 1 Body.
+
+        + Knockback
+            + Aureole was knocked back 3" and did not collide with anything.
+                Blah rolled for 3 on 2d6 for Knockback Distance versus Aureole
+                Aureole rolled 4(1) for knockback damage.
+                Aureole was knocked back 3" and did not collide with anything.
+
+            + Koua Vang was not knocked back.
+                Blah rolled for 4 on 2d6 for Knockback Distance versus Koua Vang
+                Koua Vang was not knocked back.
+
+        + Blah used 5 charge(s) used for Energy Blast. 11 charges remaining. 0 additional clips remaining.
+            5 charge(s) used for Energy Blast. 11 charges remaining. 0 additional clips remaining.
+
+    + Summary
+        + Koua Vang was {hit 3 times}, {took no damage}, and {was not knocked back}.
+            + {Shot 1 of {Center of AE Energy Blast hit Hex.  Aureole & Koua Vang affected}}
+                + Koua Vang took no damage
+                    Koua Vang was hit in the ARMS.
+                    Koua Vang's defenses absorbed 3 Stun and 1 Body.
+
+            + {Shot 2 of {Center of AE Energy Blast hit Hex.  Aureole & Koua Vang affected}}
+                + Koua Vang took no damage
+                    Koua Vang was hit in the ARMS.
+                    Koua Vang's defenses absorbed 3 Stun and 1 Body.
+
+            + {Shot 3 of {Center of AE Energy Blast hit Hex.  Aureole & Koua Vang affected}}
+                + Koua Vang took no damage
+                    Koua Vang was hit in the ARMS.
+                    Koua Vang's defenses absorbed 3 Stun and 1 Body.
+
+            + {Shot 4 of {Center of AE Energy Blast hit Hex.  Aureole & Koua Vang affected}}
+                + Koua Vang took no damage
+                    Koua Vang was hit in the ARMS.
+                    Koua Vang's defenses absorbed 3 Stun and 1 Body.
+
+            + {Shot 5 of {Center of AE Energy Blast {hit Hex}.  Aureole & Koua Vang affected}}
+                + Koua Vang took no damage
+                    Koua Vang was hit in the ARMS.
+                    Koua Vang's defenses absorbed 3 Stun and 1 Body.
+
+            + Koua Vang was not knocked back.
+                Blah rolled for 4 on 2d6 for Knockback Distance versus Koua Vang
+                Koua Vang was not knocked back.
+

@@ -1,0 +1,111 @@
+{
+	"Ability": "Air - Strike",
+	"Type": "AttackSingleTargetResult",
+	"Targets": [{
+		"Target": {
+			"Name": "Hex"
+		},
+		"Results": {
+			"Hit": true,
+			"Effects": []
+		}
+	}, {
+		"Target": {
+			"STUN": {
+				"Max": 10,
+				"Current": -26
+			},
+			"BODY": {
+				"Max": 10,
+				"Current": -26
+			},
+			"Name": "Spyder"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Obstacle Collision": {
+					"Obstacle Damage Results:": {
+						"Effects": ["Dead", "Destroyed"]
+					},
+					"BODY": {
+						"Max": 10,
+						"Current": -18
+					},
+					"Name": "City gates, small"
+				},
+				"Distance": "12"
+			},
+			"Effects": ["Dead"]
+		}
+	}, {
+		"Target": {
+			"Name": "Hex"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Distance": "17"
+			},
+			"Effects": []
+		}
+	}, {
+		"Target": {
+			"STUN": {
+				"Max": 10,
+				"Current": -25
+			},
+			"BODY": {
+				"Max": 10,
+				"Current": -25
+			},
+			"Name": "Ogun"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Obstacle Collision": {
+					"Obstacle Damage Results:": {
+						"Effects": ["Dead", "Destroyed"]
+					},
+					"BODY": {
+						"Max": 7,
+						"Current": -36
+					},
+					"Name": "test"
+				},
+				"Distance": "17"
+			},
+			"Effects": ["Dead"]
+		}
+	}, {
+		"Target": {
+			"STUN": {
+				"Max": 13,
+				"Current": -14
+			},
+			"BODY": {
+				"Max": 13,
+				"Current": -14
+			},
+			"Name": "Blind Justice"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Obstacle Collision": {
+					"Obstacle Damage Results:": {
+						"Effects": ["Dead", "Destroyed"]
+					},
+					"BODY": {
+						"Max": 4,
+						"Current": -49
+					},
+					"Name": "Light machinery"
+				},
+				"Distance": "17"
+			},
+			"Effects": ["Dead"]
+		}
+	}]
+}

@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<TEMPLATE version="3.0" extends="builtIn.Superheroic.hdt">
+<MAINAPP />
+<CHARACTERISTICS />
+<SKILLS>
+
+
+	<REMOVE>COMBAT_LEVELS</REMOVE>
+		<COMBAT_LEVELS DISPLAY="Combat Skill Levels" ALLOWSOTHERMODIFIERS="No" EXCLUSIVE="No" 
+			LVLCOST="2" LVLVAL="1" BASECOST="0" LEVELSTART="1" MINVAL="1">
+			<TYPE>ATTACK</TYPE>
+			<OPTION XMLID="SINGLESINGLE" DISPLAY="with any single attack with one specific weapon" 
+				LVLCOST="1" LVLVAL="1" ALLOWSOTHERMODIFIERS="No" ALLOWSOTHERADDERS="Yes">
+				<SOURCE>Fantasy Hero</SOURCE>
+			</OPTION>
+			<OPTION XMLID="SINGLE" DISPLAY="with any single attack" LVLCOST="2" LVLVAL="1" 
+				ALLOWSOTHERMODIFIERS="No" ALLOWSOTHERADDERS="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<SOURCE>Sidekick</SOURCE>
+			</OPTION>
+			<OPTION XMLID="SINGLESTRIKE" DISPLAY="with any single Strike" LVLCOST="2" LVLVAL="1" 
+				ALLOWSOTHERMODIFIERS="No" ALLOWSOTHERADDERS="Yes">
+				<SOURCE>Fantasy Hero</SOURCE>
+			</OPTION>
+			<OPTION XMLID="STRIKE" DISPLAY="with any Strike" LVLCOST="3" LVLVAL="1" 
+				ALLOWSOTHERMODIFIERS="No" ALLOWSOTHERADDERS="Yes">
+				<SOURCE>Fantasy Hero</SOURCE>
+			</OPTION>
+			<OPTION XMLID="TIGHT" DISPLAY="with any three maneuvers or a tight group of attacks" 
+				LVLCOST="3" LVLVAL="1" ALLOWSOTHERMODIFIERS="No" ALLOWSOTHERADDERS="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<SOURCE>Sidekick</SOURCE>
+			</OPTION>
+			<OPTION XMLID="MARTIAL" DISPLAY="with Martial Maneuvers" LVLCOST="3" LVLVAL="1" 
+				ALLOWSOTHERMODIFIERS="No" ALLOWSOTHERADDERS="Yes">
+				<SOURCE>Fantasy Hero</SOURCE>
+			</OPTION>
+			<OPTION XMLID="MAGIC" DISPLAY="with Magic" LVLCOST="3" LVLVAL="1" 
+				ALLOWSOTHERMODIFIERS="No" ALLOWSOTHERADDERS="Yes">
+				<SOURCE>Fantasy Hero</SOURCE>
+			</OPTION>
+			<OPTION XMLID="BROAD" DISPLAY="with a broadly-defined category of attacks" LVLCOST="4" LVLVAL="1" 
+				ALLOWSOTHERMODIFIERS="No" ALLOWSOTHERADDERS="Yes">
+				<SOURCE>The Ultimate Skill</SOURCE>
+			</OPTION>
+			<OPTION XMLID="HTHDCV" DISPLAY="DCV with HTH or Ranged Combat" LVLCOST="4" LVLVAL="1" 
+				ALLOWSOTHERMODIFIERS="No" ALLOWSOTHERADDERS="Yes">
+				<SOURCE>The Ultimate Skill</SOURCE>
+			</OPTION>
+			<OPTION XMLID="DECV" DISPLAY="DECV versus all Mental Powers and attacks" LVLCOST="4" LVLVAL="1" 
+				ALLOWSOTHERMODIFIERS="No" ALLOWSOTHERADDERS="Yes">
+				<SOURCE>The Ultimate Skill</SOURCE>
+			</OPTION>
+			<OPTION XMLID="HTH" DISPLAY="with HTH Combat" LVLCOST="5" LVLVAL="1">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<SOURCE>Sidekick</SOURCE>
+			</OPTION>
+			<OPTION XMLID="RANGED" DISPLAY="with Ranged Combat" LVLCOST="5" LVLVAL="1">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<SOURCE>Sidekick</SOURCE>
+			</OPTION>
+			<OPTION XMLID="MENTAL" DISPLAY="with Mental Combat" LVLCOST="5" LVLVAL="1">
+				<SOURCE>Fantasy Hero</SOURCE>
+			</OPTION>
+			<OPTION XMLID="DCV" DISPLAY="with DCV" LVLCOST="5" LVLVAL="1">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			</OPTION>
+			<OPTION XMLID="TWOOCV" DISPLAY="OCV with any two categories of combat" LVLCOST="4" LVLVAL="1" >
+				<SOURCE>The Ultimate Skill</SOURCE>
+			</OPTION>
+			<OPTION XMLID="TWODCV" DISPLAY="DCV with any two categories of combat" LVLCOST="4" LVLVAL="1">
+				<SOURCE>The Ultimate Skill</SOURCE>
+			</OPTION>
+			<OPTION XMLID="HTHRANGED" DISPLAY="with HTH and Ranged Combat" LVLCOST="6" LVLVAL="1">
+				<SOURCE>The Ultimate Skill</SOURCE>
+			</OPTION>
+			<OPTION XMLID="HTHMENTAL" DISPLAY="with HTH and Mental Combat" LVLCOST="6" LVLVAL="1">
+				<SOURCE>The Ultimate Skill</SOURCE>
+			</OPTION>
+			<OPTION XMLID="MENTALRANGED" DISPLAY="with Mental and Ranged Combat" LVLCOST="6" LVLVAL="1">
+				<SOURCE>The Ultimate Skill</SOURCE>
+			</OPTION>
+			<OPTION XMLID="ALL" DISPLAY="with All Combat" LVLCOST="8" LVLVAL="1">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<SOURCE>Sidekick</SOURCE>
+			</OPTION>
+			<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			<SOURCE>Sidekick</SOURCE>
+			<DEFINITION>(Hero System Fifth Edition Rule Book, page 35-36; Revised, page 53-55) Once a character knows 
+				how to use an attack, he can improve his skill with it by buying Combat Skill 
+				Levels. Combat Skill Levels (CSLs) have several potential uses, though a character 
+				can only use a CSL for one thing at a time. A character can change the assignment 
+				of his CSLs as a Zero-Phase Action (after he attacks, his CSLs stay as they are 
+				until his next Phase begins or he Aborts to a defensive Action). </DEFINITION>
+			<ADDER XMLID="CLSATTACHEDTO" BASECOST="0.0" LEVELS="0" DISPLAY="HCS: CLs attached to:" ALIAS="HCS: CLs attached to:"  				INPUTLABEL="Ability" 				OTHERINPUT="Yes" EXCLUSIVE="No"  MULTIPLIER="1.0" GRAPHIC="Burst" COLOR="255 255 255" SFX="Default" SHOW_ACTIVE_COST="Yes" 				INCLUDE_NOTES_IN_PRINTOUT="Yes" NAME="" SHOWALIAS="Yes" PRIVATE="No" REQUIRED="No" GROUP="No" SELECTED="YES">
+       				<NOTES />
+      			</ADDER>
+      			<ADDER XMLID="OCVLEVEL" BASECOST="0" LEVELS="0" ALIAS="HCS: Assign OCV Level" INPUTLABEL=" Assign" OTHERINPUT="Yes" MULTIPLIER="0" 				GRAPHIC="Burst" COLOR="255 255 255" SFX="Default" SHOW_ACTIVE_COST="Yes" INCLUDE_NOTES_IN_PRINTOUT="Yes" NAME="" INPUT="2" 				SHOWALIAS="Yes" PRIVATE="No" REQUIRED="No" GROUP="No" SELECTED="YES">
+        			<NOTES />
+      			</ADDER>
+      			<ADDER XMLID="DCVLEVEL" BASECOST="0" LEVELS="0" ALIAS="HCS: Assign DCV Level" INPUTLABEL=" Assign" OTHERINPUT="Yes" MULTIPLIER="0" 				GRAPHIC="Burst" COLOR="255 255 255" SFX="Default" SHOW_ACTIVE_COST="Yes" INCLUDE_NOTES_IN_PRINTOUT="Yes" NAME="" INPUT="2" 					SHOWALIAS="Yes" PRIVATE="No" REQUIRED="No" GROUP="No" SELECTED="YES">
+        			<NOTES />
+      			</ADDER>
+      			<ADDER XMLID="DCLEVEL" BASECOST="0" LEVELS="0" ALIAS="HCS: Assign DC Level" INPUTLABEL=" Assign" OTHERINPUT="Yes" MULTIPLIER="0" 				GRAPHIC="Burst" COLOR="255 255 255" SFX="Default" SHOW_ACTIVE_COST="Yes" INCLUDE_NOTES_IN_PRINTOUT="Yes" NAME="" INPUT="2" 				SHOWALIAS="Yes" PRIVATE="No" REQUIRED="No" GROUP="No" SELECTED="YES">
+        			<NOTES />
+      			</ADDER>
+
+			<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			<SOURCE>Sidekick</SOURCE>
+			<DEFINITION>(Hero System Fifth Edition Rule Book, page 35-36; Revised, page 53-55) Once a character knows 
+				how to use an attack, he can improve his skill with it by buying Combat Skill 
+				Levels. Combat Skill Levels (CSLs) have several potential uses, though a character 
+				can only use a CSL for one thing at a time. A character can change the assignment 
+				of his CSLs as a Zero-Phase Action (after he attacks, his CSLs stay as they are 
+				until his next Phase begins or he Aborts to a defensive Action). </DEFINITION>
+		</COMBAT_LEVELS>
+
+
+	<REMOVE>POWERSKILL</REMOVE>
+
+		<POWERSKILL DISPLAY="Power" INPUTLABEL="Type" OTHERINPUT="Yes" MINCOST="1" 
+			FAMILIARITYROLL="8" FAMILIARITYCOST="1" EXCLUSIVE="No">
+			<CHARACTERISTIC_CHOICE>
+				<ITEM CHARACTERISTIC="STR" BASECOST="3" LVLCOST="2" LVLVAL="1" />
+				<ITEM CHARACTERISTIC="DEX" BASECOST="3" LVLCOST="2" LVLVAL="1" />
+				<ITEM CHARACTERISTIC="CON" BASECOST="3" LVLCOST="2" LVLVAL="1" />
+				<ITEM CHARACTERISTIC="BODY" BASECOST="3" LVLCOST="2" LVLVAL="1" />
+				<ITEM CHARACTERISTIC="INT" BASECOST="3" LVLCOST="2" LVLVAL="1" />
+				<ITEM CHARACTERISTIC="EGO" BASECOST="3" LVLCOST="2" LVLVAL="1" />
+				<ITEM CHARACTERISTIC="PRE" BASECOST="3" LVLCOST="2" LVLVAL="1" />
+				<ITEM CHARACTERISTIC="COM" BASECOST="3" LVLCOST="2" LVLVAL="1" />
+				<ITEM CHARACTERISTIC="GENERAL" BASECOST="3" LVLCOST="2" LVLVAL="1" />
+			</CHARACTERISTIC_CHOICE>
+
+			<ADDER XMLID="POWERSKILLATTACHEDTO" BASECOST="0.0" LEVELS="0" DISPLAY="HCS: Skill attached to:" ALIAS="HCS: Skill attached to:"  						INPUTLABEL="Ability" OTHERINPUT="Yes" EXCLUSIVE="No"  MULTIPLIER="1.0" GRAPHIC="Burst" COLOR="255 255 255" SFX="Default"				SHOW_ACTIVE_COST="Yes" INCLUDE_NOTES_IN_PRINTOUT="Yes" NAME="" SHOWALIAS="Yes" PRIVATE="No" REQUIRED="No" 				GROUP="No" ELECTED="YES">
+       				<NOTES />
+      			</ADDER>
+			<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			<SOURCE>Sidekick</SOURCE>
+			<DEFINITION>(Hero System Fifth Edition Rule Book, page 46-47; Revised, page 67) This Skill represents a 
+				character's ability to use one of his powers or abilities in creative or unusual 
+				ways. </DEFINITION>
+		</POWERSKILL>
+</SKILLS>
+<SKILL_ENHANCERS />
+<MARTIAL_ARTS />
+<PERKS />
+<TALENTS />
+<POWERS>
+	<REMOVE>ABSORPTION</REMOVE>
+		<ABSORPTION DISPLAY="Absorption" WARNSIGN="Yes" OPTIONLABEL="Energy Type" 
+			STANDARDEFFECTALLOWED="Yes" DURATION="CONSTANT" TARGET="SELFONLY" RANGE="SELF" 
+			USESEND="No" BASECOST="0" LVLCOST="5" LVLVAL="1" LEVELSTART="1" MINVAL="0" MINCOST="0" 
+			INPUTLABEL="Absorbed Points Go Into" OTHERINPUT="Yes">
+			<TYPE>ADJUSTMENT</TYPE>
+			<ADDER XMLID="PLUSONEHALFDIE" DISPLAY="+1/2 d6" BASECOST="3" EXCLUSIVE="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<EXCLUDES>PLUSONEPIP</EXCLUDES>
+			</ADDER>
+			<ADDER XMLID="PLUSONEPIP" DISPLAY="+1 pip" BASECOST="2" EXCLUSIVE="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<EXCLUDES>PLUSONEHALFDIE</EXCLUDES>
+			</ADDER>
+			<ADDER XMLID="INCREASEDMAX" DISPLAY="Increased Maximum (+[LVL] points)" BASECOST="0" 
+				LVLCOST="1" LVLVAL="2" LEVELSTART="2" MINVAL="1" EXCLUSIVE="Yes" >
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			</ADDER>
+			<ADDER XMLID="ADDITIONALPOINTSGOINTO" BASECOST="0.0" LEVELS="0" ALIAS="HCS: Additional Absorbed Points Go Into:"  							INPUTLABEL="CHA/Ability/SFX" OTHERINPUT="Yes" EXCLUSIVE="No" POSITION="0" MULTIPLIER="1.0" GRAPHIC="Burst" COLOR="255 255 					255" SFX="Default" SHOW_ACTIVE_COST="Yes" INCLUDE_NOTES_IN_PRINTOUT="Yes" NAME="" SHOWALIAS="Yes" PRIVATE="No" REQUIRED="No" 				GROUP="No" SELECTED="YES">
+			</ADDER>
+			<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			<DEFINITION>(Hero System Fifth Edition Rule Book, page 88; Revised, page 131-133) A character with Absorption 
+				may absorb the BODY damage of an attack and add that energy, as Character Points, 
+				to a specific Power or Characteristic. Some examples of Absorption include a 
+				character whose STR increases when he's struck with physical blows or an alien who 
+				feeds off energy. When a character purchases Absorption, he specifies whether it 
+				works versus energy or physical attacks and where the absorbed Character Points 
+				go.</DEFINITION>
+			<OPTION XMLID="ENERGY" BASECOST="0" LVLCOST="5" LVLVAL="1" DISPLAY="energy">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			</OPTION>
+			<OPTION XMLID="PHYSICAL" BASECOST="0" LVLCOST="5" LVLVAL="1" DISPLAY="physical">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			</OPTION>
+			<MODIFIER XMLID="VARYINGEFFECT" DISPLAY="Varying Effect" BASECOST=".75" EXCLUSIVE="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<DEFINITION>(Hero System Fifth Edition Rule Book, page 88; Revised, page 133) Absorption with this 
+					Advantage can be switched from phase to phase to work against either physical 
+					or energy attacks. </DEFINITION>
+			</MODIFIER>
+			<MODIFIER XMLID="LIMITEDPHENOMENA" DISPLAY="Limited Phenomena" BASECOST="-.25" 
+				MAXCOST="-.25" MINCOST="-1" FIXEDVALUE="No">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<DEFINITION>(Hero System Fifth Edition Rule Book, page 88; Revised, page 133) Absorption with this 
+					Limitation only works against certain types of physical or energy phenomena. 
+					</DEFINITION>
+			</MODIFIER>
+			<MODIFIER XMLID="ABSORPTIONASDEFENSE" DISPLAY="Absorption As A Defense" BASECOST="1" 
+				MAXCOST="1" MINCOST="1" FIXEDVALUE="Yes" MULTIPLIER="Yes">
+				<SOURCE>The Ultimate Brick</SOURCE>
+				<DEFINITION>(The Ultimate Brick, page 35) If the GM wants to simplify how 
+					Absorption works as a defense, double the cost with this multiplier and have 
+					the total rolled on the dice count as both PD and ED which the character can 
+					apply against any attack he Absorbs that Phase. </DEFINITION>
+			</MODIFIER>
+			<MODIFIER XMLID="RESISTANT" DISPLAY="Provides Resistant PD and ED" BASECOST=".5" 
+				MAXCOST=".5" MINCOST=".5" FIXEDVALUE="Yes">
+    			<MODIFIER XMLID="ONLYUPTOROLLED" DISPLAY="Only Up To Amount Rolled" ABBREVIATION="OUTR" BASECOST="-.5"  	
+     				EXCLUSIVE="Yes"></MODIFIER>				
+				<REQUIRES>ABSORPTIONASDEFENSE</REQUIRES>
+				<SOURCE>The Ultimate Brick</SOURCE>
+				<DEFINITION>(The Ultimate Brick, page 35) If the GM wants to simplify how 
+					Absorption works as a defense, double the cost with this multiplier and have 
+					the total rolled on the dice count as both PD and ED which the character can 
+					apply against any attack he Absorbs that Phase. </DEFINITION>
+			</MODIFIER>
+		</ABSORPTION>
+	<REMOVE>AID</REMOVE>
+		<AID DISPLAY="Aid" STANDARDEFFECTALLOWED="Yes" DURATION="INSTANT" DEFENSE="POWER" 
+			TARGET="DCV" RANGE="No" USESEND="No" BASECOST="0" LVLCOST="10" LVLVAL="1" 
+			LEVELSTART="1" MINVAL="0" MINCOST="0" INPUTLABEL="Aid to" OTHERINPUT="Yes">
+			<TYPE>ADJUSTMENT</TYPE>
+			<ADDER XMLID="PLUSONEHALFDIE" DISPLAY="+1/2 d6" BASECOST="5" EXCLUSIVE="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<EXCLUDES>PLUSONEPIP</EXCLUDES>
+			</ADDER>
+			<ADDER XMLID="PLUSONEPIP" DISPLAY="+1 pip" BASECOST="3" EXCLUSIVE="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<EXCLUDES>PLUSONEHALFDIE</EXCLUDES>
+			</ADDER>
+    			<ADDER XMLID="ADDITIONALPOINTSGOINTO" DISPLAY="HCS: Additional Power/Stat" ABBREVIATION="XFERTO" BASECOST="-.0"	
+				INPUTLABEL="Aid To" OTHERINPUT="Yes" EXCLUSIVE="No">
+			</ADDER>
+			<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			<SOURCE>Sidekick</SOURCE>
+			<DEFINITION>(Hero System Fifth Edition Rule Book, page 89; Revised, page 133-134) A character with Aid may 
+				increase one of his or someone else's Characteristics or Powers. Some examples of 
+				Aid include a character who acts as a "living battery" to boost other's STR and 
+				END, or an enchanted item which increases a wizard's magical powers. A character 
+				must define what Characteristic or Power his Aid can increase when he buys 
+				it.</DEFINITION>
+			<ADDER XMLID="INCREASEDMAX" DISPLAY="Increased Maximum (+[LVL] points)" BASECOST="0" 
+				LVLCOST="1" LVLVAL="2" LEVELSTART="2" MINVAL="1" EXCLUSIVE="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			</ADDER>
+			<MODIFIER XMLID="ONLYTOSTARTING" DISPLAY="Only Restores to Starting Values" 
+				BASECOST="-.5" EXCLUSIVE="Yes" >
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<DEFINITION>(Hero System Fifth Edition Rule Book, page 89; Revised, page 134) A character can only use 
+					AID with this Limitation to increase Characteristics or Powers which are below 
+					their normal starting levels.</DEFINITION>
+			</MODIFIER>
+		</AID>
+
+
+<REMOVE>MINDCONTROL</REMOVE>
+
+		<MINDCONTROL DISPLAY="Mind Control" INPUTLABEL="Class of Minds" OTHERINPUT="Yes" 
+			STANDARDEFFECTALLOWED="Yes" DEFENSE="MENTAL" DURATION="INSTANT" TARGET="ECV" 
+			RANGE="LOS" VISIBLE="Yes" USESEND="Yes" BASECOST="0" LVLCOST="5" LVLVAL="1" 
+			LEVELSTART="1" MINVAL="0">
+			<EXAMPLE>
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			</EXAMPLE>
+			<EXAMPLE>Human<SOURCE>Hero System Fifth Edition Rule Book</SOURCE> </EXAMPLE>
+			<EXAMPLE>Animal<SOURCE>Hero System Fifth Edition Rule Book</SOURCE> </EXAMPLE>
+			<EXAMPLE>Machine<SOURCE>Hero System Fifth Edition Rule Book</SOURCE> </EXAMPLE>
+			<EXAMPLE>Alien<SOURCE>Hero System Fifth Edition Rule Book</SOURCE> </EXAMPLE>
+			<ADDER XMLID="PLUSONEHALFDIE" DISPLAY="+1/2 d6" BASECOST="3" EXCLUSIVE="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<EXCLUDES>PLUSONEPIP</EXCLUDES>
+			</ADDER>
+			<ADDER XMLID="PLUSONEPIP" DISPLAY="+1 pip" BASECOST="2" EXCLUSIVE="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<EXCLUDES>PLUSONEHALFDIE</EXCLUDES>
+			</ADDER>
+      			<ADDER XMLID="MULTIPLECLASSES" DISPLAY="Additional Class of Minds" BASECOST="10" EXCLUSIVE="No"
+				INPUTLABEL="Class of Minds" OTHERINPUT="Yes">
+				<EXAMPLE></EXAMPLE>
+      				<EXAMPLE>Human</EXAMPLE>
+      				<EXAMPLE>Animal</EXAMPLE>
+      				<EXAMPLE>Machine</EXAMPLE>
+     				 <EXAMPLE>Alien</EXAMPLE>
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			</ADDER>
+			<TYPE>MENTAL</TYPE>
+			<TYPE>ATTACK</TYPE>
+			<MODIFIER XMLID="INVISIBLE" DISPLAY="Invisible Power Effects" EXCLUSIVE="Yes">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<SOURCE>Sidekick</SOURCE>
+				<OPTION XMLID="FULL" DISPLAY="Fully Invisible" BASECOST=".5">
+					<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+					<SOURCE>Sidekick</SOURCE>
+				</OPTION>
+				<OPTION XMLID="SINGLE" DISPLAY="Single Sense" BASECOST=".25"/>
+				<OPTION XMLID="HEARING" DISPLAY="Hearing Group" BASECOST=".25"/>
+				<OPTION XMLID="MENTAL" DISPLAY="Mental Group" BASECOST=".5"/>
+				<OPTION XMLID="RADIO" DISPLAY="Radio Group" BASECOST=".25"/>
+				<OPTION XMLID="SIGHT" DISPLAY="Sight Group" BASECOST=".5"/>
+				<OPTION XMLID="SMELL" DISPLAY="Smell/Taste Group" BASECOST=".25"/>
+				<OPTION XMLID="TOUCH" DISPLAY="Touch Group" BASECOST=".25"/>
+				<ADDER XMLID="ADDITIONALGROUP" DISPLAY="Additional Group" EXCLUSIVE="No">
+					<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+					<OPTION XMLID="HEARING" DISPLAY="Hearing Group" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="MENTAL" DISPLAY="Mental Group" BASECOST=".5" MINCOST=".5" 
+						MAXCOST=".5"/>
+					<OPTION XMLID="RADIO" DISPLAY="Radio Group" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="SIGHT" DISPLAY="Sight Group" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="SMELL" DISPLAY="Smell/Taste Group" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="TOUCH" DISPLAY="Touch Group" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+				</ADDER>
+				<ADDER XMLID="ADDITIONALSENSE" DISPLAY="Additional Sense" EXCLUSIVE="No">
+					<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+					<OPTION XMLID="NORMALHEARING" DISPLAY="Normal Hearing" BASECOST=".25" 
+						MINCOST=".25" MAXCOST=".25"/>
+					<OPTION XMLID="ACTIVESONAR" DISPLAY="Active Sonar" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="MENTALAWARENESS" DISPLAY="Mental Awareness" BASECOST=".5" 
+						MINCOST=".5" MAXCOST=".5"/>
+					<OPTION XMLID="MINDSCAN" DISPLAY="Mind Scan" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="RADIOPERCEPTION" DISPLAY="Radio Perception" BASECOST=".25" 
+						MINCOST=".25" MAXCOST=".25"/>
+					<OPTION XMLID="RADIOTRANSMIT" DISPLAY="Radio Perception/Transmission" 
+						BASECOST=".25" MINCOST=".25" MAXCOST=".25"/>
+					<OPTION XMLID="HRRP" DISPLAY="High Range Radio Perception" BASECOST=".25" 
+						MINCOST=".25" MAXCOST=".25"/>
+					<OPTION XMLID="RADAR" DISPLAY="Radar" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="NORMALSIGHT" DISPLAY="Normal Sight" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="NIGHTVISION" DISPLAY="Nightvision" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="NORMALSMELL" DISPLAY="Normal Smell" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="NORMALTASTE" DISPLAY="Normal Taste" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="NORMALTOUCH" DISPLAY="Normal Touch" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="CLAIRSENTIENCE" DISPLAY="Clairsentience" BASECOST=".25" 
+						MINCOST=".25" MAXCOST=".25"/>
+					<OPTION XMLID="DETECT" DISPLAY="Detect" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="FINDWEAKNESS" DISPLAY="Find Weakness" BASECOST=".25" 
+						MINCOST=".25" MAXCOST=".25"/>
+					<OPTION XMLID="IR" DISPLAY="Infrared Perception" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="NRAY" DISPLAY="N-Ray Perception" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="SPATIAL" DISPLAY="Spatial Awareness" BASECOST=".25" 
+						MINCOST=".25" MAXCOST=".25"/>
+					<OPTION XMLID="SENSORY" DISPLAY="Sensory Talents" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+					<OPTION XMLID="UV" DISPLAY="Ultraviolet Perception" BASECOST=".25" 
+						MINCOST=".25" MAXCOST=".25"/>
+					<OPTION XMLID="ULTRASONIC" DISPLAY="Ultrasonic Perception" BASECOST=".25" 
+						MINCOST=".25" MAXCOST=".25"/>
+					<OPTION XMLID="OTHER" DISPLAY="Other" BASECOST=".25" MINCOST=".25" 
+						MAXCOST=".25"/>
+				</ADDER>
+
+
+ 
+				<MODIFIER XMLID="SFXONLY" DISPLAY="SFX Only" BASECOST="-1" MINCOST="-1" 
+					MAXCOST="-1" EXCLUSIVE="Yes">
+					<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+					<EXCLUDES>SOURCEONLY</EXCLUDES>
+				</MODIFIER>
+				<MODIFIER XMLID="SOURCEONLY" DISPLAY="Source Only" BASECOST="-1" MINCOST="-1" 
+					MAXCOST="-1" EXCLUSIVE="Yes">
+					<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+					<EXCLUDES>SFXONLY</EXCLUDES>
+				</MODIFIER>
+				<MODIFIER XMLID="EFFECTS" DISPLAY="Hide effects of Power" BASECOST="1" MINCOST="1" 
+					MAXCOST="1" EXCLUSIVE="Yes" >
+					<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				</MODIFIER>
+
+				<DEFINITION>(Hero System Fifth Edition Rule Book, page 168-169) Most Powers and/or 
+					their sources can be perceived by three Sense Groups. The special effects of a 
+					Power with Invisible Power Effects are not perceivable when it is in use. 
+					</DEFINITION>
+			</MODIFIER>
+			<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+			<SOURCE>Sidekick</SOURCE>
+			<DEFINITION>(Hero System Fifth Edition Rule Book, page 131-132; Revised, page 203-204) A character with this 
+				Mental Power can take control of another character's mind, and thus of his actions. 
+				Examples of Mind Control include psionic domination powers, some forms of 
+				brainwashing, and hypnosis.</DEFINITION>
+			<MODIFIER XMLID="TELEPATHIC" DISPLAY="Telepathic" BASECOST=".25" >
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<DEFINITION>(Hero System Fifth Edition Rule Book, page 132; Revised, page 204) This Advantage 
+					represents Mind Control which doesn't require verbal communication.</DEFINITION>
+			</MODIFIER>
+			<MODIFIER XMLID="SETEFFECT" DISPLAY="Set Effect" BASECOST="-.5" MINCOST="-2" 
+				MAXCOST="-.25" FIXEDVALUE="No">
+				<SOURCE>Hero System Fifth Edition Rule Book</SOURCE>
+				<SOURCE>Sidekick</SOURCE>
+				<DEFINITION>(Hero System Fifth Edition Rule Book, page 132; Revised, page 204) This Limitation 
+					represents Mind Control which only allows a single command. An example would 
+					be: Only To Control/Inflict Emotions (Empathy) or Single Command "Go 
+					Home".</DEFINITION>
+			</MODIFIER>
+		</MINDCONTROL>
+
+
+  		<HEROID XMLID="HEROID" DISPLAY="Hero ID" WARNSIGN="Yes"  DURATION="CONSTANT" TARGET="SELFONLY" RANGE="SELF" USESEND="No"
+				BASECOST="0" MINVAL="0" MINCOST="0">
+			<DEFINITION>Added for HCS.</DEFINITION>
+    		</HEROID>
+
+
+</POWERS>
+<MODIFIERS>
+    		<MODIFIER XMLID="ADDITIONALSFX" DISPLAY="HCS: Additional Special Effect" ABBREVIATION="ASFX" BASECOST="-.0"
+			INPUTLABEL="SFX" OTHERINPUT="Yes" EXCLUSIVE="No"></MODIFIER>
+    		<MODIFIER XMLID="ENDRESERVENAME" DISPLAY="HCS: Endurance Reserve Name" ABBREVIATION="ERN" BASECOST="-.0"
+			INPUTLABEL="Name" OTHERINPUT="Yes" EXCLUSIVE="Yes"></MODIFIER>
+    		<MODIFIER XMLID="TRANSFERFROM" DISPLAY="HCS: Transfer From Power/Stat" ABBREVIATION="XFERFRM" BASECOST="-.0"
+			INPUTLABEL="Transfer From" OTHERINPUT="Yes" EXCLUSIVE="No"></MODIFIER>
+    		<MODIFIER XMLID="TRANSFERTO" DISPLAY="HCS: Transfer To Power/Stat" ABBREVIATION="XFERTO" BASECOST="-.0"
+			INPUTLABEL="Transfer To" OTHERINPUT="Yes" EXCLUSIVE="No"></MODIFIER>
+    		<MODIFIER XMLID="ADDITIONALPOINTSGOINTO" DISPLAY="HCS: Additional Power/Stat" ABBREVIATION="XFERTO" BASECOST="-.0"
+			INPUTLABEL="Transfer To" OTHERINPUT="Yes" EXCLUSIVE="No"></MODIFIER>
+    		<MODIFIER XMLID="AUTOACTIVATE" DISPLAY="HCS: Activate Automatically" BASECOST="-.0" EXCLUSIVE="Yes">
+        		<DEFINITION>Hero Combat Simulator: Sets the automatically activate setting for a power.
+			  Automatically activated powers are started at the beginning of the characters phase automatically.  
+			This setting can also be adjusted inside of HCS both before and during a battle.</DEFINITION>
+    		</MODIFIER>
+    		<MODIFIER XMLID="NOAUTOACTIVATE" DISPLAY="HCS: Do Not Activate Automatically" BASECOST="-.0" EXCLUSIVE="Yes">
+        		<DEFINITION>Hero Combat Simulator: Sets the automatically activate setting for a power.  Automatically
+			 activated powers are started at the beginning of the characters phase automatically.  This setting can
+			 also be adjusted inside of HCS both before and during a battle.</DEFINITION>
+    		</MODIFIER>
+    		<MODIFIER XMLID="ABILITYTEMPLATE" DISPLAY="HCS: Ability Template" ABBREVIATION="ATEM" BASECOST="-.0"
+			INPUTLABEL="Base Ability" OTHERINPUT="Yes" EXCLUSIVE="No"></MODIFIER>
+</MODIFIERS>
+<DISADVANTAGES/>		
+</TEMPLATE>

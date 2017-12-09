@@ -1,0 +1,363 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./effectShrinking_files/filelist.xml">
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>pruttman</o:Author>
+  <o:LastAuthor>pruttman</o:LastAuthor>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>6</o:TotalTime>
+  <o:Created>2001-08-20T01:46:00Z</o:Created>
+  <o:LastSaved>2001-08-20T17:16:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>164</o:Words>
+  <o:Characters>936</o:Characters>
+  <o:Company>Foley</o:Company>
+  <o:Lines>7</o:Lines>
+  <o:Paragraphs>1</o:Paragraphs>
+  <o:CharactersWithSpaces>1149</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-font-kerning:0pt;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+tt
+	{mso-ascii-font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:947389478;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-831205222 1388071050 1722872842 -1033478622 -980756248 -1230203990 2106864292 1160126062 -502352552 -1550662192;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=blue style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>&nbsp; </p>
+
+<table border=1 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;
+ mso-cellspacing:0in;mso-padding-alt:2.25pt 2.25pt 2.25pt 2.25pt'>
+ <tr>
+  <td style='background:#CCCCFF;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:18.0pt'>Effect Overview</span></b></p>
+  </td>
+ </tr>
+</table>
+
+<h3>Effect Shrinking</h3>
+
+<h3>Description</h3>
+
+<p class=MsoNormal style='margin-left:.5in'>Implements Shrinking.&nbsp; Used by
+power Shrinking.</p>
+
+<h3>Functional Overview</h3>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo3;tab-stops:list .5in'><span style='font-size:10.0pt'>Uses
+     predefense to add Knockback.MASS to the battleEvent.&nbsp; The
+     battleEngine handles the MASS processing beyond that The Knockback.MASS
+     parameter is set when the effect is created.</span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo3;tab-stops:list .5in'><span style='font-size:10.0pt'>Uses
+     the addDCVDefenseModifiers&nbsp; method to apply a DCV bonus to the
+     character.&nbsp; </span></li>
+</ul>
+
+<h3>Known Caveats</h3>
+
+<p class=MsoNormal style='margin-left:.5in'>Does not track mass, +2 to others
+PER rolls, height, width or reach at this time.</p>
+
+<table border=1 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;
+ mso-cellspacing:0in;mso-padding-alt:2.25pt 2.25pt 2.25pt 2.25pt'>
+ <tr>
+  <td colspan=3 style='background:#EEEEFF;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b>Effect Information</b></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'>Class</span></b></p>
+  </td>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt'>champions.powers.effectShrinking</span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="1%" valign=top style='width:1.0%;background:white;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'>Persistence Type</span></b></p>
+  </td>
+  <td valign=top style='background:white;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt'>Linked</span></p>
+  </td>
+  <td style='border:none;background:white;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'>Priority</span></b></p>
+  </td>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><span style='font-size:10.0pt'>2</span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span style='display:none;mso-hide:all'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=1 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;
+ mso-cellspacing:0in;mso-padding-alt:2.25pt 2.25pt 2.25pt 2.25pt'>
+ <tr>
+  <td colspan=3 style='background:#EEEEFF;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b>Parsed Parameters</b></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'>Level</span></b></p>
+  </td>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'>Integer</span></b></p>
+  </td>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'>Power.LEVEL</span></b> <br>
+  &nbsp;&nbsp;&nbsp; Specifies the number of levels of Shrinking the character
+  has.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width="1%" valign=top style='width:1.0%;background:white;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td valign=top style='background:white;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=right style='text-align:right'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td valign=top style='background:white;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span style='display:none;mso-hide:all'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=1 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;
+ mso-cellspacing:0in;mso-padding-alt:2.25pt 2.25pt 2.25pt 2.25pt'>
+ <tr>
+  <td style='background:#EEEEFF;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b>Other Value/Pairs</b></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span style='display:none;mso-hide:all'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=1 cellspacing=0 cellpadding=0 width="99%" style='width:99.0%;
+ mso-cellspacing:0in;mso-padding-alt:2.25pt 2.25pt 2.25pt 2.25pt'>
+ <tr>
+  <td colspan=7 style='background:#EEEEFF;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b>Subeffects</b></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <h1>Mass<o:p></o:p></h1>
+  </td>
+  <td width="5%" valign=top style='width:5.28%;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal align=right style='text-align:right'><tt><span
+  style='font-size:7.5pt;font-family:"Courier New"'>Integer</span></tt><o:p></o:p></p>
+  </td>
+  <td width="83%" valign=top style='width:83.88%;border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'>Knockback.RESISTANCE</span></b>
+  <br>
+  <span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  Specifies the extra inches of knockback resistance to add due to shrinking.&nbsp;
+  This is set from Power.LEVEL.</span><o:p></o:p></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'>Dcvbonus</span></b><o:p></o:p></p>
+  </td>
+  <td width="5%" style='width:5.28%;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'>integer</span></b><o:p></o:p></p>
+  </td>
+  <td width="83%" style='width:83.88%;border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'>Power.DCVBONUS</span></b>
+  <br>
+  <span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Specifies
+  the number of DCV to add tothe character based on the levels of
+  Shrinking.&nbsp; This is calculated from Power.LEVEL.</span><o:p></o:p></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width="5%" style='width:5.28%;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+  </td>
+  <td width="83%" style='width:83.88%;border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+  <td style='border:none;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><span
+  style='font-size:10.0pt'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><br>
+&nbsp; <br>
+&nbsp; </p>
+
+<table border=1 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;
+ mso-cellspacing:0in;mso-padding-alt:2.25pt 2.25pt 2.25pt 2.25pt'>
+ <tr>
+  <td style='background:#EEEEFF;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b>Related Classes</b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="1%" valign=top style='width:1.0%;background:white;padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:10.0pt'><a
+  href="powerGrowth.html">powerShrinking</a></span></b></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+</html>

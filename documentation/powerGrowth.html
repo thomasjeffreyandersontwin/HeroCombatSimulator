@@ -1,0 +1,232 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (Win98; U) [Netscape]">
+   <title>powerDensityIncrease</title>
+</head>
+<body>
+&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td><b><font size=+2>Power Overview</font></b></td>
+</tr>
+</table>
+
+<h3>
+Power Growth</h3>
+
+<h3>
+Description</h3>
+
+<dl>
+<dd>
+Implements the power Growth.&nbsp; This power adds level increments of
++5 STR, -1" knockback to the character, +1 BODY and +1 STUN.&nbsp; For
+every 3 levels -2 DCV is added to the character and if the remainder of
+levels is at a half way point (ex: 2 levels left) he would receive an additional
+-1 DCV.</dd>
+</dl>
+
+<h3>
+Functional Overview</h3>
+
+<dl>
+<dd>
+When triggered, the power generates a custom effect called effectGrowth,
+with 3 subeffects of type aid to increase the specified stats based on
+the above increments and then custom code similar to effectKnockBack modifies
+the target's knockback resistance.&nbsp; Finally addDCVDefenseModifiers
+borrowed from effectCombatModifiers is used to create a DCV penalty based
+on increments of 3 levels.</dd>
+</dl>
+
+<h3>
+Known Caveats</h3>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; powerGrowth does not track mass,
++2 to others PER rolls, height, width or reach at this time.
+<br>&nbsp;
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Power Information</b></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Class</font></b></td>
+
+<td>Champions.powers.powerGrowth</td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Power Type</font></b></td>
+
+<td><font size=-1>Power</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Attack Type</font></b></td>
+
+<td><font size=-1>Self</font></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Persistence Type</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Constant</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Time</font></b></td>
+
+<td><font size=-1>Instant</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>PPDC</font></b></td>
+
+<td><font size=-1>5</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Strength Type</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Killing Type</font></b></td>
+
+<td><font size=-1>n/a</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Generic Damage</font></b></td>
+
+<td><font size=-1>FALSE</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Parsed Parameters</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>parameter</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Integer</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Power.LEVEL</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Indicates the number
+of increments of&nbsp; STR, KB, STUN, BODY to add to the character.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><b><font size=-1>parameter</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>type</font></tt></td>
+
+<td><b><font size=-1>KEY</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Key</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><b><font size=-1>parameter</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>type</font></tt></td>
+
+<td><b><font size=-1>KEY</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Key</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="3"><b>Other Value/Pairs</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Resistance</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>Integer</font></tt></td>
+
+<td ALIGN=LEFT VALIGN=TOP><b><font size=-1>Knockback.RESISTANCE</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; At this time,
+this value is copied directly from the Power.Level value/pair during the
+effectGrowth predefense and so is not really tracked within the power code.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><b><font size=-1>Dcvbonus</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>integer</font></tt></td>
+
+<td><b><font size=-1>Power.DCVBONUS</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Calculates
+based on Power.Level the number of DCV to penalize the character.</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP><b><font size=-1>parameter</font></b></td>
+
+<td ALIGN=RIGHT VALIGN=TOP><tt><font size=-1>type</font></tt></td>
+
+<td><b><font size=-1>KEY</font></b>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Description</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="7"><b>Dice Information</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Name</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>Description</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Name</font></b></td>
+
+<td><font size=-1>Description</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td COLSPAN="2"><b>Trigger Effects</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><b><font size=-1>Growth</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP><font size=-1>An effectGrowth is applied to the
+source.&nbsp; effectGrowth understands knockback and applies the appropriate
+resistance during knockback</font>
+<br><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+processing as well as adding BODY, STUN and STR, and a DCV penalty&nbsp;
+to the character based on the number of levels specified by the user.</font></td>
+</tr>
+
+<tr>
+<td><b><font size=-1>Name</font></b></td>
+
+<td><font size=-1>Description</font></td>
+</tr>
+</table>
+
+<table BORDER CELLSPACING=0 CELLPADDING=3 WIDTH="100%" >
+<tr BGCOLOR="#EEEEFF" CLASS="TableHeadingColor">
+<td><b>Related Classes</b></td>
+</tr>
+
+<tr BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"><a href="effectGrowth.html">effectGrowth</a></td>
+</tr>
+</table>
+
+</body>
+</html>
+

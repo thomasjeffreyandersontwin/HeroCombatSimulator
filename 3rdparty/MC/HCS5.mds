@@ -1,0 +1,267 @@
+# NOTE: this file was created automatically.
+# If you edit it by hand the application may not be able to read it.
+
+"Macro Data Sheet file v. 1" 
+gamesystem Hero5th 
+title "" 
+version 258 
+level 2 
+help Hero.hlp 
+logo Hero.lgo 
+pageinfo facename "MS Sans Serif" pointsize 8 pitch 34 end 
+$$define PLUGIN 
+
+$$include hero.inc
+
+
+cat Skills 
+	sublist "Combat Skill Levels" 
+		memlist 
+		end 
+	sublist Languages 
+		memlist 
+		end 
+	sublist "Martial Arts Styles" 
+		memlist 
+		end 
+	sublist "Martial Maneuvers" 
+		memlist 
+		end 
+	sublist "Package Deals" 
+		memlist 
+		sublist "CHAR Maxima" 
+			memlist 
+			end 
+		sublist "Sample Package Deals" 
+			memlist 
+			end 
+		end 
+	sublist Perks 
+		memlist 
+		sublist "Fringe Benefits" 
+			memlist 
+			end 
+		end 
+	sublist "Range Skill Levels" 
+		memlist 
+		end 
+	sublist Sciences 
+		memlist 
+		end 
+	sublist "Skill Enhancers" 
+		memlist 
+		end 
+	sublist "Skill Levels" 
+		memlist 
+		end 
+	sublist Talents 
+		memlist 
+		end 
+	sublist "Transport Familiarity" 
+		memlist 
+		end 
+	sublist "Weapon Familiarity" 
+		memlist 
+		sublist "Common Martial Arts Weapons" 
+			memlist 
+			end 
+		sublist "Common Melee Weapons" 
+			memlist 
+			end 
+		sublist "Common Missile Weapons" 
+			memlist 
+			end 
+		sublist "Heavy Weapons" 
+			memlist 
+			end 
+		sublist "Small Arms" 
+			memlist 
+			end 
+		sublist "Uncommon Melee Weapons" 
+			memlist 
+			end 
+		sublist "Uncommon Missile Weapons" 
+			memlist 
+			end 
+		sublist "Uncommon Weapons" 
+			memlist 
+			end 
+		end 
+	end 
+
+cat Powers 
+	colwidth 15 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 
+	sublist "Automata and Computers" 
+		colwidth 15 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 
+		memlist 
+		end 
+	sublist Characteristics 
+		colwidth 15 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 
+		memlist 
+		sublist "Base and Vehicle" 
+			memlist 
+			end 
+		end 
+	sublist "Enhanced Senses" 
+		colwidth 15 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 
+		memlist 
+		end 
+	sublist "Life Support" 
+		colwidth 15 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 
+		memlist 
+		end 
+	$$power	Hero ID	0					Power Category	^n
+	end 
+
+cat Disadvantages 
+	sublist Age 
+		memlist 
+		end 
+	sublist "Physical Limitations" 
+		memlist 
+		end 
+	sublist "Psychological Limitation" 
+		memlist 
+		end 
+	end 
+
+cat Equipment 
+	sublist "Adventuring Equipment" 
+		memlist 
+		end 
+	sublist Armor 
+		memlist 
+		sublist "Fantasy Armor" 
+			memlist 
+			end 
+		sublist "Modern Armor" 
+			memlist 
+			end 
+		sublist "Science Fiction Armor" 
+			memlist 
+			end 
+		sublist "Sectional Defense" 
+			memlist 
+			sublist Arms 
+				memlist 
+				end 
+			sublist "Generic Pieces" 
+				memlist 
+				end 
+			sublist Head 
+				memlist 
+				end 
+			sublist Legs 
+				memlist 
+				end 
+			sublist Torso 
+				memlist 
+				end 
+			end 
+		end 
+	sublist "Melee Weapons" 
+		memlist 
+		sublist "Axes & Maces" 
+			memlist 
+			end 
+		sublist Clubs 
+			memlist 
+			end 
+		sublist "Pole Arms" 
+			memlist 
+			end 
+		sublist "Science Fiction Melee Weapons" 
+			memlist 
+			end 
+		sublist "Swords and Knives" 
+			memlist 
+			end 
+		sublist "Uncommon Melee Weapons" 
+			memlist 
+			end 
+		sublist "Unusual Melee Weapons" 
+			memlist 
+			end 
+		end 
+	sublist "Ranged Weapons" 
+		memlist 
+		sublist "Assault Rifles" 
+			memlist 
+			end 
+		sublist "Automatic Pistols" 
+			memlist 
+			end 
+		sublist Grenades 
+			memlist 
+			end 
+		sublist "Heavy Weapons" 
+			memlist 
+			end 
+		sublist "Muscle-Powered Ranged Weapons" 
+			memlist 
+			end 
+		sublist Revolvers 
+			memlist 
+			end 
+		sublist Rifles 
+			memlist 
+			end 
+		sublist "Science Fiction Pistols" 
+			memlist 
+			end 
+		sublist "Science Fiction Rifles" 
+			memlist 
+			end 
+		sublist "Science Fiction Special Weapons" 
+			memlist 
+			end 
+		sublist Shotguns 
+			memlist 
+			end 
+		sublist "Special Handguns" 
+			memlist 
+			end 
+		sublist "Submachine Guns" 
+			memlist 
+			end 
+		end 
+	sublist Shields 
+		memlist 
+		end 
+	sublist "Thieves' Tools" 
+		memlist 
+		end 
+	end 
+
+cat Characteristics 
+	end 
+
+options 
+list "HCS Tags" 
+text "Activation Auto Roll for Constant power" ?:2;FALSE;TRUE 
+text "Activation Auto Roll for instant power" ?:2;FALSE;TRUE 
+begin text "Adjust Single Power/Stat" "" dispexp "format('l (t): %+d',+0)" original "Adjust Single" cat dsaf end 
+text "Adjust Special Effect" "" 
+begin text "Apply To" "?:1;format('l (%s): %+d',iteminfo('@!n@'),o+`LGPFP`+`LPUNR`+`LGPIC`+`LIPAP`)" dispexp ap(@*bc@,@*a@,@*mo@,@*fm@)>ap(@!bc@,@!a@,@!mo@,@!fm@)?-1/4:-1/2 end 
+text "Assigned to DC" "" 
+text "Assigned to DCV" "" 
+text "Assigned to OCV" "" 
+text "Attached to" "" 
+text "Automatically Activate" ?:2;TRUE;FALSE 
+begin text "Combat Level Type" "?:3;Overall (Always Active);Overall (Only when Doing Something);Normal (According To Ability List)" original Versus end 
+text "Hero ID" "" 
+text "Links to" "" 
+begin text "NND Attack Type" "" noedit end 
+text "NND Defense is" "" 
+text "Use as CL" ?:2;TRUE;FALSE 
+text "Use END Reserve" "" 
+text Versus ?:4;PD;MD;PWRD;ED 
+end 
+list "Transport Familiarity" 
+end 
+text "Use END Reserve" "" 
+text Versus ?:4;PD;MD;PWRD;ED 
+list "Weapon Familiarity" 
+end 
+end 
+end 
