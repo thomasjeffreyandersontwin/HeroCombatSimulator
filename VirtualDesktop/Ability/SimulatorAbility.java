@@ -1,11 +1,11 @@
 package VirtualDesktop.Ability;
 
 import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.Attack.SimulatorSingleAttack;
 import VirtualDesktop.Attack.AreaEffect.SimulatorAreaEffectAttack;
 import VirtualDesktop.Attack.Autofire.SimulatorAutofireAttack;
 import VirtualDesktop.Attack.MoveThrough.SimulatorMoveThrough;
 import VirtualDesktop.Attack.Sweep.SimulatorSweepAttack;
+import VirtualDesktop.SingleAttack.SimulatorSingleAttack;
 import champions.Ability;
 import champions.Battle;
 import champions.BattleEvent;

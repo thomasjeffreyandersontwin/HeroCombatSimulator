@@ -30,6 +30,10 @@ public class CombatControlAction extends AbstractDesktopCommand {
             be = new BattleEvent(BattleEvent.ADVANCE_TIME, true);
 
 		}
+		if(action.equals("New Battle")) {
+			Battle b = new Battle();
+	        b.setCurrentBattle(b);
+		}
 		Battle.currentBattle.addEvent(be);
 	}
 

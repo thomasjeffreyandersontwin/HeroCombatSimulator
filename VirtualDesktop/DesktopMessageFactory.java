@@ -19,6 +19,7 @@ public class DesktopMessageFactory {
 	
 		try {
 			reader = new  FileReader("C:\\\\HeroVirtualTableTop\\\\Installed\\\\EventInfo\\\\AbilityActivatedFromDesktop.event");
+			
 			message = (JSONObject)_parser.parse(reader);
 			reader.close();
 			

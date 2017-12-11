@@ -9,6 +9,7 @@ package champions.attackTree;
 import champions.ActivationInfo;
 import champions.Dice;
 import champions.Sense;
+import champions.SenseGroup;
 import champions.BattleEvent;
 import champions.Target;
 import champions.battleMessage.PerceptionMessage;
@@ -89,6 +90,7 @@ public class SourcePerceptionsNode extends DefaultAttackTreeNode {
         int tindex = ai.getSourceSenseIndex( getTarget() );
         if ( tindex != -1 ) {
             Sense s = ai.getSourcesSense(tindex);
+            
             
             if ( s == null ) {
                 s = ai.getSource().getBestSense( target );

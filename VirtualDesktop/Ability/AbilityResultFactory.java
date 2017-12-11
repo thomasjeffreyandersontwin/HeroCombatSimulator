@@ -1,9 +1,9 @@
 package VirtualDesktop.Ability;
 
-import VirtualDesktop.Attack.SingleAttackResults;
 import VirtualDesktop.Attack.AreaEffect.AreaEffectAttackResults;
 import VirtualDesktop.Attack.Autofire.AutofireAttackResults;
 import VirtualDesktop.Attack.Sweep.SweepAttackResults;
+import VirtualDesktop.Roster.SingleAttackResults;
 import champions.battleMessage.AFShotMessageGroup;
 import champions.battleMessage.AreaEffectAttackMessageGroup;
 import champions.battleMessage.SingleAttackMessageGroup;

@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 
 import VirtualDesktop.AbstractDesktopCommand;
 import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.SingleAttack.AttackSingleTargetCommand;
 
 public class KnockbackMultiTargetsCommand extends AbstractDesktopCommand{
 

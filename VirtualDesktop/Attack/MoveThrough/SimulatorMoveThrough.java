@@ -2,7 +2,7 @@ package VirtualDesktop.Attack.MoveThrough;
 
 import VirtualDesktop.CombatSimulatorCharacter;
 import VirtualDesktop.Ability.SimulatorMovement;
-import VirtualDesktop.Attack.SimulatorSingleAttack;
+import VirtualDesktop.SingleAttack.SimulatorSingleAttack;
 import champions.attackTree.AttackTreeModel;
 import champions.attackTree.DefaultAttackTreeNode;
 import champions.attackTree.EffectNode;

@@ -3,7 +3,7 @@ package VirtualDesktop.Attack.AreaEffect;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.SingleAttackResults;
+import VirtualDesktop.Roster.SingleAttackResults;
 import champions.battleMessage.AbstractBattleMessageGroup;
 import champions.battleMessage.ActivateAbilityMessageGroup;
 import champions.battleMessage.AreaEffectAttackMessageGroup;

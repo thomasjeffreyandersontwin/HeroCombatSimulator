@@ -1,15 +1,15 @@
 Event: 
 	Name:Expand Character Node
 character:
-	name:Spyder
+	name:Pre-Emptive Strike
 	costume:
 	model:
-	MaxStun:48
-	MaxEndurance:60
-	CurrStun:48
-	CurrEndurance:44
+	MaxStun:68
+	MaxEndurance:70
+	CurrStun:68
+	CurrEndurance:68
 	Crowd: 
-		Name:heroes
+		Name:Heroes
 		Characters:
 			Ogun:
 				name:Ogun

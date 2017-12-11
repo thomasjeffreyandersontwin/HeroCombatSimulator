@@ -2,7 +2,7 @@ package VirtualDesktop;
 
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.SingleAttack.AttackSingleTargetCommand;
 import champions.Battle;
 import champions.BattleEvent;
 import champions.CombatState;

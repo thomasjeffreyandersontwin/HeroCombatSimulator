@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.Attack.SimulatorSingleAttack;
+import VirtualDesktop.SingleAttack.SimulatorSingleAttack;
 import champions.attackTree.AttackTreeModel;
 import champions.attackTree.KnockbackEffectNode;
 import champions.attackTree.KnockbackNode;

@@ -3,7 +3,7 @@ ability:
 character:
 	name:Spyder
 	Crowd:
-		name:heroes
+		name:Heroes
 	MaxStun:48
 	MaxEndurance:60
 	CurrStun:48
@@ -14,9 +14,11 @@ target:
 
 	MaxStun:37
 	MaxEndurance:56
-	CurrStun:28
+	CurrStun:7
 	CurrEndurance:40
 	Roster:
-		name:heroes
+		name:Heroes
 result: hit
 Effects: 
+	- dying
+	- Stunned

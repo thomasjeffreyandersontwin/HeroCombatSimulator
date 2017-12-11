@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 
 import VirtualDesktop.CombatSimulatorCharacter;
 import VirtualDesktop.GLOBALS;
-import VirtualDesktop.Attack.SingleAttackResults;
+import VirtualDesktop.Roster.SingleAttackResults;
 import champions.BattleEvent;
 import champions.Target;
 import champions.battleMessage.AFShotMessageGroup;

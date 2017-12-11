@@ -503,10 +503,16 @@ public class PerceptionPanel extends JPanel
         }
         
         updateCVModifier();
-        
+        ActivationInfo ai = battleEvent.getActivationInfo();
+        int tindex = ai.getSourceSenseIndex( getTarget() );
+        if ( tindex != -1 ) {
+            ai.setSourcesSense(tindex, selectedSense);
+        }
         updateControls();
     }
     
+    
+    //todo persception only melee?
     protected void updateCVModifier() {
         if ( panelType == PanelType.ATTACKER_PERCEPTION_PANEL ) {
             SenseCVModifier mod = SenseCVModifier.getOCVModifier(selectedSense, sensee, battleEvent.isMeleeAttack() == false);

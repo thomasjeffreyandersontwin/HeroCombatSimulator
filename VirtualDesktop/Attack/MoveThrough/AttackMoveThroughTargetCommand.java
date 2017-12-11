@@ -5,7 +5,7 @@ import javax.swing.tree.TreeNode;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.SingleAttack.AttackSingleTargetCommand;
 import champions.Ability;
 import champions.Battle;
 import champions.BattleEngine;

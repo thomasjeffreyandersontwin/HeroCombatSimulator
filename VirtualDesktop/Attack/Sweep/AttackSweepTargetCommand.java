@@ -4,7 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.SingleAttack.AttackSingleTargetCommand;
 import champions.Ability;
 import champions.Battle;
 import champions.attackTree.SweepSetupPanel;

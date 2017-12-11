@@ -3,7 +3,7 @@ package VirtualDesktop.Attack.Sweep;
 import javax.swing.tree.TreeNode;
 
 import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.Attack.SimulatorSingleAttack;
+import VirtualDesktop.SingleAttack.SimulatorSingleAttack;
 import champions.Ability;
 import champions.Battle;
 import champions.attackTree.AttackTreeModel;
@@ -19,7 +19,7 @@ import champions.attackTree.SweepActivateRootNode;
 import champions.attackTree.SweepExecuteNode;
 import champions.attackTree.SweepSetupPanel;
 
-public class SimulatorSweepAttack extends SimulatorSingleAttack {
+public class SimulatorSweepAttack extends VirtualDesktop.SingleAttack.SimulatorSingleAttack {
 	private SingleTargetNode targetNode = null;
 	
 

@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 
 import VirtualDesktop.Ability.AbilityExporter;
 import VirtualDesktop.Ability.AbilityResultFactory;
-import VirtualDesktop.Attack.SingleAttackResults;
+import VirtualDesktop.Roster.SingleAttackResults;
 import champions.BattleEvent;
 import champions.battleMessage.AbstractBattleMessageGroup;
 import champions.battleMessage.ActivateAbilityMessageGroup;

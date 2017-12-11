@@ -9,17 +9,18 @@ import org.json.simple.JSONObject;
 
 import VirtualDesktop.Ability.MoveCommand;
 import VirtualDesktop.Ability.SimpleAbilityCommand;
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
-import VirtualDesktop.Attack.ConfirmAttack;
-import VirtualDesktop.Attack.KnockbackCollisionSingleTargetCommand;
 import VirtualDesktop.Attack.MoveAndAttackCommand;
-import VirtualDesktop.Attack.SimulatorSingleAttack;
 import VirtualDesktop.Attack.AreaEffect.AttackAreaEffectTargetsCommand;
 import VirtualDesktop.Attack.AreaEffect.KnockbackMultiTargetsCommand;
 import VirtualDesktop.Attack.Autofire.AttackAutofireTargetsCommand;
 import VirtualDesktop.Attack.MoveThrough.AttackMoveThroughTargetCommand;
 import VirtualDesktop.Attack.Sweep.AttackSweepTargetCommand;
 import VirtualDesktop.Attack.Sweep.KnockbackSweepTargetsCommand;
+import VirtualDesktop.SingleAttack.KnockbackCollisionSingleTargetCommand;
+import VirtualDesktop.Roster.RosterSynchCommand;
+import VirtualDesktop.SingleAttack.SimulatorSingleAttack;
+import VirtualDesktop.SingleAttack.AttackSingleTargetCommand;
+import VirtualDesktop.SingleAttack.ConfirmAttack;
 
 public class DesktopCommandFactory {
 	private Map<String, AbstractDesktopCommand> commands = new HashMap<String, AbstractDesktopCommand>();
@@ -29,7 +30,9 @@ public class DesktopCommandFactory {
 		if(type.equals("AttackSingleTarget")) {
 			return new AttackSingleTargetCommand();
 		}
-		
+		if(type.equals("RosterSynchronization")){
+			return new RosterSynchCommand();
+		}
 		if(type.equals("CombatAction"))  {
 			return new CombatControlAction();
 		}
@@ -59,9 +62,7 @@ public class DesktopCommandFactory {
 		if(type.equals("ActivateHeldCharacter") ){
 			return new ActivateHeldCharacterCommand();
 		}
-		if(type.equals("ConfirmAttack") ){
-			return new ConfirmAttack();
-		}
+		
 		if(type.equals("SimpleAbility") ){
 			return new SimpleAbilityCommand();
 		}
@@ -75,31 +76,14 @@ public class DesktopCommandFactory {
 		if(type.equals("MoveAndAttack")){
 			return new MoveAndAttackCommand();
 		}
+		if(type.equals("ConfirmAttack") ){
+			return new ConfirmAttack();
+		}
+		
 		return null;
 		
 	}
 	
-	public static AbstractDesktopCommand GetCommand(SimulatorSingleAttack attack) {
-		String type = (String) attack.getClass().getName();
-		if(type.equals("SimulatorSingleAttack")) {
-			return new AttackSingleTargetCommand();
-		}
-		
-		/*
-		if(type== "Ability") {
-			return new AbilityCommand();
-		}
-		*/
-		if(type.equals("SimulatorAreaEffectAttack")) {
-			return new AttackAreaEffectTargetsCommand();
-		}
-		
-		if(type.equals("SimulatorAutofireAttack") ){
-			return new AttackAutofireTargetsCommand();
-		}
-		return null;
-		
-	}
 	
 		
 

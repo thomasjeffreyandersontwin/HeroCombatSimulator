@@ -63,6 +63,7 @@ public class FileMessageListenerThread implements Runnable{
 			        catch(Exception e) 
 			        {
  			        	e.printStackTrace();
+ 			        	file.delete();
 			        }
 			        finally
 			        {

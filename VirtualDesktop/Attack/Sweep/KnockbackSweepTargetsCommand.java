@@ -4,8 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
 import VirtualDesktop.Attack.AreaEffect.KnockbackMultiTargetsCommand;
+import VirtualDesktop.SingleAttack.AttackSingleTargetCommand;
 
 public class KnockbackSweepTargetsCommand extends KnockbackMultiTargetsCommand{
 	@Override

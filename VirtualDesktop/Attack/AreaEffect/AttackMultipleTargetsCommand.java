@@ -3,7 +3,7 @@ package VirtualDesktop.Attack.AreaEffect;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.SingleAttack.AttackSingleTargetCommand;
 
 public class AttackMultipleTargetsCommand extends  AttackSingleTargetCommand{
 
