@@ -6,8 +6,8 @@ import java.io.FileWriter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.GLOBALS;
+import VirtualDesktop.Character.CharacterAdaptor;
+import VirtualDesktop.Controller.GLOBALS;
 import VirtualDesktop.Roster.SingleAttackResults;
 import champions.BattleEvent;
 import champions.Target;
@@ -208,7 +208,7 @@ public class AbilityExporter {
 				JSONObject collision = new JSONObject();
 				knockback.put("Obstacle Collision", collision);
 				String obtacleName = kb;
-				Target obstacle = new CombatSimulatorCharacter(kb).UnderlyingCharacter;
+				Target obstacle = new CharacterAdaptor(kb).UnderlyingCharacter;
 				if(obstacle !=null) {
 					results =  ExportDamageResults(collision, obstacle, true);
 					

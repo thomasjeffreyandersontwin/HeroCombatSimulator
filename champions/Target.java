@@ -154,7 +154,7 @@ public class Target extends DetailList implements Comparable, ChampionsConstants
             //add("Target.NAME", name, true, false);
             this.name = name;
             firePropertyChange(this, "Target.NAME", oldName, name);
-            VirtualDesktop.MessageExporter.exportRenameEvent(this, oldName, name);
+            VirtualDesktop.Legacy.MessageExporter.exportRenameEvent(this, oldName, name);
         }
     }
     

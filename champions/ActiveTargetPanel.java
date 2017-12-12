@@ -29,7 +29,7 @@ import javax.swing.event.ChangeEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.CharacterJSONExporter;
+import VirtualDesktop.Character.CharacterJSONExporter;
 
 
 

@@ -39,7 +39,7 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.tree.TreePath;
 
-import VirtualDesktop.MobActions;
+import VirtualDesktop.Legacy.MobActions;
 import treeTable.DefaultTreeTableModel;
 import treeTable.TreeTable;
 import treeTable.TreeTableColumnModel;
@@ -102,7 +102,7 @@ public class ATRosterNode extends ATNode implements RosterListener {
                     Character c = new Character("New Character");
                     getRoster().add(c);
                     c.editTarget();
-                    VirtualDesktop.MessageExporter.exportEvent("New Character",c,getRoster());
+                    VirtualDesktop.Legacy.MessageExporter.exportEvent("New Character",c,getRoster());
                 }
             }
         };
@@ -113,7 +113,7 @@ public class ATRosterNode extends ATNode implements RosterListener {
                     ObjectTarget c = new ObjectTarget("New Object");
                     roster.add(c);
                     c.editTarget();
-                    VirtualDesktop.MessageExporter.exportEvent("New Object",c,getRoster());
+                    VirtualDesktop.Legacy.MessageExporter.exportEvent("New Object",c,getRoster());
                 }
             }
         };
@@ -166,7 +166,7 @@ public class ATRosterNode extends ATNode implements RosterListener {
                             else {
                                 myRoster.add(t);
                             }
-                            VirtualDesktop.MessageExporter.exportEvent("Open Character",t,getRoster());
+                            VirtualDesktop.Legacy.MessageExporter.exportEvent("Open Character",t,getRoster());
                         }
                     }
                     
@@ -211,13 +211,13 @@ public class ATRosterNode extends ATNode implements RosterListener {
         closeRosterAction = new AbstractAction("Close Roster") {
             public void actionPerformed(ActionEvent e) {
                 if ( roster != null && Battle.currentBattle != null) {
-                	VirtualDesktop.MessageExporter.exportEvent("Close Roster", null, roster);
+                	VirtualDesktop.Legacy.MessageExporter.exportEvent("Close Roster", null, roster);
                     Battle.currentBattle.removeRoster( roster );
                     
                 }
                 RosterDockingPanel rdp = RosterDockingPanel.getDefaultRosterDockingPanel();
                 if ( roster != null && rdp != null ) {
-                	VirtualDesktop.MessageExporter.exportEvent("Close Roster", null, roster);
+                	VirtualDesktop.Legacy.MessageExporter.exportEvent("Close Roster", null, roster);
                     rdp.removeRoster(roster);
                 }
             }
@@ -267,7 +267,7 @@ public class ATRosterNode extends ATNode implements RosterListener {
                     Target newTarget = (Target)t.clone();
                     getRoster().add( newTarget );
                     newTarget.editTarget();
-                    VirtualDesktop.MessageExporter.exportEvent("RosterAdd", newTarget, getRoster());
+                    VirtualDesktop.Legacy.MessageExporter.exportEvent("RosterAdd", newTarget, getRoster());
                 }
             });
         }

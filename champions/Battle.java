@@ -518,7 +518,7 @@ public class Battle extends Object implements RosterListener, TargetingListener,
         Target oldSelectedTarget = this.activeTarget;
         this.activeTarget = activeTarget;
         
-        VirtualDesktop.MessageExporter.exportActiveCharacter(activeTarget);
+        VirtualDesktop.Legacy.MessageExporter.exportActiveCharacter(activeTarget);
         //propertyChangeSupport.firePropertyChange ("activeTarget", oldSelectedTarget, activeTarget);
         fireTargetSelected();
         
@@ -552,7 +552,7 @@ public class Battle extends Object implements RosterListener, TargetingListener,
     public void rosterRemove(RosterRemoveEvent e) {
         Target t = e.getTarget();
         Roster r= e.getTarget().getRoster();
-        VirtualDesktop.MessageExporter.exportEvent("RosterRemove", t, r);
+        VirtualDesktop.Legacy.MessageExporter.exportEvent("RosterRemove", t, r);
         t.removePropertyChangeListener(this);
         
         if ( t.isObstruction() ) {

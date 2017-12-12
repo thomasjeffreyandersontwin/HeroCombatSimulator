@@ -2,15 +2,15 @@ package VirtualDesktop.Attack;
 
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.AbstractDesktopCommand;
-import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.DesktopCommandFactory;
 import VirtualDesktop.Ability.MoveCommand;
+import VirtualDesktop.Character.CharacterAdaptor;
+import VirtualDesktop.Controller.AbstractDesktopCommand;
+import VirtualDesktop.Controller.DesktopCommandFactory;
 
 public class MoveAndAttackCommand extends AbstractDesktopCommand {
 
 	@Override
-	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message, CombatSimulatorCharacter character)
+	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message, CharacterAdaptor character)
 			throws Exception {
 
 		JSONObject move = (JSONObject) message.get("MovementAbility");

@@ -42,8 +42,7 @@ import javax.swing.tree.TreePath;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.DesktopCommandFactory;
-import VirtualDesktop.Ability.AbilityExporter;
+import VirtualDesktop.Controller.DesktopCommandFactory;
 
 import java.io.File;
 
@@ -358,7 +357,7 @@ implements TreeModel {
         		Ability a=null;
         		if(group instanceof SweepMessageGroup || (group instanceof ActivateAbilityMessageGroup&&!((ActivateAbilityMessageGroup)group).ability.getName().equals("Pass Turn"))) {
         			try {
-        			AbilityExporter.exportR(group);
+        		//	AbilityExporter.exportR(group);
         			}catch(Exception e) {
         				e.printStackTrace();
         			}

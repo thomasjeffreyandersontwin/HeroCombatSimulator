@@ -18,7 +18,7 @@ import javax.swing.ListModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListDataListener;
 
-import VirtualDesktop.BattleSequenceUpdateExporter;
+import VirtualDesktop.Roster.BattleSequenceUpdateExporter;
 
 
 /**

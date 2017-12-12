@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 
 import com.sun.media.sound.ModelAbstractChannelMixer;
 
-import VirtualDesktop.CombatSimulatorCharacter;
+import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Target;
 import champions.TargetList;
 import champions.attackTree.AttackTreeModel;
@@ -21,7 +21,7 @@ public class AttackAreaEffectTargetsCommand extends AttackMultipleTargetsCommand
 	
 
 	@Override
-	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message, CombatSimulatorCharacter character) throws Exception  {
+	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message, CharacterAdaptor character) throws Exception  {
 		
 		int areaEffectTargets =  ((JSONArray) message.get("Targets")).size();
 		

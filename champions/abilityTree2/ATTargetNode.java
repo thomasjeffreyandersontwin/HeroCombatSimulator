@@ -45,6 +45,7 @@ import treeTable.TreeTable;
 import treeTable.TreeTableCellEditor;
 import treeTable.TreeTableCellRenderer;
 import VirtualDesktop.*;
+import VirtualDesktop.Legacy.MessageExporter;
 
 
 /**
@@ -402,7 +403,7 @@ public class ATTargetNode extends ATNode implements PropertyChangeListener, Acti
     		r= rnode.getRoster();
     	}catch(Exception e){}
     	
-    	VirtualDesktop.MessageExporter.exportEvent("Node Double CLick", t,r );
+    	VirtualDesktop.Legacy.MessageExporter.exportEvent("Node Double CLick", t,r );
     }
     
     

@@ -22,8 +22,8 @@ import javax.swing.event.ListDataListener;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.BattleSequenceUpdateExporter;
-import VirtualDesktop.CharacterJSONExporter;
+import VirtualDesktop.Character.CharacterJSONExporter;
+import VirtualDesktop.Roster.BattleSequenceUpdateExporter;
 
 
 /**

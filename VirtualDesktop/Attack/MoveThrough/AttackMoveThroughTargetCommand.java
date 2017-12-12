@@ -4,8 +4,8 @@ import javax.swing.tree.TreeNode;
 
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.SingleAttack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
+import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Ability;
 import champions.Battle;
 import champions.BattleEngine;
@@ -25,7 +25,7 @@ import champions.powers.maneuverMoveThrough;
 public class AttackMoveThroughTargetCommand extends AttackSingleTargetCommand {
 
 	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message,
-			CombatSimulatorCharacter character) throws Exception  {
+			CharacterAdaptor character) throws Exception  {
 		
 		
 		if(((String) message.get("Type")).equals("MoveThrough")){

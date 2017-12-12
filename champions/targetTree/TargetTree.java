@@ -12,7 +12,7 @@ import champions.interfaces.ChampionsConstants;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import VirtualDesktop.VirtualDesktopNodeListener;
+import VirtualDesktop.Legacy.VirtualDesktopNodeListener;
 import treeTable.DefaultTreeTable;
 import treeTable.DefaultTreeTableModel;
 import treeTable.FilterableTreeTableModel;

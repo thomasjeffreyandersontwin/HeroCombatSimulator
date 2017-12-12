@@ -423,7 +423,7 @@ public class ATAbilityCellRenderer extends JPanel implements TreeTableCellRender
             	Target target=((ATSingleTargetTree)editorTree).getTarget();
             	if(oldNode.getClass()==ATAbilityNode.class) {
             		String itemClicked=((ATAbilityNode)oldNode).abilityName;
-            		VirtualDesktop.MessageExporter.exportItemCLicked(target, itemClicked);
+            		VirtualDesktop.Legacy.MessageExporter.exportItemCLicked(target, itemClicked);
             	}
             }
             catch(Exception ee)

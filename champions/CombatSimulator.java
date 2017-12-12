@@ -40,7 +40,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 
-import VirtualDesktop.FileMessageListenerThread;
+import VirtualDesktop.Controller.FileMessageListenerThread;
 
 /** Main Class of the Hero Combat Simulator.
  * Only one CombatSimulator object may be created per application.

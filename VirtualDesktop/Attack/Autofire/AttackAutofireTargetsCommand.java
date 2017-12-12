@@ -3,15 +3,15 @@ package VirtualDesktop.Attack.Autofire;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.CombatSimulatorCharacter;
 import VirtualDesktop.Attack.AreaEffect.AttackMultipleTargetsCommand;
+import VirtualDesktop.Character.CharacterAdaptor;
 
 
 //eg {"Type":"AutofireTargets","Ability":"Flurry","Shots":4, "Width:5, Spray:True, "Targets":[{Target:"Ogun"}, {Target:"Spyder"}, {Target:"Hex"}]}
 public class AttackAutofireTargetsCommand extends AttackMultipleTargetsCommand{
 
 	@Override
-	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message, CombatSimulatorCharacter character)
+	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message, CharacterAdaptor character)
 			throws Exception {
 		int autofireShots =  ((JSONArray) message.get("Targets")).size();
 		long autofireWidth = (long) message.get("Width");

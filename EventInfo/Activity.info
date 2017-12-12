@@ -1,12 +1,12 @@
 
 character:
-	name:Pre-Emptive Strike
+	name:Spyder
 	costume:
 	model:
-	MaxStun:68
-	MaxEndurance:70
-	CurrStun:68
-	CurrEndurance:68
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:48
+	CurrEndurance:44
 Activate: True
 
 	Crowd: 

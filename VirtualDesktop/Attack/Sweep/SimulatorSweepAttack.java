@@ -2,8 +2,8 @@ package VirtualDesktop.Attack.Sweep;
 
 import javax.swing.tree.TreeNode;
 
-import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.SingleAttack.SimulatorSingleAttack;
+import VirtualDesktop.Attack.SingleAttack.SimulatorSingleAttack;
+import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Ability;
 import champions.Battle;
 import champions.attackTree.AttackTreeModel;
@@ -19,11 +19,11 @@ import champions.attackTree.SweepActivateRootNode;
 import champions.attackTree.SweepExecuteNode;
 import champions.attackTree.SweepSetupPanel;
 
-public class SimulatorSweepAttack extends VirtualDesktop.SingleAttack.SimulatorSingleAttack {
+public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttack.SimulatorSingleAttack {
 	private SingleTargetNode targetNode = null;
 	
 
-	public SimulatorSweepAttack(String name, CombatSimulatorCharacter character) {
+	public SimulatorSweepAttack(String name, CharacterAdaptor character) {
 		super(name, character);
 		// TODO Auto-generated constructor stub
 	}
@@ -40,13 +40,13 @@ public class SimulatorSweepAttack extends VirtualDesktop.SingleAttack.SimulatorS
 
 	public void SelectTargetForSpecificAttack(String targetName, int i) {
 		if(i==0) {
-			champions.Target t = new CombatSimulatorCharacter(targetName).UnderlyingCharacter;
+			champions.Target t = new CharacterAdaptor(targetName).UnderlyingCharacter;
 			SelectTargetPanel.ad.selectTarget(t);
 		}
 		else {
 			SingleTargetNode execNode = GetTargetNode(i);
 
-			champions.Target t = new CombatSimulatorCharacter(targetName).UnderlyingCharacter;
+			champions.Target t = new CharacterAdaptor(targetName).UnderlyingCharacter;
 
 			AttackTreeModel.treeModel.advanceAndActivate(execNode, execNode);
 			execNode.setTarget(t);

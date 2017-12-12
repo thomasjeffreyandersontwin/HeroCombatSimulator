@@ -451,7 +451,7 @@ public class ChronometerPanel extends JPanel implements BattleListener {
         chronometer.put("CurrentPhase", Battle.currentBattle.getTime().toString());
         FileWriter writer;
 		try {
-			writer = new FileWriter(VirtualDesktop.GLOBALS.EXPORT_PATH + "Chronometer.info");
+			writer = new FileWriter(VirtualDesktop.Controller.GLOBALS.EXPORT_PATH + "Chronometer.info");
 			writer.write(chronometer.toJSONString());
 	        writer.close();
 		} catch (IOException e) {

@@ -1,8 +1,8 @@
 package VirtualDesktop.Attack.MoveThrough;
 
-import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.Ability.SimulatorMovement;
-import VirtualDesktop.SingleAttack.SimulatorSingleAttack;
+import VirtualDesktop.Ability.MovementAdaptor;
+import VirtualDesktop.Attack.SingleAttack.SimulatorSingleAttack;
+import VirtualDesktop.Character.CharacterAdaptor;
 import champions.attackTree.AttackTreeModel;
 import champions.attackTree.DefaultAttackTreeNode;
 import champions.attackTree.EffectNode;
@@ -15,11 +15,11 @@ public class SimulatorMoveThrough extends SimulatorSingleAttack {
 	int _distance=0;
 	int _attackDamage;
 	MovementManeuverSetupPanel _panel  = MovementManeuverSetupPanel.defaultPanel;
-	SimulatorMovement _movement=null;
+	MovementAdaptor _movement=null;
 	SimulatorSingleAttack _attack = null;
 	Integer _damageDice;
 	
-	public SimulatorMoveThrough(String name, CombatSimulatorCharacter character) {
+	public SimulatorMoveThrough(String name, CharacterAdaptor character) {
 		super(name, character);
 		// TODO Auto-generated constructor stub
 	}
@@ -72,7 +72,7 @@ public class SimulatorMoveThrough extends SimulatorSingleAttack {
 
 	public void setMovementAbility(String movementName)
 	{
-		_movement = new SimulatorMovement(movementName, Character);
+		_movement = new MovementAdaptor(movementName, Character);
 		_panel.setMovementAbility(_movement.UnderlyingAbility);
 
 		

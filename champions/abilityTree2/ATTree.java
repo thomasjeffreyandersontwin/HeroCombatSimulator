@@ -38,7 +38,7 @@ import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import VirtualDesktop.VirtualDesktopNodeListener;
+import VirtualDesktop.Legacy.VirtualDesktopNodeListener;
 import tjava.Destroyable;
 import treeTable.DefaultTreeTable;
 import treeTable.TreeTableColumnModel;
@@ -572,7 +572,7 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
     	}catch(Exception e){}
     	
     	if(r!=null){
-    		VirtualDesktop.MessageExporter.exportEvent("Expand Roster Node", null,r);
+    		VirtualDesktop.Legacy.MessageExporter.exportEvent("Expand Roster Node", null,r);
     	}
     	else{
     		//if(ATTree.expandAll==false){
@@ -580,7 +580,7 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
     			Target t = tNode.getTarget();
     			if(t!=null) {
     				r= t.getRoster();
-    				VirtualDesktop.MessageExporter.exportEvent("Expand Character Node", t,r);
+    				VirtualDesktop.Legacy.MessageExporter.exportEvent("Expand Character Node", t,r);
     			}
     		}
     		catch(Exception e) {}
@@ -601,13 +601,13 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
     	catch(Exception e){}
     	
     	if(r!=null){
-    		VirtualDesktop.MessageExporter.exportEvent("Collapse Roster Node", null,r);
+    		VirtualDesktop.Legacy.MessageExporter.exportEvent("Collapse Roster Node", null,r);
     	}
     	else{
     		Target t = tNode.getTarget();
     		if(t!=null) {
     			r= t.getRoster();
-    			VirtualDesktop.MessageExporter.exportEvent("Collapse Character Node", t,r);
+    			VirtualDesktop.Legacy.MessageExporter.exportEvent("Collapse Character Node", t,r);
     		}
     	}
     }

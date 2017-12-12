@@ -13,7 +13,7 @@ import tjava.Filter;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.TreePath;
 
-import VirtualDesktop.VirtualDesktopNodeListener;
+import VirtualDesktop.Legacy.VirtualDesktopNodeListener;
 import treeTable.DefaultTreeTableNode;
 import treeTable.TreeTable;
 
@@ -68,7 +68,7 @@ public class VirtualDesktopActionNode extends ATNode {
         if ( roster != null ) {
         	Target t = VirtualDesktopNodeListener.targetSelected;
         	
-        	VirtualDesktop.MessageExporter.exportVirtualDesktopAction(action, t);
+        	VirtualDesktop.Legacy.MessageExporter.exportVirtualDesktopAction(action, t);
         }
     } 
      

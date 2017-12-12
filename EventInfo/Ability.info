@@ -10,15 +10,15 @@ character:
 	CurrEndurance:36
 type: single
 target: 
-	name: Blind Justice
+	name: Ogun
 
-	MaxStun:37
-	MaxEndurance:56
-	CurrStun:7
-	CurrEndurance:40
+	MaxStun:27
+	MaxEndurance:36
+	CurrStun:-22
+	CurrEndurance:30
 	Roster:
 		name:Heroes
 result: hit
 Effects: 
-	- dying
 	- Stunned
+	- Unconsious

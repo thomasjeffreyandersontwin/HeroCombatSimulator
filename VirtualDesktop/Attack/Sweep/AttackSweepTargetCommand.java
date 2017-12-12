@@ -3,8 +3,8 @@ package VirtualDesktop.Attack.Sweep;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.SingleAttack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
+import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Ability;
 import champions.Battle;
 import champions.attackTree.SweepSetupPanel;
@@ -13,7 +13,7 @@ public class AttackSweepTargetCommand extends AttackSingleTargetCommand {
 
 	@Override
 	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message,
-			CombatSimulatorCharacter character) throws Exception  {
+			CharacterAdaptor character) throws Exception  {
 		character.ActivateAbilityByName((String) message.get("Type"));
 		SimulatorSweepAttack attack = (SimulatorSweepAttack) character.ActiveAbility;
 		

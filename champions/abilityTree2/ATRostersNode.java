@@ -88,7 +88,7 @@ public class ATRostersNode extends ATNode implements BattleListener {
                             Battle.currentBattle.addRoster(roster);
                         }
                     }
-                    VirtualDesktop.MessageExporter.exportRosterEvent("Open Roster",rosters);
+                    VirtualDesktop.Legacy.MessageExporter.exportRosterEvent("Open Roster",rosters);
                    
                 }
             };
@@ -312,7 +312,7 @@ public class ATRostersNode extends ATNode implements BattleListener {
                 a.setBattleEvent(battleEvent);
 
                 Battle.getCurrentBattle().addEvent(battleEvent);
-                VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster);
+                VirtualDesktop.Legacy.MessageExporter.exportEvent("Heal Roster",null, roster);
             }
         }
     }
@@ -345,7 +345,7 @@ public class ATRostersNode extends ATNode implements BattleListener {
                 t.healCompletely(battleEvent);
                 
             }
-            VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster);
+            VirtualDesktop.Legacy.MessageExporter.exportEvent("Heal Roster",null, roster);
         }
     }
 
@@ -377,7 +377,7 @@ public class ATRostersNode extends ATNode implements BattleListener {
                 a.setBattleEvent(battleEvent);
 
                 Battle.getCurrentBattle().addEvent(battleEvent);
-                VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster);
+                VirtualDesktop.Legacy.MessageExporter.exportEvent("Heal Roster",null, roster);
             }
         }
     }
@@ -409,7 +409,7 @@ public class ATRostersNode extends ATNode implements BattleListener {
                 Target t = targets.get(index);
                 t.healNoBODY(battleEvent);
             }
-            VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster);
+            VirtualDesktop.Legacy.MessageExporter.exportEvent("Heal Roster",null, roster);
         }
     }
 
@@ -458,7 +458,7 @@ public class ATRostersNode extends ATNode implements BattleListener {
 
 
                     }
-                    VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster);
+                    VirtualDesktop.Legacy.MessageExporter.exportEvent("Heal Roster",null, roster);
                 }
             }
         }
@@ -506,7 +506,7 @@ public class ATRostersNode extends ATNode implements BattleListener {
                         Target t = targets.get(index);
                         t.healNoBODY(battleEvent);
                     }
-                    VirtualDesktop.MessageExporter.exportEvent("Heal Roster",null, roster); 
+                    VirtualDesktop.Legacy.MessageExporter.exportEvent("Heal Roster",null, roster); 
                 }
             }
         }

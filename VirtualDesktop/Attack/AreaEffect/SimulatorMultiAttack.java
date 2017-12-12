@@ -3,8 +3,8 @@ package VirtualDesktop.Attack.AreaEffect;
 import java.util.HashMap;
 import java.util.Map;
 
-import VirtualDesktop.CombatSimulatorCharacter;
-import VirtualDesktop.SingleAttack.SimulatorSingleAttack;
+import VirtualDesktop.Attack.SingleAttack.SimulatorSingleAttack;
+import VirtualDesktop.Character.CharacterAdaptor;
 import champions.attackTree.AttackTreeModel;
 import champions.attackTree.KnockbackEffectNode;
 import champions.attackTree.KnockbackNode;
@@ -12,7 +12,7 @@ import champions.attackTree.SingleTargetNode;
 
 public class SimulatorMultiAttack extends SimulatorSingleAttack {
 
-	public SimulatorMultiAttack(String name, CombatSimulatorCharacter character) {
+	public SimulatorMultiAttack(String name, CharacterAdaptor character) {
 		super(name, character);
 		// TODO Auto-generated constructor stub
 	}
@@ -32,7 +32,7 @@ public class SimulatorMultiAttack extends SimulatorSingleAttack {
 	
 	
 
-	private Map<String, CombatSimulatorCharacter> Targets = new HashMap<String, CombatSimulatorCharacter>();
+	private Map<String, CharacterAdaptor> Targets = new HashMap<String, CharacterAdaptor>();
 	public void AddTargetByName(String targetName) {
 		Targets.put(targetName, SetTargetByName(targetName));
 	}

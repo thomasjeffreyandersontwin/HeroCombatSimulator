@@ -53,7 +53,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import VirtualDesktop.CombatSimulatorCharacter;
+import VirtualDesktop.Character.CharacterAdaptor;
 
 /**
  *
@@ -909,7 +909,7 @@ public class MessagePanel extends JPanel
             			 String targetName = message.substring(0, end);
             			 
             			 
-		    			Target t = new CombatSimulatorCharacter(targetName).UnderlyingCharacter; 
+		    			Target t = new CharacterAdaptor(targetName).UnderlyingCharacter; 
 		    			if((t.stunned==true ||t.isUnconscious()==true) && message.contains(" STUN.")) {
 		    				g.setColor( Color.RED);
 		    				if(message.contains("and is ")) {

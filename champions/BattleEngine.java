@@ -413,7 +413,7 @@ public class BattleEngine extends Thread
             } else {
                 // Non-Linked abilities
             	try{
-                VirtualDesktop.MessageExporter.exportAbilityActivation(ability);
+                VirtualDesktop.Legacy.MessageExporter.exportAbilityActivation(ability);
             	}catch(Exception e){}
 				processAttackTreeNode(getProcessAbilityRoot(be));
             	/*Target target = ability.getSource();

@@ -1126,7 +1126,7 @@ public class BattleEvent extends DetailList {
 		
 		try {
 			if(msg!=null) {
-				writer = new FileWriter(VirtualDesktop.GLOBALS.EXPORT_PATH + "MessageLog.info",true);
+				writer = new FileWriter(VirtualDesktop.Controller.GLOBALS.EXPORT_PATH + "MessageLog.info",true);
 				if(msg.contains("activates")) {
 					writer.write("-----------------------------------------------------");	
 					writer.write(System.lineSeparator());
@@ -1192,7 +1192,7 @@ public class BattleEvent extends DetailList {
             else {
                 addMessage(message, MSG_NOTICE);
             }
-	         VirtualDesktop.MessageExporter.exportMessage(message,messageGroup);
+	         VirtualDesktop.Legacy.MessageExporter.exportMessage(message,messageGroup);
         }
     }
     

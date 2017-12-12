@@ -3,13 +3,13 @@ package VirtualDesktop.Attack.Sweep;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.CombatSimulatorCharacter;
 import VirtualDesktop.Attack.AreaEffect.KnockbackMultiTargetsCommand;
-import VirtualDesktop.SingleAttack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
+import VirtualDesktop.Character.CharacterAdaptor;
 
 public class KnockbackSweepTargetsCommand extends KnockbackMultiTargetsCommand{
 	@Override
-	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message, CombatSimulatorCharacter character)
+	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message, CharacterAdaptor character)
 			throws Exception {
 		SimulatorSweepAttack attack = (SimulatorSweepAttack) AttackSingleTargetCommand.LastAttack;
 		

@@ -3,8 +3,8 @@ package VirtualDesktop.Attack.Autofire;
 import java.util.HashMap;
 import java.util.Map;
 
-import VirtualDesktop.CombatSimulatorCharacter;
 import VirtualDesktop.Attack.AreaEffect.SimulatorMultiAttack;
+import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Battle;
 import champions.TargetList;
 import champions.event.PADValueEvent;
@@ -17,7 +17,7 @@ public class SimulatorAutofireAttack extends SimulatorMultiAttack {
 	private boolean spray;
 	
 	
-	public SimulatorAutofireAttack(String name, CombatSimulatorCharacter character) {
+	public SimulatorAutofireAttack(String name, CharacterAdaptor character) {
 		super(name, character);
 		// TODO Auto-generated constructor stub
 	}
