@@ -1,12 +1,12 @@
 
 character:
-	name:Spyder
+	name:Blind Justice
 	costume:
 	model:
-	MaxStun:48
-	MaxEndurance:60
-	CurrStun:48
-	CurrEndurance:44
+	MaxStun:37
+	MaxEndurance:56
+	CurrStun:-72
+	CurrEndurance:40
 Activate: True
 
 	Crowd: 

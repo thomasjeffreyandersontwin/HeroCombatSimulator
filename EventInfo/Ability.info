@@ -1,24 +1,49 @@
-ability:
-	Name: Spider Strike
+Ability:
+	Name:Recovery
 character:
-	name:Spyder
-	Crowd:
-		name:Heroes
-	MaxStun:48
-	MaxEndurance:60
-	CurrStun:48
-	CurrEndurance:36
-type: single
-target: 
-	name: Ogun
-
-	MaxStun:27
-	MaxEndurance:36
-	CurrStun:-22
-	CurrEndurance:30
-	Roster:
-		name:Heroes
-result: hit
-Effects: 
-	- Stunned
-	- Unconsious
+	name:Pre-Emptive Strike
+	costume:
+	model:
+	MaxStun:68
+	MaxEndurance:70
+	CurrStun:68
+	CurrEndurance:42
+	Crowd: 
+		Name:Heroes
+		Characters:
+			Ogun:
+				name:Ogun
+				costume:
+				model:
+			Spyder:
+				name:Spyder
+				costume:
+				model:
+			Off-Road:
+				name:Off-Road
+				costume:
+				model:
+			New Object:
+				name:New Object
+				costume:
+				model:
+			test:
+				name:test
+				costume:
+				model:
+			Blind Justice:
+				name:Blind Justice
+				costume:
+				model:
+			Pre-Emptive Strike:
+				name:Pre-Emptive Strike
+				costume:
+				model:
+			Light machinery:
+				name:Light machinery
+				costume:
+				model:
+			City gates, small:
+				name:City gates, small
+				costume:
+				model:

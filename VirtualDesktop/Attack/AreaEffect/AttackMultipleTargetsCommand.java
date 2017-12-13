@@ -13,11 +13,10 @@ public class AttackMultipleTargetsCommand extends  AttackSingleTargetCommand{
 		for (int i = 0; i < targets.size(); i++) {
 			JSONObject targetObject =(JSONObject) targets.get(i);
 			String targetName =  (String)targetObject.get("Target");
-			ExecuteAttackOnTarget(targetObject, attack, targetName);
+			InvokeSIngleAttack(targetObject, attack, targetName);
 		}
 		attack.StartSelectingTargets();
 		//attack.ConfirmAttack();
-		
 	}
 	
 }

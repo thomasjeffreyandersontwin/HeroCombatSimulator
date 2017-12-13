@@ -32,10 +32,16 @@ public class AttackAreaEffectTargetsCommand extends AttackMultipleTargetsCommand
 		EnterAttackParameters(message, attack);
 		
 		String centerTarget = (String) message.get("Center");
-		ExecuteAttackOnTarget(message, attack, centerTarget);
+		if(centerTarget==null) 
+		{
+			centerTarget = "Hex";	
+		}
+		attack.StartSelectingTargets();
+		InvokeSIngleAttack(message, attack, centerTarget);
+
 		
 		EnterAttackForAllTargets(message, attack);
-		
+		attack.Export();
 
 	
 		
