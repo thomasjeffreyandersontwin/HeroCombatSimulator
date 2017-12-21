@@ -11,6 +11,7 @@ import champions.Dice;
 import champions.Sense;
 import champions.SenseGroup;
 import champions.BattleEvent;
+import champions.CVList;
 import champions.Target;
 import champions.battleMessage.PerceptionMessage;
 import java.util.List;
@@ -85,9 +86,11 @@ public class SourcePerceptionsNode extends DefaultAttackTreeNode {
      * be reactivated to gather more information.
      */
     public boolean processAdvance() {
+    	//jeff target > getsource
         // Find the sense that was used...
         ActivationInfo ai = battleEvent.getActivationInfo();
-        int tindex = ai.getSourceSenseIndex( getTarget() );
+        int tindex = ai.getSourceSenseIndex( ai.getSource() );
+        CVList list = ai.getCVList(tindex);
         if ( tindex != -1 ) {
             Sense s = ai.getSourcesSense(tindex);
             
@@ -105,8 +108,9 @@ public class SourcePerceptionsNode extends DefaultAttackTreeNode {
                 }
             } else {
                 boolean requiresRoll = ai.getSourceRequiresSenseRoll(tindex);
-                int needed = target.getPerceptionRoll(s, getTarget());
-                int base = target.getPerceptionRoll();
+                
+                int needed = ai.getSource().getPerceptionRoll(s, getTarget());
+                int base = ai.getSource().getPerceptionRoll();
                 
                 if ( s.isTargettingSense() == false || requiresRoll || needed < base  ) {
                     Dice d = ai.getSourceSenseRoll(tindex);
@@ -135,6 +139,9 @@ public class SourcePerceptionsNode extends DefaultAttackTreeNode {
                     ai.setSourceCanSenseTarget(tindex, true);
                 }
             }
+             
+          
+            
         }
         return true;
     }

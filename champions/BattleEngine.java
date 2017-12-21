@@ -1873,12 +1873,12 @@ public class BattleEngine extends Thread
      *
      */
     public synchronized void startProcessing() {
-        if (processing == false) {
+//        if (processing == false) {
             processing = true;
             battle.triggerProcessingNotify(processing);
             startTime = System.currentTimeMillis();
             notifyAll();
-        }
+   //     }
     }
 
     /**

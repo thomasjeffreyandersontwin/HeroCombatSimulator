@@ -5,6 +5,7 @@
  */
 package champions.attackTree;
 
+import champions.ActivationInfo;
 import champions.BattleEvent;
 import champions.CVList;
 import champions.Target;
@@ -697,8 +698,11 @@ public class DefaultAttackTreeNode implements AttackTreeNode, ChampionsConstants
                 attackTreePanel.setInstructions("");
             }
 
-
+            
+            
             boolean result = processAdvance();
+            
+           
 
             if (result == false) {
                 nextNode = this;

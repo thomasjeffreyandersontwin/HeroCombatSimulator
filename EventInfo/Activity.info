@@ -1,35 +1,19 @@
 
 character:
-	name:Blind Justice
+	name:Spyder
 	costume:
 	model:
-	MaxStun:37
-	MaxEndurance:56
-	CurrStun:-72
-	CurrEndurance:40
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:48
+	CurrEndurance:60
 Activate: True
 
 	Crowd: 
-		Name:Heroes
+		Name:heroes
 		Characters:
 			Ogun:
 				name:Ogun
-				costume:
-				model:
-			Spyder:
-				name:Spyder
-				costume:
-				model:
-			Off-Road:
-				name:Off-Road
-				costume:
-				model:
-			New Object:
-				name:New Object
-				costume:
-				model:
-			test:
-				name:test
 				costume:
 				model:
 			Blind Justice:
@@ -40,11 +24,15 @@ Activate: True
 				name:Pre-Emptive Strike
 				costume:
 				model:
-			Light machinery:
-				name:Light machinery
-				costume:
-				model:
 			City gates, small:
 				name:City gates, small
+				costume:
+				model:
+			Off-Road:
+				name:Off-Road
+				costume:
+				model:
+			Spyder:
+				name:Spyder
 				costume:
 				model:

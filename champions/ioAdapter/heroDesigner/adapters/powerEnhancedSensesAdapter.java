@@ -19,10 +19,12 @@ import org.w3c.dom.Node;
 public class powerEnhancedSensesAdapter extends AbstractPowerXMLAdapter implements PowerXMLAdapter {
     
     private static String[][] XMLIDs = new String[][] { 
+        {"DANGER_SENSE", "Danger Sense"},
         {"ACTIVESONAR", "Active Sonar"},
         {"DETECT", "Detect"},
         {"ENHANCEDPERCEPTION", "All Senses"},
         {"HRRP", "High Range Radio Perception"},
+        
         {"INFRAREDPERCEPTION", "Infrared Vision"},
         {"MENTALAWARENESS", "Mental Awareness"},
         {"NIGHTVISION", "Night Vision"}, 

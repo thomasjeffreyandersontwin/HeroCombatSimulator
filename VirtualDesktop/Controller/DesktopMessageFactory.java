@@ -18,7 +18,7 @@ public class DesktopMessageFactory {
 		JSONObject message;
 	
 		try {
-			reader = new  FileReader("C:\\\\HeroVirtualTableTop\\\\Installed\\\\EventInfo\\\\AbilityActivatedFromDesktop.event");
+			reader = new  FileReader(GLOBALS.EXPORT_PATH+"\\AbilityActivatedFromDesktop.event");
 			
 			message = (JSONObject)_parser.parse(reader);
 			reader.close();

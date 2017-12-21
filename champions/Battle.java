@@ -21,6 +21,8 @@ import champions.interfaces.RosterListener;
 import champions.interfaces.Sequencer;
 import champions.interfaces.TargetingListener;
 import champions.interfaces.Undoable;
+import champions.undoableEvent.CombatStateUndoable;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -581,7 +583,15 @@ public class Battle extends Object implements RosterListener, TargetingListener,
     public AddBattleEventUndoable addEvent(BattleEvent be, boolean first) {
         
         battleEngine.getBattleEventList().addEvent(be, first);
-        if ( isStopped() == false && battleEngine.isProcessing() == false ) battleEngine.startProcessing();
+        boolean b=false;
+       // if(be.getUndoableEventCount()>0 && be.getUndoableEvent(0) instanceof CombatStateUndoable )
+        //{
+        //	CombatStateUndoable u = (CombatStateUndoable) be.getUndoableEvent(0);
+        //	b=u.getNewState().name().equals("STATE_ABORTING");
+        //}
+        if ( isStopped() == false && (b|| battleEngine.isProcessing() == false )) {
+        	battleEngine.startProcessing();
+        }
         
         return new Battle.AddBattleEventUndoable(be, first);
     }

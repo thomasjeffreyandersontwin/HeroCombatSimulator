@@ -92,7 +92,7 @@ public class DetailList extends Object implements Destroyable, Serializable {
     
     //public String fileExtension = "lst";
     
-    protected TreeMap detailList;
+    public TreeMap detailList;
     
     /** Holds value of property fireChangeByDefault. */
     private boolean fireChangeByDefault = true;

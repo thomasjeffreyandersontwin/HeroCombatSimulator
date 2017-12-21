@@ -287,6 +287,7 @@ public class ParameterList implements PropertyChangeListener, Serializable, Debu
     protected ParameterEntry getParameterEntry(String name) {
         ParameterEntry pp = parameters.get(name);
         if ( pp == null ) {
+        	
             throw new IndexOutOfBoundsException("Parameter " + name + " not found.");
         }
         return pp;

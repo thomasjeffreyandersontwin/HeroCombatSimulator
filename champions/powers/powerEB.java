@@ -6,6 +6,8 @@
 
 package champions.powers;
 
+import org.junit.platform.commons.util.StringUtils;
+
 import champions.*;
 import champions.interfaces.*;
 import champions.exception.*;
@@ -134,6 +136,21 @@ public class powerEB extends Power implements ChampionsConstants {
         // Check for the validity of the parameters that will be set.  If the parameters
         // Fail for any reason, return false from the method immediately, indicating a
         // failure to configure
+        String keyword = "d6";
+     
+        int index = die.indexOf(keyword);
+        int count =1;
+        int last =0;
+        while (index >=0){
+            index = die.indexOf(keyword, index+keyword.length())   ;
+            if (index >=0) {
+            	count++;
+            	last=index;
+            }
+        }
+        if (count >1) {
+        	die =die.substring(0, last);
+        }
         if ( Dice.isValid(die) == false ) {
             return false;
         }

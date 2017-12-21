@@ -2,20 +2,31 @@ package VirtualDesktop.Character;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.junit.runners.Parameterized.Parameter;
 
 import com.sun.xml.internal.bind.v2.runtime.Name;
 
 import VirtualDesktop.Controller.GLOBALS;
 import champions.Ability;
 import champions.Battle;
+import champions.DetailList;
 import champions.Effect;
 import champions.Target;
 import champions.enums.DefenseType;
 import champions.interfaces.AbilityIterator;
 import champions.interfaces.AbilityList;
+import champions.interfaces.Advantage;
+import champions.interfaces.Limitation;
+import champions.parameters.ParameterList;
+import champions.powers.advantageAreaEffect;
+import champions.powers.advantageAutofire;
+import champions.powers.advantageExplosion;
 
 public class CharacterJSONExporter {
 	private Target exportingCharacter;
@@ -86,12 +97,12 @@ public class CharacterJSONExporter {
 	private void ExportAbilities(JSONObject activeTargetOutput) {
 		AbilityList list = exportingCharacter.getAbilityList();
 		
-		AddAbilities(activeTargetOutput, list,"Powers", 0); 
-		AddAbilities(activeTargetOutput, list,"Skills", 1); 
-		AddAbilities(activeTargetOutput, list,"Disadvantages", 2); 
-		AddAbilities(activeTargetOutput, list,"Talents", 3);
-		AddAbilities(activeTargetOutput, list,"Perks", 4);
-		AddAbilities(activeTargetOutput, list,"Equipment", 5);
+		AddAbilities(activeTargetOutput, list,"Powers"); 
+		AddAbilities(activeTargetOutput, list,"Skills"); 
+		AddAbilities(activeTargetOutput, list,"Disadvantages"); 
+		AddAbilities(activeTargetOutput, list,"Talents");
+		AddAbilities(activeTargetOutput, list,"Perks");
+		AddAbilities(activeTargetOutput, list,"Equipment");
 		
 		AbilityList defaults = Battle.getCurrentBattle().getDefaultAbilities();
 		AddAbilitiesFromList(activeTargetOutput, "Defaults",  list);
@@ -143,12 +154,15 @@ public class CharacterJSONExporter {
 		states.put("Is Unconsious", character.isUnconscious());
 	}
 		
-	private void AddAbilities(JSONObject activeTargetOutput, AbilityList list,String category, int i) {
+	private void AddAbilities(JSONObject activeTargetOutput, AbilityList list,String category) {
 			
-			
-			AbilityList l = list.getSublist(i);
-			
-			AddAbilitiesFromList(activeTargetOutput, category, l);
+			for (int j = 0; j <  list.getSublists().length; j++) {
+				AbilityList l = list.getSublist(j);
+				if(l.getName().equals(category)) {
+					AddAbilitiesFromList(activeTargetOutput, category, l);
+					return;
+				}
+			}
 	}
 	public void AddAbilitiesFromList(JSONObject activeTargetOutput, String category,AbilityList list) {
 			Ability ability=null;
@@ -164,12 +178,152 @@ public class CharacterJSONExporter {
 		}
 	private void AddAbility(JSONObject powers, Ability ability) {
 		if(ability!=null) {
-		JSONObject abilityJSON = new JSONObject();
-		abilityJSON.put("Description", ability.getDescription());
-		abilityJSON.put("Is Enabled", ability.isEnabled(ability.getSource()));
-		powers.put(ability.getName(), abilityJSON);
+			JSONObject abilityJSON = new JSONObject();
+			abilityJSON.put("Description", ability.getDescription());
+			abilityJSON.put("Is Enabled", ability.isEnabled(ability.getSource()));
+			ParameterList parameters = ability.getPowerParameterList();
+			for (int j=0; j<parameters.getParameterCount(); j++) {
+				champions.parameters.Parameter p = parameters.getParameter(j);
+				String key  = p.getName();
+				Object val = parameters.getParameterValue(key);
+				abilityJSON.put(key, val);
+			}
+			
+			JSONObject detailsJSON = new JSONObject();
+			abilityJSON.put("Details", detailsJSON);
+			int k =0;
+			Object key = ability.getKey(k);
+			while(key!=null) {
+				Object val = ability.getValue(k);
+				if(val instanceof ParameterList) {
+					JSONObject parameterJSON = ExportParameterList(val);
+					val = parameterJSON;	
+				}
+				if(val instanceof Ability && !((Ability)val).getName().equals(ability.getName())) {
+					AddAbility(abilityJSON, (Ability)val);
+					
+				}
+				else {
+					if(val instanceof Ability) {
+						detailsJSON.put(key, ((Ability)val).getName());	
+					}
+					else {
+						detailsJSON.put(key, val);
+					}
+				}
+
+				k++;
+				key = ability.getKey(k);
+			}
+			  
+			
+			powers.put(ability.getName(), abilityJSON);
+			ExportAdvantages(ability, abilityJSON);
+			ExportLimitations(ability, abilityJSON);
+			
 		}
 	}
+	private JSONObject ExportParameterList(Object val) {
+		JSONObject parameterJSON = new JSONObject();
+		ParameterList pl = (ParameterList)val;
+		for (int j=0; j< pl.getParameterCount(); j++) {
+			champions.parameters.Parameter p = pl.getParameter(j); 
+			String pKey  = p.getName();
+			Object pVal = pl.getParameterValue(pKey);
+			
+			if(pVal instanceof ParameterList) {
+				JSONObject chilParameterJSON = ExportParameterList(pVal);
+				pVal = chilParameterJSON;
+			}
+			
+			parameterJSON.put(pKey, pVal);
+		}
+		return parameterJSON;
+	}
+	private void ExportAdvantages(Ability ability, JSONObject abilityJSON) {
+		if(ability.getAdvantageCount()>0) {
+			JSONObject advantages = new JSONObject();
+			abilityJSON.put("Advantages", advantages);
+			
+			for (int i=0; i< ability.getAdvantageCount();i++) {
+				Advantage a = ability.getAdvantage(i);
+				JSONObject advantageJSON = new JSONObject();
+				advantages.put(a.getName(),advantageJSON);
+				advantageJSON.put("Description", a.getDescription());
+								
+				ParameterList parameters =  a.getParameterList();
+				for (int j=0; j<parameters.getParameterCount(); j++) {
+					
+					champions.parameters.Parameter p = parameters.getParameter(j);
+					String key  = p.getName();
+					if(!key.equals("Private")) {
+						Object val = parameters.getParameterValue(key);
+						advantageJSON.put(key, val);
+					}
+				}
+				CalculateAndExportAreaEffectRange(ability, a, advantageJSON, parameters);
+			}
+		}
+	}
+	
+	private void ExportLimitations(Ability ability, JSONObject abilityJSON) {
+		if(ability.getLimitationCount()>0) {
+			JSONObject limitations = new JSONObject();
+			abilityJSON.put("Limitations", limitations);
+			
+			for (int i=0; i< ability.getLimitationCount();i++) {
+				Limitation l = ability.getLimitation(i);
+				JSONObject limitationJSON = new JSONObject();
+				limitations.put(l.getName(),limitationJSON);
+				limitationJSON.put("Description", l.getDescription());
+								
+				ParameterList parameters =  l.getParameterList();
+				for (int j=0; j<parameters.getParameterCount(); j++) {
+					
+					champions.parameters.Parameter p = parameters.getParameter(j);
+					String key  = p.getName();
+					if(!key.equals("Private")) {
+						Object val = parameters.getParameterValue(key);
+						limitationJSON.put(key, val);
+					}
+				}
+			}
+		}
+	}
+	private void CalculateAndExportAreaEffectRange(Ability ability, Advantage a, JSONObject advantageJSON,
+			ParameterList parameters) {
+		if(a.getName().equals("Area Effect") || a.getName().equals("Explosion"))
+		{
+			Ability ability2 =(Ability) ability.clone();
+			
+			int i = ability2.getAdvantageIndex(advantageAreaEffect.advantageName);
+			advantageAreaEffect areaEffect2 = (advantageAreaEffect) ability2.getAdvantage(i);
+			ability2.removeAdvantage(areaEffect2);
+			
+			int distance=0;
+			int cost = ability2.getAPCost();
+			if (parameters.getParameterStringValue("Shape").equals("Radius")){
+				
+				distance = cost/10;
+			}
+			if (parameters.getParameterStringValue("Shape").equals("One-hex")){
+				distance = 1;
+			}
+			if (parameters.getParameterStringValue("Shape").equals("Cone")){
+				distance = cost/5;
+			}
+			if (parameters.getParameterStringValue("Shape").equals("Line")){
+				distance = cost/5;
+			}
+			if (parameters.getParameterStringValue("Shape").equals("Any Area")){
+				distance = cost/10;
+			}
+			int increasedArea = (int) advantageJSON.get("IncreasedAreaLevel");
+			distance = distance *(increasedArea+1);
+			advantageJSON.put("Range", distance);
+		}
+	}  
+	
 	private void AddStat(JSONObject stats, String stat) {
 		JSONObject STUN = new JSONObject();
 		int value = exportingCharacter.getCurrentStat(stat);

@@ -20,8 +20,12 @@ import champions.interfaces.Debuggable;
 import champions.interfaces.ENDSource;
 import champions.interfaces.SenseFilter;
 import champions.interfaces.Undoable;
+import champions.parameters.ListParameter;
+import champions.parameters.Parameter;
+import champions.parameters.ParameterList;
 import champions.powers.effectAdjusted;
 import champions.powers.effectUnconscious;
+import champions.powers.powerInvisibility;
 import champions.senseFilters.SensesOnlySenseFilter;
 import champions.senseTree.STSensePanel;
 import java.awt.BorderLayout;
@@ -3655,12 +3659,29 @@ public class Target extends DetailList implements Comparable, ChampionsConstants
         Sense bestNonTargettingSense = null;
         int bestNonTargettingMod = Integer.MIN_VALUE;
         
-        Iterator it;
+        Iterator it=null;
         
         it = getSenses( new SensesOnlySenseFilter() );
+        //jeff change
         while ( it.hasNext() ) {
+        	boolean invisibleToSense= false;
             Sense s = (Sense)it.next();
-            if ( s.isFunctioning() && s.isRangedSense() ) {
+            if(target!=this && target.getAbility("Invisibility")!=null) {
+            	Ability inv = target.getAbility("Invisibility");
+            	powerInvisibility pInv =  (powerInvisibility) inv.getPower();
+            	ParameterList p = inv.getPowerParameterList();
+            	ListParameter l = (ListParameter) p.getParameter("Senses");
+            	ArrayList senses = (ArrayList) p.getParameterValue("Senses");
+            	 
+            	for (Object o: senses) {
+            		SenseGroup group = (SenseGroup)o;
+            		if(group.getSenseName().equals(s.getSenseGroupName()))
+            		{
+            			invisibleToSense= true;
+            		}
+				}
+            }
+            if ( s.isFunctioning() && s.isRangedSense() && invisibleToSense==false) {
                 if ( s.isTargettingSense() && s.getEnhancedPerceptionLevel() > bestTargettingMod) {
                     bestTargettingMod = s.getEnhancedPerceptionLevel();
                     bestTargettingSense = s;

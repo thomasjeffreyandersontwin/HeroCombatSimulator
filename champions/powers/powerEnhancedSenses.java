@@ -43,7 +43,7 @@ import java.lang.Math;
 public class powerEnhancedSenses extends Power implements ChampionsConstants{
     static final long serialVersionUID =5295848583348707203L;
     
-    static public String[] sensesOptions = { "None","Active Sonar","High Range Radio Perception","Infrared Vision","Mental Awareness",
+    static public String[] sensesOptions = { "Danger Sense","None","Active Sonar","High Range Radio Perception","Infrared Vision","Mental Awareness",
     "Night Vision","N-Ray Perception","Radar Sense","Radio Hearing","Radio Listen and Transmit","Spatial Awareness","Tracking Scent",
     "Ultrasonic Hearing","Ultraviolet Vision","Detect","Normal Sight","Normal Hearing","Normal Taste","Normal Touch","Normal Smell",
     "Sight Group","Hearing Group","Radio Group","Smell/Taste Group","Unusual Senses Group","Mental Group","All Senses"};
@@ -345,6 +345,7 @@ public class powerEnhancedSenses extends Power implements ChampionsConstants{
     private static Integer zero = new Integer(0);
     
     private static String[] senseNames = new String[] {
+    	"Danger Sense",
         "None",
         "Active Sonar",
         "High Range Radio Perception",
@@ -358,7 +359,6 @@ public class powerEnhancedSenses extends Power implements ChampionsConstants{
         "Spatial Awareness",
         "Ultrasonic Hearing",
         "Ultraviolet Vision",
-        "Danger Sense",
         "Combat Sense",
         "Detect",
         "Spactial Awareness"
@@ -373,6 +373,7 @@ public class powerEnhancedSenses extends Power implements ChampionsConstants{
     
     private static boolean[][] visibleParameters = new boolean[][] {
         // ARC, DETCT, SENSE, DISCR, ANALY, ENPER, MAGNI, RAPID, TARGT, TELEX, RANGD, TRACK, TRANS, GROUP
+    	{true,  true,  true,  false, false, false, false, false, true, false, false, false, false, true},
         {false, false, false, false, false, false, false, false, false, false, false, false, false, false}, // None
         { true, false, false,  true, false,  true,  true,  true,  true,  true,  true,  true,  true,  true},
         { true, false, false,  true, false,  true,  true,  true,  true,  true,  true,  true,  true,  true},
@@ -394,6 +395,7 @@ public class powerEnhancedSenses extends Power implements ChampionsConstants{
     
     private static boolean[][] enableParmeters = new boolean[][] {
         // ARC, DETCT, SENSE, DISCR, ANALY, ENPER, MAGNI, RAPID, TARGT, TELEX, RANGD, TRACK, TRANS, GROUP
+    	{false, false, true, false, false, false, false, false, false, false, false, false, false, true},
         {false, false, false, false, false, false, false, false, false, false, false, false, false, false}, // None
         { true, false, false,  true,  true,  true,  true,  true, false,  true, false,  true,  true,  true},
         {false, false, false,  true,  true,  true,  true,  true, false,  true, false,  true, false,  true},
@@ -415,7 +417,8 @@ public class powerEnhancedSenses extends Power implements ChampionsConstants{
     
     private static Object[][] defaultValues = new Object[][] {
         //         ARC,   DETCT,   SENSE,   DISCR,   ANALY,  PER, MAGN,RAPID, TARG,  TELEX,   RANGD,   TRACK,    TRANS,         GROUP
-        {"120 Degrees", "FALSE", "FALSE", "FALSE", "FALSE", zero, zero, zero, "FALSE", zero, "FALSE", "FALSE", "FALSE", "Sight Group"}, // None
+    	{"360 Degrees",  "TRUE",  "TRUE", "FALSE", "FALSE", zero, zero, zero,  "TRUE", zero,  "TRUE", "FALSE", "FALSE", "Unusual Group"}, 
+    	{"120 Degrees", "FALSE", "FALSE", "FALSE", "FALSE", zero, zero, zero, "FALSE", zero, "FALSE", "FALSE", "FALSE", "Sight Group"}, // None
         {"120 Degrees", "FALSE",  "TRUE", "FALSE", "FALSE", zero, zero, zero,  "TRUE", zero,  "TRUE", "FALSE", "FALSE", "Hearing Group"},
         {"360 Degrees", "FALSE",  "TRUE", "FALSE", "FALSE", zero, zero, zero,  "TRUE", zero,  "TRUE", "FALSE",  "TRUE", "Radio Group"},
         {"120 Degrees", "FALSE",  "TRUE", "FALSE", "FALSE", zero, zero, zero,  "TRUE", zero,  "TRUE", "FALSE", "FALSE", "Sight Group"},

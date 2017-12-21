@@ -6,7 +6,10 @@
 
 package champions;
 import champions.abilityTree2.ATAbilityFilter;
+import champions.abilityTree2.ATAbilityInstanceGroupNode;
+import champions.abilityTree2.ATAbilityListNode;
 import champions.abilityTree2.ATSingleTargetTree;
+import champions.abilityTree2.ATTargetNode;
 import champions.event.SegmentAdvancedEvent;
 import champions.event.SequenceChangedEvent;
 import champions.event.TargetSelectedEvent;
@@ -216,8 +219,12 @@ public class AbilityPanel extends JPanel
                 atTargetTree.expandAll( new TreePath(atTargetTree.getProxyTreeTableModel().getRoot()));
                 
             }
+     
+
+
             
         } 
+        
     }
     
     /** Triggers an update of the ability filter. */

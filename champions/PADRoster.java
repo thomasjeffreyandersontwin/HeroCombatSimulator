@@ -126,6 +126,7 @@ public class PADRoster extends Object {
         //  {"Takes No Stun","powerTakesNoStun", "Powers"},
         {"Suppress","powerSuppress", "Powers"},
         {"Swinging","powerSwinging", "Powers"},
+        {"Stretching","powerStretching", "Powers"},
         {"Telekinesis","powerTK", "Powers"},
         {"Teleportation","powerTeleport", "Powers"},
         {"Transfer","powerTransfer", "Powers"},
@@ -537,6 +538,7 @@ public class PADRoster extends Object {
         "Active Sonar",
         "Detect",
         "High Range Radio Perception",
+        "Danger Sense",
         "Infrared Perception",
         "Mental Awareness",
         "Nightvision",
@@ -1242,7 +1244,7 @@ public class PADRoster extends Object {
             s = new Sense("Combat Sense", "Unusual Group");
             s.setTargettingSense(true);
             s.setCost(5);
-        } else if ( group == null && "Danger Sense".equals(name)  ) {
+        } else if (  "Danger Sense".equals(name)  ) {
             s = new Sense("Danger Sense", "Unusual Group");
             s.setTargettingSense(true);
             s.setCost(5);

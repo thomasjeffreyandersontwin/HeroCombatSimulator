@@ -2295,8 +2295,10 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
             return false;
         }
         
-        if ( pad instanceof Limitation && ((Limitation)pad).isUnique() && hasLimitation(pad.getName()) ) {
-            return false;
+        if ( pad instanceof Limitation ) {
+        		if(((Limitation)pad).isUnique() && hasLimitation(pad.getName()))  {
+        			return false;
+        		}
         }
         if ( pl == null ) pl = pad.createParameterList(null,  -1);
         boolean value = pad.configurePAD( this, pl);
@@ -4880,6 +4882,7 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
             Power power;
             if ( newAbility.getPower() == null ) {
                 power = (Power)this.getPower().clone();
+            
             }
             else {
                 power = newAbility.getPower();
@@ -4888,6 +4891,9 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
             ParameterList parent = getPower().getParameterList(this,-1);
             ParameterList pl = new ParameterList(parent);
             power.configurePAD(newAbility, pl);
+            if(newAbility.getPower() == null) {
+            	newAbility.setPower(power, pl);
+            }
         }
         
         count = getAdvantageCount();
@@ -4897,6 +4903,9 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
             ParameterList pl = new ParameterList( adv.getParameterList() );
             
             newAbility.addPAD(childAdv,pl);
+            if(newAbility.getAdvantageIndex(adv.getName())==0) {
+            	newAbility.addAdvantageInfo(childAdv, childAdv.getName(), pl);
+            }
         }
         
         count = getLimitationCount();

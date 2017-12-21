@@ -170,6 +170,10 @@ public class ToHitNode extends DefaultAttackTreeNode {
         ActivationInfo ai = battleEvent.getActivationInfo();
         int tindex = ai.getTargetIndex(targetReferenceNumber, getTargetGroup());
         
+         tindex = ai.getSourceSenseIndex( ai.getSource() );
+        CVList list = ai.getCVList(tindex);
+         tindex = ai.getTargetIndex(targetReferenceNumber, getTargetGroup());
+        
         String hitmode = ai.getTargetHitMode(tindex);
         if ( hitmode == null ) {
             hitmode = USEDICE;
@@ -353,7 +357,9 @@ public class ToHitNode extends DefaultAttackTreeNode {
             // Adjust the cvList according to the perception rolls...
             cvList.removeSourceModifier("Perception");
             
-            int sindex = ai.getSourceSenseIndex( target );
+            //jeff ai.getsource instead if target
+            int sindex = ai.getSourceSenseIndex( ai.getSource() );
+           
             Sense s = ai.getSourcesSense(sindex);
             if ( ai.getSourceCanSenseTarget(sindex) == false ) {
                 // Can't perceive target with sense!!!

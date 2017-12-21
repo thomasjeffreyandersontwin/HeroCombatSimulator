@@ -16,6 +16,7 @@ import champions.EffectPanelTreeTableRenderer;
 import champions.GenericEffectDetail;
 import champions.Roster;
 import champions.Target;
+import champions.attackTree.AttackTreePanel;
 import champions.enums.DefenseType;
 import champions.exception.BattleEventException;
 import java.util.Comparator;
@@ -963,6 +964,8 @@ public class ATTargetNode extends ATNode implements PropertyChangeListener, Acti
                 BattleEvent be = new BattleEvent(BattleEvent.ACTIVE_TARGET, target);
                 be.addCombatStateEvent(target, target.getCombatState(), CombatState.STATE_ABORTING );
                 target.setCombatState( CombatState.STATE_ABORTING );
+                AttackTreePanel attackPanel = AttackTreePanel.defaultAttackTreePanel;
+        		attackPanel.cancelAttack();
                 Battle.currentBattle.addEvent(be);
             }
         }

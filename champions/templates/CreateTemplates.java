@@ -76,6 +76,7 @@ public class CreateTemplates {
         new ManeuverCreator("MartialEscape.abt", "Martial Escape", maneuverEscape.class, true, 0, 0, 0, 4, new Object[] { "Strength", new Integer(15) }),
         new ManeuverCreator("MartialGrab.abt", "Martial Grab", maneuverGrab.class, true, -1, -1, 0, 3, new Object[] { "Strength", new Integer(10) }),
         new ManeuverCreator("MartialStrike.abt", "Martial Strike", maneuverStrike.class, true, 0, 2, 2, 4),
+        new ManeuverCreator("DildoStrike.abt", "Dildo Strike", maneuverStrike.class, true, 9, 9, 2, 4),
         new ManeuverCreator("MartialThrow.abt", "Martial Throw", maneuverThrow.class, true, 0, 1, 0, 3, new Object[] { "DC", new Double(1) }),
         new ManeuverCreator("NerveStrike.abt", "Nerve Strike", maneuverNerveStrike.class, true, -1, 1, 2, 4),
         new ManeuverCreator("OffensiveStrike.abt", "Offensive Strike", maneuverStrike.class, true, -2, 1, 4, 5),

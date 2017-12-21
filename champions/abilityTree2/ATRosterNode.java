@@ -326,7 +326,11 @@ public class ATRosterNode extends ATNode implements RosterListener {
                 add(ccn);
             }
             
-            ATNode V = nodeFactory.createVirtualDesktopActionNode(roster, nodeFilter, pruned, "Show Camera");
+            
+            
+            /*
+              
+             ATNode V = nodeFactory.createVirtualDesktopActionNode(roster, nodeFilter, pruned, "Show Camera");
             if ( V != null && (nodeFilter == null || nodeFilter.includeElement(V))) {
                 add(V);
             }
@@ -350,6 +354,7 @@ public class ATRosterNode extends ATNode implements RosterListener {
             if ( V4 != null && (nodeFilter == null || nodeFilter.includeElement(V4))) {
                 add(V4);
             }
+            */
             
             updateCounts(false);
             

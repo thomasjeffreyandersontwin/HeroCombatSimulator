@@ -150,14 +150,54 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
             for(int index = 0; index < count; index++) {
                 TreePath newPath = path.pathByAddingChild( model.getChild(node, index));
                 
+                
                 expandAll(newPath);
                 
             }
             
-            if ( expanded == false ) expandPath(path);
+            if ( expanded == false ) {
+            	expandPath(path);
+            }
             
         }
         
+        //Jeff Anderson Change
+
+        ATNode node2 = (ATNode)node;       
+        ATTargetNode root = (ATTargetNode)node2.getRoot();
+        
+      try {
+        for(int i=0;i< root.getChildCount(); i++) {
+        	String name="";
+        	if ( root.getChildAt(i) instanceof  ATAbilityListNode) {
+        		ATAbilityListNode abilityChategory = (ATAbilityListNode) root.getChildAt(i);
+        		abilityChategory.setExpandedByDefault(true);
+        		if(abilityChategory.getAbilityList().getName()==null) {
+        		
+        			for(int j=0;j< abilityChategory.getChildCount(); j++) {
+        				if(abilityChategory.getChildAt(j) instanceof  ATAbilityListNode)
+        				{
+        					ATAbilityListNode powerSkillDisad = (ATAbilityListNode) abilityChategory.getChildAt(j);
+        					if(powerSkillDisad.getAbilityList().getName().equals("Non Core")|| powerSkillDisad.getAbilityList().getName().equals("Skills") || powerSkillDisad.getAbilityList().getName().equals("Disadvantages"))
+        					{
+        						powerSkillDisad.setExpandedByDefault(false);
+        					}	
+        					else {
+        						powerSkillDisad.setExpandedByDefault(true);
+        					}
+        				}
+        			}
+        		}
+        	}
+        	
+        }
+      }
+      catch(Exception e) {
+    	 e.printStackTrace();
+      }
+      
+        	
+       	
     }
     
     /** Expends the children of the specified path.

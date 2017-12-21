@@ -8,8 +8,13 @@ package champions;
 
 import champions.interfaces.Debuggable;
 import champions.interfaces.SenseCapabilities;
+import champions.parameters.ListParameter;
+import champions.parameters.ParameterList;
+import champions.powers.powerInvisibility;
+
 import java.awt.BorderLayout;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -719,6 +724,22 @@ public class Sense
      *
      */
     public boolean isTargetableWithSense(Target target) {
+    	//jeff
+    	if( target.getAbility("Invisibility")!=null) {
+        	Ability inv = target.getAbility("Invisibility");
+        	powerInvisibility pInv =  (powerInvisibility) inv.getPower();
+        	ParameterList p = inv.getPowerParameterList();
+        	ListParameter l = (ListParameter) p.getParameter("Senses");
+        	ArrayList senses = (ArrayList) p.getParameterValue("Senses");
+        	 
+        	for (Object o: senses) {
+        		SenseGroup group = (SenseGroup)o;
+        		if(group.getSenseName().equals(this.getSenseGroupName()))
+        		{
+        			return false;
+        		}
+			}
+        }
         if ( isFunctioning() == false ) return false;
         
         if ( isTargettingSense() == true ) return true;

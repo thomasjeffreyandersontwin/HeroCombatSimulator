@@ -482,7 +482,8 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
     }
 
     protected PowerXMLAdapter getPowerAdapter(String powerName) {
-        if (adapterMap.containsKey(powerName)) {
+    
+        if (adapterMap.containsKey(powerName) && adapterMap.get(powerName)!=null) {
             return (PowerXMLAdapter) adapterMap.get(powerName);
         } else {
             // Lookup the approprate adapter based on name...

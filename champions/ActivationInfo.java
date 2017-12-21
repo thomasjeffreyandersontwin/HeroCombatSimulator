@@ -316,7 +316,8 @@ implements ChampionsConstants {
     }
     
     public void setAbility(Ability ability, boolean abilityConstant) {
-        if ( abilityConstant == false && ability != null && ability.isBaseInstance() == true ) ability = ability.getModifiableInstance();
+        if ( abilityConstant == false && ability != null && ability.isBaseInstance() == true )
+        	ability = ability.getModifiableInstance();
         //add("ActivationInfo.ABILITY",  ability, true );
         this.ability = ability;
     }
