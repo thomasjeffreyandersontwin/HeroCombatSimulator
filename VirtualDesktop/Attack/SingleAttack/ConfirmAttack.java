@@ -28,6 +28,7 @@ public class ConfirmAttack extends AbstractDesktopCommand {
 		}
 		if(status.equals("Confirm")) {
 			attack.ConfirmAttack();
+			attack.ConfirmAttack();
 		}
 		else
 			attack.CancelAttack();

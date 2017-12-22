@@ -9,6 +9,7 @@ import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import VirtualDesktop.Attack.SingleAttack.SimulatorSingleAttack;
 import VirtualDesktop.Character.CharacterAdaptor;
 import VirtualDesktop.Controller.AbstractDesktopCommand;
+import champions.BattleEvent;
 import champions.Sense;
 import champions.Target;
 import champions.TargetList;
@@ -40,13 +41,27 @@ public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 
 
 	}
-
+	
+	public void EnterKnockbackCollision(SimulatorSingleAttack attack, JSONObject message) {
+		JSONObject potCol = (JSONObject)message.get("Potential Collision");
+		Long distanceToCollision = (Long) potCol.get("Distance From Target");
+		String knockbackTargetName = (String) potCol.get("Obstacle");
+		if(knockbackTargetName!=null){
+			attack.StartEnteringKnockback();
+			int knockbackDistance = attack.getKnockbackDistance();
+			if(knockbackDistance  >=distanceToCollision )
+				attack.SetKnockBackTargetByName(knockbackTargetName);
+			
+		}
+		
+	}
 	
 
 	public void ExecuteAttackOnTarget(JSONObject message, SimulatorSingleAttack attack, String targetName) {
 		attack.StartSelectingTargets();
 		InvokeSIngleAttack(message, attack, targetName);
 		attack.Export();
+		
 	}
 
 
@@ -59,7 +74,9 @@ public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 		SelectTargetingSense(attack, message);
 		EnterHitLocation(message, attack);
 		AddObstructions(message, attack);
-		
+		EnterKnockbackCollision( attack,  message);
+
+
 		
 	}
 
@@ -183,6 +200,6 @@ public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 		}
 		attack.ConfirmAttack();
 		
-			//attack.SetAttackFromSurprise(true);
+			
 	}
 }

@@ -444,4 +444,10 @@ protected void WriteJSON(JSONObject attackJSON) {
 }
 
 
+public int getKnockbackDistance() {
+	return battleEvent.getKnockbackDistance(this.targetNum);
+	
+}
+
+
 }

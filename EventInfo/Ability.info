@@ -6,8 +6,8 @@ character:
 	model:
 	MaxStun:37
 	MaxEndurance:56
-	CurrStun:-2
-	CurrEndurance:37
+	CurrStun:-59
+	CurrEndurance:50
 	Crowd: 
 		Name:2 character
 		Characters:
@@ -27,7 +27,11 @@ character:
 				name:Telephone pole
 				costume:
 				model:
-			Blind Justice Entangle:
-				name:Blind Justice Entangle
+			New Object:
+				name:New Object
+				costume:
+				model:
+			Test Object:
+				name:Test Object
 				costume:
 				model:
