@@ -341,8 +341,13 @@ public class ParameterList implements PropertyChangeListener, Serializable, Debu
             if ( getParent() != null ) {
                 if ( pp.overrideParent == false ) {
                     pv = getParent().getParameterValue(parameter);
-                    
+                    try {
                     rv = pp.parameter.mergeValues(rv,pv);
+                    }
+                    catch(ClassCastException e) {
+                    	rv = pp.parameter.getDefaultValue();
+                    }
+                    
                 }
             }
             

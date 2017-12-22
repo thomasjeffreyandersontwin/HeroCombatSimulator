@@ -27,13 +27,15 @@ public class AbilityWrapper {
 	protected int Pushed;
 	
 	public AbilityWrapper(String name, CharacterAdaptor character ){
-		Name = name;
-		Character = character;
-		battle= Battle.currentBattle;
-		if(Character !=null) {
-			UnderlyingAbility = Character.UnderlyingCharacter.getAbility(Name);
-			if(UnderlyingAbility==null) {
-				UnderlyingAbility = battle.getDefaultAbilities().getAbility(Name, true);	
+		if(name!=null && character!=null) {
+			Name = name;
+			Character = character;
+			battle= Battle.currentBattle;
+			if(Character !=null) {
+				UnderlyingAbility = Character.UnderlyingCharacter.getAbility(Name);
+				if(UnderlyingAbility==null) {
+					UnderlyingAbility = battle.getDefaultAbilities().getAbility(Name, true);	
+				}
 			}
 		}
 		

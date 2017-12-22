@@ -7,31 +7,4 @@ character:
 	MaxStun:48
 	MaxEndurance:60
 	CurrStun:48
-	CurrEndurance:60
-	Crowd: 
-		Name:heroes
-		Characters:
-			Ogun:
-				name:Ogun
-				costume:
-				model:
-			Blind Justice:
-				name:Blind Justice
-				costume:
-				model:
-			Pre-Emptive Strike:
-				name:Pre-Emptive Strike
-				costume:
-				model:
-			City gates, small:
-				name:City gates, small
-				costume:
-				model:
-			Off-Road:
-				name:Off-Road
-				costume:
-				model:
-			Spyder:
-				name:Spyder
-				costume:
-				model:
+	CurrEndurance:28

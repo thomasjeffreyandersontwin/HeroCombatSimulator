@@ -2,10 +2,12 @@ package VirtualDesktop.Character;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 
+import org.apache.commons.lang3.ClassUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.runners.Parameterized.Parameter;
@@ -23,10 +25,14 @@ import champions.interfaces.AbilityIterator;
 import champions.interfaces.AbilityList;
 import champions.interfaces.Advantage;
 import champions.interfaces.Limitation;
+import champions.interfaces.SpecialParameter;
 import champions.parameters.ParameterList;
 import champions.powers.advantageAreaEffect;
 import champions.powers.advantageAutofire;
 import champions.powers.advantageExplosion;
+import sun.security.util.Length;
+
+
 
 public class CharacterJSONExporter {
 	private Target exportingCharacter;
@@ -138,7 +144,9 @@ public class CharacterJSONExporter {
 		List<Effect> ef = character.getEffects();
 		for (int i = 0; i < ef.size(); i++) {
 			JSONObject effect = new JSONObject();
-			effect.put("Description", ef.get(i).getDescription());
+			if(ef.get(i).getDescription()!=null) {
+				effect.put("Description", ef.get(i).getDescription());
+			}
 			effects.put(ef.get(i).getName(), effect);
 		}
 	}
@@ -186,7 +194,39 @@ public class CharacterJSONExporter {
 				champions.parameters.Parameter p = parameters.getParameter(j);
 				String key  = p.getName();
 				Object val = parameters.getParameterValue(key);
-				abilityJSON.put(key, val);
+				if(val instanceof ArrayList<?>) {
+					JSONArray array = new JSONArray();
+					for(int i=0;i < ((ArrayList<?>)val).size();i++)
+					{
+						Object arrayVal = ((ArrayList<?>)val).get(i);
+						if(arrayVal instanceof Ability)
+						{
+							array.add(((Ability)arrayVal).getName());
+						}
+						else {
+							if(arrayVal!=null && ClassUtils.isPrimitiveOrWrapper(arrayVal.getClass())){
+								array.add(val);
+							}
+							else {
+								array.add(val.toString());
+							}
+						}
+					}
+					abilityJSON.put(key, array);
+					
+				}
+				else if(val instanceof Ability && !((Ability)val).getName().equals(ability.getName())) {
+					AddAbility(abilityJSON, (Ability)val);
+					
+				}
+				else {
+					if(val!=null && ClassUtils.isPrimitiveOrWrapper(val.getClass())){
+						abilityJSON.put(key, val);
+					}
+					else {
+						abilityJSON.put(key, "");
+					}
+				}
 			}
 			
 			JSONObject detailsJSON = new JSONObject();
@@ -199,16 +239,31 @@ public class CharacterJSONExporter {
 					JSONObject parameterJSON = ExportParameterList(val);
 					val = parameterJSON;	
 				}
-				if(val instanceof Ability && !((Ability)val).getName().equals(ability.getName())) {
+				if(val instanceof SpecialParameter) {
+					int index = ability.findIndexed("SpecialParameter", "SPECIALPARAMETER", val);
+					ParameterList spl = ((SpecialParameter)val).getParameterList(ability, index);
+					JSONObject spljson = ExportParameterList(spl);
+					detailsJSON.put(key, spljson);
+				}
+				else if(val instanceof Ability && !((Ability)val).getName().equals(ability.getName())) {
 					AddAbility(abilityJSON, (Ability)val);
 					
+				}
+				else if(val ==null) 
+				{
+					detailsJSON.put(key, "");
 				}
 				else {
 					if(val instanceof Ability) {
 						detailsJSON.put(key, ((Ability)val).getName());	
 					}
 					else {
-						detailsJSON.put(key, val);
+						if(ClassUtils.isPrimitiveOrWrapper(val.getClass())){
+							detailsJSON.put(key, val);
+						}
+						else {
+							detailsJSON.put(key, "");
+						}
 					}
 				}
 
@@ -235,8 +290,12 @@ public class CharacterJSONExporter {
 				JSONObject chilParameterJSON = ExportParameterList(pVal);
 				pVal = chilParameterJSON;
 			}
-			
-			parameterJSON.put(pKey, pVal);
+			if(ClassUtils.isPrimitiveOrWrapper(val.getClass())){
+				parameterJSON.put(pKey, pVal);
+			}
+			else {
+				parameterJSON.put(pKey, "");
+			};
 		}
 		return parameterJSON;
 	}
@@ -258,7 +317,13 @@ public class CharacterJSONExporter {
 					String key  = p.getName();
 					if(!key.equals("Private")) {
 						Object val = parameters.getParameterValue(key);
-						advantageJSON.put(key, val);
+						
+						if(ClassUtils.isPrimitiveOrWrapper(val.getClass())){
+							advantageJSON.put(key, val);
+						}
+						else {
+							advantageJSON.put(key, "");
+						};
 					}
 				}
 				CalculateAndExportAreaEffectRange(ability, a, advantageJSON, parameters);
@@ -284,7 +349,14 @@ public class CharacterJSONExporter {
 					String key  = p.getName();
 					if(!key.equals("Private")) {
 						Object val = parameters.getParameterValue(key);
-						limitationJSON.put(key, val);
+						if(!key.equals("Private")) {
+							if(ClassUtils.isPrimitiveOrWrapper(val.getClass())){
+								limitationJSON.put(key, val);
+							}
+							else {
+								limitationJSON.put(key, "");
+							};
+						}
 					}
 				}
 			}
