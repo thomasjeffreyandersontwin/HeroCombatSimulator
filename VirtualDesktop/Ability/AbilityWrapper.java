@@ -2,10 +2,10 @@ package VirtualDesktop.Ability;
 
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.AreaEffect.SimulatorAreaEffectAttack;
-import VirtualDesktop.Attack.Autofire.SimulatorAutofireAttack;
-import VirtualDesktop.Attack.MoveThrough.SimulatorMoveThrough;
-import VirtualDesktop.Attack.SingleAttack.SimulatorSingleAttack;
+import VirtualDesktop.Attack.AreaEffect.AreaEffectAttackAdapter;
+import VirtualDesktop.Attack.Autofire.AutofireAttackAdapter;
+import VirtualDesktop.Attack.MoveThrough.MoveThroughAdapter;
+import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
 import VirtualDesktop.Attack.Sweep.SimulatorSweepAttack;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Ability;
@@ -64,15 +64,15 @@ public class AbilityWrapper {
 		}
 		if(a!= null) {
 			if(abilityName=="Move Through" || abilityName=="Move By") {
-				ability = new SimulatorMoveThrough(abilityName, character);
+				ability = new MoveThroughAdapter(abilityName, character);
 				return ability;
 			}
 			if(a.hasAdvantage("Autofire")){
-				ability = new SimulatorAutofireAttack(abilityName, character);
+				ability = new AutofireAttackAdapter(abilityName, character);
 				return ability;
 			}
 			if(a.hasAdvantage("Area Effect")) {
-				ability = new SimulatorAreaEffectAttack(abilityName, character);
+				ability = new AreaEffectAttackAdapter(abilityName, character);
 				return ability;
 			}
 			if(a.getName().equals("Sweep")) {
@@ -80,11 +80,11 @@ public class AbilityWrapper {
 				return ability;
 			}
 			if(a.isAttack()) {
-				ability = new SimulatorSingleAttack(abilityName, character);
+				ability = new SingleAttackAdapter(abilityName, character);
 				return ability;
 			}
 			if(a.isMovementPower()) {
-				ability = new MovementAdaptor(abilityName, character);
+				ability = new MovementAdapter(abilityName, character);
 			return ability;
 			}
 			

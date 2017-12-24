@@ -14,6 +14,7 @@ public class SimpleAbilityCommand extends AbstractDesktopCommand {
 	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message, CharacterAdaptor character)
 			throws Exception {
 		String abilityName = (String)message.get("Ability");
+		String token = (String)message.get("Token");
 		character.ActivateAbilityByName(abilityName);
 		if(AbortNextActionCommand.isAbortActivated==true) {
 			new AbortNextActionCommand().ResumeInteruptedAttack();

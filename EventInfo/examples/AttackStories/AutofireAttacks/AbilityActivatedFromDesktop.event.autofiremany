@@ -1,24 +1,35 @@
 {
+	"Token":"q12d3d4f4g",
 	"Type": "AutofireTargets",
-	"Ability": "Flurry",
-	"Width":5,
+	"Ability": "Rapid Punch",
+	"Width":1,
 	"Spray":true,
-	"Targets": [{
-			"Target": "Ogun",
-			"Obstruction": "test",
-			"Encumbrance": -3
-		},
+	"Targets": [
+		
+		{
+
+			"Target": "Spyder"
+			"Potential Collision":
+			{
+				"Distance From Target":1,
+				"Obstacle":"Magnetic lock"
+			}
+			
+		}, 
 		{
 			"Target": "Ogun",
-			"Obstruction": "test",
-			"From Behind": true,
-			"Surprised": true,
-			"Surprise Move": 2,
-			"Encumbrance": -2
-		}, {
-			"Target": "Ogun",
-			"Obstruction": "test",
-			"Encumbrance": -3
+			"Potential Collision":
+			{
+				"Distance From Target":1,
+				"Obstacle":"Magnetic lock"
+			}
+		},
+		{"Target": "Blind Justice",
+			"Potential Collision":
+			{
+				"Distance From Target":1,
+				"Obstacle":"Airlock Door"
+			}
 		}
 	]
 }

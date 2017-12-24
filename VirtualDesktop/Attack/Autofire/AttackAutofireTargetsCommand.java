@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.Attack.AreaEffect.AttackMultipleTargetsCommand;
+import VirtualDesktop.Attack.AreaEffect.MultAttackAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 
 
@@ -23,19 +24,33 @@ public class AttackAutofireTargetsCommand extends AttackMultipleTargetsCommand{
 		
 		
 		//enter autofire parameters
-		SimulatorAutofireAttack attack =  (SimulatorAutofireAttack)character.ActiveAbility;
+		AutofireAttackAdapter attack =  (AutofireAttackAdapter)character.ActiveAbility;
 		EnterAttackParameters(message, attack);
 		//attack.EnterAttackParameters();
 		attack.SetAutoFireSprayMode(true);
 		attack.SetAutoFireShots((int)autofireShots);
 		attack.SetAutoFireWidth((int)autofireWidth);
 
+		attack.StartSelectingTargets();
 		EnterAttackForAllTargets(message, attack);
 		
 		//attack.ConfirmAttack();
 		
 		
 
+	}
+	
+	protected void EnterAttackForAllTargets(JSONObject message, MultAttackAdapter attack) {
+		JSONArray targets = (JSONArray) message.get("Targets");
+		for (int i = 0; i < targets.size(); i++) {
+			JSONObject targetObject =(JSONObject) targets.get(i);
+			String targetName =  (String)targetObject.get("Target");
+			InvokeSingleAttackWithoutKnockback(targetObject, attack, targetName);
+			
+		}
+		
+		EnterKnockbackForAllTargets(message, attack);
+		attack.Export(Token);
 	}
 
 }

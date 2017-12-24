@@ -2,10 +2,17 @@ package VirtualDesktop.Attack.Sweep;
 
 import javax.swing.tree.TreeNode;
 
-import VirtualDesktop.Attack.SingleAttack.SimulatorSingleAttack;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+
+import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
+import VirtualDesktop.Roster.SingleAttackResults;
 import champions.Ability;
 import champions.Battle;
+import champions.BattleEvent;
+import champions.Target;
 import champions.attackTree.AttackTreeModel;
 import champions.attackTree.AttackTreeNode;
 import champions.attackTree.AttackTreePanel;
@@ -18,8 +25,12 @@ import champions.attackTree.SweepActivateAbilityNode;
 import champions.attackTree.SweepActivateRootNode;
 import champions.attackTree.SweepExecuteNode;
 import champions.attackTree.SweepSetupPanel;
+import champions.battleMessage.ActivateAbilityMessageGroup;
+import champions.battleMessage.EmbeddedBattleEventMessageGroup;
+import champions.battleMessage.SweepMessageGroup;
+import champions.interfaces.IndexIterator;
 
-public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttack.SimulatorSingleAttack {
+public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter {
 	private SingleTargetNode targetNode = null;
 	
 
@@ -77,8 +88,6 @@ public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttack.Sim
 		return sNode;
 	}
 	
-	
-
 	public void EnterKnockbackForSpecificTarget(String knockbackTargetName, int i) {
 		AttackTreeModel model = AttackTreeModel.treeModel;
 		SingleTargetNode knockBackTargetNode = GetKnockbackNode(i);
@@ -88,7 +97,53 @@ public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttack.Sim
 		}
 	}
 	
-	
+	public JSONObject ExportBasedOnBattleEvent(String token, BattleEvent sweepEvent) {
+		String type= "SweepTargetResult";
+		JSONObject sweepAttackJSON = new JSONObject();
+		sweepAttackJSON.put("Type", type);
+		
+		JSONArray attacks = new JSONArray(); 
+		sweepAttackJSON.put("Attacks", attacks );
+		int sweeps = sweepEvent.getIndexedSize("LinkedAbility");
+		for(int i = 0;i< sweeps; i++)
+		{
+			BattleEvent event = (BattleEvent) sweepEvent.getIndexedValue(i, "LinkedAbility", "BATTLEEVENT");
+			IndexIterator index =event.getActivationInfo().getTargetGroupIterator(".ATTACK");
+			while(index.hasNext()) {
+				int  j =  index.nextIndex();
+				Target t  = event.getActivationInfo().getTarget(j);
+				if(t!=null) {
+					int tindex = event.getActivationInfo().getTargetIndex(t, ".ATTACK") ;
+					JSONObject targetJSON = new JSONObject();
+					ExportSingleAttackResults(targetJSON, event,tindex);
+					ExportSingleKnockback( targetJSON, event,tindex);
+					
+					attacks.add(targetJSON);
+					targetJSON.put("Ability", event.getAbility().getName());
+				}
+				
+			}
+		}
+		
+		/*
+		SweepMessageGroup group = (SweepMessageGroup) sweepEvent.getPrimaryBattleMessageGroup(); 
+
+		for(int i=0; i< group.getChildCount();i++) {
+			if(group.getChild(i) instanceof EmbeddedBattleEventMessageGroup) {
+				EmbeddedBattleEventMessageGroup emb = (EmbeddedBattleEventMessageGroup)group.getChild(i);
+				BattleEvent be = emb.battleEvent;
+				ActivateAbilityMessageGroup embeddedGroup = (ActivateAbilityMessageGroup) be.getPrimaryBattleMessageGroup();
+				
+				type = AbilityExporter.DetermineAttackType(embeddedGroup);
+				SingleAttackResults abilityResult = AbilityResultFactory.GetAbilityForType(type);
+				JSONObject resultJSON =  abilityResult.buildFrom(embeddedGroup);
+				attacks.add(resultJSON);
+			}
+		}
+		*/
+		sweepAttackJSON.put("Token", token);
+		return sweepAttackJSON;
+	}
 	
 
 }

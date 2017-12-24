@@ -1,38 +1,46 @@
 
 character:
-	name:Spyder
+	name:Off-Road
 	costume:
 	model:
-	MaxStun:48
-	MaxEndurance:60
-	CurrStun:39
-	CurrEndurance:59
+	MaxStun:28
+	MaxEndurance:44
+	CurrStun:28
+	CurrEndurance:26
 Activate: True
 
 	Crowd: 
-		Name:2 character
+		Name:heroes
 		Characters:
-			Blind Justice:
-				name:Blind Justice
+			Ogun:
+				name:Ogun
+				costume:
+				model:
+			Pre-Emptive Strike:
+				name:Pre-Emptive Strike
+				costume:
+				model:
+			City gates, small:
+				name:City gates, small
+				costume:
+				model:
+			Off-Road:
+				name:Off-Road
 				costume:
 				model:
 			Spyder:
 				name:Spyder
 				costume:
 				model:
-			WALL:
-				name:WALL
+			Blind Justice:
+				name:Blind Justice
 				costume:
 				model:
-			Telephone pole:
-				name:Telephone pole
+			Airlock Door:
+				name:Airlock Door
 				costume:
 				model:
-			New Object:
-				name:New Object
-				costume:
-				model:
-			Test Object:
-				name:Test Object
+			Magnetic lock:
+				name:Magnetic lock
 				costume:
 				model:

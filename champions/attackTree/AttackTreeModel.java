@@ -23,6 +23,7 @@ import champions.battleMessage.KnockbackSummaryMessage;
 import champions.battleMessage.SingleAttackMessageGroup;
 import champions.battleMessage.SweepMessageGroup;
 import champions.exception.BattleEventException;
+import champions.interfaces.IndexIterator;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -42,6 +43,12 @@ import javax.swing.tree.TreePath;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import VirtualDesktop.Attack.AreaEffect.AreaEffectAttackAdapter;
+import VirtualDesktop.Attack.AreaEffect.MultAttackAdapter;
+import VirtualDesktop.Attack.Autofire.AutofireAttackAdapter;
+import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
+import VirtualDesktop.Attack.Sweep.SimulatorSweepAttack;
 import VirtualDesktop.Controller.DesktopCommandFactory;
 
 import java.io.File;
@@ -338,8 +345,31 @@ implements TreeModel {
                 battleEvent = node.getBattleEvent();
             }
             else {
-            	
-            	
+            	try{
+            	if(this.isAttackTreePanelVisible() && this.attackTreePanel.OKCLicked==true)
+                {
+            		SingleAttackAdapter a=null;
+                
+            		if(battleEvent.getPrimaryBattleMessageGroup() instanceof SweepMessageGroup) {
+            			a = new SimulatorSweepAttack(null, null);
+            		}
+            		else if(battleEvent.getActivationInfo().getTarget(1)!=null) {
+            			a = new MultAttackAdapter(null, null);
+            		}
+            		else if (battleEvent.getAbility().hasAdvantage("Autofire"))
+            		{
+            			a = new AutofireAttackAdapter(null, null);
+            		}
+            		else {
+            			a = new SingleAttackAdapter(null, null);
+            		}
+        			JSONObject att = a.ExportBasedOnBattleEvent(AttackSingleTargetCommand.Token, battleEvent);
+        			a.WriteJSON(att);
+        			AttackSingleTargetCommand.Token=null;
+                }
+            	}catch(Exception e) {
+            		e.printStackTrace();
+            	}
             	
                 setFinished(true);
                 accepted = true;

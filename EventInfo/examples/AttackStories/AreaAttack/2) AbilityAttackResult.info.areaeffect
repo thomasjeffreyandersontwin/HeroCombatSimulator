@@ -1,114 +1,90 @@
-	
 {
-	"Type": "AttackAreaTargetsResult",
-	"Ability":"Loa Blast",
-	"Targets":
-	[
-	{	
-		"Target":
-		{
-			Name:"Spyder",
-			Crowd:"Heroes",
-			Stats:{
-				"Stun":
-				{
-					"Current":35,
-					"Max":48
+	"Ability": "Air - Strike",
+	"Type": "AttackMultiTargetResult",
+	"Targets": [{
+		"Target": {
+			"STUN": {
+				"Max": 48,
+				"Current": -152
+			},
+			"BODY": {
+				"Max": 10,
+				"Current": -14
+			},
+			"Name": "Spyder"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Obstacle Collision": {
+					"BODY": {
+						"Max": 7,
+						"Current": -8
+					},
+					"Obstacle Damage Results": {
+						"Effects": ["Dead",
+						"Destroyed"]
+					},
+					"Name": "Airlock Door"
 				},
-				"Body":
-				{
-					"Current":10,
-					"Max":10
-				},
-				"End":
-				{
-					"Current":60,
-					"Max":46
-				},
-			
-			"Result":
-			{
-				"Hit":true
-				,	
-				"Damage Results":{
-					"Stun":35,
-					"Body":22
-				}
-				,
-				"Effects":[
-					"Stunned",
-					"Unconsious"
-				]
-				'
-				"Knockback":
-				{
-					distance:12
-				}
-			}
+				"Distance": 20
+			},
+			"Effects": ["Dead"]
 		}
 	},
-	{	
-		"Target":{
-			Name:"Off-road",
-			Crowd:"Heroes",
-			Stats:{
-				"Stun":
-				{
-					"Current":22,
-					"Max":33
-				},
-				"Body":
-				{
-					"Current":10,
-					"Max":10
-				},
-				"End":
-				{
-					"Current":60,
-					"Max":46
-				},
-			
-			"Result":
-			{
-				"Hit":true
-				,	
-				"Damage Results":{
-					"Stun":11,
-					"Body":22
-				}
-				,
-				"Effects":[
-					"Stunned",
-				]
-				'
-				"Knockback":5
-			}
+	{
+		"Target": {
+			"STUN": {
+				"Max": 28,
+				"Current": -118
+			},
+			"BODY": {
+				"Max": 10,
+				"Current": -2
+			},
+			"Name": "Off-Road"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Distance": 23
+			},
+			"Effects": ["Dying",
+			"Stunned",
+			"Unconscious"]
 		}
 	},
-	{	
-		"Target":{
-			Name:"Ogun",
-			Crowd:"Heroes",
-			Stats:{
-				"Stun":
-				{
-					"Current":22,
-					"Max":33
+	{
+		"Target": {
+			"STUN": {
+				"Max": 27,
+				"Current": -149
+			},
+			"BODY": {
+				"Max": 10,
+				"Current": 10
+			},
+			"Name": "Ogun"
+		},
+		"Results": {
+			"Hit": true,
+			"Knockback": {
+				"Obstacle Collision": {
+					"BODY": {
+						"Max": 3,
+						"Current": -13
+					},
+					"Obstacle Damage Results": {
+						"Effects": ["Dead",
+						"Destroyed"]
+					},
+					"Name": "Magnetic lock"
 				},
-				"Body":
-				{
-					"Current":10,
-					"Max":10
-				},
-				"End":
-				{
-					"Current":60,
-					"Max":46
-				},
-			
-			"Result":
-			{
-				"Hit":false
-			}
+				"Distance": 19
+			},
+			"Effects": ["Stunned",
+			"Unconscious"]
 		}
+	}],
+	"Token": "q12d3d4f4g"
 }

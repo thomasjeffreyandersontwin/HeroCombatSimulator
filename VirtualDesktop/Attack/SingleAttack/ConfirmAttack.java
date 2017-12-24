@@ -22,9 +22,9 @@ public class ConfirmAttack extends AbstractDesktopCommand {
 			throws Exception {
 		String status = (String) message.get("Status");
 		
-		SimulatorSingleAttack attack = AttackSingleTargetCommand.LastAttack;
+		SingleAttackAdapter attack = AttackSingleTargetCommand.AttackInProgress;
 		if(attack==null) {
-			attack = new SimulatorSingleAttack(null, null);
+			attack = new SingleAttackAdapter(null, null);
 		}
 		if(status.equals("Confirm")) {
 			attack.ConfirmAttack();
@@ -32,8 +32,8 @@ public class ConfirmAttack extends AbstractDesktopCommand {
 		}
 		else
 			attack.CancelAttack();
-		AttackSingleTargetCommand.LastAttack = null;
-		
+		AttackSingleTargetCommand.AttackInProgress = null;
+		Token=null;
 	}
 
 	

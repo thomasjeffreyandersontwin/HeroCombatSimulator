@@ -73,6 +73,8 @@ public class AttackTreePanel extends JPanel implements TreeWillSelectListener {
     
     private boolean processing = false;
 
+	public boolean OKCLicked;
+
 	public static AttackTreePanel Panel;
     
     private static EventListenerList listenerList;
@@ -148,7 +150,13 @@ public class AttackTreePanel extends JPanel implements TreeWillSelectListener {
     	clearInputPanel();
         if ( model != null ) {
             //model.advanceNode(null);
+        	  
             model.advanceAndActivate(null,null);
+            if(treePanel.getModel().battleEvent.getTarget()!=null) {
+            	
+            }
+           
+          
         }
     }
     
@@ -395,7 +403,9 @@ public class AttackTreePanel extends JPanel implements TreeWillSelectListener {
     }//GEN-LAST:event_cancelButtonActionPerformed
     
     private void okayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okayButtonActionPerformed
-        advanceNode();
+    	OKCLicked = true;
+    	advanceNode();
+        OKCLicked = false;
        // Battle b = Battle.currentBattle;
        // BattleEvent be = b.getCompletedEventList().get(b.getCompletedEventList().size()-1);
        // be.getMessage

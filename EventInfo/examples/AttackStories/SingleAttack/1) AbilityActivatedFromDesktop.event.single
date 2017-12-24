@@ -1,13 +1,14 @@
 {
-        "Type": "AttackSingleTarget",
-        "Ability": "Spider Strike",
-        "Target": "Blind Justice",
-        "Range": 3,
-        "Potential Collision":
-        {
-                "Obstacle":"Test Object",
-                "Distance From Target":3
-        
-        }
-        
+	"Token":"q12d3d4f4g",
+	"Type": "AttackSingleTarget",
+	"Ability": "Spider Strike",
+	"Target": "Ogun",
+	"Potential Collision":
+	{
+		"Distance From Target":2,
+		"Obstacle":"Magnetic Lock"
+	}
 }
+
+
+

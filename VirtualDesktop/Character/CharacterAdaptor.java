@@ -3,7 +3,7 @@ package VirtualDesktop.Character;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.Ability.AbilityWrapper;
-import VirtualDesktop.Ability.MovementAdaptor;
+import VirtualDesktop.Ability.MovementAdapter;
 import champions.Ability;
 import champions.Battle;
 import champions.BattleEvent;
@@ -47,7 +47,7 @@ public class CharacterAdaptor {
 	}
 	public void MoveByName(String movementName, int distance) throws Exception {
 		ActivateAbilityByName( movementName);
-		((MovementAdaptor)this.ActiveAbility).setDistance(distance);
+		((MovementAdapter)this.ActiveAbility).setDistance(distance);
 		this.ActiveAbility.ConfirmAttack();
 		this.ActiveAbility.ConfirmAttack();
 	}

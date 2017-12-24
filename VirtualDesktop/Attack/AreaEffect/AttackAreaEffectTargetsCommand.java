@@ -27,21 +27,23 @@ public class AttackAreaEffectTargetsCommand extends AttackMultipleTargetsCommand
 		
 		String abilityName = (String)message.get("Ability");
 		character.ActivateAbilityByName(abilityName);
-		SimulatorAreaEffectAttack attack =  (SimulatorAreaEffectAttack)character.ActiveAbility;
+		AreaEffectAttackAdapter attack =  (AreaEffectAttackAdapter)character.ActiveAbility;
 		
 		EnterAttackParameters(message, attack);
 		
-		String centerTarget = (String) message.get("Center");
-		if(centerTarget==null) 
+		JSONObject centerTarget = (JSONObject) message.get("Center");
+		String centerTargetString = (String) centerTarget.get("Target");
+		if(centerTargetString==null) 
 		{
-			centerTarget = "Hex";	
+			centerTargetString = "Hex";	
 		}
 		attack.StartSelectingTargets();
-		InvokeSIngleAttack(message, attack, centerTarget);
-
+		InvokeSIngleAttack(message, attack, centerTargetString);
+		
 		
 		EnterAttackForAllTargets(message, attack);
-		attack.Export();
+		
+		attack.Export(this.Token);
 
 	
 		

@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
-import VirtualDesktop.Attack.SingleAttack.SimulatorSingleAttack;
+import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 import VirtualDesktop.Controller.AbstractDesktopCommand;
 import champions.BattleEvent;
@@ -24,7 +24,7 @@ import champions.attackTree.SourcePerceptionsNode;
 public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 	
 	
-	public static  SimulatorSingleAttack LastAttack;
+	public static  SingleAttackAdapter AttackInProgress;
 	public static JSONObject lastMessage;
 	@Override
 	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message,
@@ -33,7 +33,8 @@ public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 		String abilityName = (String)message.get("Ability");
 		character.ActivateAbilityByName(abilityName);
 	
-		SimulatorSingleAttack attack = (SimulatorSingleAttack) character.ActiveAbility;
+		SingleAttackAdapter attack = (SingleAttackAdapter) character.ActiveAbility;
+		AttackInProgress = attack;
 		EnterAttackParameters(message, attack);
 		
 		String targetName = (String) message.get("Target");
@@ -42,52 +43,59 @@ public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 
 	}
 	
-	public void EnterKnockbackCollision(SimulatorSingleAttack attack, JSONObject message) {
+	public void EnterKnockbackCollision(SingleAttackAdapter attack, JSONObject message) {
 		JSONObject potCol = (JSONObject)message.get("Potential Collision");
-		Long distanceToCollision = (Long) potCol.get("Distance From Target");
-		String knockbackTargetName = (String) potCol.get("Obstacle");
-		if(knockbackTargetName!=null){
-			attack.StartEnteringKnockback();
-			int knockbackDistance = attack.getKnockbackDistance();
-			if(knockbackDistance  >=distanceToCollision )
-				attack.SetKnockBackTargetByName(knockbackTargetName);
-			
+		if (potCol!=null) {
+			Long distanceToCollision = (Long) potCol.get("Distance From Target");
+			String knockbackTargetName = (String) potCol.get("Obstacle");
+			if(knockbackTargetName!=null){
+				attack.StartEnteringKnockback();
+				int knockbackDistance = attack.getKnockbackDistance();
+				if(knockbackDistance  >=distanceToCollision )
+					attack.SetKnockBackTargetByName(knockbackTargetName);
+				
+			}
 		}
 		
 	}
 	
 
-	public void ExecuteAttackOnTarget(JSONObject message, SimulatorSingleAttack attack, String targetName) {
+	public void ExecuteAttackOnTarget(JSONObject message, SingleAttackAdapter attack, String targetName) {
 		attack.StartSelectingTargets();
 		InvokeSIngleAttack(message, attack, targetName);
-		attack.Export();
+		attack.Export(Token);
 		
 	}
 
 
 
-	protected void InvokeSIngleAttack(JSONObject message, SimulatorSingleAttack attack, String targetName) {
-		lastMessage = message;
-		CharacterAdaptor target = new CharacterAdaptor(targetName);
-		attack.SetTarget(target);
-		EnterToHitParameters(attack, message);
-		SelectTargetingSense(attack, message);
-		EnterHitLocation(message, attack);
-		AddObstructions(message, attack);
+	protected void InvokeSIngleAttack(JSONObject message, SingleAttackAdapter attack, String targetName) {
+		InvokeSingleAttackWithoutKnockback(message, attack, targetName);
 		EnterKnockbackCollision( attack,  message);
 
 
 		
 	}
 
+	protected void InvokeSingleAttackWithoutKnockback(JSONObject message, SingleAttackAdapter attack, String targetName) {
+		lastMessage = message;
+		CharacterAdaptor target = new CharacterAdaptor(targetName);
+
+		attack.SetTarget(target);
+		EnterToHitParameters(attack, message);
+		SelectTargetingSense(attack, message);
+		EnterHitLocation(message, attack);
+		AddObstructions(message, attack);
+	}
 
 
-	private void EnterHitLocation(JSONObject message, SimulatorSingleAttack attack) {
+
+	private void EnterHitLocation(JSONObject message, SingleAttackAdapter attack) {
 		attack.setHitLocation((String) message.get("Hit Location"));
 		attack.setFromBehind((Boolean) message.get("From Behind"));
 	}
 
-	private void SelectTargetingSense(SimulatorSingleAttack attack, JSONObject message) {
+	private void SelectTargetingSense(SingleAttackAdapter attack, JSONObject message) {
 		String targetingSense = (String) message.get("Targeting Sense");
 		if(targetingSense!=null)
 		{
@@ -111,7 +119,7 @@ public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 
 
 
-	protected void AddObstructions(JSONObject message, SimulatorSingleAttack attack) {
+	protected void AddObstructions(JSONObject message, SingleAttackAdapter attack) {
 		String obstacle = (String) message.get("Obstruction");
 		attack.StartAddObstructionInFrontOfTarget();
 		if(obstacle!=null) {
@@ -121,7 +129,7 @@ public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 		attack.ShowSummary();
 	}
 
-	public void EnterAttackParameters(JSONObject message, SimulatorSingleAttack attack) {
+	public void EnterAttackParameters(JSONObject message, SingleAttackAdapter attack) {
 		attack.EnterAttackParameters();
 		Boolean burnStun = (Boolean) message.get("BurnStun");
 		if(burnStun !=null) {
@@ -133,7 +141,7 @@ public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 		}
 	}
 
-	protected void EnterToHitParameters(SimulatorSingleAttack attack, JSONObject message) {
+	protected void EnterToHitParameters(SingleAttackAdapter attack, JSONObject message) {
 		attack.EnterToHitParameters();
 		Long generic = (Long) message.get("Generic");
 		if(generic !=null) {

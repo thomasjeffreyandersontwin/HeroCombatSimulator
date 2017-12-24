@@ -14,15 +14,12 @@ import VirtualDesktop.Actions.ActivateHeldCharacterCommand;
 import VirtualDesktop.Actions.CombatControlAction;
 import VirtualDesktop.Attack.MoveAndAttackCommand;
 import VirtualDesktop.Attack.AreaEffect.AttackAreaEffectTargetsCommand;
-import VirtualDesktop.Attack.AreaEffect.KnockbackMultiTargetsCommand;
 import VirtualDesktop.Attack.Autofire.AttackAutofireTargetsCommand;
 import VirtualDesktop.Attack.MoveThrough.AttackMoveThroughTargetCommand;
 import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
 import VirtualDesktop.Attack.SingleAttack.ConfirmAttack;
-import VirtualDesktop.Attack.SingleAttack.KnockbackCollisionSingleTargetCommand;
-import VirtualDesktop.Attack.SingleAttack.SimulatorSingleAttack;
+import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
 import VirtualDesktop.Attack.Sweep.AttackSweepTargetCommand;
-import VirtualDesktop.Attack.Sweep.KnockbackSweepTargetsCommand;
 import VirtualDesktop.Roster.RosterSynchCommand;
 
 public class DesktopCommandFactory {
@@ -45,15 +42,6 @@ public class DesktopCommandFactory {
 		
 		if(type.equals("AreaEffectTargets")) {
 			return new AttackAreaEffectTargetsCommand();
-		}
-		if(type.equals("KnockbackCollisionSingleTarget")) {
-			return new KnockbackCollisionSingleTargetCommand();
-		}
-		if(type.equals("KnockbackCollisionMultiTargets")) {
-			return new KnockbackMultiTargetsCommand();
-		}
-		if(type.equals("KnockbackCollisionSweepTargets")) {
-			return new KnockbackSweepTargetsCommand();
 		}
 		
 		if(type.equals("AutofireTargets") ){

@@ -37,7 +37,7 @@ public class AttackMoveThroughTargetCommand extends AttackSingleTargetCommand {
 			}
 		}
 		
-		SimulatorMoveThrough movethrough = (SimulatorMoveThrough) character.ActiveAbility;
+		MoveThroughAdapter movethrough = (MoveThroughAdapter) character.ActiveAbility;
 		
 		JSONObject movement = (JSONObject)message.get("MovementAbility");
 		movethrough.setMovementAbility((String) movement.get("Movement"));

@@ -39,7 +39,7 @@ public class AttackSweepTargetCommand extends AttackSingleTargetCommand {
 			
 		
 		}
-		LastAttack = attack;
+		//LastAttack = attack;
 	}
 	
 	

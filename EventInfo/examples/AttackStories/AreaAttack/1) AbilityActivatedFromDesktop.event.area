@@ -1,17 +1,27 @@
 {
+	"Token":"q12d3d4f4g",
 	"Type": "AreaEffectTargets",
 	"Ability": "Air - Strike",
-	"Center": {"Target":"Hex",Range:12}
-	"Targets": [{
-			"Range":4
+	"Center": {"Target":"Hex","Range":12},
+	"Targets": [
+	{
 			"Target": "Spyder",
+			"Potential Collision":
+			{
+				"Distance From Target":3,
+				"Obstacle":"Airlock Door"
+			}
 		},
 		{
-			"Target": "Off-Road",
-			"Range":11,
+			"Target": "Off-Road"
+			
 		}, {
 			"Target": "Ogun",
-			"Range":11,
+			"Potential Collision":
+			{
+				"Distance From Target":3,
+				"Obstacle":"Magnetic lock"
+			}
 		}
 	]
 }

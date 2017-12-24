@@ -1,18 +1,23 @@
 {
-	"Ability": "Loa Blast",
+	"Ability": "Spider Strike",
 	"Type": "AttackSingleTargetResult",
 	"Target": {
 		"STUN": {
-			"Max": 37,
-			"Current": -15
+			"Max": 27,
+			"Current": 27
 		},
-		"Name": "Blind Justice"
+		"BODY": {
+			"Max": 10,
+			"Current": 10
+		},
+		"Name": "Ogun"
 	},
 	"Results": {
 		"Hit": true,
 		"Knockback": {
-			"Distance": "4"
+			"Distance": 1
 		},
-		"Effects": ["Unconscious"]
-	}
+		"Effects": []
+	},
+	"Token": "q12d3d4f4g"
 }
