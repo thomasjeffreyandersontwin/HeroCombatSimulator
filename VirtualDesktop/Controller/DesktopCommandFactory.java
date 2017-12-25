@@ -16,6 +16,7 @@ import VirtualDesktop.Attack.MoveAndAttackCommand;
 import VirtualDesktop.Attack.AreaEffect.AttackAreaEffectTargetsCommand;
 import VirtualDesktop.Attack.Autofire.AttackAutofireTargetsCommand;
 import VirtualDesktop.Attack.MoveThrough.AttackMoveThroughTargetCommand;
+import VirtualDesktop.Attack.SingleAttack.AttackSingleNoGui;
 import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
 import VirtualDesktop.Attack.SingleAttack.ConfirmAttack;
 import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
@@ -29,6 +30,9 @@ public class DesktopCommandFactory {
 		String type = (String) message.get("Type");
 		if(type.equals("AttackSingleTarget")) {
 			return new AttackSingleTargetCommand();
+		}
+		if(type.equals("AttackSingleNoGui")) {
+			return new AttackSingleNoGui();
 		}
 		if(type.equals("RosterSynchronization")){
 			return new RosterSynchCommand();

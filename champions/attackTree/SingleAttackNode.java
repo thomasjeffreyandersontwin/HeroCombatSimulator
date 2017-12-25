@@ -66,6 +66,10 @@ public class SingleAttackNode extends DefaultAttackTreeNode implements BattleMes
                 if ( nextNodeName.equals("Single Target")) {
                     SingleTargetNode node = new SingleTargetNode(nextNodeName);
                     node.setTargetReferenceNumber(0); // Indicate that this is the primary target of the Group.
+                    if(battleEvent.getActivationInfo().getTargetIndex(0, getTargetGroup())==-1) {
+                    	//jeff change
+                    	node.setTargetReferenceNumber(1); 
+                    }
                     node.setPrimaryTargetNumber(primaryTargetNumber);
                     nextNode = node;
                 }

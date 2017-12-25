@@ -1,12 +1,12 @@
 
 character:
-	name:Off-Road
+	name:Pre-Emptive Strike
 	costume:
 	model:
-	MaxStun:28
-	MaxEndurance:44
-	CurrStun:28
-	CurrEndurance:26
+	MaxStun:68
+	MaxEndurance:70
+	CurrStun:73
+	CurrEndurance:40
 Activate: True
 
 	Crowd: 

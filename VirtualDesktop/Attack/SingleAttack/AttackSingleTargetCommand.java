@@ -31,14 +31,27 @@ public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 			CharacterAdaptor character) throws Exception  {
 		
 		String abilityName = (String)message.get("Ability");
-		character.ActivateAbilityByName(abilityName);
-	
-		SingleAttackAdapter attack = (SingleAttackAdapter) character.ActiveAbility;
-		AttackInProgress = attack;
+		SingleAttackAdapter attack = null;
+		
+		if(AttackSingleTargetCommand.AttackInProgress ==null) 
+		{
+			character.ActivateAbilityByName(abilityName);
+			attack = (SingleAttackAdapter) character.ActiveAbility;
+		}
+		else {
+			
+			character.LoadAbilityByName(abilityName);
+			attack = (SingleAttackAdapter) character.ActiveAbility;
+			attack.CancelAttack();
+			character.ActivateAbilityByName(abilityName);
+			attack = (SingleAttackAdapter) character.ActiveAbility;
+		}
+		
 		EnterAttackParameters(message, attack);
 		
 		String targetName = (String) message.get("Target");
 		ExecuteAttackOnTarget(message, attack, targetName);
+		AttackInProgress = attack;
 
 
 	}
@@ -78,9 +91,9 @@ public class AttackSingleTargetCommand extends AbstractDesktopCommand {
 	}
 
 	protected void InvokeSingleAttackWithoutKnockback(JSONObject message, SingleAttackAdapter attack, String targetName) {
+		
 		lastMessage = message;
 		CharacterAdaptor target = new CharacterAdaptor(targetName);
-
 		attack.SetTarget(target);
 		EnterToHitParameters(attack, message);
 		SelectTargetingSense(attack, message);

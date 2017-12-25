@@ -411,54 +411,8 @@ public class BattleEngine extends Thread
 
                 processAttackTreeNode(getProcessLinkedActivateRoot(lbe));
             } else {
-                // Non-Linked abilities
-            	try{
-                VirtualDesktop.Legacy.MessageExporter.exportAbilityActivation(ability);
-            	}catch(Exception e){}
-				processAttackTreeNode(getProcessAbilityRoot(be));
-            	/*Target target = ability.getSource();
-    			Roster roster = target.getRoster();
-    			if(roster.MobMode==true){
-    				Target leader=ability.getSource().getRoster().MobLeader;
-    				String leaderName=leader.getName();
-    				Ability mobAbility=null;
-    				BattleEvent mobMemberBattleEvent= null;
-    				String commonAbilityName=ability.getName();
-    				Battle currentBattle= Battle.getCurrentBattle();
-    				for(Target mobMember: roster.getCombatants()){
-    					if(leaderName != mobMember.getName()){
-    						
-    						//mobAbility = currentBattle.getDefaultAbilities().getAbility("Pass Turn", true);
-    						mobAbility = mobMember.getAbility(commonAbilityName);
-    						if(mobAbility==null){
-    							mobAbility= currentBattle.getDefaultAbilities().getAbility(commonAbilityName, true);
-    						}
-    						if(mobAbility==null){
-    							mobAbility= ability;
-    						}
-    						currentBattle.setSelectedTarget(mobMember);
-    						  
-    						mobMemberBattleEvent = mobAbility.getActivateAbilityBattleEvent(ability, null, null);
-    						
-    						if(roster.MobTarget!= null){
-    							mobMemberBattleEvent.activationInfo.addTarget(roster.MobTarget, ".ATTACK");
-    							
-    							AttackTreeNode node =getProcessAbilityRoot(mobMemberBattleEvent);
-    							
-    						}
-    						mobMemberBattleEvent.addBattleMessage(new champions.battleMessage.LegacyBattleMessage(mobMember.getName() + " is now Active.", BattleEvent.MSG_NOTICE)); // .addBattleMessage( new champions.battleMessage.LegacyBattleMessage( newTarget.getName() + " is now Active", BattleEvent.MSG_NOTICE)); // .addMessage( newTarget.getName() + " is now Active", BattleEvent.MSG_NOTICE);
-                            Battle.getCurrentBattle().addCompletedEvent(mobMemberBattleEvent);
-    						currentBattle.addEvent( mobMemberBattleEvent );
-    						processAttackTreeNode(getProcessAbilityRoot(mobMemberBattleEvent));
-    					}
-    					processAttackTreeNode(getProcessAbilityRoot(be));
-    				}
-    				//}
-    		}
-    		//	else{
-    				
-    		//	} */
-    			
+                
+				processAttackTreeNode(getProcessAbilityRoot(be));		
             }
         } else if (be.getType() == BattleEvent.CONTINUE || be.getType() == BattleEvent.CHARGE_END) {
             // processActivating(be);

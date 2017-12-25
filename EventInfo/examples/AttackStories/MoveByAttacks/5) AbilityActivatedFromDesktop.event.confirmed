@@ -1,5 +1,5 @@
 {
-	"Type": "FinalizeAttack"
-	"Attack Confirmed": true
+	"Type": "ConfirmAttack"
+	"Status": "COnfirmed"
 }
 

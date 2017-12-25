@@ -66,7 +66,9 @@ public class ToHitNode extends DefaultAttackTreeNode {
      */
     public boolean activateNode(boolean manualOverride) {
         boolean acceptActivation = false;
-        
+        if(attackTreePanel==null) {
+        	attackTreePanel = AttackTreePanel.defaultAttackTreePanel;
+        	}
         // Make sure you have the correct target...
         ActivationInfo ai = getBattleEvent().getActivationInfo();
         int tindex = ai.getTargetIndex(targetReferenceNumber, getTargetGroup() );

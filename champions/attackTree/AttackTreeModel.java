@@ -336,7 +336,7 @@ implements TreeModel {
             
             // Now advance nodes, looking for another
             node = advanceNode();
-           
+            
             if ( node != null ) {
                 setFinished(false);
                 

@@ -41,8 +41,13 @@ public class CharacterAdaptor {
 
 	public void ActivateAbilityByName(String abilityName) throws Exception {
 		
+		 LoadAbilityByName( abilityName);
+		 this.ActiveAbility.ActivateAbility();
+		
+	}
+	
+	public void LoadAbilityByName(String abilityName) throws Exception {
 		AbilityWrapper ability= AbilityWrapper.CreateAbility(abilityName, this);
-		ability.ActivateAbility();
 		this.ActiveAbility = ability;
 	}
 	public void MoveByName(String movementName, int distance) throws Exception {

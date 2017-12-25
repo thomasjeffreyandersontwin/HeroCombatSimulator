@@ -1,10 +1,30 @@
 ability:
-	Name: Rapid Punch
+	Name: Spider Strike
 character:
-	name:Off-Road
+	name:Spyder
 	Crowd:
 		name:heroes
-	MaxStun:28
-	MaxEndurance:44
-	CurrStun:28
-	CurrEndurance:11
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:48
+	CurrEndurance:36
+type: single
+target: 
+	name: Ogun
+
+	MaxStun:27
+	MaxEndurance:36
+	CurrStun:12
+	CurrEndurance:30
+	Roster:
+		name:heroes
+result: hit
+Effects: 
+Knockback
+	- 
+		target:
+			name:Ogun
+			Roster:
+				name:heroes
+		distance:7
+		effect:knockedback

@@ -16,7 +16,7 @@ public abstract class AbstractDesktopCommand {
 		CharacterAdaptor character = CharacterAdaptor.GetActiveCharacter();
 		String abilityName = (String)message.get("Ability");
 		String token = (String)message.get("Token");
-		if(token.equals(Token) || token !=null && Token==null) {
+		if(token == null || token.equals(Token) || token !=null && Token==null) {
 			Token = token;
 		
 			ExecuteDesktopEventOnSimulatorBasedOnMessageType(message, character);
