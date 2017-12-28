@@ -87,9 +87,12 @@ public class ObstructionNode extends DefaultAttackTreeNode {
         if ( nodeRequiresInput() || manualOverride ) {
         
            ObstructionPanel op = ObstructionPanel.getDefaultPanel(battleEvent, targetReferenceNumber, getTargetGroup());
+           if(attackTreePanel==null) {
+           	attackTreePanel=AttackTreePanel.defaultAttackTreePanel;
+           }
            attackTreePanel.showInputPanel(this,op);
            attackTreePanel.setInstructions("Configure Obstructions between " + battleEvent.getSource().getName() + " and " + target.getName() + ".");
-            
+          
            acceptActivation = true;
         }
         

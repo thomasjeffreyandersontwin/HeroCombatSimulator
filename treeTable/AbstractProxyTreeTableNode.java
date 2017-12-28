@@ -64,7 +64,7 @@ public abstract class AbstractProxyTreeTableNode<N> implements TreeNode {
      */
     public void delegateNodesChanged(TreeModelEvent e) {
 
-        assert SwingUtilities.isEventDispatchThread();
+        //assert SwingUtilities.isEventDispatchThread();
 
         // The nodes have been reordered, so we have to get the new indecies...
         int[] newIndecies = getIndeciesForDelegateChildren(e.getChildren());

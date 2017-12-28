@@ -6,7 +6,7 @@ import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
+import VirtualDesktop.Attack.SingleAttackAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.BattleEvent;
 import champions.Target;

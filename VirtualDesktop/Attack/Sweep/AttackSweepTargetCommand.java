@@ -3,7 +3,7 @@ package VirtualDesktop.Attack.Sweep;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.AttackSingleTargetCommand;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Ability;
 import champions.Battle;

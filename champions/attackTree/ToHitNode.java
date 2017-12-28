@@ -70,6 +70,9 @@ public class ToHitNode extends DefaultAttackTreeNode {
         	attackTreePanel = AttackTreePanel.defaultAttackTreePanel;
         	}
         // Make sure you have the correct target...
+        if(battleEvent== null) {
+        	battleEvent =AttackTreePanel.defaultAttackTreePanel.getModel().battleEvent;
+        }
         ActivationInfo ai = getBattleEvent().getActivationInfo();
         int tindex = ai.getTargetIndex(targetReferenceNumber, getTargetGroup() );
         if ( tindex != -1 ) {

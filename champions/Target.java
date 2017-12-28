@@ -77,6 +77,24 @@ import javax.imageio.ImageIO;
  */
 public class Target extends DetailList implements Comparable, ChampionsConstants, ENDSource {
     
+	
+	private int _lastStun;
+	public void setLastStunTaken(int totalStunDamage) {
+		_lastStun = totalStunDamage;
+		
+	}
+	public int getLastStunTaken() {
+		return _lastStun;
+	}
+	
+	private int _lastBOD;
+	public void setLastBodyTaken(int totalStunDamage) {
+		_lastBOD = totalStunDamage;
+		
+	}
+	public int getLastBOdyTaken() {
+		return _lastBOD;
+	}
     static final long serialVersionUID = 8050829359056525528L;
     
     static private final int DEBUG = 0;

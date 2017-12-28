@@ -796,6 +796,10 @@ public class BattleEngine extends Thread
                                 System.out.println("Killing Stun multiple = " + Double.toString(multiple));
                             }
                             effect.addIndexed(sindex, "Subeffect", "VALUE", new Double(Math.floor(bvalue * multiple)), true);
+                            
+                            Target t = be.getActivationInfo().getTarget(0);
+                            t.setLastStunTaken( effect.getTotalStunDamage());
+                            t.setLastBodyTaken( effect.getTotalBodyDamage());
                             be.addBattleMessage(new champions.battleMessage.LegacyBattleMessage("Stun Multiplier for killing attack was " + Double.toString(multiple) + ".", MSG_NOTICE)); // .addBattleMessage( new champions.battleMessage.LegacyBattleMessage( "Stun Multiplier for killing attack was " + Double.toString(multiple) + ".", MSG_NOTICE)); // .addMessage( "Stun Multiplier for killing attack was " + Double.toString(multiple) + ".", MSG_NOTICE);
 
                         }
@@ -987,7 +991,8 @@ public class BattleEngine extends Thread
         String deftype, defspecial;
         double defenseMultiplier, defenseModifier;
         double value;
-
+        ActivationInfo ai = be.getActivationInfo();
+        int tindex = ai.getTargetIndex(targetReferenceNumber, targetGroup);
         int bodyAbsorbed = 0;
         int stunAbsorbed = 0;
         int mentalAbsorbed = 0;
@@ -1005,8 +1010,8 @@ public class BattleEngine extends Thread
 
             if (defspecial.equals("NND")) {
                 boolean hasNNDDefense = false;
-                ActivationInfo ai = be.getActivationInfo();
-                int tindex = ai.getTargetIndex(targetReferenceNumber, targetGroup);
+                //ActivationInfo ai = be.getActivationInfo();
+                //int tindex = ai.getTargetIndex(targetReferenceNumber, targetGroup);
 //                if ( ai.isTargetHasNNDDefenseSet(tindex) == false ) {
 //                    hasNNDDefense = checkNND(i,effect,target);
 //                    ai.setTargetHasNNDDefense(tindex, hasNNDDefense);
@@ -1270,6 +1275,8 @@ public class BattleEngine extends Thread
             } else if (defspecial.equals("NONE") == false) {
                 throw new BattleEventException("Unknown DEFSPECIAL: " + defspecial);
             }
+            
+            be.addDamageEffect(effect,tindex);
         }
 
         if ((Boolean) Preferences.getPreferenceList().getParameterValue("DamageAbsorbedMessage")) {

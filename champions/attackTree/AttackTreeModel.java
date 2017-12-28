@@ -43,11 +43,11 @@ import javax.swing.tree.TreePath;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import VirtualDesktop.Attack.SingleAttackAdapter;
+import VirtualDesktop.Attack.AttackSingleTargetCommand;
 import VirtualDesktop.Attack.AreaEffect.AreaEffectAttackAdapter;
 import VirtualDesktop.Attack.AreaEffect.MultAttackAdapter;
 import VirtualDesktop.Attack.Autofire.AutofireAttackAdapter;
-import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
-import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
 import VirtualDesktop.Attack.Sweep.SimulatorSweepAttack;
 import VirtualDesktop.Controller.DesktopCommandFactory;
 
@@ -333,67 +333,47 @@ implements TreeModel {
         if ( attackTreePanel != null ) attackTreePanel.setProcessing(true);
         
         while(!accepted) {
-            
-            // Now advance nodes, looking for another
             node = advanceNode();
-            
             if ( node != null ) {
                 setFinished(false);
-                
-                
                 accepted = activateNode(node, manualOverrideNode);
                 battleEvent = node.getBattleEvent();
             }
             else {
-            	try{
-            	if(this.isAttackTreePanelVisible() && this.attackTreePanel.OKCLicked==true)
-                {
-            		SingleAttackAdapter a=null;
-                
-            		if(battleEvent.getPrimaryBattleMessageGroup() instanceof SweepMessageGroup) {
-            			a = new SimulatorSweepAttack(null, null);
-            		}
-            		else if(battleEvent.getActivationInfo().getTarget(1)!=null) {
-            			a = new MultAttackAdapter(null, null);
-            		}
-            		else if (battleEvent.getAbility().hasAdvantage("Autofire"))
-            		{
-            			a = new AutofireAttackAdapter(null, null);
-            		}
-            		else {
-            			a = new SingleAttackAdapter(null, null);
-            		}
-        			JSONObject att = a.ExportBasedOnBattleEvent(AttackSingleTargetCommand.Token, battleEvent);
-        			a.WriteJSON(att);
-        			AttackSingleTargetCommand.Token=null;
-                }
-            	}catch(Exception e) {
-            		e.printStackTrace();
-            	}
-            	
                 setFinished(true);
-                accepted = true;
-                
-                
+                accepted = true;  
             }
         }
         
         if ( attackTreePanel != null ) attackTreePanel.setProcessing(false);
         
-        if(manualOverrideNode!=null && manualOverrideNode.getClass()== SummaryNode.class) {
-        	if(battleEvent!=null && (battleEvent.getPrimaryBattleMessageGroup().getClass() ==SweepMessageGroup.class || battleEvent.getPrimaryBattleMessageGroup().getClass() ==ActivateAbilityMessageGroup.class )) 
-        	{	
-        		AbstractBattleMessageGroup group = (AbstractBattleMessageGroup)battleEvent.getPrimaryBattleMessageGroup();
-        		Ability a=null;
-        		if(group instanceof SweepMessageGroup || (group instanceof ActivateAbilityMessageGroup&&!((ActivateAbilityMessageGroup)group).ability.getName().equals("Pass Turn"))) {
-        			try {
-        		//	AbilityExporter.exportR(group);
-        			}catch(Exception e) {
-        				e.printStackTrace();
-        			}
+        try{
+        	if(this.isAttackTreePanelVisible() && this.attackTreePanel.OKCLicked==true)
+            {
+        		SingleAttackAdapter a=null;
+            
+        		if(battleEvent.getPrimaryBattleMessageGroup() instanceof SweepMessageGroup) {
+        			a = new SimulatorSweepAttack(null, null);
         		}
+        		//jeff this doesnt work
+        		//else if(battleEvent.getActivationInfo().getTarget(1)!=null) {
+        		//	a = new MultAttackAdapter(null, null);
+        		//}
+        		else if (battleEvent.getAbility().hasAdvantage("Autofire"))
+        		{
+        			a = new AutofireAttackAdapter(null, null);
+        		}
+        		else {
+        			a = new SingleAttackAdapter(null, null);
+        		}
+        		a.battleEvent = battleEvent;
+    			JSONObject att = a.ExportBasedOnBattleEvent(AttackSingleTargetCommand.Token, battleEvent);
+    			a.WriteJSON(att);
+    			//AttackSingleTargetCommand.Token=null;
+            }
+        	}catch(Exception e) {
+        		e.printStackTrace();
         	}
-        }
     }
     
     /** Advance the current node and return the next node in the tree.
@@ -419,11 +399,13 @@ implements TreeModel {
             // Look for a non-null next node.  While next node is null, find the
             // parent of the current node, then see if the parent has a desired
             // next node.
+            
             while ( newNode == null ) {
                 activeChild = atn;
                 atn = (AttackTreeNode)atn.getRealParent();
                 if ( atn != null ) {
                     newNode = atn.advanceNode(activeChild);
+                    int i=0;
                 }
                 else {
                     break;

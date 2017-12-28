@@ -162,11 +162,12 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
         }
         
         //Jeff Anderson Change
-
-        ATNode node2 = (ATNode)node;       
-        ATTargetNode root = (ATTargetNode)node2.getRoot();
-        
+      
       try {
+    	  
+    	  ATNode node2 = (ATNode)node;       
+          ATTargetNode root = (ATTargetNode)node2.getRoot();
+     
         for(int i=0;i< root.getChildCount(); i++) {
         	String name="";
         	if ( root.getChildAt(i) instanceof  ATAbilityListNode) {

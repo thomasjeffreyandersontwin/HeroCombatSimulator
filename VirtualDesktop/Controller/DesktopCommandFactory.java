@@ -12,14 +12,14 @@ import VirtualDesktop.Ability.SimpleAbilityCommand;
 import VirtualDesktop.Actions.AbortNextActionCommand;
 import VirtualDesktop.Actions.ActivateHeldCharacterCommand;
 import VirtualDesktop.Actions.CombatControlAction;
+import VirtualDesktop.Attack.SingleAttackAdapter;
+import VirtualDesktop.Attack.AttackSingleNoGui;
+import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.ConfirmAttack;
 import VirtualDesktop.Attack.MoveAndAttackCommand;
 import VirtualDesktop.Attack.AreaEffect.AttackAreaEffectTargetsCommand;
 import VirtualDesktop.Attack.Autofire.AttackAutofireTargetsCommand;
 import VirtualDesktop.Attack.MoveThrough.AttackMoveThroughTargetCommand;
-import VirtualDesktop.Attack.SingleAttack.AttackSingleNoGui;
-import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
-import VirtualDesktop.Attack.SingleAttack.ConfirmAttack;
-import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
 import VirtualDesktop.Attack.Sweep.AttackSweepTargetCommand;
 import VirtualDesktop.Roster.RosterSynchCommand;
 

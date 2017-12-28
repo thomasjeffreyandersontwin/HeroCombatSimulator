@@ -5,8 +5,7 @@ import javax.swing.tree.TreeNode;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-
-import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
+import VirtualDesktop.Attack.SingleAttackAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 import VirtualDesktop.Roster.SingleAttackResults;
 import champions.Ability;
@@ -30,7 +29,7 @@ import champions.battleMessage.EmbeddedBattleEventMessageGroup;
 import champions.battleMessage.SweepMessageGroup;
 import champions.interfaces.IndexIterator;
 
-public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter {
+public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttackAdapter {
 	private SingleTargetNode targetNode = null;
 	
 

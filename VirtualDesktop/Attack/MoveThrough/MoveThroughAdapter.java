@@ -1,7 +1,7 @@
 package VirtualDesktop.Attack.MoveThrough;
 
 import VirtualDesktop.Ability.MovementAdapter;
-import VirtualDesktop.Attack.SingleAttack.SingleAttackAdapter;
+import VirtualDesktop.Attack.SingleAttackAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.attackTree.AttackTreeModel;
 import champions.attackTree.DefaultAttackTreeNode;

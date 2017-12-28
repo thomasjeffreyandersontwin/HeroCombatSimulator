@@ -204,14 +204,14 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
         boolean breakfallSuccessful = false;
 
         Target sourceTarget = null;
-        int tindex;
+        int targetIndex=0;
         boolean hit;
 
         buildSecondaryNode = false; // Reset the secondary node
 
         sourceTarget = ai.getKnockbackSourceTarget(getTargetGroup());
 
-
+        targetIndex = ai.getTargetIndex(target, ".ATTACK");
 
         if (distance == 0 && knockdown == false) {
             battleEvent.addBattleMessage(new KnockbackSummaryMessage(sourceTarget, "was not knocked back or knocked down"));
@@ -271,9 +271,9 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
             }
 
             IndexIterator ii = ai.getIteratorForIndex("Target", "TARGETGROUP", getTargetGroup());
-
+            Effect k=null;
             while (ii.hasNext()) {
-                tindex = ii.nextIndex();
+                int tindex = ii.nextIndex();
                 Target aTarget = (Target) ai.getIndexedValue(tindex, "Target", "TARGET");
 
                 if (dice != null && aTarget == sourceTarget && (collisionOccurred || breakfallSuccessful == false)) {
@@ -292,12 +292,14 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
                         battleEvent.addBattleMessage(new KnockbackSummaryMessage(sourceTarget, "collided with " + aTarget.getName()));
                     }
 
-                    Effect effect = new effectKnockback(distance);
+                    k = new effectKnockback(distance);
+                    battleEvent.addKnockbackDamageEffect(k,targetIndex);
+                    
                     // Add Effects
-                    effect.addDamageSubeffect("KBStun", "STUN", dice.getStun(), "PD", "NORMAL");
-                    effect.addDamageSubeffect("KBBody", "BODY", dice.getBody(), "PD", "NORMAL");
+                    k.addDamageSubeffect("KBStun", "STUN", dice.getStun(), "PD", "NORMAL");
+                    k.addDamageSubeffect("KBBody", "BODY", dice.getBody(), "PD", "NORMAL");
 
-                    effect.add("Effect.DOESKB", (aTarget == sourceTarget) ? "FALSE" : "TRUE");
+                    k.add("Effect.DOESKB", (aTarget == sourceTarget) ? "FALSE" : "TRUE");
 
                     if (aTarget != sourceTarget) {
                         buildSecondaryNode = true;
@@ -305,7 +307,7 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
 
                     try {
                         int targetReferenceNumber = ai.getTargetReferenceNumber(tindex);
-                        BattleEngine.applyEffectToTarget(battleEvent, targetReferenceNumber, getTargetGroup(), effect, true);
+                        BattleEngine.applyEffectToTarget(battleEvent, targetReferenceNumber, getTargetGroup(), k, true);
 
 
                     } catch (BattleEventException bee) {
@@ -317,8 +319,11 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
                 if (aTarget == sourceTarget && breakfallSuccessful == false) {
                     Effect kd = new effectKnockedDown();
                     BattleEngine.addEffect(battleEvent, kd, aTarget);
+                    
                 }
             }
+            
+            
         }
     }
 

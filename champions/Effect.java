@@ -719,13 +719,14 @@ public class Effect extends DetailList implements ChampionsConstants, Serializab
 
                         be.addBattleMessage(new StatChangeBattleMessage(target, StatChangeType.DAMAGE, (String) versus, (int) amount));
                     }
-
+                    getSubeffectAdjustedAmount(0);
+                    getTotalBodyDamage();
                     originalAmount -= amount;
                     if (originalAmount < 0) {
                         originalAmount = 0;
                     }
                     addIndexed(i, "Subeffect", "VALUE", new Double(originalAmount), true);
-
+                    
                     if (amount > 0 && isAlive && (stat).equals("STUN")) {
                         if (target.hasStat("CON")) {
                             // Has con, so lets see if he is stunned

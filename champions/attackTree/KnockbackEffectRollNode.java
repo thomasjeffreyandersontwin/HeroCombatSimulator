@@ -137,6 +137,9 @@ public class KnockbackEffectRollNode extends DefaultAttackTreeNode {
     }
  */
     public boolean processAdvance() {
+    	 if(battleEvent== null) {
+         	battleEvent =AttackTreePanel.defaultAttackTreePanel.getModel().battleEvent;
+         }
         // Calculate the Actual knockback before leaving the node.
         
         // First Gaurantee the die rolls where made in case the panel was bypassed...

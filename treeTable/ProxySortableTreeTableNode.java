@@ -82,7 +82,8 @@ public class ProxySortableTreeTableNode<N> extends AbstractProxyTreeTableNode<N>
             // If we are building (or updating for some other reason), the
             // delegate model shouldn't be posting changes since it is
             // only supposed to post changes in the event thread.
-            assert false;
+        	//jeff
+            //assert false;
         }
     }
 

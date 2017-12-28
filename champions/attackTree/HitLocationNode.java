@@ -78,7 +78,9 @@ public class HitLocationNode extends DefaultAttackTreeNode {
         
         if ( nodeRequiresInput() || manualOverride ) {
             HitLocationPanel app = HitLocationPanel.getDefaultPanel(battleEvent, targetReferenceNumber, getTargetGroup(),getTarget());
-            
+            if(attackTreePanel==null) {
+            	attackTreePanel=AttackTreePanel.defaultAttackTreePanel;
+            }
             attackTreePanel.showInputPanel(this,app);
             attackTreePanel.setInstructions("Configure Hit Location for " + getTarget().getName() + "...");
             

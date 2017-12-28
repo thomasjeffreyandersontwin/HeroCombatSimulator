@@ -152,9 +152,9 @@ public class AttackTreePanel extends JPanel implements TreeWillSelectListener {
             //model.advanceNode(null);
         	  
             model.advanceAndActivate(null,null);
-            if(treePanel.getModel().battleEvent.getTarget()!=null) {
+           // if(treePanel.getModel().battleEvent.getTarget()!=null) {
             	
-            }
+           // }
            
           
         }

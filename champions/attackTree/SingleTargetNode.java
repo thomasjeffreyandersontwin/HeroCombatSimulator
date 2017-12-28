@@ -8,6 +8,7 @@ package champions.attackTree;
 
 import champions.Ability;
 import champions.ActivationInfo;
+import champions.Battle;
 import champions.BattleEngine;
 import champions.BattleEvent;
 import champions.DefenseList;
@@ -74,7 +75,9 @@ public class SingleTargetNode extends DefaultAttackTreeNode
         boolean fixed = false;
         String reason = null;
         
-        
+        if(battleEvent== null) {
+        	battleEvent =AttackTreePanel.defaultAttackTreePanel.getModel().battleEvent;
+        }
         ActivationInfo ai = battleEvent.getActivationInfo();
         
         adjustSource(battleEvent, targetReferenceNumber, getTargetGroup());
@@ -167,7 +170,9 @@ public class SingleTargetNode extends DefaultAttackTreeNode
                 SelectTargetPanel stp = SelectTargetPanel.getSelectTargetPanel(getBattleEvent(), getTargetGroup(), mode, target != null, source, filter);
                 if ( additionalNotes != null ) stp.setAdditionalNotes(additionalNotes);
                 stp.addTargetListener(this);
-                
+                if(attackTreePanel==null) {
+                	attackTreePanel = AttackTreePanel.defaultAttackTreePanel;
+                }
                 attackTreePanel.showInputPanel(this,stp, isTargetRequirementSatisfied());
                 if ( instructions == null ) {
                     attackTreePanel.setInstructions("Select Target...");

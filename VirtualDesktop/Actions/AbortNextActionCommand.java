@@ -2,7 +2,7 @@ package VirtualDesktop.Actions;
 
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.AttackSingleTargetCommand;
 import VirtualDesktop.Character.CharacterAdaptor;
 import VirtualDesktop.Controller.AbstractDesktopCommand;
 import VirtualDesktop.Controller.DesktopCommandFactory;

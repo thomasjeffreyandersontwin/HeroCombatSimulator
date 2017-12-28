@@ -46,11 +46,13 @@ import champions.undoableEvent.TargetActivationInfoLinkUndoable;
 import champions.undoableEvent.TimeUndoable;
 import champions.undoableEvent.FinishedProcessingUndoable;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
@@ -1946,6 +1948,7 @@ public class BattleEvent extends DetailList {
         int currentBody = getKnockbackBody(kbindex);
         int currentCount = getKnockbackCount(kbindex);
         
+        
         if ( bodyDone > currentBody ) {
             setKnockbackBody(kbindex, bodyDone);
             ku.setEndingBody(bodyDone);
@@ -3017,22 +3020,23 @@ public class BattleEvent extends DetailList {
                 } else {
                     // Loop, looking for either a normal message, or an iterator with messages...
                     //BattleEvent embeddedEvent = (BattleEvent) be.getIndexedValue(messageIndex, "Message", "BATTLEEVENT");
-                    MessageEntry me = be.messages.get(messageIndex);
-                    
-                    if ( me instanceof TextMessageEntry ) {
-                        // This must be a normal message, so set more to true and break...
-                        more = true;
-                        break;
-                    } else {
-                        BattleEvent embeddedEvent = ((EmbeddedBEMessageEntry)me).battleEvent;
-                        if ( embeddedEvent.getMessageCount() > 0 ) {
-                            embeddedIterator = embeddedEvent.getMessageIterator();
-                            more = true;
-                            break;
-                        } else {
-                            messageIndex++;
-                        }
-                    }
+                	if(be.messages.size()> messageIndex) {
+                		MessageEntry me = be.messages.get(messageIndex);
+                		if ( me instanceof TextMessageEntry ) {
+                			// This must be a normal message, so set more to true and break...
+                			more = true;
+                			break;
+	                    } else {
+	                        BattleEvent embeddedEvent = ((EmbeddedBEMessageEntry)me).battleEvent;
+	                        if ( embeddedEvent.getMessageCount() > 0 ) {
+	                            embeddedIterator = embeddedEvent.getMessageIterator();
+	                            more = true;
+	                            break;
+	                        } else {
+	                            messageIndex++;
+	                        }
+	                    }
+                	}
                 }
             }
             
@@ -3254,5 +3258,32 @@ public class BattleEvent extends DetailList {
 
         return combatLevelList;
     }
+    Map<Integer, Effect> _damageEffects = new HashMap<Integer, Effect>();
+	public void addDamageEffect(Effect effect, int tindex) {
+		_damageEffects.put(tindex, effect);
+		
+	}
+	public Effect getDamageEffect(int tindex) {
+		return _damageEffects.get(tindex);
+	}
+	
+	public void removeDamageEffect( int tindex) {
+		_damageEffects.remove(tindex);
+		
+	}
+
+	Map<Integer, Effect> _knockbackDamageEffects = new HashMap<Integer, Effect>();
+	public void addKnockbackDamageEffect(Effect effect, int tindex) {
+		_knockbackDamageEffects.put(tindex, effect);
+		
+	}
+	public Effect getKnockbackDamageEffect(int tindex) {
+		return _knockbackDamageEffects.get(tindex);
+	}
+	
+	public void removeKnockbackDamageEffect( int tindex) {
+		_knockbackDamageEffects.remove(tindex);
+		
+	}
     
 }

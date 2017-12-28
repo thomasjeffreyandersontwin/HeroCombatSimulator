@@ -1740,7 +1740,8 @@ public class TreeTableVariableHeightLayoutCache extends AbstractLayoutCache {
 	    // Make sure next index not beyond child count.
 	    else if(++nextIndex >= childCount)
 		return false;
-
+	    
+	    
 	    TreeStateNode       child = (TreeStateNode)parent.
 		                        getChildAt(nextIndex);
 

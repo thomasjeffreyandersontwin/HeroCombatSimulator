@@ -8,8 +8,8 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import VirtualDesktop.Attack.AttackSingleTargetCommand;
 import VirtualDesktop.Attack.AreaEffect.MultAttackAdapter;
-import VirtualDesktop.Attack.SingleAttack.AttackSingleTargetCommand;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Battle;
 import champions.BattleEvent;

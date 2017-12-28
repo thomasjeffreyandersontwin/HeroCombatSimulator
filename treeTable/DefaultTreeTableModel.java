@@ -642,7 +642,8 @@ public class DefaultTreeTableModel<N extends TreeNode> extends Object
      * @param node
      */
     public void nodeChanged(TreeNode node) {
-        assert SwingUtilities.isEventDispatchThread();
+    	//Jeff
+        //assert SwingUtilities.isEventDispatchThread();
 
         if (listenerList != null && node != null) {
             TreeNode parent = node.getParent();
@@ -722,7 +723,7 @@ public class DefaultTreeTableModel<N extends TreeNode> extends Object
      * @param childIndices
      */
     public void nodesChanged(TreeNode node, int[] childIndices) {
-        assert SwingUtilities.isEventDispatchThread();
+       // assert SwingUtilities.isEventDispatchThread();
 
         if (node != null) {
             if (childIndices != null) {
@@ -751,7 +752,7 @@ public class DefaultTreeTableModel<N extends TreeNode> extends Object
      * @param node
      */
     public void nodeStructureChanged(TreeNode node) {
-        assert SwingUtilities.isEventDispatchThread();
+        //assert SwingUtilities.isEventDispatchThread();
         
         if (node != null) {
             fireTreeStructureChanged(this, getPathToRoot(node), null, null);

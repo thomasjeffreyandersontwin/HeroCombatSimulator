@@ -54,14 +54,16 @@ public class KnockbackEffectNode extends DefaultAttackTreeNode {
         boolean acceptActivation = false;
         
         boolean requiresInput = nodeRequiresInput();
-        
+
         prepareBattleEvent();
         if ( manualOverride || requiresInput ) {
             acceptActivation = true;
-            
+            if(attackTreePanel==null) {
+            	attackTreePanel=AttackTreePanel.defaultAttackTreePanel;
+            }          
             attackTreePanel.setInstructions( "Choose the effect of the Knockback...");
             attackTreePanel.showInputPanel(this, KnockbackEffectPanel.getDefaultPanel(battleEvent, getTarget(), getKnockbackGroup(),getTargetGroup()));
-        }
+       }
         
         if ( AttackTreeModel.DEBUG > 0 ) System.out.println("Node " + name + " activated.");
         return acceptActivation;
@@ -293,23 +295,25 @@ public class KnockbackEffectNode extends DefaultAttackTreeNode {
     }
     
     private void prepareBattleEvent() {
-        int kbindex = battleEvent.getKnockbackIndex(getTarget(),getKnockbackGroup());
-        KnockbackEffect effect = battleEvent.getKnockbackEffect(kbindex);
-        
-        int distance = battleEvent.getKnockbackDistance(kbindex);
-        boolean knockdownPossible = battleEvent.isKnockedDownPossible(kbindex);
-        
-        if ( distance == 0 ) {
-            if ( knockdownPossible ) {
-                battleEvent.setKnockbackEffect(kbindex, KnockbackEffect.KNOCKDOWNONLY);
-            }
-            else {
-                battleEvent.setKnockbackEffect(kbindex, KnockbackEffect.NOEFFECT);
-            }
-        }
-        else if ( effect == null ) {
-            battleEvent.setKnockbackEffect(kbindex, KnockbackEffect.POSSIBLECOLLISION);
-        }
+    	if(battleEvent!=null) {
+	        int kbindex = battleEvent.getKnockbackIndex(getTarget(),getKnockbackGroup());
+	        KnockbackEffect effect = battleEvent.getKnockbackEffect(kbindex);
+	        
+	        int distance = battleEvent.getKnockbackDistance(kbindex);
+	        boolean knockdownPossible = battleEvent.isKnockedDownPossible(kbindex);
+	        
+	        if ( distance == 0 ) {
+	            if ( knockdownPossible ) {
+	                battleEvent.setKnockbackEffect(kbindex, KnockbackEffect.KNOCKDOWNONLY);
+	            }
+	            else {
+	                battleEvent.setKnockbackEffect(kbindex, KnockbackEffect.NOEFFECT);
+	            }
+	        }
+	        else if ( effect == null ) {
+	            battleEvent.setKnockbackEffect(kbindex, KnockbackEffect.POSSIBLECOLLISION);
+	        }
+    	}
     }
     
     /** Getter for property ability.
