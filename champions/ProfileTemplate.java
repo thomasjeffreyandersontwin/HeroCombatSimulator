@@ -204,7 +204,7 @@ public class ProfileTemplate extends DetailList {
                 "AttackTree.summaryIcon", null);
         
         // Movement Input Panel
-        addOption( "Movement Distance Panel", "SHOW_MOVEMENT_DISTANCE_PANEL", "Put Description Here",
+        addOption( "Movement DistanceFromCollision Panel", "SHOW_MOVEMENT_DISTANCE_PANEL", "Put Description Here",
                 "AttackTree.summaryIcon", null);
         
         addOption( "Configure Battle Description Panel", "SHOW_CONFIGURE_BATTLE_DESCRIPTION_PANEL", "Panel describing the use and " +
@@ -217,7 +217,7 @@ public class ProfileTemplate extends DetailList {
         addOption( "NND Defense Panel", "SHOW_NND_PANEL", "Panel used to select whether a target has NND defense.",
                 "AttackTree.defenseIcon", null);
         
-        addOption( "Explosion Distance Panel", "SHOW_EXPLOSION_DISTANCE_PANEL", "Panel to set the distance of possible target from the center of an explosion.",
+        addOption( "Explosion DistanceFromCollision Panel", "SHOW_EXPLOSION_DISTANCE_PANEL", "Panel to set the distance of possible target from the center of an explosion.",
                 "AttackTree.configurePowerIcon", null);
         
     }

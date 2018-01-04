@@ -1501,7 +1501,7 @@ public class PADRoster extends Object {
     }
     
     
-    private static TargetList createObjectPresets() {
+    public static TargetList createObjectPresets() {
         TargetList tl = new TargetList("Preset Objects");
         
         Target target;

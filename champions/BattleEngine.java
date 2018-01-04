@@ -899,6 +899,7 @@ public class BattleEngine extends Thread
         if (priority == 0 && hitLocation != null && hitLocation.equals("NONE") == false) {
             int bindex;
             bindex = effect.findIndexed("Subeffect", "VERSUS", "BODY");
+            
             if (bindex != -1) {
                 String effectType = effect.getSubeffectEffectType(bindex);
                 if (effectType.equals("DAMAGE")) {
@@ -3428,7 +3429,7 @@ public class BattleEngine extends Thread
     }
 
     /**
-     * Calculates the Knockback Distance and Damage for a particular target/knockbackGroup.
+     * Calculates the Knockback DistanceFromCollision and Damage for a particular target/knockbackGroup.
      * @param be
      * @throws BattleEventException
      */

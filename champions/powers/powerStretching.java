@@ -39,7 +39,7 @@ implements ChampionsConstants {
     static final long serialVersionUID = 7766760941340027676L;
     
     static private Object[][] parameterArray = {
-        {"Distance","Power.DISTANCE", Integer.class, new Integer(5), "Stretching Distance", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(0)},
+        {"DistanceFromCollision","Power.DISTANCE", Integer.class, new Integer(5), "Stretching DistanceFromCollision", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(0)},
     };
     
     // Power Definition Variables
@@ -55,7 +55,7 @@ implements ChampionsConstants {
    
     // Import Patterns Definitions
     private static Object[][] patterns = {
-        { "Distance: ([0-9]*),.*", new Object[] { "Distance", Integer.class}},
+        { "DistanceFromCollision: ([0-9]*),.*", new Object[] { "DistanceFromCollision", Integer.class}},
     };
     
     /** Creates new powerHandToHandAttack */
@@ -93,7 +93,7 @@ implements ChampionsConstants {
         // Determine the validity of the power configuration.  Read the parameters
         // from the parameterList, instead of directly from the ability, since the
         // Ability isn't configured yet.
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         
         // Check for the validity of the parameters that will be set.  If the parameters
         // Fail for any reason, return false from the method immediately, indicating a
@@ -136,7 +136,7 @@ implements ChampionsConstants {
     
     public int calculateCPCost(Ability ability) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
          int cost = 0;
         
         if ( distance.intValue() > 0 ) cost += distance.intValue() * 5;
@@ -145,14 +145,14 @@ implements ChampionsConstants {
     
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         int total = getMovementDistance(ability);
         return "Stretching (+" + Integer.toString( distance.intValue() ) + ")";
     }
     
     public int getMovementDistance(Ability ability) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         
         return distance.intValue();
     }

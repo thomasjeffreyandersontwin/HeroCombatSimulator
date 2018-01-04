@@ -20,7 +20,7 @@ public class powerTunnelingAdapter extends AbstractPowerXMLAdapter implements Po
     
     private static String XMLID = "TUNNELING";
     private static String[][] translationArray = {
-        { "LEVELS", "Distance" },
+        { "LEVELS", "DistanceFromCollision" },
         { "ADDER(XMLID=DEFBONUS).LEVELS", "ExtraDEF" },
         { "ADDER(XMLID=FILLIN)", "FillIn", "trueSpecial" },
         { "ADDER(XMLID=IMPROVEDNONCOMBAT).LEVELS", "NoncombatX","NoncombatXSpecial"}

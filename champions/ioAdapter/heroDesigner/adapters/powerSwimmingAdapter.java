@@ -22,7 +22,7 @@ public class powerSwimmingAdapter extends AbstractPowerXMLAdapter implements Pow
     
     private static String XMLID = "RUNNING";
     private static String[][] translationArray = {
-        { "LEVELS", "Distance", "levelsSpecial"},
+        { "LEVELS", "DistanceFromCollision", "levelsSpecial"},
         { "ADDER(XMLID=IMPROVEDNONCOMBAT).LEVELS", "NoncombatX", "noncombatSpecial"},
         { "ADD_MODIFIERS_TO_BASE", "AddsToBase", "addsToBaseSpecial" }
     };
@@ -74,7 +74,7 @@ public class powerSwimmingAdapter extends AbstractPowerXMLAdapter implements Pow
         
         if ( basePower ) levels += 2;
         
-        pl.setParameterValue("Distance", new Integer(levels));
+        pl.setParameterValue("DistanceFromCollision", new Integer(levels));
     }
     
     public void noncombatSpecial(Ability ability, Node node, String attrValue, ParameterList pl, String parameterName, String specialData) {

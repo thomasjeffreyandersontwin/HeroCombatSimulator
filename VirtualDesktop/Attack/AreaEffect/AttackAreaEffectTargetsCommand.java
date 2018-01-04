@@ -29,7 +29,7 @@ public class AttackAreaEffectTargetsCommand extends AttackMultipleTargetsCommand
 		character.ActivateAbilityByName(abilityName);
 		AreaEffectAttackAdapter attack =  (AreaEffectAttackAdapter)character.ActiveAbility;
 		
-		EnterAttackParameters(message, attack);
+		//EnterAttackParameters(message, attack);
 		
 		JSONObject centerTarget = (JSONObject) message.get("Center");
 		String centerTargetString = (String) centerTarget.get("Target");
@@ -38,7 +38,7 @@ public class AttackAreaEffectTargetsCommand extends AttackMultipleTargetsCommand
 			centerTargetString = "Hex";	
 		}
 		attack.StartSelectingTargets();
-		InvokeSIngleAttack(message, attack, centerTargetString);
+		//InvokeSIngleAttack(message, attack, centerTargetString);
 		
 		
 		EnterAttackForAllTargets(message, attack);

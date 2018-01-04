@@ -909,7 +909,7 @@ public class MessagePanel extends JPanel
             			 String targetName = message.substring(0, end);
             			 
             			 
-		    			Target t = new CharacterAdaptor(targetName).UnderlyingCharacter; 
+		    			Target t = new CharacterAdaptor(targetName).target; 
 		    			if((t.stunned==true ||t.isUnconscious()==true) && message.contains(" STUN.")) {
 		    				g.setColor( Color.RED);
 		    				if(message.contains("and is ")) {

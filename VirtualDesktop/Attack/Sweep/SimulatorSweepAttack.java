@@ -6,8 +6,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.Attack.SingleAttackAdapter;
+//import VirtualDesktop.Attack.SingleAttackResults;
 import VirtualDesktop.Character.CharacterAdaptor;
-import VirtualDesktop.Roster.SingleAttackResults;
 import champions.Ability;
 import champions.Battle;
 import champions.BattleEvent;
@@ -39,7 +39,7 @@ public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttackAdap
 	}
 
 	public void AddAbility(String abilityName) {
-		Ability ability = this.Character.UnderlyingCharacter.getAbility(abilityName);
+		Ability ability = this.Character.target.getAbility(abilityName);
 		if(ability==null) {
 			ability = Battle.currentBattle.getDefaultAbilities().getAbility(abilityName, true);	
 		}
@@ -50,13 +50,13 @@ public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttackAdap
 
 	public void SelectTargetForSpecificAttack(String targetName, int i) {
 		if(i==0) {
-			champions.Target t = new CharacterAdaptor(targetName).UnderlyingCharacter;
+			champions.Target t = new CharacterAdaptor(targetName).target;
 			SelectTargetPanel.ad.selectTarget(t);
 		}
 		else {
 			SingleTargetNode execNode = GetTargetNode(i);
 
-			champions.Target t = new CharacterAdaptor(targetName).UnderlyingCharacter;
+			champions.Target t = new CharacterAdaptor(targetName).target;
 
 			AttackTreeModel.treeModel.advanceAndActivate(execNode, execNode);
 			execNode.setTarget(t);

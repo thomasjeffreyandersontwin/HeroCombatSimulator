@@ -3,13 +3,13 @@ package VirtualDesktop.Attack.Sweep;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.AttackTargetCommand;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Ability;
 import champions.Battle;
 import champions.attackTree.SweepSetupPanel;
 
-public class AttackSweepTargetCommand extends AttackSingleTargetCommand {
+public class AttackSweepTargetCommand extends AttackTargetCommand {
 
 	@Override
 	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message,

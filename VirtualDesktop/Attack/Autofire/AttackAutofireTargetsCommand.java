@@ -25,7 +25,7 @@ public class AttackAutofireTargetsCommand extends AttackMultipleTargetsCommand{
 		
 		//enter autofire parameters
 		AutofireAttackAdapter attack =  (AutofireAttackAdapter)character.ActiveAbility;
-		EnterAttackParameters(message, attack);
+		//EnterAttackParameters(message, attack);
 		//attack.EnterAttackParameters();
 		attack.SetAutoFireSprayMode(true);
 		attack.SetAutoFireShots((int)autofireShots);
@@ -45,7 +45,7 @@ public class AttackAutofireTargetsCommand extends AttackMultipleTargetsCommand{
 		for (int i = 0; i < targets.size(); i++) {
 			JSONObject targetObject =(JSONObject) targets.get(i);
 			String targetName =  (String)targetObject.get("Target");
-			InvokeSingleAttackWithoutKnockback(targetObject, attack, targetName);
+			//InvokeSingleAttackWithoutKnockback(targetObject, attack, targetName);
 			
 		}
 		

@@ -36,13 +36,17 @@ public class ObstructionNode extends DefaultAttackTreeNode {
     public boolean activateNode(boolean manualOverride) {
         boolean acceptActivation = false;
         
+        int tindex;
         ActivationInfo ai = getBattleEvent().getActivationInfo();
-        
-        int tindex = ai.getTargetIndex(targetReferenceNumber, getTargetGroup());
-        Target target = ai.getTarget(tindex);
-        
-        setTarget(target);
-        
+        if(getTarget()==null) {
+        	tindex = ai.getTargetIndex(targetReferenceNumber, getTargetGroup());
+        	Target target = ai.getTarget(tindex);
+        	setTarget(target);
+        }
+        else 
+        {
+        	tindex = ai.getTargetIndex(getTarget());
+        }
         // Check if Obstruction List is already set
         ObstructionList ol = ai.getObstructionList(tindex);
         if ( ol != null ){

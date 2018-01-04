@@ -67,7 +67,7 @@ public class MovementDistancePanel extends JPanel implements AttackTreeInputPane
         setLayout(new java.awt.GridBagLayout());
         java.awt.GridBagConstraints gridBagConstraints1;
         
-        distanceMovedButton.setText("Distance Moved");
+        distanceMovedButton.setText("DistanceFromCollision Moved");
         distanceMovedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 distanceMovedButtonActionPerformed(evt);
@@ -171,7 +171,7 @@ public class MovementDistancePanel extends JPanel implements AttackTreeInputPane
         
         
         
-        // Set the Text of the Distance Button
+        // Set the Text of the DistanceFromCollision Button
         distanceLabel.setText( " (0\" to " + Integer.toString(maximumDistance) + "\")");
         
         // Figure out which button should be selected..

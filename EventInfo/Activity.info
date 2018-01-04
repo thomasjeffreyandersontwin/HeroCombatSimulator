@@ -3,44 +3,20 @@ character:
 	name:Pre-Emptive Strike
 	costume:
 	model:
-	MaxStun:68
+	MaxStun:98
 	MaxEndurance:70
-	CurrStun:73
-	CurrEndurance:40
+	CurrStun:69
+	CurrEndurance:31
 Activate: True
 
 	Crowd: 
-		Name:heroes
+		Name:Unnamed
 		Characters:
-			Ogun:
-				name:Ogun
-				costume:
-				model:
 			Pre-Emptive Strike:
 				name:Pre-Emptive Strike
 				costume:
 				model:
-			City gates, small:
-				name:City gates, small
-				costume:
-				model:
-			Off-Road:
-				name:Off-Road
-				costume:
-				model:
-			Spyder:
-				name:Spyder
-				costume:
-				model:
-			Blind Justice:
-				name:Blind Justice
-				costume:
-				model:
-			Airlock Door:
-				name:Airlock Door
-				costume:
-				model:
-			Magnetic lock:
-				name:Magnetic lock
+			Ogun:
+				name:Ogun
 				costume:
 				model:

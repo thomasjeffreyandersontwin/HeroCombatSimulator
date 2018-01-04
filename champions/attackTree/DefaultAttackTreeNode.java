@@ -37,7 +37,9 @@ import javax.swing.tree.TreePath;
  */
 public class DefaultAttackTreeNode implements AttackTreeNode, ChampionsConstants {
 
-    /**
+    public static DefaultAttackTreeNode Node;
+
+	/**
      * Stores the parent of this node.
      *
      * Note, this stores the real parent.
@@ -84,6 +86,7 @@ public class DefaultAttackTreeNode implements AttackTreeNode, ChampionsConstants
 
     /** Creates new DefaultAttackTreeNode */
     public DefaultAttackTreeNode() {
+    	Node =this;
     }
 
     /**

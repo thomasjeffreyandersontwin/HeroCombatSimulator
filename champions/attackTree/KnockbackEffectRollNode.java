@@ -154,8 +154,8 @@ public class KnockbackEffectRollNode extends DefaultAttackTreeNode {
             battleEvent.setKnockbackAmountRoll(kbindex,d);
         }
         
-        String msg = battleEvent.getSource().getName() + " rolled for " + d.getStun().toString() + " on " + Integer.toString(rollAmount) + "d6 for Knockback Distance versus " + target.getName() + ".";
-        //battleEvent.addBattleMessage( new champions.battleMessage.LegacyBattleMessage( battleEvent.getSource().getName() + " rolled for " + d.getStun().toString() + " on " + Integer.toString(rollAmount) + "d6 for Knockback Distance versus " + target.getName(), BattleEvent.MSG_DICE));
+        String msg = battleEvent.getSource().getName() + " rolled for " + d.getStun().toString() + " on " + Integer.toString(rollAmount) + "d6 for Knockback DistanceFromCollision versus " + target.getName() + ".";
+        //battleEvent.addBattleMessage( new champions.battleMessage.LegacyBattleMessage( battleEvent.getSource().getName() + " rolled for " + d.getStun().toString() + " on " + Integer.toString(rollAmount) + "d6 for Knockback DistanceFromCollision versus " + target.getName(), BattleEvent.MSG_DICE));
         battleEvent.addBattleMessage( new DiceRollMessage(battleEvent.getSource(), msg));
         
         int originalDistance = battleEvent.getKnockbackDistance(kbindex);

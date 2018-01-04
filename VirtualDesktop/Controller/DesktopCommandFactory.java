@@ -13,8 +13,7 @@ import VirtualDesktop.Actions.AbortNextActionCommand;
 import VirtualDesktop.Actions.ActivateHeldCharacterCommand;
 import VirtualDesktop.Actions.CombatControlAction;
 import VirtualDesktop.Attack.SingleAttackAdapter;
-import VirtualDesktop.Attack.AttackSingleNoGui;
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.AttackTargetCommand;
 import VirtualDesktop.Attack.ConfirmAttack;
 import VirtualDesktop.Attack.MoveAndAttackCommand;
 import VirtualDesktop.Attack.AreaEffect.AttackAreaEffectTargetsCommand;
@@ -29,10 +28,7 @@ public class DesktopCommandFactory {
 	public static AbstractDesktopCommand GetCommand(JSONObject message) {
 		String type = (String) message.get("Type");
 		if(type.equals("AttackSingleTarget")) {
-			return new AttackSingleTargetCommand();
-		}
-		if(type.equals("AttackSingleNoGui")) {
-			return new AttackSingleNoGui();
+			return new AttackTargetCommand();
 		}
 		if(type.equals("RosterSynchronization")){
 			return new RosterSynchCommand();

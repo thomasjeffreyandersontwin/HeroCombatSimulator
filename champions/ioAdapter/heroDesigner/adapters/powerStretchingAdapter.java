@@ -22,7 +22,7 @@ public class powerStretchingAdapter extends AbstractPowerXMLAdapter implements P
     
     private static String XMLID = "STRETCHING";
     private static String[][] translationArray = {
-        {  "Distance"}
+        {  "DistanceFromCollision"}
     };
     
     private boolean basePower = false;

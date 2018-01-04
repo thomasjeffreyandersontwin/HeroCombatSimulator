@@ -71,7 +71,7 @@ public class AreaEffectAttackNode extends DefaultAttackTreeNode implements Battl
                  //   node.setTargetReferenceNumber(0); // Indicate that this is the primary target of the Group.
                     nextNode = node;
                 }
-                else if ( nextNodeName.equals("Distance From Center")) {
+                else if ( nextNodeName.equals("DistanceFromCollision From Center")) {
                     ExplosionDistanceNode node = new ExplosionDistanceNode(nextNodeName);
                     node.setTargetGroupSuffix("AE");
                     nextNode = node;
@@ -131,14 +131,14 @@ public class AreaEffectAttackNode extends DefaultAttackTreeNode implements Battl
             
             if ( ai.getTargetGroupHasHitTargets( getTargetGroup() + ".AE" ) ) {
                 if ( isExplosion() ) {
-                    nextNodeName = "Distance From Center";
+                    nextNodeName = "DistanceFromCollision From Center";
                 }
                 else {
                     nextNodeName = "Effect";
                 }
             }
         }
-        else if ( previousNodeName.equals("Distance From Center")) {
+        else if ( previousNodeName.equals("DistanceFromCollision From Center")) {
             nextNodeName = "Effect";
         }
         

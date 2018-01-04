@@ -148,7 +148,7 @@ public class MovementManeuverSetupPanel extends JPanel implements AttackTreeInpu
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         add(jPanel1, gridBagConstraints);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Distance Moved"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("DistanceFromCollision Moved"));
 
         buttonGroup1.add(halfButton);
         halfButton.setText("Half Move");
@@ -169,7 +169,7 @@ public class MovementManeuverSetupPanel extends JPanel implements AttackTreeInpu
         fullMoveDistanceLabel.setText("(x\")");
 
         buttonGroup1.add(distanceMovedButton);
-        distanceMovedButton.setText("Distance");
+        distanceMovedButton.setText("DistanceFromCollision");
         distanceMovedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 distanceMovedButtonActionPerformed(evt);

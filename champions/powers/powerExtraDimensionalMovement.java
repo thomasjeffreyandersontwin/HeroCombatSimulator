@@ -82,23 +82,23 @@ public class powerExtraDimensionalMovement extends Power
     
     static private Object[][] parameterArray = {
         {"Dimension","Power.DIMENSION", String.class, "Single Dimension", "Dimension Options", COMBO_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "OPTIONS", dimensionOptions},
-        //{"Distance","Ability.MOVEDISTANCE", Integer.class, new Integer(1), "Distance", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(1)},
+        //{"DistanceFromCollision","Ability.MOVEDISTANCE", Integer.class, new Integer(1), "DistanceFromCollision", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(1)},
         {"WeightMultiplier","Power.WEIGHTMULTIPLIER", Integer.class, new Integer(1), "Weight Multiplier", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
         {"PositionShift","Power.POSITIONSHIFT", Boolean.class, new Boolean(false), "Position Shift", BOOLEAN_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED}
     };
     
     // Import Patterns Definitions
     private static Object[][] patterns = {
-        { "([0-9]*)\" .*", new Object[] { "Distance", Integer.class}},
-        { "([0-9]*)\" .*", new Object[] { "Distance", Integer.class}},
-        { ".*: ([0-9]*)\" .*", new Object[] { "Distance", Integer.class}},
-        { ".* ([0-9]*)\", .*", new Object[] { "Distance", Integer.class}},
+        { "([0-9]*)\" .*", new Object[] { "DistanceFromCollision", Integer.class}},
+        { "([0-9]*)\" .*", new Object[] { "DistanceFromCollision", Integer.class}},
+        { ".*: ([0-9]*)\" .*", new Object[] { "DistanceFromCollision", Integer.class}},
+        { ".* ([0-9]*)\", .*", new Object[] { "DistanceFromCollision", Integer.class}},
         { "Non-Combat Multiplier: ([0-9]*),.*", new Object[] { "NoncombatX", Integer.class}},
         { "Non-Combat \\(MPH\\).*",null},
         { "(Position Shift:).*", new Object[] { "PositionShift", Boolean.class }},
         //hd
-        { ".* ([0-9]*)\", .*", new Object[] { "Distance", Integer.class}},
-        { ".* ([0-9]*)\".*", new Object[] { "Distance", Integer.class}},
+        { ".* ([0-9]*)\", .*", new Object[] { "DistanceFromCollision", Integer.class}},
+        { ".* ([0-9]*)\".*", new Object[] { "DistanceFromCollision", Integer.class}},
         { "x([0-9]*) Noncombat.*", new Object[] { "NoncombatX", Integer.class}},
         { "Improved Noncombat Movement \\(x([0-9]*)\\).*", new Object[] { "NoncombatX", Integer.class}},
         { "(Position Shift).*", new Object[] { "PositionShift", Boolean.class }},
@@ -108,7 +108,7 @@ public class powerExtraDimensionalMovement extends Power
     static private Object[][] costArray = {
         { "Dimension", COMBO_COST, STATIC_RECONFIG, ZERO_RECONFIG, setCostArray, dimensionOptions },
         //{ "Base", BASE_COST, STATIC_RECONFIG, ZERO_RECONFIG, new Integer(0) },
-        //{ "Distance", GEOMETRIC_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(2), new Integer(1), new Integer(0), new Integer(0) },
+        //{ "DistanceFromCollision", GEOMETRIC_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(2), new Integer(1), new Integer(0), new Integer(0) },
         { "WeightMultiplier", LOGRITHMIC_COST, DYNAMIC_RECONFIG, ZERO_RECONFIG, new Integer(5), new Integer(2), new Integer(1), new Integer(2) },
         { "PositionShift", BOOLEAN_COST, DYNAMIC_RECONFIG, ZERO_RECONFIG, new Integer(5)},
     };
@@ -172,7 +172,7 @@ public class powerExtraDimensionalMovement extends Power
         // Determine the validity of the power configuration.  Read the parameters
         // from the parameterList, instead of directly from the ability, since the
         // Ability isn't configured yet.
-        //Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        //Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         //Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         
         // Check for the validity of the parameters that will be set.  If the parameters
@@ -220,7 +220,7 @@ public class powerExtraDimensionalMovement extends Power
     
  /*   public int calculateCPCost(Ability ability) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
   
         int cost = 10;
@@ -232,7 +232,7 @@ public class powerExtraDimensionalMovement extends Power
     
     public String getConfigSummary(Ability ability, int not_used) {
 //        ParameterList parameterList = getParameterList(ability);
-//        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+//        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
 //        Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         return "Blank";// distance.toString() + "\" Flight (NC: " + Integer.toString( distance.intValue() * NoncombatX.intValue() ) + "\")";
     }

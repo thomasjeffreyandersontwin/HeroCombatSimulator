@@ -22,7 +22,7 @@ public class powerLeapingAdapter extends AbstractPowerXMLAdapter implements Powe
     
     private static String XMLID = "RUNNING";
     private static String[][] translationArray = {
-        { "LEVELS", "Distance", "levelsSpecial"},
+        { "LEVELS", "DistanceFromCollision", "levelsSpecial"},
         { "ADDER(XMLID=IMPROVEDNONCOMBAT).LEVELS", "NoncombatX", "noncombatSpecial"},
         { "ADD_MODIFIERS_TO_BASE", "AddsToBase", "addsToBaseSpecial" }
     };
@@ -72,7 +72,7 @@ public class powerLeapingAdapter extends AbstractPowerXMLAdapter implements Powe
     public void levelsSpecial(Ability ability, Node node, String attrValue, ParameterList pl, String parameterName, String specialData) {
         int levels = Integer.parseInt(attrValue);
         
-        pl.setParameterValue("Distance", new Integer(levels));
+        pl.setParameterValue("DistanceFromCollision", new Integer(levels));
     }
     
     public void noncombatSpecial(Ability ability, Node node, String attrValue, ParameterList pl, String parameterName, String specialData) {

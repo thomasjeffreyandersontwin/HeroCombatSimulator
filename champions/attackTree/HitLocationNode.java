@@ -240,8 +240,6 @@ public class HitLocationNode extends DefaultAttackTreeNode {
         return -1;
     }
     
-    
-    
     private int findIndexOfHitLocation(String location) {
         if ( location != null ) {
             for(int index = 0; index < hitLocationOptions.length; index++) {

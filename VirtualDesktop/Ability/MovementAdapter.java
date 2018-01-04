@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.attackTree.MovementDistancePanel;
 
-public class MovementAdapter extends AbilityWrapper {
+public class MovementAdapter extends AbilityAdapter {
 
 	public int Distance;
 

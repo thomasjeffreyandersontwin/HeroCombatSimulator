@@ -39,7 +39,7 @@ implements ChampionsConstants {
     static final long serialVersionUID = 7766760941340027676L;
     
     static private Object[][] parameterArray = {
-        {"Distance","Power.DISTANCE", Integer.class, new Integer(5), "Additional Leap Distance", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(0)},
+        {"DistanceFromCollision","Power.DISTANCE", Integer.class, new Integer(5), "Additional Leap DistanceFromCollision", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(0)},
         {"NoncombatX","Power.NONCOMBATX", Integer.class, new Integer(2), "Non-Combat Multiplier", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(2)}
     };
     
@@ -56,7 +56,7 @@ implements ChampionsConstants {
     
     // Import Patterns Definitions
     private static Object[][] patterns = {
-        { ".*\\(\\+([0-9]*)\", .*\", .*", new Object[] { "Distance", Integer.class}},
+        { ".*\\(\\+([0-9]*)\", .*\", .*", new Object[] { "DistanceFromCollision", Integer.class}},
         { "Non-Combat Multiplier: ([0-9]*),.*", new Object[] { "NoncombatX", Integer.class}},
         { "Non-Combat \\(MPH\\).*",null}
     };
@@ -96,7 +96,7 @@ implements ChampionsConstants {
         // Determine the validity of the power configuration.  Read the parameters
         // from the parameterList, instead of directly from the ability, since the
         // Ability isn't configured yet.
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         
         // Check for the validity of the parameters that will be set.  If the parameters
@@ -141,7 +141,7 @@ implements ChampionsConstants {
     
     public int calculateCPCost(Ability ability) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         
         int cost = 0;
@@ -153,7 +153,7 @@ implements ChampionsConstants {
     
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         int total = getMovementDistance(ability);
         return "Superleap (+" + Integer.toString( distance.intValue() ) + "\", " + Integer.toString(total) + "\", NC: " + Integer.toString( total * noncombatX.intValue() ) + "\")";
@@ -161,7 +161,7 @@ implements ChampionsConstants {
     
     public int getMovementDistance(Ability ability) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         
         Target source = ability.getSource();
         int str = 0;

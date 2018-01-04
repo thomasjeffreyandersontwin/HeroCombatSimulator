@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import VirtualDesktop.Attack.AttackTest;
-import VirtualDesktop.Attack.Attack.*;
+
 
 public class AreaEffectAttackTest extends AttackTest {
 	

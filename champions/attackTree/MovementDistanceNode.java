@@ -41,7 +41,7 @@ public class MovementDistanceNode extends DefaultAttackTreeNode{
                 maximumDistance = (int)Math.ceil( (double)battleEvent.getAbility().getRange() / 2.0);
             }
             
-            attackTreePanel.setInstructions( "Set the Distance and Velocity of the Movement...");
+            attackTreePanel.setInstructions( "Set the DistanceFromCollision and Velocity of the Movement...");
             attackTreePanel.showInputPanel(this, MovementDistancePanel.getDefaultPanel(battleEvent, maximumDistance, fullPhase));
         }
         

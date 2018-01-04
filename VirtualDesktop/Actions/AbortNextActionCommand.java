@@ -2,7 +2,7 @@ package VirtualDesktop.Actions;
 
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.AttackTargetCommand;
 import VirtualDesktop.Character.CharacterAdaptor;
 import VirtualDesktop.Controller.AbstractDesktopCommand;
 import VirtualDesktop.Controller.DesktopCommandFactory;
@@ -21,14 +21,14 @@ public class AbortNextActionCommand extends AbstractDesktopCommand {
 			throws Exception {
 		 isAbortActivated= true;
 		
-		 lastAttackMessage = AttackSingleTargetCommand.lastMessage;
+		 lastAttackMessage = AttackTargetCommand.lastMessage;
 		
 		
 		AttackTreePanel.Panel.cancelAttack();
 		String characterName = (String)message.get("Character");
 		character= new CharacterAdaptor(characterName);;
 		
-		Target target = character.UnderlyingCharacter;
+		Target target = character.target;
 		BattleEvent be = new BattleEvent(BattleEvent.ACTIVE_TARGET,target );
         be.addCombatStateEvent(target, target.getCombatState(), CombatState.STATE_ABORTING );
         target.setCombatState( CombatState.STATE_ABORTING );

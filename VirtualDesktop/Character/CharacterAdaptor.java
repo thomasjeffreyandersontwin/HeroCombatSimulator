@@ -2,32 +2,40 @@ package VirtualDesktop.Character;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Dictionary;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Ability.AbilityWrapper;
+import VirtualDesktop.Ability.AbilityAdapter;
 import VirtualDesktop.Ability.MovementAdapter;
+import VirtualDesktop.Attack.AttackAdapter;
+import VirtualDesktop.Attack.BasicTargetAdapter;
 import champions.Ability;
 import champions.Battle;
 import champions.BattleEvent;
+import champions.CVList;
 import champions.DetailList;
 import champions.Target;
 import champions.TargetList;
+import champions.enums.DefenseType;
+import jdk.nashorn.api.scripting.JSObject;
 
-public class CharacterAdaptor {
-	public Target UnderlyingCharacter;
-	public AbilityWrapper ActiveAbility;
+public class CharacterAdaptor extends BasicTargetAdapter {
+	public AbilityAdapter ActiveAbility;
 	public String ActiveAbilityName;
 	public String ActivateAbilityName;
-	public CharacterAdaptor() {}
-	public CharacterAdaptor(Target character) {
-		this.UnderlyingCharacter = character;
-	}
 	
+	public CharacterAdaptor() {}
+	
+	public CharacterAdaptor(Target character) {
+		this.target = character;
+	}
 	public CharacterAdaptor(String characterName) {
 		this();
 		Battle battle = Battle.currentBattle;
+		//battle.startBattle();
 		TargetList targets = battle.getTargetList(true);
 		champions.Target target = targets.getTarget(characterName, true);
 		if(target==null) {
@@ -38,20 +46,8 @@ public class CharacterAdaptor {
 		{
 			target = loadCharacterFromFile(characterName);
 		}
-		this.UnderlyingCharacter = target;
+		this.target =target;
 	}
-	private Target loadCharacterFromFile(String characterName) {
-		File file = new File(characterName +".hcs");
-		DetailList d = new DetailList();
-		Target target=null;
-		try {
-			target = (Target) d.open(file);
-		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
-		}
-		return target;
-	}
-
 	public static CharacterAdaptor GetActiveCharacter() {
 		Battle battle = Battle.currentBattle;
 		champions.Target active = battle.getActiveTarget();
@@ -59,19 +55,6 @@ public class CharacterAdaptor {
 		
 	}
 
-	public void ActivateAbilityByName(String abilityName) throws Exception {
-		
-		 LoadAbilityByName( abilityName);
-		 if(this.ActiveAbility!=null) {
-			 this.ActiveAbility.ActivateAbility();
-		 }
-		
-	}
-	
-	public void LoadAbilityByName(String abilityName) throws Exception {
-		AbilityWrapper ability= AbilityWrapper.CreateAbility(abilityName, this);
-		this.ActiveAbility = ability;
-	}
 	public void MoveByName(String movementName, int distance) throws Exception {
 		ActivateAbilityByName( movementName);
 		((MovementAdapter)this.ActiveAbility).setDistance(distance);
@@ -80,37 +63,40 @@ public class CharacterAdaptor {
 	}
 	
 	public JSONObject toJSON() {
-		return new CharacterJSONExporter().toJSON(this.UnderlyingCharacter);
+		return new CharacterJSONExporter().toJSON(target);
 	}
 	
-	public AbilityWrapper getAbilityWrapper(String abilityName) 
-	{
-		return AbilityWrapper.CreateAbilityWrapper(abilityName, this);
-	}
-	
-	public AbilityWrapper getAbility(String abilityName) 
-	{
-		return AbilityWrapper.CreateAbility(abilityName, this);
-	}
-	
-	public void Perform(String abilityName) {}
-
-	public void AddAbility(AbilityWrapper ability) {}
-
-	public void RemoveAbility(AbilityWrapper ability) {}
-	
-	public Dictionary<String, AbilityWrapper> getAllowedAbilities(){
-		return null;
-	}
-	
-	public void CancelAbilityInProgress() {}
-	
-	public AbilityWrapper getActiveAbilty(){
-		return null;
-	}
-	
-	public void setActiveAbilty(AbilityWrapper ability){
+	public void ActivateAbilityByName(String abilityName) throws Exception {
 		
+		 LoadAbilityByName( abilityName);
+		 if(this.ActiveAbility!=null) {
+			 this.ActiveAbility.activateAbility();
+		 }
+		
+	}
+	public void LoadAbilityByName(String abilityName) throws Exception {
+		AbilityAdapter ability = getAbility("abilityName");	
+		this.ActiveAbility = ability;
+	}
+	public AbilityAdapter getAbilityWrapper(String abilityName) 
+	{
+		return AbilityAdapter.CreateAbilityWrapper(abilityName, this);
+	}
+	public AbilityAdapter getAbility(String abilityName) 
+	{
+		return AbilityAdapter.CreateAbility(abilityName, this);
+	}
+	public void Perform(String abilityName) {}
+	public void AddAbility(AbilityAdapter ability) {}
+	public void RemoveAbility(AbilityAdapter ability) {}
+	public Dictionary<String, AbilityAdapter> getAllowedAbilities(){
+		return null;
+	}
+	public void cancelAbilityInProgress() {}
+	public AbilityAdapter getActiveAbilty(){
+		return ActiveAbility;
+	}
+	public void setActiveAbilty(AbilityAdapter ability){	
 	}
 	
 	public boolean IsPerformingSet() { return false;}
@@ -118,10 +104,45 @@ public class CharacterAdaptor {
     public boolean IsRolling() { return false;};
     public boolean IsAborting(){ return false;};
     public boolean IsHaymakering() { return false;}
-	public Object getName() {
-		// TODO Auto-generated method stub
-		return UnderlyingCharacter.getName();
-	};
 	
+	private Target loadCharacterFromFile(String characterName) {
+		return loadFromFile(characterName,".hcs"); 
+	}
+	
+    public String getName() {
+		
+		return target.getName();
+	}
+
+	public int getDefense(DefenseType def) {
+		return target.getDefense(def);
+	}
+
+	public JSONObject processJSON(JSONObject abilityJSON) {
+		
+		AbilityAdapter a = getAbilityWrapper((String) abilityJSON.get("Ability"));
+		ActiveAbility = a;
+		JSONObject r = a.processJSON(abilityJSON);
+		if(a instanceof AttackAdapter) 
+			a.WriteJSON(r);
+		return r;
+		
+		
+	}
+
+	public JSONObject exportToJSON() {
+		JSONObject ex = new JSONObject();
+		ex.put("Name", getName());
+		
+		JSONObject bodyJSO = getCharasteristic("BODY").exportToJSON();
+		ex.put("BODY",bodyJSO );
+		JSONObject stunJSO = getCharasteristic("STUN").exportToJSON();
+		ex.put("STUN",stunJSO );
+		
+		JSONArray damageEffects = getCharacterEffect().exportToJSON();
+		ex.put("Effects", damageEffects  );
+		
+		return ex;
+	}
 
 }

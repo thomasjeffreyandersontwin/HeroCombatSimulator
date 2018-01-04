@@ -21,7 +21,7 @@ public class powerFlightAdapter extends AbstractPowerXMLAdapter implements Power
     
     private static String XMLID = "FLIGHT";
     private static String[][] translationArray = {
-        { "LEVELS", "Distance" },
+        { "LEVELS", "DistanceFromCollision" },
         { "ADDER(XMLID=POSITIONSHIFT)", "PositionShift", "trueSpecial" },
                 //{ "ADDER(XMLID=IMPROVEDNONCOMBAT).LEVELS", "NoncombatX" }
         { "ADDER(XMLID=IMPROVEDNONCOMBAT).LEVELS", "NoncombatX","NoncombatXSpecial"}

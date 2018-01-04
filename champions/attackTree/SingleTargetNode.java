@@ -31,7 +31,7 @@ import javax.swing.UIManager;
  */
 public class SingleTargetNode extends DefaultAttackTreeNode
         implements TargetListener, ChampionsConstants {
-    public static AttackTreeNode Node;
+    public static SingleTargetNode Node;
 
 	/** Store Target Selected for this node */
     protected Target target;

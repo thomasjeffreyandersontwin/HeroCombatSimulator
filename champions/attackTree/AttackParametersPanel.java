@@ -166,7 +166,7 @@ public class AttackParametersPanel extends JPanel implements PADValueListener, A
         }
     }
     
-    protected void fireChangeEvent() {
+    public void fireChangeEvent() {
         if ( listenerList != null ) {
             ChangeEvent e = new ChangeEvent(this);
             // Guaranteed to return a non-null array

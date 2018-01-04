@@ -291,7 +291,7 @@ public class CombatSimulator {
         FileMessageListenerThread run = new FileMessageListenerThread(battle);
         run.start();
         
-        checkForUpdate();
+       // checkForUpdate();
 
         ExceptionWizard.addExcludeString("javax.swing.tree.VariableHeightLayoutCache.getRowContainingYLocation");
         ExceptionWizard.addExcludeString("javax.swing.tree.AbstractLayoutCache.getNodeDimensions");
@@ -303,12 +303,16 @@ public class CombatSimulator {
     public static void exit() {
         // Update the stats here...
 
-        Preferences.savePreferenceList();
-        DetailList.exitHook();
-        ProfileManager.saveProfiles();
+        exitHCS();
 
         System.exit(0);
     }
+
+	public static void exitHCS() {
+		Preferences.savePreferenceList();
+        DetailList.exitHook();
+        ProfileManager.saveProfiles();
+	}
 
     /** gets the bounds for <CODE>what</CODE> from the user preferences.
      * If no bounds exist for <CODE>what</CODE>, returns sane, non-zero

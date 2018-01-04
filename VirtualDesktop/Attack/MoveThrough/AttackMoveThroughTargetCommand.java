@@ -4,7 +4,7 @@ import javax.swing.tree.TreeNode;
 
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.AttackTargetCommand;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Ability;
 import champions.Battle;
@@ -22,7 +22,7 @@ import champions.attackTree.MoveThroughEffectNode;
 import champions.attackTree.MovementManeuverSetupPanel;
 import champions.powers.maneuverMoveThrough;
 
-public class AttackMoveThroughTargetCommand extends AttackSingleTargetCommand {
+public class AttackMoveThroughTargetCommand extends AttackTargetCommand {
 
 	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message,
 			CharacterAdaptor character) throws Exception  {
@@ -41,14 +41,14 @@ public class AttackMoveThroughTargetCommand extends AttackSingleTargetCommand {
 		
 		JSONObject movement = (JSONObject)message.get("MovementAbility");
 		movethrough.setMovementAbility((String) movement.get("Movement"));
-		movethrough.setDistance(((Long)movement.get("Distance")).intValue());
+		movethrough.setDistance(((Long)movement.get("DistanceFromCollision")).intValue());
 		
 		JSONObject attackAbility = (JSONObject)message.get("AttackAbility");
 		movethrough.setAttack((String) attackAbility.get("Ability"));
 		movethrough.ConfirmAttack();
         
 		String targetName = (String) attackAbility.get("Target");
-		ExecuteAttackOnTarget(attackAbility,movethrough, targetName);
+		//ExecuteAttackOnTarget(attackAbility,movethrough, targetName);
 		
 		movethrough.UpdateAttackWithAdjustedDamageDice();		
 		

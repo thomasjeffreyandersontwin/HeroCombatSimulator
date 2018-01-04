@@ -54,7 +54,11 @@ public class SourcePerceptionsNode extends DefaultAttackTreeNode {
             List<Sense> sl = source.getOrderedSenseList( getTarget() );
             
             Sense selectedSense = null;
-            
+            //jeff 
+            if(PerceptionPanel.defaultPanel!=null && PerceptionPanel.defaultPanel.getSelectedSense()!=null)
+			{
+				selectedSense = PerceptionPanel.defaultPanel.getSelectedSense();
+			}
             PerceptionPanel app = PerceptionPanel.getDefaultPanel( battleEvent, PerceptionPanel.PanelType.ATTACKER_PERCEPTION_PANEL, sl, selectedSense, null, target, getTargetGroup());
             
             attackTreePanel.showInputPanel(this,app);

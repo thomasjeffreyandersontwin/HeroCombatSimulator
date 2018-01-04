@@ -49,7 +49,7 @@ public class MovementNode extends DefaultAttackTreeNode {
                     SingleAttackNode node = new SingleAttackNode(nextNodeName);
                     nextNode = node;
                 }
-                else if ( nextNodeName.equals("Movement Distance") ) {
+                else if ( nextNodeName.equals("Movement DistanceFromCollision") ) {
                     MovementDistanceNode node = new MovementDistanceNode(nextNodeName);
                     nextNode = node;
                 }
@@ -66,9 +66,9 @@ public class MovementNode extends DefaultAttackTreeNode {
         String nextNodeName = null;
         
         if ( previousNodeName == null ) {
-            nextNodeName = "Movement Distance";
+            nextNodeName = "Movement DistanceFromCollision";
         }
-        else if ( previousNodeName.equals("Movement Distance") ) {
+        else if ( previousNodeName.equals("Movement DistanceFromCollision") ) {
             Ability ability = battleEvent.getAbility();
             if ( ability.isRequiresTarget() ) {
                 nextNodeName = "Single Attack";

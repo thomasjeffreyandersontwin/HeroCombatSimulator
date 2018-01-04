@@ -47,7 +47,7 @@ public class powerMindLink extends Power implements ChampionsConstants {
         {"RelatedGroup","Power.RELATEDGROUP", Integer.class, new Integer(5), "Related Group of Minds", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
         {"AdditionalMind","Power.ADDITIONALMIND", Integer.class, new Integer(5), "Additional Mind", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
         {"MindMultiplier","Power.MINDMULTIPIER", Integer.class, new Integer(1), "Number of Minds Multiplier", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
-        {"AnyDistance","Power.ANYDISTANCE", Boolean.class, new Boolean(false), "Any Distance", BOOLEAN_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
+        {"AnyDistance","Power.ANYDISTANCE", Boolean.class, new Boolean(false), "Any DistanceFromCollision", BOOLEAN_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
         {"AnyDimension","Power.ANYDIMENSION", Boolean.class, new Boolean(false), "Any Dimension", BOOLEAN_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
     };
     

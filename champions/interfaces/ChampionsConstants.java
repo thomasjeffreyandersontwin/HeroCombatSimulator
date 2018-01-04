@@ -219,7 +219,7 @@ public interface ChampionsConstants {
     public static final String AI_STATE_DEACTIVATED = "DEACTIVATED";
     //public static final String AI_STATE_CANCELLED = "CANCELLED";
     
-    // Special Distance Indicators
+    // Special DistanceFromCollision Indicators
     public static final int MOVEMENT_FULL_MOVE = -1;
     public static final int MOVEMENT_HALF_MOVE = -2;
     

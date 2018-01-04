@@ -43,15 +43,15 @@ public class powerFlightconstant extends Power implements ChampionsConstants {
     static final long serialVersionUID = 7766760941350025676L;
     
     static private Object[][] parameterArray = {
-        {"Distance","Ability.MOVEDISTANCE", Integer.class, new Integer(5), "Flight Distance", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(1)},
+        {"DistanceFromCollision","Ability.MOVEDISTANCE", Integer.class, new Integer(5), "Flight DistanceFromCollision", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(1)},
         {"NoncombatX","Power.NONCOMBATX", Integer.class, new Integer(2), "Non-Combat Multiplier", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(2)}
     };
     
     // Import Patterns Definitions
     private static Object[][] patterns = {
-//        { ".*([0-9]*)\" .*", new Object[] { "Distance", Integer.class}},
-        { "([0-9]*)\" .*", new Object[] { "Distance", Integer.class}},
-        { ".*: ([0-9]*)\" .*", new Object[] { "Distance", Integer.class}},
+//        { ".*([0-9]*)\" .*", new Object[] { "DistanceFromCollision", Integer.class}},
+        { "([0-9]*)\" .*", new Object[] { "DistanceFromCollision", Integer.class}},
+        { ".*: ([0-9]*)\" .*", new Object[] { "DistanceFromCollision", Integer.class}},
         { "Non-Combat Multiplier: ([0-9]*),.*", new Object[] { "NoncombatX", Integer.class}},
         { "Non-Combat \\(MPH\\).*",null}
     };
@@ -59,7 +59,7 @@ public class powerFlightconstant extends Power implements ChampionsConstants {
     // Cost Array - See Power.getCostArray()
     static private Object[][] costArray = {
 //        { "Base", BASE_COST, STATIC_RECONFIG, ZERO_RECONFIG, new Integer(10) },
-        { "Distance", GEOMETRIC_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(2), new Integer(1), new Integer(0), new Integer(0) },
+        { "DistanceFromCollision", GEOMETRIC_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(2), new Integer(1), new Integer(0), new Integer(0) },
         { "NoncombatX", LOGRITHMIC_COST, DYNAMIC_RECONFIG, ZERO_RECONFIG, new Integer(5), new Integer(2), new Integer(2), new Integer(2) }
     };
 
@@ -117,7 +117,7 @@ public class powerFlightconstant extends Power implements ChampionsConstants {
         // Determine the validity of the power configuration.  Read the parameters
         // from the parameterList, instead of directly from the ability, since the
         // Ability isn't configured yet.
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         
         // Check for the validity of the parameters that will be set.  If the parameters
@@ -164,7 +164,7 @@ public class powerFlightconstant extends Power implements ChampionsConstants {
     
  /*   public int calculateCPCost(Ability ability) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         
         int cost = 10;
@@ -181,7 +181,7 @@ public class powerFlightconstant extends Power implements ChampionsConstants {
     
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         return distance.toString() + "\" Flight (NC: " + Integer.toString( distance.intValue() * NoncombatX.intValue() ) + "\")";
     }

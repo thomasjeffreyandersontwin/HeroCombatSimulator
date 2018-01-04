@@ -34,7 +34,7 @@ public enum ATColumn {
     DC_EXPLINATION_COLUMN("Explanation", 400, String.class),
     MESSAGE_COLUMN("Message", 400, String.class), // Message column for battle messages
     EXPLOSION_SLIDER("", 200, Integer.class),
-    EXPLOSION_DISTANCE("Distance", 30, Integer.class),
+    EXPLOSION_DISTANCE("DistanceFromCollision", 30, Integer.class),
     VPP_CURRENT_ABILITY_STATUS("Status", 120, String.class),
     VPP_ABILITY_ACTION("Action", 140, String.class),
     VPP_ADDITIONAL_INFO("Info", 200, String.class),

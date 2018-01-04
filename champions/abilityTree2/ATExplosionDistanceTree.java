@@ -23,7 +23,7 @@ public class ATExplosionDistanceTree extends ATTree {
     
     protected void setupModel() {
         ATNode root = new ATExplosionDistanceRoot(null, null, null);
-        ATModel model = new ATExplosionDistanceModel(root, "Explosion Distance");
+        ATModel model = new ATExplosionDistanceModel(root, "Explosion DistanceFromCollision");
         setTreeTableModel(model);
         root.setTree(this);
     }

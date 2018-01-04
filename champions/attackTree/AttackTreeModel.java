@@ -44,7 +44,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.Attack.SingleAttackAdapter;
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.AttackTargetCommand;
 import VirtualDesktop.Attack.AreaEffect.AreaEffectAttackAdapter;
 import VirtualDesktop.Attack.AreaEffect.MultAttackAdapter;
 import VirtualDesktop.Attack.Autofire.AutofireAttackAdapter;
@@ -333,11 +333,11 @@ implements TreeModel {
         if ( attackTreePanel != null ) attackTreePanel.setProcessing(true);
         
         while(!accepted) {
+        	int x=0;
             node = advanceNode();
             if ( node != null ) {
                 setFinished(false);
                 accepted = activateNode(node, manualOverrideNode);
-                battleEvent = node.getBattleEvent();
             }
             else {
                 setFinished(true);
@@ -367,9 +367,9 @@ implements TreeModel {
         			a = new SingleAttackAdapter(null, null);
         		}
         		a.battleEvent = battleEvent;
-    			JSONObject att = a.ExportBasedOnBattleEvent(AttackSingleTargetCommand.Token, battleEvent);
+    			JSONObject att = a.ExportBasedOnBattleEvent(AttackTargetCommand.Token, battleEvent);
     			a.WriteJSON(att);
-    			//AttackSingleTargetCommand.Token=null;
+    			//AttackTargetCommand.Token=null;
             }
         	}catch(Exception e) {
         		e.printStackTrace();
@@ -379,7 +379,7 @@ implements TreeModel {
     /** Advance the current node and return the next node in the tree.
      *
      */
-    private AttackTreeNode advanceNode() {
+    public AttackTreeNode advanceNode() {
         AttackTreeNode atn = getActiveNode();
         
         try {

@@ -45,7 +45,7 @@ implements ChampionsConstants {
     static final long serialVersionUID = 7766760921350027676L;
 
     static private Object[][] parameterArray = {
-        {"Distance","Ability.MOVEDISTANCE", Integer.class, new Integer(6), "Distance", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(1)},
+        {"DistanceFromCollision","Ability.MOVEDISTANCE", Integer.class, new Integer(6), "DistanceFromCollision", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(1)},
         {"NoncombatX","Power.NONCOMBATX", Integer.class, new Integer(2), "Non-Combat Multiplier", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(2)},
         {"Base","Power.ISBASE", Boolean.class, new Boolean(false), "Character's Base Running", BOOLEAN_PARAMETER, HIDDEN, ENABLED, NOTREQUIRED},
         {"AddsToBase","Power.ADDSTOBASE", Boolean.class, new Boolean(false), "Include Base Running", BOOLEAN_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
@@ -65,11 +65,11 @@ implements ChampionsConstants {
 
     // Import Patterns Definitions
     private static Object[][] patterns = {
-     //   { ".*\\(\\+.*\", ([0-9]*)\", .*", new Object[] { "Distance", Integer.class}},
+     //   { ".*\\(\\+.*\", ([0-9]*)\", .*", new Object[] { "DistanceFromCollision", Integer.class}},
       //  { "Non-Combat Multiplier: �([0-9]*),.*", new Object[] { "NoncombatX", Integer.class}},
      //   { "Non-Combat \\(MPH\\).*",null},
         //MC 5e
-        { ".*\\+([0-9]*).*", new Object[] { "Distance", Integer.class}},
+        { ".*\\+([0-9]*).*", new Object[] { "DistanceFromCollision", Integer.class}},
         { "Noncombat.*", null}
     };
     
@@ -108,7 +108,7 @@ implements ChampionsConstants {
         // Determine the validity of the power configuration.  Read the parameters
         // from the parameterList, instead of directly from the ability, since the
         // Ability isn't configured yet.
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         
         // Check for the validity of the parameters that will be set.  If the parameters
@@ -158,7 +158,7 @@ implements ChampionsConstants {
 
      public int calculateCPCost(Ability ability) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         boolean base = (Boolean)parameterList.getParameterValue("Base");
         
@@ -178,7 +178,7 @@ implements ChampionsConstants {
 
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         boolean base = (Boolean)parameterList.getParameterValue("Base");
         boolean addsToBase = (Boolean)parameterList.getParameterValue("AddsToBase");
@@ -206,7 +206,7 @@ implements ChampionsConstants {
     
     public int getMovementDistance(Ability ability) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
        // Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         boolean base = (Boolean)parameterList.getParameterValue("Base");
         boolean addsToBase = (Boolean)parameterList.getParameterValue("AddsToBase");

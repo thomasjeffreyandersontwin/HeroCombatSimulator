@@ -10,7 +10,7 @@ public class MoveCommand extends SimpleAbilityCommand {
 	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message, CharacterAdaptor character)
 			throws Exception {
 		String movementName = (String)message.get("Movement");
-		Long distance= (Long)message.get("Distance");
+		Long distance= (Long)message.get("DistanceFromCollision");
 		character.MoveByName(movementName, distance.intValue());
 		
 		if(AbortNextActionCommand.isAbortActivated==true) {

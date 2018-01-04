@@ -40,7 +40,7 @@ implements ChampionsConstants {
     static final long serialVersionUID = 7766760941350027456L;
     
     static private Object[][] parameterArray = {
-        {"Distance","Ability.MOVEDISTANCE", Integer.class, new Integer(10), "Distance", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
+        {"DistanceFromCollision","Ability.MOVEDISTANCE", Integer.class, new Integer(10), "DistanceFromCollision", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
         {"NoncombatX","Power.NONCOMBATX", Integer.class, new Integer(2), "Non-Combat Multiplier", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(2)},
         {"IncreasedRange","Power.INCREASEDRANGE", Integer.class, new Integer(1), "Increased Range Multiple", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(1)},
         {"FixedLocations","Power.FIXED", Integer.class, new Integer(0), "Fixed Locations", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(1)},
@@ -52,7 +52,7 @@ implements ChampionsConstants {
 
     // Cost Array - See Power.getCostArray()
     static private Object[][] costArray = {
-        { "Distance", GEOMETRIC_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(2), new Integer(1), new Integer(0), new Integer(0) },
+        { "DistanceFromCollision", GEOMETRIC_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(2), new Integer(1), new Integer(0), new Integer(0) },
         { "IncreasedRange", LOGRITHMIC_COST, DYNAMIC_RECONFIG, ZERO_RECONFIG, new Integer(5), new Integer(2), new Integer(1), new Integer(2) },
         { "FixedLocations", GEOMETRIC_COST, DYNAMIC_RECONFIG, ZERO_RECONFIG, new Integer(1), new Integer(1), new Integer(0), new Integer(0) },
         { "FloatingLocations", GEOMETRIC_COST, DYNAMIC_RECONFIG, ZERO_RECONFIG, new Integer(5), new Integer(1), new Integer(0), new Integer(0) },
@@ -81,9 +81,9 @@ implements ChampionsConstants {
     
     // Import Patterns Definitions
     private static Object[][] patterns = {
-        { "([0-9]*)\" (.*) \\(Long Range .*\\)", new Object[] { "Distance", Integer.class, "!Name", String.class }},
-        { "([0-9]*)\" .*", new Object[] { "Distance", Integer.class }},
-        { "Teleportation: ([0-9]*)\" .*", new Object[] { "Distance", Integer.class }},
+        { "([0-9]*)\" (.*) \\(Long Range .*\\)", new Object[] { "DistanceFromCollision", Integer.class, "!Name", String.class }},
+        { "([0-9]*)\" .*", new Object[] { "DistanceFromCollision", Integer.class }},
+        { "Teleportation: ([0-9]*)\" .*", new Object[] { "DistanceFromCollision", Integer.class }},
         { "Noncombat Movement \\(([0-9]*)\\):.*", new Object[] { "NoncombatX", Integer.class}},
         { "Noncombat \\(Miles Per Phase\\).*", null},
         { "Long Range:.*", null },
@@ -99,7 +99,7 @@ implements ChampionsConstants {
         { "Location: .*", null },
         { "(Position Shift:).*", new Object[] { "PositionShift", Boolean.class }},
         //hd
-        { "Teleportation ([0-9]*)\".*", new Object[] { "Distance", Integer.class }},
+        { "Teleportation ([0-9]*)\".*", new Object[] { "DistanceFromCollision", Integer.class }},
         { "(Position Shift).*", new Object[] { "PositionShift", Boolean.class }},
         { "Improved Noncombat Movement \\(x([0-9]*)\\).*", new Object[] { "NoncombatX", Integer.class}},
         { "x([0-9]*) Increased Mass", new Object[] { "MassMultiplier", Integer.class}},
@@ -141,7 +141,7 @@ implements ChampionsConstants {
         // Determine the validity of the power configuration.  Read the parameters
         // from the parameterList, instead of directly from the ability, since the
         // Ability isn't configured yet.
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer fixedlocation = (Integer)parameterList.getParameterValue("FixedLocations");
         Integer floatinglocation = (Integer)parameterList.getParameterValue("FloatingLocations");
         Integer noncombat2x = (Integer)parameterList.getParameterValue("NoncombatX");
@@ -190,7 +190,7 @@ implements ChampionsConstants {
     
 /*    /*//*) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         String noncombat2x = (String)parameterList.getParameterValue("Noncombat2X");
         
         int cost = 20;
@@ -202,7 +202,7 @@ implements ChampionsConstants {
 */    
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer noncombat2x = (Integer)parameterList.getParameterValue("NoncombatX");
         return distance.toString() + "\" Teleport";
     }

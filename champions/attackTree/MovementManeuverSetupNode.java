@@ -37,7 +37,7 @@ public class MovementManeuverSetupNode extends DefaultAttackTreeNode{
             Target source = battleEvent.getSource();
             boolean fullPhase = source.hasFullPhase();
             
-            attackTreePanel.setInstructions( "Set the Distance and Velocity of the Movement...");
+            attackTreePanel.setInstructions( "Set the DistanceFromCollision and Velocity of the Movement...");
             attackTreePanel.showInputPanel(this, MovementManeuverSetupPanel.getDefaultPanel(battleEvent, fullPhase));
         }
         

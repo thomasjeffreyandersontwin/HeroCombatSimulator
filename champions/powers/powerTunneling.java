@@ -44,7 +44,7 @@ public class powerTunneling extends Power implements ChampionsConstants {
     static final long serialVersionUID = 2002072230347033561L;
     
     static private Object[][] parameterArray = {
-        {"Distance","Ability.MOVEDISTANCE", Integer.class, new Integer(1), "Tunneling Distance", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(1)},
+        {"DistanceFromCollision","Ability.MOVEDISTANCE", Integer.class, new Integer(1), "Tunneling DistanceFromCollision", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(1)},
         {"ExtraDEF","Ability.EXTRADEF", Integer.class, new Integer(0), "Extra DEF", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(0)},
         {"TotalDEF","Ability.TOTALDEF", Integer.class, new Integer(0), "Total DEF", INTEGER_PARAMETER, HIDDEN, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(0)},
         {"NoncombatX","Power.NONCOMBATX", Integer.class, new Integer(2), "Non-Combat Multiplier", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "MINIMUM", new Integer(2)},
@@ -54,7 +54,7 @@ public class powerTunneling extends Power implements ChampionsConstants {
     // Import Patterns Definitions
     private static Object[][] patterns = {
         { "Tunneling \\(([0-9]*)\" through DEF ([0-9]*).*",
-                  new Object[] { "Distance", Integer.class, "TotalDEF", Integer.class}},
+                  new Object[] { "DistanceFromCollision", Integer.class, "TotalDEF", Integer.class}},
                   { "Non-Combat Multiplier: ([0-9]*),.*", new Object[] { "NoncombatX", Integer.class}},
                   { "Non-Combat \\(MPH\\).*",null},
                   { "(Tunnels: Not Left Behind.*)", new Object[] { "FillIn", Boolean.class}},
@@ -64,7 +64,7 @@ public class powerTunneling extends Power implements ChampionsConstants {
     // Cost Array - See Power.getCostArray()
     static private Object[][] costArray = {
         //        { "Base", BASE_COST, STATIC_RECONFIG, ZERO_RECONFIG, new Integer(10) },
-        { "Distance", GEOMETRIC_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(5), new Integer(1), new Integer(0), new Integer(0) },
+        { "DistanceFromCollision", GEOMETRIC_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(5), new Integer(1), new Integer(0), new Integer(0) },
         //        { "TotalDEF", GEOMETRIC_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(0), new Integer(1), new Integer(0), new Integer(0) },
         { "ExtraDEF", GEOMETRIC_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(3), new Integer(1), new Integer(0), new Integer(0) },
         { "NoncombatX", LOGRITHMIC_COST, DYNAMIC_RECONFIG, ZERO_RECONFIG, new Integer(5), new Integer(2), new Integer(2), new Integer(2) },
@@ -131,7 +131,7 @@ public class powerTunneling extends Power implements ChampionsConstants {
         // Determine the validity of the power configuration.  Read the parameters
         // from the parameterList, instead of directly from the ability, since the
         // Ability isn't configured yet.
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         Integer totalDEF = (Integer)parameterList.getParameterValue("TotalDEF");
         
@@ -185,7 +185,7 @@ public class powerTunneling extends Power implements ChampionsConstants {
     
  /*   public int calculateCPCost(Ability ability) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
   
         int cost = 10;
@@ -197,7 +197,7 @@ public class powerTunneling extends Power implements ChampionsConstants {
     
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("Distance");
+        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
         Integer extraDEF = (Integer)parameterList.getParameterValue("ExtraDEF");
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         boolean fillIn = (Boolean)parameterList.getParameterValue("FillIn");

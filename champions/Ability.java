@@ -85,7 +85,7 @@ import javax.swing.WindowConstants;
  * Ability.NAME         Name of the Ability Changed.<P>
  * Ability.ENDCOST      The ENDCost of Ability changed, based upon the current configuration of the Ability.<P>
  * Ability.DESCRIPTION  The Description of the Ability has changed.  HTML description will also be modified.<P>
- * Ability.MOVEDISTANCE The Distance available for a movement power changed. <B>NOT IMPLEMENTED.</B><P>
+ * Ability.MOVEDISTANCE The DistanceFromCollision available for a movement power changed. <B>NOT IMPLEMENTED.</B><P>
  * Ability.OCVBONUS     The OCV modifier imparted by using the ability changed. <B>NOT IMPLEMENTED.</B><P>
  * Ability.DCVBONUS     The DCV modifier imported by using the ability changed. <B>NOT IMPLEMENTED.</B><P>
  * Ability.CPCOST       The final CP cost of the ability, as it is currently configured, changed.<P>
@@ -399,12 +399,19 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
     
     public int DamageDiceOverride=0;
     public double getDamageDie(Ability maneuver) {
-
-        if ( Battle.debugLevel >= 4 ) System.out.println( "Adjusting Dice for: " + getName() );
+    	BattleEvent be=null;	
+        return getDamageDieForBattleEvent(be, maneuver);
+    }
+    
+    public double getDamageDieForBattleEvent(BattleEvent be, Ability maneuver)
+    {
+    	if ( Battle.debugLevel >= 4 ) System.out.println( "Adjusting Dice for: " + getName() );
         Power power = getPower();
         Target source = getSource();
         if ( power != null ) {
-            BattleEvent be = new BattleEvent( this );
+        	if(be==null) {
+        		be = new BattleEvent( this );
+        	}
             be.setSource(source);
             if ( maneuver != null ) {
                 be.setManeuver(maneuver);

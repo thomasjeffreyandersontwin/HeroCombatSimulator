@@ -21,7 +21,7 @@ import javax.swing.UIManager;
  * @version
  */
 public class TargetPerceptionsNode extends DefaultAttackTreeNode {
-    
+	public static TargetPerceptionsNode Node;
     
     /** Store Target Selected for this node */
     protected Target target;
@@ -33,6 +33,7 @@ public class TargetPerceptionsNode extends DefaultAttackTreeNode {
     public TargetPerceptionsNode(String name) {
         this.name = name;
         icon = UIManager.getIcon("AttackTree.perceptionsIcon");
+        Node=this;
     }
     
     public boolean activateNode(boolean manualOverride) {

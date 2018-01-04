@@ -867,6 +867,11 @@ implements ChampionsConstants {
      * If the specified referenceNumber/targetGroup combination does not exist, -1 is return
      * to indicate failure.
      */
+     
+    public int getTargetIndex(Target target)
+    {
+    	return  findIndexed("Target", "TARGET", target);
+    }
     
     public int getTargetIndex(int referenceNumber, String targetGroup) {
         int index;

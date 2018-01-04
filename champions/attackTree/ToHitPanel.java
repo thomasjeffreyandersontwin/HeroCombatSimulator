@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  */
 public class ToHitPanel extends JPanel implements AttackTreeInputPanel, ChampionsConstants {
     /** Stores the static, default toHit panel. */
-    static private ToHitPanel ad = null;
+    public static  ToHitPanel ad = null;
     
     private AttackTreePanel atip = null;
     
@@ -29,6 +29,7 @@ public class ToHitPanel extends JPanel implements AttackTreeInputPanel, Champion
         bg.add(hitRollButton);
         bg.add(forceHitButton);
         bg.add(forceMissButton);
+        
     }
     
     static public ToHitPanel getToHitPanel(BattleEvent be, Target target, String targetGroup, int targetReferenceNumber) {

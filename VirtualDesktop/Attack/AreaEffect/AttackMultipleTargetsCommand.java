@@ -4,9 +4,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.Attack.SingleAttackAdapter;
-import VirtualDesktop.Attack.AttackSingleTargetCommand;
+import VirtualDesktop.Attack.AttackTargetCommand;
 
-public class AttackMultipleTargetsCommand extends  AttackSingleTargetCommand{
+public class AttackMultipleTargetsCommand extends  AttackTargetCommand{
 
 		
 	protected void EnterAttackForAllTargets(JSONObject message, MultAttackAdapter attack) {
@@ -14,7 +14,7 @@ public class AttackMultipleTargetsCommand extends  AttackSingleTargetCommand{
 		for (int i = 0; i < targets.size(); i++) {
 			JSONObject targetObject =(JSONObject) targets.get(i);
 			String targetName =  (String)targetObject.get("Target");
-			InvokeSingleAttackWithoutKnockback(targetObject, attack, targetName);
+			//InvokeSingleAttackWithoutKnockback(targetObject, attack, targetName);
 			
 		}
 		attack.StartSelectingTargets();
@@ -32,14 +32,14 @@ public class AttackMultipleTargetsCommand extends  AttackSingleTargetCommand{
 			//attack.ConfirmAttack();
 //			attack.ConfirmAttack();
 		}
-		AttackSingleTargetCommand.AttackInProgress=null;
+		AttackTargetCommand.AttackInProgress=null;
 	}
 	
 	public void EnterKnockbackForSpecificTarget(MultAttackAdapter attack, JSONObject message, int i) {
 		
 		JSONObject potCol = (JSONObject)message.get("Potential Collision");
 		if (potCol!=null) {
-			Long distanceToCollision = (Long) potCol.get("Distance From Target");
+			Long distanceToCollision = (Long) potCol.get("DistanceFromCollision From Target");
 			String knockbackTargetName = (String) potCol.get("Obstacle");
 			if(knockbackTargetName!=null) {
 				int knockbackDistance = attack.getKnockbackDistanceForTarget(i);

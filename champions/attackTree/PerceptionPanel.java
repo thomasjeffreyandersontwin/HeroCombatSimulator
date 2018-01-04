@@ -504,7 +504,10 @@ public class PerceptionPanel extends JPanel
         
         updateCVModifier();
         ActivationInfo ai = battleEvent.getActivationInfo();
-        int tindex = ai.getSourceSenseIndex( getTarget() );
+        
+        //int tindex = ai.getSourceSenseIndex( getTarget() );
+        
+        int tindex =ai.getSourceSenseIndex(ai.getSource());
         if ( tindex != -1 ) {
             ai.setSourcesSense(tindex, selectedSense);
         }

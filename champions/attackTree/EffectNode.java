@@ -27,6 +27,7 @@ public class EffectNode extends DefaultAttackTreeNode {
         this.name = name;
         icon = UIManager.getIcon("AttackTree.diceIcon");
         // setVisible(false);
+        Node = this;
     }
     
     public boolean activateNode(boolean manualOverride) {
@@ -243,7 +244,7 @@ public class EffectNode extends DefaultAttackTreeNode {
         // updateChildren();
     }
     
-    private void checkDice() {
+    public void checkDice() {
         if ( battleEvent != null ) {
             IndexIterator ii = battleEvent.getDiceIterator(getTargetGroup());
             

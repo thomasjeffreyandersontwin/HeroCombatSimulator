@@ -17,7 +17,7 @@ public class powerGlidingAdapter extends AbstractPowerXMLAdapter implements Powe
     
     private static String XMLID = "GLIDING";
     private static String[][] translationArray = {
-        { "LEVELS", "Distance" },
+        { "LEVELS", "DistanceFromCollision" },
         { "ADDER(XMLID=POSITIONSHIFT)", "PositionShift", "trueSpecial" },
         { "ADDER(XMLID=IMPROVEDNONCOMBAT).LEVELS", "NoncombatX"}
     };

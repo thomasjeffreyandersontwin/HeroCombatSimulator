@@ -17,7 +17,7 @@ public class powerTeleportAdapter extends AbstractPowerXMLAdapter implements Pow
     
     private static String XMLID = "TELEPORTATION";
     private static String[][] translationArray = {
-        { "LEVELS", "Distance" },
+        { "LEVELS", "DistanceFromCollision" },
         { "ADDER(XMLID=POSITIONSHIFT)", "PositionShift", "trueSpecial" },
         { "ADDER(XMLID=IMPROVEDNONCOMBAT).LEVELS", "NoncombatX" },
         { "ADDER(XMLID=INCREASEDMASS).LEVELS", "MassMultiplier" }

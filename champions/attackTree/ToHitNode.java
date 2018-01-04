@@ -46,6 +46,7 @@ public class ToHitNode extends DefaultAttackTreeNode {
         this.name = name;
         icon = UIManager.getIcon("AttackTree.toHitIcon");
         Node = this;
+        
     }
     
     /**
