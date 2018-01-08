@@ -37,13 +37,13 @@ public class AttackAreaEffectTargetsCommand extends AttackMultipleTargetsCommand
 		{
 			centerTargetString = "Hex";	
 		}
-		attack.StartSelectingTargets();
+	//	attack.StartSelectingTargets();
 		//InvokeSIngleAttack(message, attack, centerTargetString);
 		
 		
-		EnterAttackForAllTargets(message, attack);
+	//	EnterAttackForAllTargets(message, attack);
 		
-		attack.Export(this.Token);
+	//	attack.Export(this.Token);
 
 	
 		

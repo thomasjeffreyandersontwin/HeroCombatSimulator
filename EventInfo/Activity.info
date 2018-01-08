@@ -5,8 +5,8 @@ character:
 	model:
 	MaxStun:98
 	MaxEndurance:70
-	CurrStun:69
-	CurrEndurance:31
+	CurrStun:98
+	CurrEndurance:28
 Activate: True
 
 	Crowd: 

@@ -1000,6 +1000,7 @@ public class BattleEngine extends Thread
 
         for (i = 0; i < count; i++) {
             deftype = effect.getSubeffectDefenseType(i);
+            
             defspecial = effect.getSubeffectDefenseSpecial(i);
 
             Object versus;

@@ -70,6 +70,9 @@ public class DesktopCommandFactory {
 		if(type.equals("ConfirmAttack") ){
 			return new ConfirmAttack();
 		}
+		if(type.equals("Attack") ){
+			return new AttackTargetCommand();
+		}
 		
 		return null;
 		

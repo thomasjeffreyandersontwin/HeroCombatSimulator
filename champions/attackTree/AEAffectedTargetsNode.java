@@ -15,11 +15,12 @@ import champions.exception.BattleEventException;
  * @version
  */
 public class AEAffectedTargetsNode extends DefaultAttackTreeNode {
-    
+	public static AEAffectedTargetsNode AENode;
     /** Creates new AEAffectedTargetsNode */
     public AEAffectedTargetsNode(String name) {
         this.name = name;
         setVisible(true);
+        AENode = this;
     }
     
     public boolean activateNode(boolean manualOverride) {

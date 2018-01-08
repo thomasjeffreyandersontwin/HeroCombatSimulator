@@ -57,6 +57,8 @@ public class SingleTargetNode extends DefaultAttackTreeNode
     
     /** Hold the primary Target number, if this is a primary target. */
     private int primaryTargetNumber = -1;
+
+	public SelectTargetPanel stp;
     
     /** Creates new SingleTargetNode */
     public SingleTargetNode(String name) {
@@ -167,7 +169,7 @@ public class SingleTargetNode extends DefaultAttackTreeNode
 //                }
                 source = getSource();
                 
-                SelectTargetPanel stp = SelectTargetPanel.getSelectTargetPanel(getBattleEvent(), getTargetGroup(), mode, target != null, source, filter);
+                stp = SelectTargetPanel.getSelectTargetPanel(getBattleEvent(), getTargetGroup(), mode, target != null, source, filter);
                 if ( additionalNotes != null ) stp.setAdditionalNotes(additionalNotes);
                 stp.addTargetListener(this);
                 if(attackTreePanel==null) {

@@ -24,7 +24,6 @@ public class MultAttackAdapter extends SingleAttackAdapter {
 
 	public MultAttackAdapter(String name, CharacterAdaptor character) {
 		super(name, character);
-		// TODO Auto-generated constructor stub
 	}
 	
 	private KnockbackNode knockBackNode = null;
@@ -39,11 +38,6 @@ public class MultAttackAdapter extends SingleAttackAdapter {
 		SetTargetByName(knockbackTargetName);
 	}
 	
-	
-	
-	
-	
-
 	private Map<String, CharacterAdaptor> Targets = new HashMap<String, CharacterAdaptor>();
 	public void AddTargetByName(String targetName) {
 		Targets.put(targetName, SetTargetByName(targetName));

@@ -1754,11 +1754,47 @@ public class Effect extends DetailList implements ChampionsConstants, Serializab
         while (ii.hasNext()) {
             int index = ii.nextIndex();
             if (getSubeffectEffectType(index).equals(DAMAGE) && getSubeffectVersusObject(index).equals("STUN")) {
-                totalBody += Math.round(getSubeffectValue(index));
+               totalBody += Math.round(getSubeffectValue(index));
             }
         }
+        
         return totalBody;
     }
+    
+    
+    /** Search Effect for Body Damage and returns the total amount in all subeffects.
+    *
+    */
+   public int getTotalAdjustedBodyDamage() {
+       int totalBody = 0;
+
+       IndexIterator ii = getSubeffectIterator();
+       while (ii.hasNext()) {
+           int index = ii.nextIndex();
+           if (getSubeffectEffectType(index).equals(DAMAGE) && getSubeffectVersusObject(index).equals("BODY")) {
+               totalBody += Math.round(getSubeffectAdjustedAmount(index));
+           }
+       }
+       return totalBody;
+   }
+
+   /** Search Effect for Stun Damage and returns the total amount in all subeffects.
+    *
+    */
+   public int getTotalAdjustedStunDamage() {
+       int totalBody = 0;
+
+       IndexIterator ii = getSubeffectIterator();
+       while (ii.hasNext()) {
+           int index = ii.nextIndex();
+           if (getSubeffectEffectType(index).equals(DAMAGE) && getSubeffectVersusObject(index).equals("STUN")) {
+              // totalBody += Math.round(getSubeffectValue(index));
+           	totalBody += Math.round(getSubeffectAdjustedAmount(index));
+           }
+       }
+       
+       return totalBody;
+   }
 
     public AttackTreeNode preactivate(BattleEvent be, Ability ability) {
         return null;

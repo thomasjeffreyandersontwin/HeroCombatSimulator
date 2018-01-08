@@ -556,7 +556,13 @@ public class Target extends DetailList implements Comparable, ChampionsConstants
     }
     
     public int getCurrentStat(String stat) {
-        return getCharacteristic(stat).getCurrentStat();
+    	if( getCharacteristic(stat)!=null)
+    	{
+    		return getCharacteristic(stat).getCurrentStat();	
+    	}
+    	else
+    		return -99;
+        
         //        Double offset = getDoubleValue(stat + ".CURRENTOFFSET");
         //        if ( offset == null ) offset = new Double(0);
         //

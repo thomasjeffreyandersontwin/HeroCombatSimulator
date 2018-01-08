@@ -7,14 +7,14 @@ character:
 	MaxStun:98
 	MaxEndurance:70
 	CurrStun:98
-	CurrEndurance:0
+	CurrEndurance:16
 type: single
 target: 
 	name: Ogun
 
 	MaxStun:27
 	MaxEndurance:36
-	CurrStun:-170
+	CurrStun:-52
 	CurrEndurance:46
 	Roster:
 		name:Unnamed
@@ -22,3 +22,11 @@ result: hit
 Effects: 
 	- Stunned
 	- Unconsious
+Knockback
+	- 
+		target:
+			name:Ogun
+			Roster:
+				name:Unnamed
+		distance:17
+		effect:knockedback

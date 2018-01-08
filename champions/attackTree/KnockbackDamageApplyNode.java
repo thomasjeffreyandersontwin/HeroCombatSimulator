@@ -7,6 +7,7 @@ package champions.attackTree;
 
 import champions.ActivationInfo;
 import champions.BattleEngine;
+import champions.Characteristic;
 import champions.Dice;
 import champions.Effect;
 import champions.Preferences;
@@ -275,7 +276,10 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
             while (ii.hasNext()) {
                 int tindex = ii.nextIndex();
                 Target aTarget = (Target) ai.getIndexedValue(tindex, "Target", "TARGET");
-
+                
+                //jeff
+                targetIndex = ai.getTargetIndex(aTarget);
+                
                 if (dice != null && aTarget == sourceTarget && (collisionOccurred || breakfallSuccessful == false)) {
                     // Always hit the sourceTarget since he will always take the damage
                     // Remember, the damage die was adjusted previously, so this should be
@@ -291,8 +295,24 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
 
                         battleEvent.addBattleMessage(new KnockbackSummaryMessage(sourceTarget, "collided with " + aTarget.getName()));
                     }
-
+                    
+                    //jeff massive hack if knockback already applied, reverse the damage, then re-apply omg
+                    //why do i have to do this
+                    k = battleEvent.getDamageEffect(tindex);
+                    if(k!=null && k.getTotalAdjustedStunDamage() > 0)
+                    {
+                    	Target t = battleEvent.getActivationInfo().getTarget(tindex);
+                    	Characteristic c =  t.getCharacteristic("STUN");
+                    
+                    	int curr = t.getCurrentStat("STUN");
+                    	if(curr + k.getTotalAdjustedStunDamage() > t.getStartingStat("STUN"))
+                    		t.setCurrentStat("STUN", (int)t.getStartingStat("STUN"));
+                    	else
+                    		t.setCurrentStat("STUN", curr + k.getTotalAdjustedStunDamage());
+                    	
+                    }
                     k = new effectKnockback(distance);
+                    battleEvent.removeKnockbackDamageEffect(tindex);
                     battleEvent.addKnockbackDamageEffect(k,targetIndex);
                     
                     // Add Effects
@@ -308,7 +328,7 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
                     try {
                         int targetReferenceNumber = ai.getTargetReferenceNumber(tindex);
                         BattleEngine.applyEffectToTarget(battleEvent, targetReferenceNumber, getTargetGroup(), k, true);
-
+                    
 
                     } catch (BattleEventException bee) {
                         getModel().setError(bee);

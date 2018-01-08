@@ -267,7 +267,7 @@ public class ToHitNode extends DefaultAttackTreeNode {
             int tindex = ai.getTargetIndex(targetReferenceNumber, getTargetGroup());
             
             String hitmode = ai.getIndexedStringValue(tindex, "Target", "HITMODE");
-            if ( hitmode.equals(USEDICE) ) {
+            if ( hitmode !=null && hitmode.equals(USEDICE) ) {
                 Dice d = (Dice)ai.getIndexedValue(tindex, "Target", "TOHITDIE");
                 if ( d == null ) {
                     requiresInput = true;

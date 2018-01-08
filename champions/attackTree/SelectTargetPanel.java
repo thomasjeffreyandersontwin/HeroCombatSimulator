@@ -582,7 +582,11 @@ public class SelectTargetPanel extends JPanel implements MouseListener, AttackTr
     }
     
     public void SelectTarget(Target t, boolean preset) {
-    	if(t!= SingleTargetNode.Node.getTarget()) {
+    	if(SingleTargetNode.Node==null) {
+    		new SingleTargetNode("");
+    	}
+    	if(SingleTargetNode.Node!=null && t!= SingleTargetNode.Node.getTarget()) {
+    		
     		fireTargetingEvent( t , preset);
     		//jeff
     		atip.advanceNode();

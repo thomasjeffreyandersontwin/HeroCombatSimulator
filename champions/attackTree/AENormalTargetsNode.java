@@ -22,6 +22,7 @@ public class AENormalTargetsNode extends DefaultAttackTreeNode {
     public AENormalTargetsNode(String name) {
         this.name = name;
         setVisible(false);
+        Node = this;
     }
     
     public boolean activateNode(boolean manualOverride) {

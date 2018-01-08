@@ -15,12 +15,13 @@ import champions.battleMessage.ActivateAbilityMessageGroup;
  * @version
  */
 public class ProcessActivateRootNode extends DefaultAttackTreeNode {
-    
+	public static  ProcessActivateRootNode PNode;
     /** Creates new ProcessActivateRoot */
     public ProcessActivateRootNode(String name, BattleEvent be) {
         super();
         this.name = name;
         setBattleEvent(be);
+        PNode = this;
         
         //setVisible(false);
     }

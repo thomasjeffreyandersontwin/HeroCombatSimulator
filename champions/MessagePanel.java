@@ -53,6 +53,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import VirtualDesktop.Attack.PhysicalObjectAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 
 /**
@@ -910,6 +911,11 @@ public class MessagePanel extends JPanel
             			 
             			 
 		    			Target t = new CharacterAdaptor(targetName).target; 
+		    			if(t==null) {
+		    				
+		    				t = new PhysicalObjectAdapter(targetName).target;
+		    			}
+		    			
 		    			if((t.stunned==true ||t.isUnconscious()==true) && message.contains(" STUN.")) {
 		    				g.setColor( Color.RED);
 		    				if(message.contains("and is ")) {

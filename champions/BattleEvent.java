@@ -1194,7 +1194,7 @@ public class BattleEvent extends DetailList {
             else {
                 addMessage(message, MSG_NOTICE);
             }
-	         VirtualDesktop.Legacy.MessageExporter.exportMessage(message,messageGroup);
+	         //VirtualDesktop.Legacy.MessageExporter.exportMessage(message,messageGroup);
         }
     }
     
@@ -3270,6 +3270,10 @@ public class BattleEvent extends DetailList {
 	public void removeDamageEffect( int tindex) {
 		_damageEffects.remove(tindex);
 		
+	}
+	public int getDamageEffectCount()
+	{
+		return _damageEffects.size();
 	}
 
 	Map<Integer, Effect> _knockbackDamageEffects = new HashMap<Integer, Effect>();

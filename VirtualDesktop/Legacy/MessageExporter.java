@@ -338,18 +338,19 @@ public class MessageExporter {
 			
 			Characteristic stat = t.getCharacteristic("STUN");
 			
+			if( t.getCharacteristic("STUN")!=null &&  t.getCharacteristic("STUN")!=null )
+			{
+				Integer CurrStun= t.getCurrentStat("STUN");
+				Integer MaxStun = t.getCharacteristic("STUN").getBaseStat();
 			
-
-			Integer CurrStun= t.getCurrentStat("STUN");
-			Integer MaxStun = t.getCharacteristic("STUN").getBaseStat();
-			
-			Integer CurrEndurance= t.getCurrentStat("END");
-			Integer MaxEndurance = t.getCharacteristic("END").getBaseStat();
-			
-			character=character+ "\r\n\tMaxStun:" + MaxStun;
-			character=character+ "\r\n\tMaxEndurance:" + MaxEndurance;
-			character=character+ "\r\n\tCurrStun:" + CurrStun;
-			character=character+ "\r\n\tCurrEndurance:" + CurrEndurance;
+				Integer CurrEndurance= t.getCurrentStat("END");
+				Integer MaxEndurance = t.getCharacteristic("END").getBaseStat();
+				
+				character=character+ "\r\n\tMaxStun:" + MaxStun;
+				character=character+ "\r\n\tMaxEndurance:" + MaxEndurance;
+				character=character+ "\r\n\tCurrStun:" + CurrStun;
+				character=character+ "\r\n\tCurrEndurance:" + CurrEndurance;
+			}
 			return character;
 		}
 		else{
