@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,10 +24,7 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 	Roster roster;
 	AttackAdapter attack;
 
-	@BeforeAll
-	public static void startHCS() {
-		CombatSimulator.main(null);
-	}
+	
 	
 	PhysicalObjectAdapter door;
 	PhysicalObjectAdapter lock ;	
@@ -34,6 +32,7 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 	
 	@BeforeEach
 	void RosterHasFourCharactersLoaded() {
+		
 		attacker = new CharacterAdaptor(System.getProperty("user.dir") + "\\eventinfo\\testdata\\Pre-Emptive Strike\\Pre-Emptive Strike");
 		defender1 = new CharacterAdaptor(System.getProperty("user.dir") + "\\eventinfo\\testdata\\Spyder\\Spyder");
 		defender2 = new CharacterAdaptor(System.getProperty("user.dir") + "\\eventinfo\\testdata\\Saviour\\Saviour");
@@ -46,13 +45,24 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 		pot = PhysicalObjectAdapter.newObjectFromPresests("Chamber pot");	
 		
 		roster = Battle.currentBattle.findRoster("Unnamed");	
-		//roster.add(attacker.target);
+		
+		
+		
+		
+		try {
+			Battle.currentBattle.setStopped(true);
+			Thread.sleep(500);
+			roster.removeAll();
+			Thread.sleep(500);
+		}
+		catch (InterruptedException e){}
+		roster.add(attacker.target);
 		roster.add(defender1.target);
 		roster.add(defender2.target);
 		roster.add(door.target);
 		roster.add(lock.target);
 		roster.add(pot.target);
-		//roster.add(defender3.target);
+		roster.add(defender3.target);
 			
 		try {
 			Thread.sleep(500);
@@ -79,7 +89,7 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 		for(int i=0 ; i< individualResults.size();i++)
 		{
 			AttackResultAdapter targetedResult = individualResults.get(i);
-			AttackTarget targetedAttack = attack.getAttackTarget(i);
+			AttackTarget targetedAttack = attack.getIndividualAttackTarget(i);
 			CharacterAdaptor defender = targetedAttack.getDefender();
 			assertAttackHit(targetedAttack, targetedResult);
 			assertAttackDamage(targetedResult, defender);
@@ -95,9 +105,9 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 		attack.targetDefender(defender2);
 		attack.targetDefender(defender3);
 		
-		for(int i=0 ; i< attack.getAttackTargetCount();i++)
+		for(int i=0 ; i< attack.getCountOfIndividualAttackTarget();i++)
 		{
-				AttackTarget attackTarget = attack.getAttackTarget(i);
+				AttackTarget attackTarget = attack.getIndividualAttackTarget(i);
 				attackTarget.ForceHit();
 		}
 		return attack;
@@ -112,9 +122,9 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 		attack.changeAttackTargetAt(1,defender3);
 		attack.changeAttackTargetAt(2,defender1);
 		
-		assertEquals(defender2.target, attack.getAttackTarget(0).getTarget());
-		assertEquals(defender3.target, attack.getAttackTarget(1).getTarget());
-		assertEquals(defender1.target, attack.getAttackTarget(2).getTarget());
+		assertEquals(defender2.target, attack.getIndividualAttackTarget(0).getTarget());
+		assertEquals(defender3.target, attack.getIndividualAttackTarget(1).getTarget());
+		assertEquals(defender1.target, attack.getIndividualAttackTarget(2).getTarget());
 		
 	}
 	
@@ -125,9 +135,9 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 		AreaEffectAttackAdapter attack = targetAllDefendersWithAreaAttack();
 		
 		//act
-		attack.getAttackTarget(0).addObstruction(door);
-		attack.getAttackTarget(1).addObstruction(lock);
-		attack.getAttackTarget(2).addObstruction(pot);
+		attack.getIndividualAttackTarget(0).addObstruction(door);
+		attack.getIndividualAttackTarget(1).addObstruction(lock);
+		attack.getIndividualAttackTarget(2).addObstruction(pot);
 		
 		AreaEffectAttackResultAdapter result = attack.completeAttack();
 		
@@ -144,11 +154,11 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 		//arrange
 		AreaEffectAttackAdapter attack = targetAllDefendersWithAreaAttack();
 	
-		attack.Process();
+		//attack.Process();
 		//act
-		attack.getAttackTarget(0).placeObjectDirectlyBehindDefender(door, 3);
-		attack.getAttackTarget(1).placeObjectDirectlyBehindDefender(lock, 3);
-		attack.getAttackTarget(2).placeObjectDirectlyBehindDefender(pot, 4);
+		attack.getIndividualAttackTarget(0).placeObjectDirectlyBehindDefender(door, 3);
+		attack.getIndividualAttackTarget(1).placeObjectDirectlyBehindDefender(lock, 3);
+		attack.getIndividualAttackTarget(2).placeObjectDirectlyBehindDefender(pot, 4);
 		
 		AreaEffectAttackResultAdapter r = attack.completeAttack();
 				
@@ -159,7 +169,24 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 		
 	}
 	
-	public void ToHItModifiersAreSetForAttack_ToHitRollForAttackisModified() {}
+	@Test
+	public void ToHItModifiersAreSetForAllAttackTargets_ToHitRollForAttackisModifiedCorrectlyForEachAttack() 
+	{
+		//arrange
+		AreaEffectAttackAdapter attack = targetAllDefendersWithAreaAttack();
+		
+		for(int i=0; i< attack.getCountOfIndividualAttackTarget(); i++)
+		{
+			int toHitRoll=attack.getToHitRoll();
+			int OCV = attack.getAttackerOCV();
+			AttackTarget individualAttack = attack.getIndividualAttackTarget(i);
+			changeModifersAndAssertToHitRollHasChanged(individualAttack);
+			AttackTarget attackTarget = attack.getIndividualAttackTarget(i);
+		}
+			
+		
+		
+	}
 	
 	public void targetSenseChangedForAttacker_ToHitRollForAttackisModified() {}
 	
@@ -173,5 +200,20 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 	{
 	}
 
-
+	@AfterEach
+	public void clearRoster()
+	{
+		
+		Battle.currentBattle.setStopped(true);
+		roster.remove(attacker.target);
+		roster.remove(defender1.target);
+		roster.remove(defender2.target);
+		roster.remove(defender3.target);
+		roster.remove(door.target);
+		roster.remove(lock.target);
+		roster.remove(pot.target);
+		
+		
+		
+	}
 }

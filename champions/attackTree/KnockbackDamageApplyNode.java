@@ -290,7 +290,8 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
                 }
 
                 if (hit) {
-                    if (aTarget != sourceTarget) {
+                    if (aTarget != sourceTarget) 
+                    {
                         //battleEvent.addBattleMessage( new champions.battleMessage.LegacyBattleMessage(sourceTarget.getName() + " collided with " + target.getName() + " while being knocked back.", MSG_COMBAT)); // .addBattleMessage( new champions.battleMessage.LegacyBattleMessage(sourceTarget.getName() + " collided with " + target.getName() + " while being knocked back.", MSG_COMBAT)); // .addMessage(sourceTarget.getName() + " collided with " + target.getName() + " while being knocked back.", MSG_COMBAT);
 
                         battleEvent.addBattleMessage(new KnockbackSummaryMessage(sourceTarget, "collided with " + aTarget.getName()));
@@ -298,7 +299,7 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
                     
                     //jeff massive hack if knockback already applied, reverse the damage, then re-apply omg
                     //why do i have to do this
-                    k = battleEvent.getDamageEffect(tindex);
+                   /* k = battleEvent.getDamageEffect(tindex);
                     if(k!=null && k.getTotalAdjustedStunDamage() > 0)
                     {
                     	Target t = battleEvent.getActivationInfo().getTarget(tindex);
@@ -310,10 +311,14 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
                     	else
                     		t.setCurrentStat("STUN", curr + k.getTotalAdjustedStunDamage());
                     	
-                    }
+                    } */
                     k = new effectKnockback(distance);
+                    
+                    //jeff tindex to targetindex
                     battleEvent.removeKnockbackDamageEffect(tindex);
                     battleEvent.addKnockbackDamageEffect(k,targetIndex);
+                    
+                    
                     
                     // Add Effects
                     k.addDamageSubeffect("KBStun", "STUN", dice.getStun(), "PD", "NORMAL");

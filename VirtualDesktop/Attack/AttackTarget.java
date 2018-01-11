@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.tree.TreeNode;
 
+
 import VirtualDesktop.Ability.AbstractBattleClassAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.ActivationInfo;
@@ -48,6 +49,18 @@ public class AttackTarget extends AbstractBattleClassAdapter{
 		ToHitModifiers = new ToHitModifiers(battleEvent, targetIndex);
 		return ToHitModifiers;
 	}
+	public int getToHitRoll() {
+		getToHitModifiers();
+		CVList cvl = (CVList) battleEvent.getActivationInfo().getIndexedValue(targetIndex, "Target", "CVLIST");
+		int OCV=  cvl.getSourceCV();
+		int DCV= cvl.getTargetCV();
+		return 11 + OCV - DCV;
+	}
+	public int getAttackerOCV() {
+		getToHitModifiers();
+		CVList cvl = (CVList) battleEvent.getActivationInfo().getIndexedValue(targetIndex, "Target", "CVLIST");
+		return  cvl.getSourceCV();
+	}
 	public ToHitModifiers getToHitModifiers() {
 		if(ToHitModifiers==null) {
 			enterToHitModifiers();
@@ -86,30 +99,44 @@ public class AttackTarget extends AbstractBattleClassAdapter{
 	private TreeNode activateSubNodeOfTarget(Class nodeClass)
 	{
 		DefaultAttackTreeNode node=null;
-		for (int i=0; i< getAEATargetsNode().getChildCount();i++)
-		{
-			if(  getAEATargetsNode().getChildAt(i).getClass() == nodeClass)
-				node = (DefaultAttackTreeNode) getAEATargetsNode().getChildAt(i);
-		}
-		if(node == null)
-		{
+		if(getAEATargetsNode()!=null) {
+			for (int i=0; i< getAEATargetsNode().getChildCount();i++)
+			{
+				if(  getAEATargetsNode().getChildAt(i).getClass() == nodeClass)
+					node = (DefaultAttackTreeNode) getAEATargetsNode().getChildAt(i);
+			}
+			if(node == null)
+			{
+				try {
+					node = (DefaultAttackTreeNode) nodeClass.newInstance();
+				} catch (InstantiationException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
 			try {
-				node = (DefaultAttackTreeNode) nodeClass.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
+				node.activateNode(true);
+			} catch (BattleEventException e) {
 				e.printStackTrace();
 			}
 		}
-		try {
-			node.activateNode(true);
-		} catch (BattleEventException e) {
-			e.printStackTrace();
+		else
+		{
+			try {
+				node= (DefaultAttackTreeNode) nodeClass.getField("Node").get(null);
+			} catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
 		}
 		return node;
 	}
 
 
 	private TreeNode getAEATargetsNode() {
-		return AEAffectedTargetsNode.AENode.getChildAt(targetIndex - 1);
+		if(AEAffectedTargetsNode.AENode!=null) {
+			return AEAffectedTargetsNode.AENode.getChildAt(targetIndex - 1);
+		}
+		return null;
 	}
 	public void removeObstruction(PhysicalObjectAdapter obstruction) {
 		ObstructionList ol = getActivationInfo().getObstructionList(targetIndex);
@@ -158,7 +185,8 @@ public class AttackTarget extends AbstractBattleClassAdapter{
 		
 		if(knockbackDistance!=0 && knockbackDistance  > distance) {
 			SingleTargetNode snode = (SingleTargetNode) n.getChildAt(n.getChildCount()-1);
-			snode.activateNode(true);
+			AttackTreeModel.treeModel.activateNode(snode, snode);
+//			snode.activateNode(true);
 			SelectTargetPanel panel = snode.stp;
 			panel.selectTarget(obj.target);
 			

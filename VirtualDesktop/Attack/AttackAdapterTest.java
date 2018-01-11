@@ -38,19 +38,28 @@ public class AttackAdapterTest {
 	CharacterAdaptor attacker;
 	CharacterAdaptor _defender;
 	Roster roster;
-	AttackAdapter attack;
+	AttackAdapter _attack;
 	
 	@BeforeAll
-	public static void startHCS() {
+	public static void HeroCombatSimulatiorIsRunning() {
 		CombatSimulator.main(null);
 	}
 	
 	@BeforeEach
-	void twoValidCharactersInRoster() {
+	void twoValidCharactersAreInARoster() {
+		
 		attacker = new CharacterAdaptor(System.getProperty("user.dir") + "\\eventinfo\\testdata\\Pre-Emptive Strike\\Pre-Emptive Strike");
 		_defender = new CharacterAdaptor(System.getProperty("user.dir") + "\\eventinfo\\testdata\\Ogun\\Ogun");
 				
-		roster = Battle.currentBattle.findRoster("Unnamed");	
+		roster = Battle.currentBattle.findRoster("Unnamed");
+		roster.removeAll();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		roster.add(attacker.target);
 		roster.add(_defender.target);
 			
@@ -69,22 +78,22 @@ public class AttackAdapterTest {
 	@Test
 	public void attackerAttacksDefender_DefenderIsHitAndLosesStunEqualToAttackStunDamage() {
 		//arrange
-		AttackAdapter attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
+		AttackAdapter _attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
 		
 		//act
-		attack.activateAbility();
-		attack.targetDefender(_defender);
-		attack.ForceHit();
-		AttackResultAdapter result = attack.completeAttack();
+		_attack.activateAbility();
+		_attack.targetDefender(_defender);
+		_attack.ForceHit();
+		AttackResultAdapter result = _attack.completeAttack();
 		
 		//assert
-		assertAttackHit(attack.getAttackTarget(), result);
+		assertAttackHit(_attack.getAttackTarget(), result);
 		assertAttackDamage(result, _defender);
 	}
 
-	protected void assertAttackHit(AttackTarget attack, AttackResultAdapter result) {
+	protected void assertAttackHit(AttackTarget _attack, AttackResultAdapter result) {
 		assertEquals(true, result.getAttackHit());
-		assertEquals(result.getDefender().getName(), attack.getDefender().getName());
+		assertEquals(result.getDefender().getName(), _attack.getDefender().getName());
 		assertEquals(true, result.getAttackHit());
 	}
 
@@ -102,42 +111,45 @@ public class AttackAdapterTest {
 	public void attackerPushesWithSTR_AttackDamageClassesIncrease() {
 		//arrange
 		int pushedAmount = 25;
-		attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
+		_attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
 		Target d = _defender.target;
-		int damageClass = attack.getDamageClass();
+		int damageClass = _attack.getDamageClass();
 				
 		//act
-		attack.activateAbility();
-		attack.targetDefender(_defender);
-		attack.pushWithStr(pushedAmount);
+		_attack.activateAbility();
+		_attack.targetDefender(_defender);
+		_attack.pushWithStr(pushedAmount);
 	
-		int pushesDamageClass = (int) attack.UnderlyingAbility.getDamageDieForBattleEvent(attack.battleEvent,null);
-		attack.completeAttack();
+		int pushesDamageClass = (int) _attack.UnderlyingAbility.getDamageDieForBattleEvent(_attack.battleEvent,null);
+		_attack.completeAttack();
 		
 		//assert
 		assertEquals(damageClass+pushedAmount/5, pushesDamageClass);
-				
-		
 	}
 	
 	@Test
 	public void ToHItModifiersAreSetForAttack_ToHitRollForAttackisModified() {
 		//arrange
 				
-		attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
+		_attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
 		Target d = _defender.target;
 		
-		attack.activateAbility();
-		attack.targetDefender(_defender);
+		_attack.activateAbility();
 		
-		ToHitModifiers modifiers = attack.getToHitModifiers();
+		changeModifersAndAssertToHitRollHasChanged(_attack.attackTarget);
+		_attack.completeAttack();
+	}
+
+	protected void changeModifersAndAssertToHitRollHasChanged(AttackTarget attackTarget ) {
+		//arrange
+		int toHitRoll=attackTarget.getToHitRoll();
+		int OCV = attackTarget.getAttackerOCV();
+		int DCV = attackTarget.getDefenderDCV();
+		
+		attackTarget.targetDefender(_defender);
+		ToHitModifiers modifiers = attackTarget.getToHitModifiers();
 		modifiers.setAttackerPerception(false);
 		modifiers.setDefenderPerception(false);
-
-		int toHitRoll=attack.getToHitRoll();
-		int OCV = attack.getAttackerOCV();
-		int DCV = attack.getDefenderDCV();
-		
 		
 		//act
 		modifiers.setGenericAttacker(3);
@@ -150,33 +162,31 @@ public class AttackAdapterTest {
 		modifiers.setDefenderSurprised(false);
 		modifiers.setAttackerPerception(false);
 		modifiers.setDefenderPerception(false);
-		attack.completeAttack();
 		
 		//assert
 		int expectedToHitRoll = 11+ OCV-DCV+ modifiers.getTotalModiferAmount() ;
-		int actualToHitRoll = attack.getToHitRoll();
-		
+		int actualToHitRoll = toHitRoll;	
 		assertEquals(expectedToHitRoll, actualToHitRoll); //fix when i add perception	
 	}
 	
 	@Test
 	public void targetSenseChangedForAttacker_ToHitRollForAttackisModified() {
 		//arrange
-		attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
-		attack.activateAbility();
-		attack.targetDefender(_defender);
-		ToHitModifiers modifiers = attack.getToHitModifiers();
-		int OCV = attack.getAttackerOCV();
+		_attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
+		_attack.activateAbility();
+		_attack.targetDefender(_defender);
+		ToHitModifiers modifiers = _attack.getToHitModifiers();
+		int OCV = _attack.getAttackerOCV();
 		
 		//act
-		CharacterSensesAdapter senses =  attack.getAttackerSenses();
+		CharacterSensesAdapter senses =  _attack.getAttackerSenses();
 		SenseAdapter sense = senses.getSense("Normal Hearing");
 		sense.Activate();
 		
 		//assert
 		int modifiedOCV = OCV/2;		
-		attack.completeAttack();	
-		assertEquals( modifiedOCV,attack.getAttackerOCV());
+		_attack.completeAttack();	
+		assertEquals( modifiedOCV,_attack.getAttackerOCV());
 	}
 
 	@Test
@@ -189,29 +199,29 @@ public class AttackAdapterTest {
 		roster.add(attackerWithFlash.target);
 		
 		//arrange blind Spyder
-		attack = (AttackAdapter) attackerWithFlash.getAbilityWrapper("Flash");
-		attack.activateAbility();
-		attack.targetDefender(attackerWithFlash);
-		attack.ForceHit();
-		attack.completeAttack();
+		_attack = (AttackAdapter) attackerWithFlash.getAbilityWrapper("Flash");
+		_attack.activateAbility();
+		_attack.targetDefender(attackerWithFlash);
+		_attack.ForceHit();
+		_attack.completeAttack();
 		
 		
-		attack = (AttackAdapter) attackerWithDangerSense.getAbilityWrapper("Strike");
-		attack.activateAbility();
-		attack.targetDefender(_defender);
-		ToHitModifiers modifiers = attack.getToHitModifiers();
-		int OCV = attack.getAttackerOCV();
+		_attack = (AttackAdapter) attackerWithDangerSense.getAbilityWrapper("Strike");
+		_attack.activateAbility();
+		_attack.targetDefender(_defender);
+		ToHitModifiers modifiers = _attack.getToHitModifiers();
+		int OCV = _attack.getAttackerOCV();
 		
 		//act
-		CharacterSensesAdapter senses =  attack.getAttackerSenses();
+		CharacterSensesAdapter senses =  _attack.getAttackerSenses();
 		SenseAdapter sense = senses.getSense("Normal Sight");
 		sense.Activate();
 		
 		//assert
 		int modifiedOCV = OCV;		
-		assertEquals( modifiedOCV,attack.getAttackerOCV());
+		assertEquals( modifiedOCV,_attack.getAttackerOCV());
 		
-		attack.completeAttack();	
+		_attack.completeAttack();	
 		roster.remove(attackerWithFlash.target);
 		roster.remove(attackerWithDangerSense.target);
 		
@@ -224,15 +234,15 @@ public class AttackAdapterTest {
 		
 		//arrange
 		PhysicalObjectAdapter door = PhysicalObjectAdapter.newObjectFromPresests("Interior wood door");
-		attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
-		attack.activateAbility();
-		attack.targetDefender(_defender);
+		_attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
+		_attack.activateAbility();
+		_attack.targetDefender(_defender);
 		
 		
 		//act
-		attack.addObstruction(door);
-		attack.ForceHit();
-		AttackResultAdapter result = attack.completeAttack();
+		_attack.addObstruction(door);
+		_attack.ForceHit();
+		AttackResultAdapter result = _attack.completeAttack();
 		
 		//assert
 		assertObstructionAbsorbsAttackAndIsDestroyed(result, door.getName() );
@@ -255,14 +265,14 @@ public class AttackAdapterTest {
 	public void attackerAttacksSpecificHitLocationOfDefender_AttackDamageAndAttackToHitAreModified()
 	{
 		//arrange
-		attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
-		attack.activateAbility();
-		attack.targetDefender(_defender);
+		_attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
+		_attack.activateAbility();
+		_attack.targetDefender(_defender);
 		
-		int damageDice = attack.getDamageClass();
+		int damageDice = _attack.getDamageClass();
 		//act
-		attack.TargetHitLocation(HitLocation.HEAD);
-		AttackResultAdapter r = attack.completeAttack();
+		_attack.TargetHitLocation(HitLocation.HEAD);
+		AttackResultAdapter r = _attack.completeAttack();
 		
 		//assert
 		AttackTarget.HitLocation hitLocationUsed = r.getLocationHit();
@@ -276,14 +286,14 @@ public class AttackAdapterTest {
 		//arrange
 		PhysicalObjectAdapter collidingWith = PhysicalObjectAdapter.newObjectFromPresests("Interior wood door");
 		
-		attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
-		attack.activateAbility();
-		attack.targetDefender(_defender);
+		_attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
+		_attack.activateAbility();
+		_attack.targetDefender(_defender);
 		
 		
 		//act
-		attack.placeObjectDirectlyBehindDefender(collidingWith,2);
-		AttackResultAdapter r = attack.completeAttack();
+		_attack.placeObjectDirectlyBehindDefender(collidingWith,2);
+		AttackResultAdapter r = _attack.completeAttack();
 		
 		assertObjectWasCollidedIntoAndAndObjectTookCorrectDamageAndObjectWasDestroyed(collidingWith, r);
 	}
@@ -311,7 +321,7 @@ public class AttackAdapterTest {
 		int collisonBodyDamage = damageToObject.getBODY();
 		assertEquals( (startingObjectBOD - collisonObjectBOD), collisonBodyDamage);
 		
-		//assert - target of attack took correct amount of damage
+		//assert - target of _attack took correct amount of damage
 		DamageAmount kdamage = knr.getKnockbackDamage();
 		double now  =r.getDefender().getCharasteristic("STUN").getCurrentVaue();
 		int kbstun = kdamage.getSTUN(); 
@@ -341,14 +351,14 @@ public class AttackAdapterTest {
 		
 		int startingObjectBOD = collidingWith.getCharasteristic("BODY").getCurrentVaue();
 		int secondStartingObjectBOD = secondCollidingWith.getCharasteristic("BODY").getCurrentVaue();
-		attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
-		attack.activateAbility();
-		attack.targetDefender(_defender);
+		_attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
+		_attack.activateAbility();
+		_attack.targetDefender(_defender);
 		
 		//act
-		attack.placeObjectDirectlyBehindDefender(collidingWith,2);
-		attack.placeObjectDirectlyBehindDefender(secondCollidingWith,2);
-		AttackResultAdapter r = attack.completeAttack();
+		_attack.placeObjectDirectlyBehindDefender(collidingWith,2);
+		_attack.placeObjectDirectlyBehindDefender(secondCollidingWith,2);
+		AttackResultAdapter r = _attack.completeAttack();
 		
 
 		//assert - 2 collisions
@@ -379,20 +389,24 @@ public class AttackAdapterTest {
 		damageToObject = collisionResult.getDamageResults();
 		collisonBodyDamage = damageToObject.getBODY();
 		assertEquals( (startingObjectBOD - collisonObjectBOD), collisonBodyDamage);
+		
+		roster.remove(collidingWith.target);
+		roster.remove(secondCollidingWith.target);
 	}
 		
 	@Test
 	public void jSONWithFullAttackParametersPassedToCharacter_CharacterInvokesAttackAndResponseIsCreatedCorrectly()
 	{	
+		
 		//arrange
 		JSONObject attackJSON = buildAttackJSON();
 		
 		//act
 		JSONObject resultJSON =  attacker.processJSON(attackJSON);
-		
+		try {Thread.sleep(500);		} catch (InterruptedException e) {	e.printStackTrace();}
 		//assert
-		AttackAdapter attack = (AttackAdapter) attacker.getActiveAbilty();
-		AttackResultAdapter result = attack.getLastResult();
+		AttackAdapter _attack = (AttackAdapter) attacker.getActiveAbilty();
+		AttackResultAdapter result = _attack.getLastResult();
 		
 		assertEquals( result.getDefender().getName(), ((JSONObject) resultJSON.get("Defender")).get("Name"));
 		
@@ -441,10 +455,9 @@ public class AttackAdapterTest {
 	}
 
 	@AfterEach
-	void closeAllRosters() {
+	protected void closeAllRosters() {
 		Battle.currentBattle.setStopped(true);
-		roster.remove(attacker.target);
-		roster.remove(_defender.target);
+		roster.removeAll();
 		
 		
 	}

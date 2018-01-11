@@ -52,7 +52,7 @@ public class AreaEffectAttackAdapter extends AttackAdapter{
 	}
 		
 	
-	public AttackTarget getAttackTarget(int i)
+	public AttackTarget getIndividualAttackTarget(int i)
 	{
 		AEAffectedTargetsNode aeNode = (AEAffectedTargetsNode) AEAffectedTargetsNode.AENode;
 		Target t = ((SingleTargetNode) aeNode.getChildAt(i)).getTarget();
@@ -81,7 +81,7 @@ public class AreaEffectAttackAdapter extends AttackAdapter{
 		aeNode.activateNode(false);
 	}
 
-	public int getAttackTargetCount() {
+	public int getCountOfIndividualAttackTarget() {
 		AEAffectedTargetsNode aeNode = (AEAffectedTargetsNode) AEAffectedTargetsNode.AENode;
 		int c;
 		for( c=0;c < aeNode.getChildCount();c++)
