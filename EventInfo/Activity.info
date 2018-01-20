@@ -1,22 +1,38 @@
 
 character:
-	name:Pre-Emptive Strike
+	name:Spyder
 	costume:
 	model:
-	MaxStun:98
-	MaxEndurance:70
-	CurrStun:98
-	CurrEndurance:28
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:-93
+	CurrEndurance:56
 Activate: True
 
 	Crowd: 
 		Name:Unnamed
 		Characters:
-			Pre-Emptive Strike:
-				name:Pre-Emptive Strike
+			Spyder:
+				name:Spyder
 				costume:
 				model:
 			Ogun:
 				name:Ogun
+				costume:
+				model:
+			Interior wood door:
+				name:Interior wood door
+				costume:
+				model:
+			Magnetic lock:
+				name:Magnetic lock
+				costume:
+				model:
+			Chamber pot:
+				name:Chamber pot
+				costume:
+				model:
+			Saviour:
+				name:Saviour
 				costume:
 				model:

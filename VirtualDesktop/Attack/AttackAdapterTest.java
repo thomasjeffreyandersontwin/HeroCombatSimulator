@@ -37,10 +37,6 @@ public class AttackAdapterTest extends BaseAttackAdapterTest{
 
 	
 	
-	@BeforeAll
-	public static void HeroCombatSimulatiorIsRunning() {
-		CombatSimulator.main(null);
-	}
 	
 	@BeforeEach
 	void twoValidCharactersAreInARoster() {

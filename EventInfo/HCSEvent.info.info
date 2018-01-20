@@ -1,13 +1,13 @@
 Event: 
 	Name:RosterRemove
 character:
-	name:Ogun
+	name:Saviour
 	costume:
 	model:
-	MaxStun:27
-	MaxEndurance:36
-	CurrStun:-127
-	CurrEndurance:46
+	MaxStun:25
+	MaxEndurance:40
+	CurrStun:-92
+	CurrEndurance:40
 	Crowd: 
 		Name:Unnamed
 		Characters:

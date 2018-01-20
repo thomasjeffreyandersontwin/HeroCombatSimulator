@@ -31,7 +31,21 @@ public class AreaEffectAttackAdapter extends MultiAttackAdapter{
 	}
 
 	public void targetCenter(BasicTargetAdapter center) {
-		AECenterTargetNode aeNode = (AECenterTargetNode) AEAffectedTargetsNode.Node;
+		boolean success = false;
+		AECenterTargetNode aeNode=null;
+		while( success==false){
+			ClassCastException cee=null;
+			try {
+				aeNode = (AECenterTargetNode) AEAffectedTargetsNode.Node;
+				success = true;
+			}
+			catch(ClassCastException ce) {
+				if(AttackTreePanel.Panel.isShowing()==true) {
+					AttackTreePanel.Panel.cancelAttack();
+					this.Activate();
+				}
+			}
+		}
 		aeNode.setBattleEvent(battleEvent);
 		aeNode.activateNode(true);	
 	    

@@ -94,7 +94,8 @@ public class AttackResultAdapter extends AbstractBattleClassAdapter{
 	}	
 	
 	public HitLocation getLocationHit() {
-			String locationString =  getActivationInfo().getTargetHitLocation(targetIndex);
+		String locationString =  getActivationInfo().getTargetHitLocation(targetIndex);
+		if(locationString!=null) {
 		switch (locationString)
 		{
 			case "HEAD": return HitLocation.HEAD;
@@ -107,6 +108,7 @@ public class AttackResultAdapter extends AbstractBattleClassAdapter{
 			case "STOCMACH": return HitLocation.STOMACH;
 			case "THIGHS": return HitLocation.THIGHS;
 			case "VITALS": return HitLocation.VITALS;
+		} 
 		}
 		return null;
 	}

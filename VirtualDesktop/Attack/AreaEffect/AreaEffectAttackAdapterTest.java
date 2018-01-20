@@ -21,7 +21,7 @@ import champions.Battle;
 import champions.CombatSimulator;
 import champions.Roster;
 
-class AreaEffectAttackAdapterTest extends AttackAdapterTest{
+class AreaEffectAttackAdapterTest extends BaseAttackAdapterTest{
 	
 	CharacterAdaptor attacker;
 	CharacterAdaptor defender1;
@@ -138,7 +138,7 @@ class AreaEffectAttackAdapterTest extends AttackAdapterTest{
 		assertEquals(defender2.target, attack.getIndividualAttackTarget(0).getTarget());
 		assertEquals(defender3.target, attack.getIndividualAttackTarget(1).getTarget());
 		assertEquals(defender1.target, attack.getIndividualAttackTarget(2).getTarget());
-		
+		attack.completeAttack();
 	}
 	
 	@Test

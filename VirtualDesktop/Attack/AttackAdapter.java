@@ -14,6 +14,7 @@ import VirtualDesktop.Character.CharacterAdaptor;
 import VirtualDesktop.Character.CharacterSensesAdapter;
 import VirtualDesktop.Character.SenseAdapter;
 import champions.ActivationInfo;
+import champions.ActiveTargetPanel;
 import champions.Battle;
 import champions.BattleEngine;
 import champions.BattleEvent;
@@ -86,12 +87,6 @@ public class AttackAdapter extends AbilityAdapter {
         DefaultAttackTreeNode node = DefaultAttackTreeNode.Node;
         node.setBattleEvent(battleEvent);
         
-        
-          try {
-			Thread.sleep(1200);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
         
         if(getDefender()!=null) {
         	AttackResultAdapter result = new AttackResultAdapter(battleEvent, targetIndex);

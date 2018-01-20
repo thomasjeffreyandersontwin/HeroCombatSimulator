@@ -36,13 +36,15 @@ public class AreaEffectAttackResultAdapter extends AttackResultAdapter{
 		for(int i=0; i < aeNode.getChildCount();i++)
 		{
 			Target t = ((SingleTargetNode) aeNode.getChildAt(i)).getTarget();
-			int  tindex = getActivationInfo().getTargetIndex(t);
-			AttackResultAdapter result;
-			if(tindex!=-1) 
-			{
-				result = new AttackResultAdapter(battleEvent, tindex);
-				results.add(result);
-			}		
+			if(t!=null && t.getName()!="Hex") {
+				int  tindex = getActivationInfo().getTargetIndex(t);
+				AttackResultAdapter result;
+				if(tindex!=-1) 
+				{
+					result = new AttackResultAdapter(battleEvent, tindex);
+					results.add(result);
+				}		
+			}
 		}
 		return results;
 	}
