@@ -2,12 +2,16 @@ package VirtualDesktop.Attack.AreaEffect;
 
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import VirtualDesktop.Attack.AttackAdapter;
 import VirtualDesktop.Attack.AttackResultAdapter;
 import VirtualDesktop.Attack.AttackTarget;
 import VirtualDesktop.Attack.BasicTargetAdapter;
 import VirtualDesktop.Attack.PhysicalObjectAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
+import VirtualDesktop.MultiAttack.MultiAttackAdapter;
 import champions.BattleEvent;
 import champions.Target;
 import champions.attackTree.AEAffectedTargetsNode;
@@ -20,7 +24,7 @@ import champions.attackTree.KnockbackNode;
 import champions.attackTree.SingleTargetNode;
 import champions.exception.BattleEventException;
 
-public class AreaEffectAttackAdapter extends AttackAdapter{
+public class AreaEffectAttackAdapter extends MultiAttackAdapter{
 
 	public AreaEffectAttackAdapter(String name, CharacterAdaptor character) {
 		super(name, character);
@@ -50,7 +54,16 @@ public class AreaEffectAttackAdapter extends AttackAdapter{
 		super.targetDefender(defender);
 		
 	}
-		
+	
+	@Override
+	public void Process() {
+		//hack to get collisions on last node with knock back working
+		if(!getIndividualAttackTarget(getCountOfIndividualAttackTarget()-1).getDefender().getName().equals("Hex"))
+		{
+			targetDefender(new PhysicalObjectAdapter("Hex"));
+		}
+		AttackTreePanel.Panel.advanceNode();
+	}
 	
 	public AttackTarget getIndividualAttackTarget(int i)
 	{
@@ -96,10 +109,45 @@ public class AreaEffectAttackAdapter extends AttackAdapter{
 
 	
 	public AreaEffectAttackResultAdapter completeAttack() {
+		//hack to get collisions on last node with knock back working
+		if(!getIndividualAttackTarget(getCountOfIndividualAttackTarget()-1).getDefender().getName().equals("Hex"))
+		{
+			targetDefender(new PhysicalObjectAdapter("Hex"));
+		}
 		super.completeAttack();
-		return new AreaEffectAttackResultAdapter(battleEvent);
+		
+		Result = new AreaEffectAttackResultAdapter(battleEvent);
+		return (AreaEffectAttackResultAdapter)Result;
 	}
 	
+	public JSONObject processJSON(JSONObject attackJSON)
+	{
+		super.Activate();
+		processAttackerJSON(attackJSON);
+		BasicTargetAdapter aoeCenter = new PhysicalObjectAdapter((String)attackJSON.get("AOE Center"));
+		if(aoeCenter.target==null) {
+			aoeCenter = new CharacterAdaptor((String)attackJSON.get("AOE Center"));
+		}
+		try {Thread.sleep(500);}catch(Exception e) {}
+		targetCenter(aoeCenter);
+		
+		JSONArray attackTargetsJSON = (JSONArray) attackJSON.get("Attack Targets");
+		for(int i=0;i< attackTargetsJSON.size();i++)
+		{
+			JSONObject attackTargetJSON = (JSONObject) attackTargetsJSON.get(i);
+			AttackTarget attackTarget = new AttackTarget(battleEvent);
+			attackTarget.processDefenderObstructionsAndModifiersInJSON(attackTargetJSON);
+		}
+		Process();
+		for(int i=0;i< attackTargetsJSON.size();i++)
+		{
+			JSONObject attackTargetJSON = (JSONObject) attackTargetsJSON.get(i);
+			AttackTarget attackTarget = getIndividualAttackTarget(i);
+			attackTarget.processPotentialCollisionsInJSON(attackTargetJSON);
+		}
+		Result = completeAttack();
+		return Result.exportToJSON();
+	}
 
 
 }

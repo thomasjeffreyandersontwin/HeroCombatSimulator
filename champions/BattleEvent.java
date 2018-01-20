@@ -3037,6 +3037,10 @@ public class BattleEvent extends DetailList {
 	                        }
 	                    }
                 	}
+                	else {
+                		//jeff message iterator
+                		messageIndex++;
+                	}
                 }
             }
             

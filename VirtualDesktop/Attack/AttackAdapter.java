@@ -47,7 +47,7 @@ import champions.interfaces.IndexIterator;
 public class AttackAdapter extends AbilityAdapter {
 	
 	
-	private AttackResultAdapter Result;
+	protected AttackResultAdapter Result;
 	public AttackAdapter(String name, CharacterAdaptor character) {
 		super(name, character);
 		
@@ -79,7 +79,10 @@ public class AttackAdapter extends AbilityAdapter {
         }
      	
         battle.addEvent( battleEvent );
-        
+        while(AttackTreePanel.Panel.isShowing()==false)
+        {
+        	try {Thread.sleep(100);}catch(Exception e) {}
+        }
         DefaultAttackTreeNode node = DefaultAttackTreeNode.Node;
         node.setBattleEvent(battleEvent);
         
@@ -98,6 +101,7 @@ public class AttackAdapter extends AbilityAdapter {
         return null;
 	}
 
+	
 	public void pushWithStr(int push) {
 			
 			/*battleEvent.add("Normal.STR", new Integer(battleEvent.getSource().getCurrentStat("STR")), true);
@@ -121,9 +125,12 @@ public class AttackAdapter extends AbilityAdapter {
 			
 			AttackResultAdapter result = new AttackResultAdapter(battleEvent, targetIndex);
 			Result = result;
-			try{Thread.sleep(500);} catch (InterruptedException e) {}
+			try{
+				Thread.sleep(500);
 				AttackTreePanel.Panel.advanceNode();
-		
+			
+			}
+			catch (Exception e) {}
 	    	return result;
 	}
 	public void CancelAttack() {
@@ -160,44 +167,31 @@ public class AttackAdapter extends AbilityAdapter {
 	}
 		
 	public CharacterSensesAdapter getAttackerSenses() {
-		CharacterSensesAdapter senses = new CharacterSensesAdapter(battleEvent,targetIndex,CombatRole.Attacker);
-		return senses;
+		return attackTarget.getAttackerSenses();
 	}
+	
 	public JSONObject processJSON (JSONObject attackJSON) {
 		
 		super.processJSON(attackJSON);
-		targetDefender(new CharacterAdaptor((String)attackJSON.get("Defender")));
-		int push =0;
-		if(attackJSON.get("PushedStr") instanceof Long) {
-			push = ((Long)attackJSON.get("PushedStr")).intValue();
-		}
-		else
-			push=(int) attackJSON.get("PushedStr") ;
-		pushWithStr(push);
+		processAttackerJSON(attackJSON);
 		
-		JSONArray physicalObjects = (JSONArray) attackJSON.get("Obstructions");
-		for(int i = 0; i < physicalObjects.size();i++) {
-			addObstruction(new PhysicalObjectAdapter((String) physicalObjects.get(i)));
-		}
-		
-		JSONObject modifiersJSON = (JSONObject) attackJSON.get("To Hit Modifiers");
-		ToHitModifiers modifiers = enterToHitModifiers();
-		modifiers.processJSON(modifiersJSON);
-		
-		SenseAdapter sense = getAttackerSenses().getSense((String) attackJSON.get("Targeting Sense"));
-		sense.Activate();
-		
-		JSONArray potentialCollisions = (JSONArray) attackJSON.get("Potential Knockback Collisions");
-		for(int i = 0; i < potentialCollisions.size();i++) {
-			JSONObject pcoJSON = (JSONObject)potentialCollisions.get(i);
-			String co = (String) pcoJSON.get("Collision Object");
-			int distance  = (int) pcoJSON.get("Collision Distance");
-			placeObjectDirectlyBehindDefender(new PhysicalObjectAdapter(co), distance);
-		}
-		AttackResultAdapter r = new AttackResultAdapter(battleEvent, targetIndex);
-		Result = r;
-		return r.exportToJSON();
+		JSONObject r = attackTarget.processJSON(attackJSON);
+		Result = attackTarget.Result;
+		return r;
 
+	}
+
+	protected void processAttackerJSON(JSONObject attackJSON) {
+		int push =0;
+		if(attackJSON.get("PushedStr")!=null) {
+			if( attackJSON.get("PushedStr") instanceof Long) {
+				push = ((Long)attackJSON.get("PushedStr")).intValue();
+			}
+			else
+				push=(int) attackJSON.get("PushedStr") ;
+			pushWithStr(push);
+		}
+		
 	}
 
 	public enum CombatRole{ Attacker, Defender}
@@ -238,8 +232,8 @@ public class AttackAdapter extends AbilityAdapter {
 	public void ForceHit() {
 		attackTarget.ForceHit();	
 	}
-	public void TargetHitLocation(HitLocation location) {
-		attackTarget.TargetHitLocation(location);
+	public void targetHitLocation(HitLocation location) {
+		attackTarget.targetHitLocation(location);
 	}
 	public void placeObjectDirectlyBehindDefender(PhysicalObjectAdapter obj, int distance) 
 	{

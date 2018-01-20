@@ -33,7 +33,7 @@ public class BasicTargetAdapter {
 		try {
 			target = (Target) d.open(file);
 		} catch (ClassNotFoundException | IOException e) {
-			System.out.println(characterName +"file not found");
+			//System.out.println(characterName +"file not found");
 		}
 		return target;
 	}

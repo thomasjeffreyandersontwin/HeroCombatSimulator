@@ -347,7 +347,7 @@ implements TreeModel {
         
         if ( attackTreePanel != null ) attackTreePanel.setProcessing(false);
         
-        try{
+       /* try{
         	if(this.isAttackTreePanelVisible() && this.attackTreePanel.OKCLicked==true)
             {
         		SingleAttackAdapter a=null;
@@ -355,10 +355,6 @@ implements TreeModel {
         		if(battleEvent.getPrimaryBattleMessageGroup() instanceof SweepMessageGroup) {
         			a = new SimulatorSweepAttack(null, null);
         		}
-        		//jeff this doesnt work
-        		//else if(battleEvent.getActivationInfo().getTarget(1)!=null) {
-        		//	a = new MultAttackAdapter(null, null);
-        		//}
         		else if (battleEvent.getAbility().hasAdvantage("Autofire"))
         		{
         			a = new AutofireAttackAdapter(null, null);
@@ -369,11 +365,10 @@ implements TreeModel {
         		a.battleEvent = battleEvent;
     			JSONObject att = a.ExportBasedOnBattleEvent(AttackTargetCommand.Token, battleEvent);
     			a.WriteJSON(att);
-    			//AttackTargetCommand.Token=null;
             }
         	}catch(Exception e) {
         		e.printStackTrace();
-        	}
+        	}*/
     }
     
     /** Advance the current node and return the next node in the tree.

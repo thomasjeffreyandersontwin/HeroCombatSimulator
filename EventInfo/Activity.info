@@ -16,26 +16,6 @@ Activate: True
 				name:Pre-Emptive Strike
 				costume:
 				model:
-			Spyder:
-				name:Spyder
-				costume:
-				model:
-			Saviour:
-				name:Saviour
-				costume:
-				model:
-			Interior wood door:
-				name:Interior wood door
-				costume:
-				model:
-			Magnetic lock:
-				name:Magnetic lock
-				costume:
-				model:
-			Chamber pot:
-				name:Chamber pot
-				costume:
-				model:
 			Ogun:
 				name:Ogun
 				costume:

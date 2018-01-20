@@ -17,7 +17,7 @@ public class Charasteristic {
 		return target.getCharacteristic(name).getCurrentStat() ;
 	}
 
-	public double getStartingVaue() {
+	public double getStartingValue() {
 		if(target.getCharacteristic(name)!=null) {
 			return target.getCharacteristic(name).getAdjustedStat() ;
 		}
@@ -31,8 +31,8 @@ public class Charasteristic {
 	public JSONObject exportToJSON() {
 		JSONObject ex = new JSONObject();
 		ex.put("Name", getName());
-		if(getStartingVaue() != -999d){
-			ex.put("Starting", getStartingVaue());
+		if(getStartingValue() != -999d){
+			ex.put("Starting", getStartingValue());
 			ex.put("Currrent", getCurrentVaue());
 		}
 		return ex;

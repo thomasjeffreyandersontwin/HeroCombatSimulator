@@ -75,7 +75,7 @@ public class CharacterAdaptor extends BasicTargetAdapter {
 		
 	}
 	public void LoadAbilityByName(String abilityName) throws Exception {
-		AbilityAdapter ability = getAbility("abilityName");	
+		AbilityAdapter ability = getAbility(abilityName);	
 		this.ActiveAbility = ability;
 	}
 	public AbilityAdapter getAbilityWrapper(String abilityName) 

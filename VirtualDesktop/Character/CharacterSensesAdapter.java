@@ -17,7 +17,7 @@ public class CharacterSensesAdapter extends AbstractBattleClassAdapter {
 		this.targetIndex = targetIndex;
 		DefaultAttackTreeNode node;
 		if(role==CombatRole.Defender) {
-			node = TargetPerceptionsNode.Node;
+			node = (DefaultAttackTreeNode) activateSubNodeOfTarget(TargetPerceptionsNode.class);
 			if(node==null)
 			{
 				node = new TargetPerceptionsNode("target");
@@ -25,13 +25,17 @@ public class CharacterSensesAdapter extends AbstractBattleClassAdapter {
 		}
 		else 
 		{
-			node = SourcePerceptionsNode.Node;	
+			node =(DefaultAttackTreeNode) activateSubNodeOfTarget(SourcePerceptionsNode.class);
 			if(node==null)
 			{
 				node = new SourcePerceptionsNode("source");
 			}
 		}
 		try {
+			if(node.battleEvent==null)
+			{
+				node.battleEvent=battleEvent;
+			}
 			node.activateNode(true);
 		} catch (BattleEventException e) {
 			e.printStackTrace();

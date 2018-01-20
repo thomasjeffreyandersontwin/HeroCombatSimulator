@@ -59,32 +59,6 @@ public class AttackResultAdapter extends AbstractBattleClassAdapter{
 		
 		KnockbackResult k = new KnockbackResult(battleEvent, targetIndex);
 		return k;
-		//if(getActivationInfo().isTargetKnockbackSecondary(targetIndex)==false) {
-		//	KnockbackResult k = new KnockbackResult(battleEvent, targetIndex);
-		//	IndexIterator i  = battleEvent.getKnockbackTargets(".ATTACK");
-		//	while(i.hasNext()) {
-		//		int index = i.nextIndex();
-		//		battleEvent.getKnockbackDamageEffect(1)
-		//	}
-			
-			
-			
-		//	for(int i=0;i< battleEvent.getDamageEffectCount(); i++) 
-		//	{
-		//		Effect e  = battleEvent.getDamageEffect(i);
-		//		if(e!=null) {
-		//			if(e.getName().equals("Knockback") && (e.getValue("Subeffect0.ADJUSTEDAMOUNT") !=null || e.getValue("Subeffect1.ADJUSTEDAMOUNT")!=null)) 
-		//			{
-		//				k.setKnockbackDamageEffect(e);
-		//				break;
-		//			}
-		//		}
-		//		i++;
-		//	}
-			
-		//	return k;
-		//}
-		//return null;
 	}
 	
 	
@@ -106,13 +80,16 @@ public class AttackResultAdapter extends AbstractBattleClassAdapter{
 					PhysicalObjectAdapter object = new PhysicalObjectAdapter(ob);
 					
 					int tindex = getActivationInfo().getTargetIndex(ob);
-					AttackResultAdapter result = new AttackResultAdapter(battleEvent, tindex);
-					result.forObject=true;
-					results.add(result);
+					if(tindex!=-1) {
+						AttackResultAdapter result = new AttackResultAdapter(battleEvent, tindex);
+						result.forObject=true;
+						results.add(result);
+					}
 				}
 			}
 
 		}
+		
 		return results;
 	}	
 	
@@ -136,25 +113,28 @@ public class AttackResultAdapter extends AbstractBattleClassAdapter{
 
 	public JSONObject exportToJSON() {
 		JSONObject attackResultJSON = new JSONObject();
-		
 		attackResultJSON.put("Ability", getActivationInfo().getAbility().getName());
-		
-		CharacterAdaptor defender = new CharacterAdaptor(getTarget());
+		exportAffectedTargetToJSON(this,attackResultJSON);
+		return attackResultJSON;
+	}
+
+	protected void exportAffectedTargetToJSON(AttackResultAdapter attackResultAdapter, JSONObject attackResultJSON) {
+		CharacterAdaptor defender = new CharacterAdaptor(attackResultAdapter.getTarget());
 		JSONObject defenderJSON = defender.exportToJSON();
 		attackResultJSON.put("Defender", defenderJSON);
 		
-		JSONObject damageJSON = getDamageResults().exportToJSON();
+		JSONObject damageJSON = attackResultAdapter.getDamageResults().exportToJSON();
 		attackResultJSON.put("Damage Results", damageJSON);
 		
-		attackResultJSON.put("Hit", getAttackHit());
-		if(getKnockbackResult()!=null) {
-			JSONObject kbJSON = getKnockbackResult().exportToJSON();
+		attackResultJSON.put("Hit", attackResultAdapter.getAttackHit());
+		if(attackResultAdapter.getKnockbackResult()!=null) {
+			JSONObject kbJSON = attackResultAdapter.getKnockbackResult().exportToJSON();
 			attackResultJSON.put("Knockback Result", kbJSON);
 		}
 		
 		JSONArray objstructionsJSON = new JSONArray();
-		if(getObstructionDamageResults().size() !=0) {
-			ArrayList<AttackResultAdapter> obsResult = getObstructionDamageResults();
+		if(attackResultAdapter.getObstructionDamageResults().size() !=0) {
+			ArrayList<AttackResultAdapter> obsResult = attackResultAdapter.getObstructionDamageResults();
 			for(int i =0; i < obsResult.size();i++)
 			{
 				objstructionsJSON.add(obsResult.get(i).exportToJSON());
@@ -162,12 +142,6 @@ public class AttackResultAdapter extends AbstractBattleClassAdapter{
 			
 			attackResultJSON.put("Obstruction Damage Results", objstructionsJSON);
 		}
-		
-		
-		//note effects happen with target
-		
-		
-		return attackResultJSON;
 	}
 	
 }

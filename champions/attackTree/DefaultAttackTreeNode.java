@@ -82,7 +82,7 @@ public class DefaultAttackTreeNode implements AttackTreeNode, ChampionsConstants
     protected String targetGroupSuffix;
 
     /** Stores the cached TargetGroup for this node */
-    private String targetGroup = null;
+    public String targetGroup = null;
 
     /** Creates new DefaultAttackTreeNode */
     public DefaultAttackTreeNode() {

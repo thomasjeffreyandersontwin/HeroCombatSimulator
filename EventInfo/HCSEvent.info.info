@@ -6,7 +6,7 @@ character:
 	model:
 	MaxStun:27
 	MaxEndurance:36
-	CurrStun:37
+	CurrStun:-127
 	CurrEndurance:46
 	Crowd: 
 		Name:Unnamed

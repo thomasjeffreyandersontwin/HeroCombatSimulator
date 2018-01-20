@@ -41,7 +41,7 @@ public class AbilityAdapter extends AbstractBattleClassAdapter {
 	public int getAbilityType() {return 0;}
 	
 	boolean CanPerform() { return false; }
-    boolean Activate() 
+    protected boolean Activate() 
     {
     	try {
 			activateAbility();

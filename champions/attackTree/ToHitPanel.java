@@ -67,8 +67,13 @@ public class ToHitPanel extends JPanel implements AttackTreeInputPanel, Champion
                 if (ai.getAbility().isSkill() || ai.getAbility().isDisadvantage()) {
                     setHitMode("FORCEHIT");
                 }
-                else {
-                    setHitMode(hitMode);
+                else 
+                {
+                	if(hitMode==null) 
+                	{
+                		hitMode = USEDICE;
+                	}
+                	setHitMode(hitMode);
                 }
                 
                 
@@ -376,7 +381,7 @@ public class ToHitPanel extends JPanel implements AttackTreeInputPanel, Champion
                 if (ai.getAbility().isSkill() || ai.getAbility().isDisadvantage()) {
                     ai.addIndexed(tindex, "Target", "HITMODE", "FORCEHIT", true);
                 }
-                else if ( originalHitMode.equals(OVERRIDE) == false ) {
+                else if ( originalHitMode !=null&& originalHitMode.equals(OVERRIDE) == false ) {
                     ai.addIndexed(tindex, "Target", "HITMODE", hitmode, true);
                 }
                 ai.addIndexed(tindex, "Target", "DICEROLLMODE", rollmode, true);

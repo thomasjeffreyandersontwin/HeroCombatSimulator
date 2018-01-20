@@ -25,32 +25,8 @@ public class ToHitModifiers extends AbstractBattleClassAdapter {
 		this.battleEvent = battleEvent;
 		this.targetIndex = targetIndex;
 		
-		ToHitPanel = ToHitPanel.getToHitPanel(battleEvent, getTarget(),".Attack", getTargetReferenceNumber());
-		ToHitNode node = ToHitNode.Node;
-		if(node==null)
-		{
-			node = new ToHitNode("to hit node");
-		}
-		node.activateNode(true);
-		/*
-		setGenericAttacker(0);
-		setGenericDefender(0);
-		setOffHand(false);;
-		setUnfamiliarWeapon(false);
-		setEncumbrance(0);
-		setSurpriseMove(0);
-		setTargetConcealment(Concealment.NotHidden);
-		setTargetConcealment(Concealment.NotHidden);
-		setRange(0);
-		setAttackFromBehind(false);
-		setDefenderSurprised(false);
-		setDefenderEntangled(false);
-		setTargetRecovering(false);
-		*/
-
-		
-		
-		
+	    ToHitPanel = ToHitPanel.getToHitPanel(battleEvent, getTarget(),".Attack", getTargetReferenceNumber());
+		ToHitNode node = (ToHitNode) activateSubNodeOfTarget(ToHitNode.class);	
 	}
 	
 	public void setGenericAttacker(int generic) {

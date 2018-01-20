@@ -25,11 +25,13 @@ public class DamageAmount extends AbstractBattleClassAdapter{
 	public int getSTUN() {
 		
 		String stat="STUN";
-		if(type.equals(DamageType.Knockback))
+		if(type.equals(DamageType.Knockback) && battleEvent.getKnockbackDamageEffect(targetIndex)!=null)
 			return battleEvent.getKnockbackDamageEffect(targetIndex).getTotalAdjustedStunDamage();
 		else {
-			return battleEvent.getDamageEffect(targetIndex).getTotalAdjustedStunDamage();
+			if(battleEvent.getDamageEffect(targetIndex)!=null)
+				return battleEvent.getDamageEffect(targetIndex).getTotalAdjustedStunDamage();
 		}
+		return 0;
 	}
 
 	private int getDamageValueForStat(String stat) {
@@ -61,21 +63,25 @@ public class DamageAmount extends AbstractBattleClassAdapter{
 		String stat="BODY";
 		if(!forObject) 
 		{
-			if(type.equals(DamageType.Knockback))
+			if(type.equals(DamageType.Knockback)&&battleEvent.getKnockbackDamageEffect(targetIndex)!=null)
 				return battleEvent.getKnockbackDamageEffect(targetIndex).getTotalAdjustedBodyDamage();
 			else {
-				return battleEvent.getDamageEffect(targetIndex).getTotalAdjustedBodyDamage();
+				if(battleEvent.getDamageEffect(targetIndex)!=null)
+					return battleEvent.getDamageEffect(targetIndex).getTotalAdjustedBodyDamage();
 			}
 		}
 		else 
-		{
-			if(type.equals(DamageType.Knockback))
+		{	
+			if(type.equals(DamageType.Knockback)&&battleEvent.getKnockbackDamageEffect(targetIndex)!=null) 
+			{
 				return battleEvent.getKnockbackDamageEffect(targetIndex).getTotalAdjustedStunDamage();
-			else {
+			}
+			else 
+			{
 				return battleEvent.getDamageEffect(targetIndex).getTotalAdjustedStunDamage();
 			}
 		}
-			
+		return 0;
 	}
 
 	public JSONObject exportToJSON() {
