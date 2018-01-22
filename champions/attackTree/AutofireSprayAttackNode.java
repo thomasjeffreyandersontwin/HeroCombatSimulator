@@ -12,10 +12,13 @@ package champions.attackTree;
  */
 public class AutofireSprayAttackNode extends DefaultAttackTreeNode {
 
-    /** Creates new AutofireSprayAttackNode */
+    public static AutofireSprayAttackNode AFNode;
+
+	/** Creates new AutofireSprayAttackNode */
     public AutofireSprayAttackNode(String name) {
         this.name = name;
         setVisible(false);
+        AFNode = this;
     }
     
     public boolean activateNode(boolean manualOverride) {

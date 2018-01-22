@@ -34,32 +34,17 @@ class AbilityAdapterTest {
 	
 	@BeforeEach
 	void validCharacterInRoster() {
+		validCharacter = new CharacterAdaptor(System.getProperty("user.dir") + "\\eventinfo\\testdata\\Ogun\\Ogun");
+		roster = Battle.currentBattle.findRoster("Unnamed");
+		roster.add(validCharacter.target);
+		Battle.currentBattle.startBattle();		
 		
-		try {
-     		String name = System.getProperty("user.dir") + "\\eventinfo\\testdata\\Ogun.rst";
-			roster = Roster.open(new File(name));
-			Battle.currentBattle.addRoster(roster);
-			
-			Battle.currentBattle.startBattle();		
-			Thread.sleep(500);
-			
-			validCharacter= new CharacterAdaptor("Ogun");
-			
-		} catch (ClassNotFoundException | IOException |InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-
-		
-		
+		try{Thread.sleep(500);}catch(Exception e) {}
 	}
 	
 	@Test
 	void CharacterIsNotActiveAndCharacterPersistentAbilityIsActivated_UnderlyingAbilityIsActive() {
-		
-
 		try {
-			
 			CharacterAdaptor spyderChar = new CharacterAdaptor(System.getProperty("user.dir") + "\\eventinfo\\testdata\\Spyder\\Spyder");
 			roster.add(spyderChar.target);
 			
@@ -72,14 +57,10 @@ class AbilityAdapterTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-	
-	
+
 	@Test
 	void persistentAbilityIsActivated_UnderlyingAbilityIsActive() {
-		
-
 		try {			
 			AbilityAdapter ability = validCharacter.getAbility("Force Field");
 			ability.Activate();
@@ -89,13 +70,12 @@ class AbilityAdapterTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	@AfterEach
 	void removeRosterAndStopBattle(){
 		try {
-		Battle.currentBattle.removeRoster(roster);
+		roster.removeAll();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

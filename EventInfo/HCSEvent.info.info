@@ -1,13 +1,13 @@
 Event: 
 	Name:RosterRemove
 character:
-	name:Saviour
+	name:Spyder
 	costume:
 	model:
-	MaxStun:25
-	MaxEndurance:40
-	CurrStun:-92
-	CurrEndurance:40
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:48
+	CurrEndurance:56
 	Crowd: 
 		Name:Unnamed
 		Characters:

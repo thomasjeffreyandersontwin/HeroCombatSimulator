@@ -7,7 +7,10 @@ import champions.Battle;
 import champions.BattleEvent;
 import champions.Target;
 import champions.attackTree.AEAffectedTargetsNode;
+import champions.attackTree.AFShotNode;
+import champions.attackTree.AutofireAttackNode;
 import champions.attackTree.DefaultAttackTreeNode;
+import champions.attackTree.SingleTargetNode;
 import champions.exception.BattleEventException;
 
 public abstract class AbstractBattleClassAdapter{
@@ -36,49 +39,67 @@ public abstract class AbstractBattleClassAdapter{
 		return battleEvent.getActivationInfo();
 	}
 	
-	protected TreeNode getAEATargetsNode() {
+	protected DefaultAttackTreeNode getAEATargetsNode() {
 		if(AEAffectedTargetsNode.AENode!=null) {
-			return AEAffectedTargetsNode.AENode.getChildAt(targetIndex - 1);
+			return (DefaultAttackTreeNode) AEAffectedTargetsNode.AENode.getChildAt(targetIndex - 1);
 		}
 		return null;
 	}
+	
+	protected DefaultAttackTreeNode getAFTargetsNode() {
 
+		if( AutofireAttackNode.AFNode!=null) {
+			return  (DefaultAttackTreeNode) AutofireAttackNode.AFNode.getChildAt(targetIndex).getChildAt(0);
+		}
+		return null;
+	}
+	
+
+	//protected SingleTargetNode getSelectTargetingNode(int i) {
+		//DefaultAttackTreeNode rootNode =  getRootAttackNode();
+		 //AFShotNode afsn= (AFShotNode) rootNode.getChildAt(i);
+         //r//eturn (SingleTargetNode) afsn.getChildAt(0);
+//	}
+	
 	protected TreeNode activateSubNodeOfTarget(Class nodeClass) {
 		DefaultAttackTreeNode node=null;
-		if(getAEATargetsNode()!=null) {
-			for (int i=0; i< getAEATargetsNode().getChildCount();i++)
-			{
-				if(  getAEATargetsNode().getChildAt(i).getClass() == nodeClass)
-					node = (DefaultAttackTreeNode) getAEATargetsNode().getChildAt(i);
+		DefaultAttackTreeNode rootNode=null;
+		try
+		{
+			if(getAEATargetsNode()!=null) {
+				rootNode = getAEATargetsNode();
 			}
+			else if(getAFTargetsNode()!=null)
+			{
+				rootNode = getAFTargetsNode();
+			}
+			if(rootNode!=null) {
+				for (int i=0; i< rootNode.getChildCount();i++)
+				{
+					if(  rootNode.getChildAt(i).getClass() == nodeClass)
+					{
+						node = (DefaultAttackTreeNode) rootNode.getChildAt(i);
+						node.activateNode(true);
+						return node;
+					}
+					
+				}
+			}
+			node= (DefaultAttackTreeNode) nodeClass.getField("Node").get(null);
+			node.activateNode(true);
 			if(node == null)
 			{
-				try {
-					node = (DefaultAttackTreeNode) nodeClass.newInstance();
-				} catch (InstantiationException | IllegalAccessException e) {
-					e.printStackTrace();
-				}
-			}
-			try {
+				
+				node = (DefaultAttackTreeNode) nodeClass.newInstance();
 				node.activateNode(true);
-			} catch (BattleEventException e) {
-				e.printStackTrace();
+				
 			}
+			
 		}
-		else
-		{
-			try {
-				node= (DefaultAttackTreeNode) nodeClass.getField("Node").get(null);
-				try {
-					node.activateNode(true);
-				} catch (BattleEventException e) {
-					e.printStackTrace();
-				}
-			} catch (Exception e) 
-			{
-				e.printStackTrace();
-			}
+		catch(Exception e) {
+			e.printStackTrace();
 		}
 		return node;
 	}
+
 }

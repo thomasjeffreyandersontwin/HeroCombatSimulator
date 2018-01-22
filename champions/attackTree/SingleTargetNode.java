@@ -342,6 +342,14 @@ public class SingleTargetNode extends DefaultAttackTreeNode
     public void setTarget(Target target) {
         if ( this.target != target ) {
             ActivationInfo ai = getBattleEvent().getActivationInfo();
+            
+            //afsn.buildNextChild(afsn);           
+           // DefaultAttackTreeNode n2 = (DefaultAttackTreeNode) getModel().getRoot();
+           // n2.buildNextChild(afsn);
+            
+            
+         
+
             if ( this.target != null ) {
                 ai.removeTarget(targetReferenceNumber, getTargetGroup());
                 

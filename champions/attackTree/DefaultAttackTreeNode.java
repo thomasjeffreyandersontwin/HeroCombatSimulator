@@ -824,7 +824,7 @@ public class DefaultAttackTreeNode implements AttackTreeNode, ChampionsConstants
         for (index = 0; index < count; index++) {
             atn = (AttackTreeNode) children.get(index);
             nextNodeName = nextNodeName(previousNodeName);
-            if (atn.getName().equals(nextNodeName) == false) {
+            if (atn.getName().equals(nextNodeName) == false && atn.getName()!="Autofire") {
                 // The next node name isn't what it should be, so rebuild this tree from this child down.
                 while (index < children.size()) {
                     atn = (AttackTreeNode) children.get(index);

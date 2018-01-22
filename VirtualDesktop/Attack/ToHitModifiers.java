@@ -26,7 +26,8 @@ public class ToHitModifiers extends AbstractBattleClassAdapter {
 		this.targetIndex = targetIndex;
 		
 	    ToHitPanel = ToHitPanel.getToHitPanel(battleEvent, getTarget(),".Attack", getTargetReferenceNumber());
-		ToHitNode node = (ToHitNode) activateSubNodeOfTarget(ToHitNode.class);	
+		
+	    ToHitNode node = (ToHitNode) activateSubNodeOfTarget(ToHitNode.class);	
 	}
 	
 	public void setGenericAttacker(int generic) {
@@ -255,4 +256,16 @@ public class ToHitModifiers extends AbstractBattleClassAdapter {
 			setTargetRecovering((boolean) modifiersJSON.get("Target Recovering"));
 
 		}
+
+	public int getAutofirePenalty() {
+		if( getCVModifierValue("Source0") <=0)
+		{
+			return getCVModifierValue("Source0");
+		}
+		if(targetIndex > 0) {
+			return -1;
+		}
+		
+		return 0;
+	}
 }

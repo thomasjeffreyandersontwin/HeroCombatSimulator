@@ -27,10 +27,8 @@ public class AttackTargetCommand extends AbstractDesktopCommand {
 	public static JSONObject lastMessage;
 	@Override
 	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message,
-			CharacterAdaptor character) throws Exception  {
-		
+		CharacterAdaptor character) throws Exception  {
 		JSONObject responseJSON = character.processJSON(message);
-		
 		String abilityName = (String)message.get("Ability");
 		AttackInProgress = (AttackAdapter) character.ActiveAbility;
 

@@ -95,7 +95,6 @@ public class AttackAdapter extends AbilityAdapter {
         }
         return null;
 	}
-
 	
 	public void pushWithStr(int push) {
 			
@@ -115,17 +114,28 @@ public class AttackAdapter extends AbilityAdapter {
 		
 		}
 	
-	public AttackResultAdapter completeAttack() {
+	public AttackResultAdapter completeAttack() {	
+		AttackResultAdapter result=null;
+		if(AttackTreePanel.Panel.isShowing()) {
+			if(AttackTreePanel.Panel.model.battleEvent==null)
+			{
+				AttackTreePanel.Panel.model.battleEvent = battleEvent;
+			}
 			AttackTreePanel.Panel.advanceNode();
 			
-			AttackResultAdapter result = new AttackResultAdapter(battleEvent, targetIndex);
+			result = new AttackResultAdapter(battleEvent, targetIndex);
 			Result = result;
 			try{
-				Thread.sleep(500);
+				
+				Thread.sleep(700);
 				AttackTreePanel.Panel.advanceNode();
-			
+				while(AttackTreePanel.Panel.isShowing()) {
+					Thread.sleep(50);
+					break;
+				}
 			}
-			catch (Exception e) {}
+			catch (Exception e) {e.printStackTrace();}
+		}
 	    	return result;
 	}
 	public void CancelAttack() {
@@ -206,9 +216,18 @@ public class AttackAdapter extends AbilityAdapter {
 	}
 	public void targetDefender(BasicTargetAdapter defender)
 	{
+		if(isAttackActivated()==false)
+        {
+        	Activate();
+        }
 		attackTarget.targetDefender(defender);
 	}
 	
+	private boolean isAttackActivated() {
+		// TODO Auto-generated method stub
+		return AttackTreePanel.Panel.isShowing() && battleEvent.getAbility().getName().equals(this.UnderlyingAbility.getName());
+	}
+
 	public int getDefenderDCV() {
 		return attackTarget.getDefenderDCV();
 	}

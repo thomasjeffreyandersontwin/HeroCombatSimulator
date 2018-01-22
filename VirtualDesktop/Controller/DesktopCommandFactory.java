@@ -12,12 +12,9 @@ import VirtualDesktop.Ability.SimpleAbilityCommand;
 import VirtualDesktop.Actions.AbortNextActionCommand;
 import VirtualDesktop.Actions.ActivateHeldCharacterCommand;
 import VirtualDesktop.Actions.CombatControlAction;
-import VirtualDesktop.Attack.SingleAttackAdapter;
 import VirtualDesktop.Attack.AttackTargetCommand;
 import VirtualDesktop.Attack.ConfirmAttack;
 import VirtualDesktop.Attack.MoveAndAttackCommand;
-import VirtualDesktop.Attack.AreaEffect.AttackAreaEffectTargetsCommand;
-import VirtualDesktop.Attack.Autofire.AttackAutofireTargetsCommand;
 import VirtualDesktop.Attack.MoveThrough.AttackMoveThroughTargetCommand;
 import VirtualDesktop.Attack.Sweep.AttackSweepTargetCommand;
 import VirtualDesktop.Roster.RosterSynchCommand;
@@ -41,12 +38,11 @@ public class DesktopCommandFactory {
 		}
 		
 		if(type.equals("AreaEffectTargets")) {
-			return new AttackAreaEffectTargetsCommand();
+			return new AttackTargetCommand();
 		}
 		
 		if(type.equals("AutofireTargets") ){
-			return new AttackAutofireTargetsCommand();
-		}
+			return new AttackTargetCommand();		}
 		if(type.equals("AbortNextAction") ){
 			return new AbortNextActionCommand();
 		}

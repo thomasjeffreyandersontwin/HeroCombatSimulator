@@ -7,14 +7,16 @@ import org.json.simple.JSONObject;
 
 import VirtualDesktop.Attack.AttackResultAdapter;
 import VirtualDesktop.Attack.PhysicalObjectAdapter;
+import VirtualDesktop.Attack.MultiAttack.MultiAttackResultAdapter;
 import champions.BattleEvent;
 import champions.DetailList;
 import champions.Target;
 import champions.attackTree.AEAffectedTargetsNode;
 import champions.attackTree.AttackTreePanel;
+import champions.attackTree.DefaultAttackTreeNode;
 import champions.attackTree.SingleTargetNode;
 
-public class AreaEffectAttackResultAdapter extends AttackResultAdapter{
+public class AreaEffectAttackResultAdapter extends MultiAttackResultAdapter{
 
 	public AreaEffectAttackResultAdapter(BattleEvent battleEvent) 
 	{
@@ -29,43 +31,18 @@ public class AreaEffectAttackResultAdapter extends AttackResultAdapter{
 		
 	}
 	
-	public ArrayList<AttackResultAdapter> getAffectedTargetResults()
+	protected DefaultAttackTreeNode getRootAttackNode()
 	{
-		ArrayList<AttackResultAdapter> results = new ArrayList<AttackResultAdapter>();
-		AEAffectedTargetsNode aeNode = (AEAffectedTargetsNode) AEAffectedTargetsNode.AENode;
-		for(int i=0; i < aeNode.getChildCount();i++)
-		{
-			Target t = ((SingleTargetNode) aeNode.getChildAt(i)).getTarget();
-			if(t!=null && t.getName()!="Hex") {
-				int  tindex = getActivationInfo().getTargetIndex(t);
-				AttackResultAdapter result;
-				if(tindex!=-1) 
-				{
-					result = new AttackResultAdapter(battleEvent, tindex);
-					results.add(result);
-				}		
-			}
-		}
-		return results;
+		return AEAffectedTargetsNode.AENode;
+		
+	}
+	protected SingleTargetNode getSelectTargetingNode(int i) {
+		DefaultAttackTreeNode rootNode =  getRootAttackNode();
+		return (SingleTargetNode) rootNode.getChildAt(i);
+
 	}
 	
-	public JSONObject exportToJSON()
-	{
-		JSONObject attackResultJSON = new JSONObject();
-		attackResultJSON.put("Ability", getActivationInfo().getAbility().getName());
-		
-		JSONArray affectedTargetsJSON = new JSONArray();
-		attackResultJSON.put("Affected Targets", affectedTargetsJSON);
-		for(int i=0; i< getAffectedTargetResults().size();i++)
-		{
-			JSONObject arJSON = new JSONObject();
-			AttackResultAdapter res = getAffectedTargetResults().get(i);
-			exportAffectedTargetToJSON(res,arJSON);
-			affectedTargetsJSON.add(arJSON);
-			
-		}
-		return attackResultJSON;
-	}
+	
 
 
 }

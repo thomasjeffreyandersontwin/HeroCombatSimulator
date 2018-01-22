@@ -6,7 +6,6 @@ import java.lang.reflect.UndeclaredThrowableException;
 
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.SingleAttackAdapter;
 import VirtualDesktop.Attack.AttackAdapter;
 import VirtualDesktop.Attack.AttackResultAdapter;
 import VirtualDesktop.Attack.AreaEffect.AreaEffectAttackAdapter;
@@ -25,6 +24,7 @@ import champions.attackTree.AttackTreePanel;
 import champions.attackTree.SelectTargetPanel;
 import champions.exception.BattleEventException;
 import champions.powers.advantageAreaEffect;
+import champions.powers.advantageAutofire;
 
 public class AbilityAdapter extends AbstractBattleClassAdapter {
 	
@@ -115,6 +115,10 @@ public class AbilityAdapter extends AbstractBattleClassAdapter {
 				ability = new AreaEffectAttackAdapter(abilityName, character);
 				return ability;
 			}
+			if(a.hasAdvantage(advantageAutofire.advantageName)) {
+				ability = new AutofireAttackAdapter(abilityName, character);
+				return ability;
+			}
 			if(a.isAttack()) {
 				ability = new AttackAdapter(abilityName, character);
 				return ability;
@@ -136,7 +140,7 @@ public class AbilityAdapter extends AbstractBattleClassAdapter {
 		}
 		if(a!= null) {
 			if(abilityName=="Move Through" || abilityName=="Move By") {
-				ability = new MoveThroughAdapter(abilityName, character);
+				//ability = new MoveThroughAdapter(abilityName, character);
 				return ability;
 			}
 			if(a.hasAdvantage("Autofire")){
@@ -148,7 +152,7 @@ public class AbilityAdapter extends AbstractBattleClassAdapter {
 				return ability;
 			}
 			if(a.getName().equals("Sweep")) {
-				ability = new SimulatorSweepAttack(abilityName, character);
+				//ability = new SimulatorSweepAttack(abilityName, character);
 				return ability;
 			}
 			if(a.isAttack()) {

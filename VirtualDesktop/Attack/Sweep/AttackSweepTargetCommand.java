@@ -13,7 +13,9 @@ public class AttackSweepTargetCommand extends AttackTargetCommand {
 
 	@Override
 	public void ExecuteDesktopEventOnSimulatorBasedOnMessageType(JSONObject message,
+			
 			CharacterAdaptor character) throws Exception  {
+		/*
 		character.ActivateAbilityByName((String) message.get("Type"));
 		SimulatorSweepAttack attack = (SimulatorSweepAttack) character.ActiveAbility;
 		
@@ -50,5 +52,7 @@ public class AttackSweepTargetCommand extends AttackTargetCommand {
 			
 		}
 		
+	}
+	*/
 	}
 }

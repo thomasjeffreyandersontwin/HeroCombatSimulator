@@ -1,7 +1,6 @@
 package VirtualDesktop.Attack.MoveThrough;
 
 import VirtualDesktop.Ability.MovementAdapter;
-import VirtualDesktop.Attack.SingleAttackAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.attackTree.AttackTreeModel;
 import champions.attackTree.DefaultAttackTreeNode;
@@ -10,17 +9,17 @@ import champions.attackTree.MoveByEffectNode;
 import champions.attackTree.MoveThroughEffectNode;
 import champions.attackTree.MovementManeuverSetupPanel;
 
-public class MoveThroughAdapter extends SingleAttackAdapter {
+public class MoveThroughAdapter{// extends SingleAttackAdapter {
 	
 	int _distance=0;
 	int _attackDamage;
 	MovementManeuverSetupPanel _panel  = MovementManeuverSetupPanel.defaultPanel;
 	MovementAdapter _movement=null;
-	SingleAttackAdapter _attack = null;
+	//SingleAttackAdapter _attack = null;
 	Integer _damageDice;
 	
 	public MoveThroughAdapter(String name, CharacterAdaptor character) {
-		super(name, character);
+		//super(name, character);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -28,19 +27,21 @@ public class MoveThroughAdapter extends SingleAttackAdapter {
 
 	public void setDistance(int distance)
 	{
+		
+	/**
 		this._distance= distance;
 		_panel.setDistance(distance);
 		if(_attack!=null) {
 			updateDamageDice();
-		}
-	}
+		}\
+		*/	}
 	
 	private void updateDamageDice() {
-		UnderlyingAbility = _panel.getBattleEvent().getAbility();
+		/*//UnderlyingAbility = _panel.getBattleEvent().getAbility();
 		int distanceMod = new Integer(_distance/3);
 		
-		Integer damage = ((Double)_attack.UnderlyingAbility.getDamageDie()).intValue();
-		if(_attack.UnderlyingAbility.isKillingAttack())
+		//Integer damage = ((Double)_attack.UnderlyingAbility.getDamageDie()).intValue();
+		//if(_attack.UnderlyingAbility.isKillingAttack())
 		{
 			Integer base  = ((Double)_attack.UnderlyingAbility.getValue("Base.DC")).intValue();
 			if(damage+distanceMod > base *2)
@@ -66,14 +67,17 @@ public class MoveThroughAdapter extends SingleAttackAdapter {
 			UnderlyingAbility.add("Ability.KTYPE","NORMAL");
 		}
 		_damageDice = damage;
+	}*/
 	}
-
 
 
 	public void setMovementAbility(String movementName)
 	{
+		/*
+	}
 		_movement = new MovementAdapter(movementName, Character);
 		_panel.setMovementAbility(_movement.UnderlyingAbility);
+		*/
 
 		
 	}
@@ -81,14 +85,19 @@ public class MoveThroughAdapter extends SingleAttackAdapter {
 
 
 	public void setAttack(String attackName) {
+		/*
+	}
 		_attack = (SingleAttackAdapter) SingleAttackAdapter.CreateAbility(attackName, Character);
 		_attackDamage = ((Double)_attack.UnderlyingAbility.getDamageDie()).intValue();
 		updateDamageDice();
+		*/
 	}
 
 
 
 	public void UpdateAttackWithAdjustedDamageDice() {
+		/*
+	}
 		DefaultAttackTreeNode node = null;
 		if(Name.equals("Move Through")){
 			node =MoveThroughEffectNode.Node;
@@ -108,7 +117,7 @@ public class MoveThroughAdapter extends SingleAttackAdapter {
         EffectNode node2 = EffectNode.Node;
 		AttackTreeModel.treeModel.advanceAndActivate(node2, node2);
 		UnderlyingAbility.DamageDiceOverride = 0;
-		
+		*/
 	}
 	
 

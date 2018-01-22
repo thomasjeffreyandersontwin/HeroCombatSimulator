@@ -6,31 +6,9 @@
 
 package champions.attackTree;
 
-import champions.Ability;
-import champions.Battle;
 import champions.BattleEvent;
-import champions.InlineView;
-import champions.Target;
-import champions.battleMessage.AbstractBattleMessageGroup;
-import champions.battleMessage.ActivateAbilityMessage;
-import champions.battleMessage.ActivateAbilityMessageGroup;
-import champions.battleMessage.BattleMessage;
-import champions.battleMessage.BattleMessageGroup;
-import champions.battleMessage.ENDSummaryMessage;
-import champions.battleMessage.KnockbackMessageGroup;
-import champions.battleMessage.KnockbackSummaryGroup;
-import champions.battleMessage.KnockbackSummaryMessage;
-import champions.battleMessage.SingleAttackMessageGroup;
-import champions.battleMessage.SweepMessageGroup;
 import champions.exception.BattleEventException;
-import champions.interfaces.IndexIterator;
-
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Iterator;
-
-import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.event.EventListenerList;
@@ -40,18 +18,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.SingleAttackAdapter;
-import VirtualDesktop.Attack.AttackTargetCommand;
-import VirtualDesktop.Attack.AreaEffect.AreaEffectAttackAdapter;
-import VirtualDesktop.Attack.AreaEffect.MultAttackAdapter;
-import VirtualDesktop.Attack.Autofire.AutofireAttackAdapter;
-import VirtualDesktop.Attack.Sweep.SimulatorSweepAttack;
-import VirtualDesktop.Controller.DesktopCommandFactory;
-
-import java.io.File;
 
 
 /**
@@ -388,7 +355,10 @@ implements TreeModel {
             if ( atn == null ) return null;
             
             AttackTreeNode newNode, activeChild;
-            
+            if(atn.getBattleEvent()==null)
+            {
+            	atn.setBattleEvent(battleEvent);
+            }
             newNode = atn.advanceNode(atn);
             
             // Look for a non-null next node.  While next node is null, find the

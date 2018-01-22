@@ -5,34 +5,18 @@ character:
 	model:
 	MaxStun:48
 	MaxEndurance:60
-	CurrStun:-93
+	CurrStun:48
 	CurrEndurance:56
 Activate: True
 
 	Crowd: 
 		Name:Unnamed
 		Characters:
-			Spyder:
-				name:Spyder
-				costume:
-				model:
 			Ogun:
 				name:Ogun
 				costume:
 				model:
-			Interior wood door:
-				name:Interior wood door
-				costume:
-				model:
-			Magnetic lock:
-				name:Magnetic lock
-				costume:
-				model:
-			Chamber pot:
-				name:Chamber pot
-				costume:
-				model:
-			Saviour:
-				name:Saviour
+			Spyder:
+				name:Spyder
 				costume:
 				model:

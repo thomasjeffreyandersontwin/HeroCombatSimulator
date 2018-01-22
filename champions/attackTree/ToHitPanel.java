@@ -234,7 +234,7 @@ public class ToHitPanel extends JPanel implements AttackTreeInputPanel, Champion
         hitRollField.selectAll();
     }//GEN-LAST:event_hitRollFieldFocusGained
     
-    private void forceHitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forceHitButtonActionPerformed
+    public void forceHitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forceHitButtonActionPerformed
         // Add your handling code here:
         setHitMode(FORCEHIT);
         atip.advanceNode();

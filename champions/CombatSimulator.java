@@ -85,6 +85,7 @@ public class CombatSimulator {
     private static DockingPanel activeTargetAbilitiesDockingPanel;
     private static DockingPanel defaultAbilitiesDockingPanel;
     private static DockingPanel chronometerDockingPanel;
+    private static DockingFrame reference;
     static private Object[][] moduleList = {
         {"Initializing", new Integer(1)},
         {"Initializing Preferences", new Integer(1)},
@@ -289,8 +290,10 @@ public class CombatSimulator {
             df.setVisible(true);
         }
         FileMessageListenerThread run = new FileMessageListenerThread(battle);
+        reference = df;
         run.start();
         
+       
        // checkForUpdate();
 
         ExceptionWizard.addExcludeString("javax.swing.tree.VariableHeightLayoutCache.getRowContainingYLocation");
@@ -312,6 +315,7 @@ public class CombatSimulator {
 		Preferences.savePreferenceList();
         DetailList.exitHook();
         ProfileManager.saveProfiles();
+        reference.dispose();
 	}
 
     /** gets the bounds for <CODE>what</CODE> from the user preferences.

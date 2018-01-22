@@ -32,6 +32,8 @@ import champions.attackTree.SelectTargetPanel;
 import champions.attackTree.SingleAttackNode;
 import champions.attackTree.SingleTargetNode;
 import champions.attackTree.SummaryNode;
+import champions.attackTree.ToHitNode;
+import champions.attackTree.ToHitPanel;
 
 public class AttackTarget extends AbstractBattleClassAdapter{
 	private BasicTargetAdapter defender;
@@ -41,16 +43,20 @@ public class AttackTarget extends AbstractBattleClassAdapter{
 		this.defender = defender;
 		this.targetIndex = targetIndex;
 	}
-	
 	public AttackTarget(int targetIndex, BattleEvent battleEvent) {
 		this.battleEvent = battleEvent;
 		this.targetIndex = targetIndex;
 	}
-
 	public AttackTarget(BattleEvent battleEvent) {
 		this.battleEvent = battleEvent;
 	}
 
+	public void ForceHit() {
+		enterToHitModifiers();
+		battleEvent.getActivationInfo().addIndexed(targetIndex, "Target", "HITMODE","FORCEHIT",true);
+		AttackTreePanel.Panel.model.advanceAndActivate(ToHitNode.Node,ToHitNode.Node);
+		
+	}
 	ToHitModifiers ToHitModifiers;
 	public ToHitModifiers enterToHitModifiers() {
 		ToHitModifiers = new ToHitModifiers(battleEvent, targetIndex);
@@ -74,21 +80,47 @@ public class AttackTarget extends AbstractBattleClassAdapter{
 		}	
 		return ToHitModifiers;
 	}
+	public int getDefenderDCV() {
+		getToHitModifiers();
+		CVList cvl = (CVList) battleEvent.getActivationInfo().getIndexedValue(targetIndex, "Target", "CVLIST");
+		return  cvl.getTargetCV();
+	}
+	
+	public CharacterSensesAdapter getAttackerSenses() {
+		CharacterSensesAdapter senses = new CharacterSensesAdapter(battleEvent,targetIndex,CombatRole.Attacker);
+		return senses;
+	}
+
+	
 	public CharacterAdaptor getDefender() {
 		ActivationInfo ai = battleEvent.getActivationInfo();
 		Target t = ai.getTarget(targetIndex);
 		CharacterAdaptor defender = new CharacterAdaptor(t);
 		return defender;
 	}
-	public int getDefenderDCV() {
-		getToHitModifiers();
-		CVList cvl = (CVList) battleEvent.getActivationInfo().getIndexedValue(targetIndex, "Target", "CVLIST");
-		return  cvl.getTargetCV();
-	}
-	ArrayList<PhysicalObjectAdapter> obstructions = new ArrayList<PhysicalObjectAdapter>();
 	public SingleTargetNode SingleTargetNode;
 	public AttackResultAdapter Result;
-	
+	public void targetDefender(BasicTargetAdapter defender)
+	{		
+		targetDefenderNoActivate(defender);
+        AttackTreePanel.Panel.advanceNode();
+        targetIndex = getActivationInfo().getTargetIndex(defender.target);
+	}
+	public void targetDefenderNoActivate(BasicTargetAdapter ta) {
+		if(SingleTargetNode==null)
+			SingleTargetNode=SingleTargetNode.Node;
+		
+		if(SingleTargetNode==null) {
+			SingleTargetNode= new SingleTargetNode("");
+		}
+		
+	    Target target= ta.target;
+	    SingleTargetNode.battleEvent = battleEvent;
+	    SingleTargetNode.activateNode(false);
+	    SingleTargetNode.setTarget(target);
+	}
+
+	ArrayList<PhysicalObjectAdapter> obstructions = new ArrayList<PhysicalObjectAdapter>();
 	public void addObstruction(PhysicalObjectAdapter obstruction) {
 		ObstructionNode node = (ObstructionNode) activateSubNodeOfTarget(ObstructionNode.class); 
 		
@@ -99,7 +131,7 @@ public class AttackTarget extends AbstractBattleClassAdapter{
 			}
 		}
 		node.activateNode(true);
-		AttackTreePanel.Panel.model.advanceAndActivate(node,node);
+		AttackTreePanel.Panel.advanceNode();
 	}
 	public void removeObstruction(PhysicalObjectAdapter obstruction) {
 		ObstructionList ol = getActivationInfo().getObstructionList(targetIndex);
@@ -139,32 +171,28 @@ public class AttackTarget extends AbstractBattleClassAdapter{
 
 	public void placeObjectDirectlyBehindDefender(PhysicalObjectAdapter obj, int distance) {
 		KnockbackTargetNode node = getKnockbackNodeForTarget();
-		
+		while(node==null && getActivationInfo().getTargetHit(targetIndex))
+		{
+			node = getKnockbackNodeForTarget();
+		}
 		KnockbackEffectNode n = (KnockbackEffectNode) node.getChildAt(1);
-		if(n==null) 
-		{	n = KnockbackEffectNode.Node;
-		
+		if(n==null) {
+			n = KnockbackEffectNode.Node;
 		}
 	
 		int knockbackDistance = getKnockbackDistance();
-		
-		
 		if(knockbackDistance!=0 && knockbackDistance  > distance) {
 			SingleTargetNode snode = (SingleTargetNode) n.getChildAt(n.getChildCount()-1);
-			//snode.targetGroup = ".KB." + getDefender().getName();
 			AttackTreeModel.treeModel.activateNode(snode, snode);
+			snode.activateNode(true);
 
 			SelectTargetPanel panel = snode.stp;
 			snode.setTarget(obj.target);
-			//panel.selectTarget(obj.target);	
-			//snode.activateNode(true);
-			//AttackTreeModel.treeModel.activateNode(snode, snode);
 			AttackTreePanel.Panel.advanceNode();
 		}
 		
 		try{Thread.sleep(500);} catch (InterruptedException e) {}	
 	}
-	
 	private KnockbackTargetNode getKnockbackNodeForTarget() {
 		ProcessActivateRootNode pNode = ProcessActivateRootNode.PNode;
 		for(int i = 0; i < pNode.getChildCount();i++)
@@ -181,49 +209,8 @@ public class AttackTarget extends AbstractBattleClassAdapter{
 		}
 		return null;
 	}
-
 	public int getKnockbackDistance() {
 		return battleEvent.getKnockbackDistance(targetIndex);
-	}
-
-	public void ForceHit() {
-		battleEvent.getActivationInfo().addIndexed(targetIndex, "Target", "HITMODE",true,true);
-		
-	}
-	
-	public void targetDefender(BasicTargetAdapter defender)
-	{
-        /*ActivationInfo ai = battleEvent.getActivationInfo();
-        if ( defender != null ) {
-        	 ai.removeTarget(defender.UnderlyingCharacter, ".ATTACK");
-        }
-        ai.addTarget(defender.UnderlyingCharacter, ".ATTACK");
-        int _targetIndex = ai.getTargetIndex(defender.UnderlyingCharacter, ".ATTACK");
-        
-        DefenseList dl = new DefenseList();
-        BattleEngine.buildDefenseList(dl,defender.UnderlyingCharacter);
-        ai.setDefenseList(_targetIndex, dl);
-        
-        int tgindex = ai.addTargetGroup(".ATTACK");
-        ai.setKnockbackGroup(tgindex, "KB");
-        */
-		
-		targetDefenderNoActivate(defender);
-        AttackTreePanel.Panel.advanceNode();
-        targetIndex = getActivationInfo().getTargetIndex(defender.target);
-	}
-	public void targetDefenderNoActivate(BasicTargetAdapter ta) {
-		if(SingleTargetNode==null)
-			SingleTargetNode=SingleTargetNode.Node;
-		
-		if(SingleTargetNode==null) {
-			SingleTargetNode= new SingleTargetNode("");
-		}
-		
-	    Target target= ta.target;
-	    SingleTargetNode.battleEvent = battleEvent;
-	    SingleTargetNode.activateNode(false);
-	    SingleTargetNode.setTarget(target);
 	}
 
 	public JSONObject processJSON(JSONObject attackJSON) {
@@ -237,11 +224,6 @@ public class AttackTarget extends AbstractBattleClassAdapter{
 		Result = r;
 		return r.exportToJSON();
 	}
-	public CharacterSensesAdapter getAttackerSenses() {
-		CharacterSensesAdapter senses = new CharacterSensesAdapter(battleEvent,targetIndex,CombatRole.Attacker);
-		return senses;
-	}
-
 	public void processPotentialCollisionsInJSON(JSONObject attackJSON) {
 		JSONArray potentialCollisions = (JSONArray) attackJSON.get("Potential Knockback Collisions");
 		for(int i = 0; i < potentialCollisions.size();i++) {
@@ -251,7 +233,6 @@ public class AttackTarget extends AbstractBattleClassAdapter{
 			placeObjectDirectlyBehindDefender(new PhysicalObjectAdapter(co), distance);
 		}
 	}
-
 	public void processDefenderObstructionsAndModifiersInJSON(JSONObject attackJSON) {
 		targetDefender(new CharacterAdaptor((String)attackJSON.get("Defender")));
 		

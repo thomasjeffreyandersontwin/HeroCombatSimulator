@@ -37,7 +37,8 @@ public class AttackMoveThroughTargetCommand extends AttackTargetCommand {
 			}
 		}
 		
-		MoveThroughAdapter movethrough = (MoveThroughAdapter) character.ActiveAbility;
+		MoveThroughAdapter movethrough = null;
+		//(MoveThroughAdapter) character.ActiveAbility;
 		
 		JSONObject movement = (JSONObject)message.get("MovementAbility");
 		movethrough.setMovementAbility((String) movement.get("Movement"));
@@ -45,7 +46,7 @@ public class AttackMoveThroughTargetCommand extends AttackTargetCommand {
 		
 		JSONObject attackAbility = (JSONObject)message.get("AttackAbility");
 		movethrough.setAttack((String) attackAbility.get("Ability"));
-		movethrough.ConfirmAttack();
+		//movethrough.ConfirmAttack();
         
 		String targetName = (String) attackAbility.get("Target");
 		//ExecuteAttackOnTarget(attackAbility,movethrough, targetName);

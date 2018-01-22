@@ -5,7 +5,7 @@ import javax.swing.tree.TreeNode;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.SingleAttackAdapter;
+//import VirtualDesktop.Attack.SingleAttackAdapter;
 //import VirtualDesktop.Attack.SingleAttackResults;
 import VirtualDesktop.Character.CharacterAdaptor;
 import champions.Ability;
@@ -29,16 +29,17 @@ import champions.battleMessage.EmbeddedBattleEventMessageGroup;
 import champions.battleMessage.SweepMessageGroup;
 import champions.interfaces.IndexIterator;
 
-public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttackAdapter {
+public class SimulatorSweepAttack {//extends VirtualDesktop.Attack.SingleAttackAdapter {
 	private SingleTargetNode targetNode = null;
 	
 
 	public SimulatorSweepAttack(String name, CharacterAdaptor character) {
-		super(name, character);
+		//super(name, character);
 		// TODO Auto-generated constructor stub
 	}
 
 	public void AddAbility(String abilityName) {
+		/*
 		Ability ability = this.Character.target.getAbility(abilityName);
 		if(ability==null) {
 			ability = Battle.currentBattle.getDefaultAbilities().getAbility(abilityName, true);	
@@ -139,10 +140,11 @@ public class SimulatorSweepAttack extends VirtualDesktop.Attack.SingleAttackAdap
 				attacks.add(resultJSON);
 			}
 		}
-		*/
+		
 		sweepAttackJSON.put("Token", token);
 		return sweepAttackJSON;
-	}
+		*/
+		}
 	
 
 }
