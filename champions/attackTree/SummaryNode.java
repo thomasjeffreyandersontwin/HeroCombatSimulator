@@ -31,11 +31,11 @@ public class SummaryNode extends DefaultAttackTreeNode {
         
         if ( nodeRequiresInput() || manualOverride == true ) {
             
-            MessagePanel mp = MessagePanel.getDefaultPanel(battleEvent, battleEvent.getSource(), 0, Integer.MAX_VALUE);
+         //   MessagePanel mp = MessagePanel.getDefaultPanel(battleEvent, battleEvent.getSource(), 0, Integer.MAX_VALUE);
             if(attackTreePanel==null) {
             	attackTreePanel= AttackTreePanel.defaultAttackTreePanel;
             }
-            attackTreePanel.showInputPanel(this,mp);
+            attackTreePanel.showInputPanel(this,null);
             attackTreePanel.setInstructions("Hit Okay to finish...");
             
             activateNode = true;

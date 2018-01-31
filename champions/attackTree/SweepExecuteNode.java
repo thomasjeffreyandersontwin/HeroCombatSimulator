@@ -20,10 +20,13 @@ import champions.Target;
  */
 public class SweepExecuteNode extends DefaultAttackTreeNode {
     
-    /** Creates new AutofireAttackNode */
+    public static SweepExecuteNode SENode;
+
+	/** Creates new AutofireAttackNode */
     public SweepExecuteNode(String name) {
         this.name = name;
         setVisible(false);
+        SENode = this;
     }
     
     public boolean activateNode(boolean manualOverride) {
@@ -121,44 +124,54 @@ public class SweepExecuteNode extends DefaultAttackTreeNode {
             BattleEvent aBE = lbe.getLinkedBattleEvent(index);
             if ( aBE == be ) {
                 // This was the node.  Find the other battleEvent
-                BattleEvent previousBE = lbe.getLinkedBattleEvent(index-1);
+            	int targetReferenceNumber = aBE.getActivationInfo()
+            			.getPrimaryTargetReferenceNumber(primaryTargetNumber);
+            	String tGroup = aBE.getActivationInfo().getPrimaryTargetGroup(primaryTargetNumber);
+            	int tindex = aBE.getActivationInfo().
+            			getTargetIndex(targetReferenceNumber, tGroup);
                 
-                ActivationInfo previousAI = previousBE.getActivationInfo();
-                String previousTargetGroup = previousAI.getPrimaryTargetGroup(primaryTargetNumber);
-                int previousTargetReferenceNumber = previousAI.getPrimaryTargetReferenceNumber(primaryTargetNumber);
-                
-                if ( previousTargetGroup != null ) {
-                    // There is a set primaryTarget
-                    // Find if the previous primary target is actually set...
-                    int previousTargetIndex = previousAI.getTargetIndex(previousTargetReferenceNumber, previousTargetGroup);
-                    if ( previousTargetIndex != -1 ) {
-                        Target previousTarget = previousAI.getTarget(previousTargetIndex);
-                        boolean previousHit = previousAI.getTargetHit(previousTargetIndex);
-                        
-                        
-                        ActivationInfo ai = be.getActivationInfo();
-                        
-                        // Add a new target (or set the already created one)
-                        int tindex = ai.addTarget(previousTarget,targetGroup,referenceNumber);
-                        
-//                        String reason = "This target is a primary target from an earlier sweep or rapid fire attack.\n\n" +
-//                                        "Primary targets must be the same for consecutive sweep and rapid fire attacks.";
-//                        ai.setTargetFixed(tindex, true, reason);
-                        
-                        if ( previousHit == false ) { 
-                            String reason = "A previous attack in the sweep/rapid fire attack sequence missed.\n\n" +
-                                        "All remaining attacks in this sequence will miss.";
-                        
-                            ai.setTargetHitOverride(tindex, false, reason, reason);
-                        }
-                        else {
-                            ai.clearTargetHitOverride(tindex);
-                        }
-                    }
-                }
-                break;   
-            }
-        }
+            	if(tindex==0 || tindex==-1)
+            	{
+            	
+	                BattleEvent previousBE = lbe.getLinkedBattleEvent(index-1);
+	                
+	                ActivationInfo previousAI = previousBE.getActivationInfo();
+	                String previousTargetGroup = previousAI.getPrimaryTargetGroup(primaryTargetNumber);
+	                int previousTargetReferenceNumber = previousAI.getPrimaryTargetReferenceNumber(primaryTargetNumber);
+	                
+	                if ( previousTargetGroup != null ) {
+	                    // There is a set primaryTarget
+	                    // Find if the previous primary target is actually set...
+	                    int previousTargetIndex = previousAI.getTargetIndex(previousTargetReferenceNumber, previousTargetGroup);
+	                    if ( previousTargetIndex != -1 ) {
+	                        Target previousTarget = previousAI.getTarget(previousTargetIndex);
+	                        boolean previousHit = previousAI.getTargetHit(previousTargetIndex);
+	                        
+	                        
+	                        ActivationInfo ai = be.getActivationInfo();
+	                        
+	                        // Add a new target (or set the already created one)
+	                        tindex = ai.addTarget(previousTarget,targetGroup,referenceNumber);
+	                        
+	//                        String reason = "This target is a primary target from an earlier sweep or rapid fire attack.\n\n" +
+	//                                        "Primary targets must be the same for consecutive sweep and rapid fire attacks.";
+	//                        ai.setTargetFixed(tindex, true, reason);
+	                        
+	                        if ( previousHit == false ) { 
+	                            String reason = "A previous attack in the sweep/rapid fire attack sequence missed.\n\n" +
+	                                        "All remaining attacks in this sequence will miss.";
+	                        
+	                            ai.setTargetHitOverride(tindex, false, reason, reason);
+	                        }
+	                        else {
+	                            ai.clearTargetHitOverride(tindex);
+	                        }
+	                    }
+	                }
+	                break;   
+	            }
+	        }
+	    }
     }
 
     

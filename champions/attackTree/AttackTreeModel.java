@@ -474,6 +474,7 @@ implements TreeModel {
         }
         catch ( BattleEventException bee ) {
             setError(bee);
+            bee.printStackTrace();
             return false;
         }
         

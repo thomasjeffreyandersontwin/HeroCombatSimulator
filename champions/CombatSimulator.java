@@ -556,8 +556,8 @@ public class CombatSimulator {
         UIManager.put("Directory.ProfileDirectory", "HCSData/Profiles/");
         UIManager.put("File.HCSINI", "HCSprefs.ini");
 
-        UIManager.put("CombatSimulator.defaultFont", new Font("SansSerif", Font.PLAIN, 11));
-        UIManager.put("CombatSimulator.boldFont", new Font("SansSerif", Font.BOLD, 11));
+        UIManager.put("CombatSimulator.defaultFont", new Font(GlobalFontSettings.Font, Font.PLAIN, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("CombatSimulator.boldFont", new Font(GlobalFontSettings.Font, Font.BOLD, (int) (22* GlobalFontSettings.SizeMagnification)));
 
         UIManager.put("Checked.DefaultIcon", new ImageIcon(getClass().getResource("/graphics/greenCheckIcon.gif")));
         UIManager.put("X.DefaultIcon", new ImageIcon(getClass().getResource("/graphics/redXIcon.gif")));
@@ -645,9 +645,9 @@ public class CombatSimulator {
 
         UIManager.put("AbilityPanel.defaultPortraitIcon", new ImageIcon(getClass().getResource("/graphics/defaultPortrait.gif")));
 
-        UIManager.put("AbilityTree.headerFont", new Font("SansSerif", Font.PLAIN, 10));
-        UIManager.put("AbilityTree.defaultFont", new Font("SansSerif", Font.PLAIN, 11));
-        UIManager.put("AbilityTree.sublistCPFont", new Font("Dialog", Font.BOLD, 12));
+        UIManager.put("AbilityTree.headerFont", new Font(GlobalFontSettings.Font, Font.PLAIN, (int) (20*GlobalFontSettings.SizeMagnification)));
+        UIManager.put("AbilityTree.defaultFont", new Font(GlobalFontSettings.Font, Font.PLAIN, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("AbilityTree.sublistCPFont", new Font("Dialog", Font.BOLD, (int) (24*GlobalFontSettings.SizeMagnification)));
 
         UIManager.put("AbilityTree.rosterIcon", new ImageIcon(getClass().getResource("/graphics/rosterIcon.png")));
 
@@ -670,10 +670,10 @@ public class CombatSimulator {
         UIManager.put("SenseTree.trueIcon", new ImageIcon(getClass().getResource("/graphics/greenCheckIcon.gif")));
         UIManager.put("SenseTree.falseIcon", new ImageIcon(getClass().getResource("/graphics/redXIcon.gif")));
 
-        UIManager.put("HTML.beginPlainText", "<font SIZE=\"-1\" FACE=\"Arial,'Times New Roman',System\">");
+        UIManager.put("HTML.beginPlainText", "<font SIZE=\"-3\" FACE=\"Arial,'Times New Roman',System\">");
         UIManager.put("HTML.endPlainText", "</font>");
 
-        //   UIManager.put( "AbilityEditor.background", new Color(204,204,204) );
+         UIManager.put( "AbilityEditor.background", Color.white) ;
         UIManager.put("AbilityEditor.foreground", Color.black);
 
         UIManager.put("TargetEditor.headerBackground", Color.black);
@@ -689,8 +689,8 @@ public class CombatSimulator {
         UIManager.put("Messages.undoneSelectionColor", new Color(230,230,230));
         UIManager.put("Messages.textSelectionColor", Color.white); */
 
-        UIManager.put("OnDeckList.activeFont", new Font("SansSerif", Font.BOLD, 11));
-        UIManager.put("OnDeckList.nonActiveFont", new Font("SansSerif", Font.PLAIN, 11));
+        UIManager.put("OnDeckList.activeFont", new Font(GlobalFontSettings.Font, Font.BOLD, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("OnDeckList.nonActiveFont", new Font(GlobalFontSettings.Font, Font.PLAIN, (int) (22* GlobalFontSettings.SizeMagnification)));
         UIManager.put("OnDeckList.activeColor", Color.red);
         UIManager.put("OnDeckList.nonActiveColor", Color.black);
 
@@ -782,6 +782,37 @@ public class CombatSimulator {
         UIManager.put("CombinedAbility.Icon", new ImageIcon(getClass().getResource("/graphics/CombinedAbilityIcon.png")));
         UIManager.put("AttackTree.combinedSetupIcon", new ImageIcon(getClass().getResource("/graphics/CombinedAbilityIcon.png")));
 
+        UIManager.put("Button.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("ToggleButton.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("RadioButton.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("CheckBox.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("ColorChooser.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("ComboBox.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("Label.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("List.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("MenuBar.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("MenuItem.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("RadioButtonMenuItem.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("CheckBoxMenuItem.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("Menu.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("PopupMenu.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("OptionPane.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("Panel.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("ProgressBar.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("ScrollPane.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("Viewport.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("TabbedPane.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("Table.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("TableHeader.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("TextField.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("PasswordField.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("TextArea.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("TextPane.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("EditorPane.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("TitledBorder.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("ToolBar.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("ToolTip.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
+        UIManager.put("Tree.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22* GlobalFontSettings.SizeMagnification)));
     }
 
     /** This is the main method.  If you don't understand that, you should

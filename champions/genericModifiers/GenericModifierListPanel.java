@@ -6,6 +6,7 @@
 
 package champions.genericModifiers;
 
+import champions.GlobalFontSettings;
 import champions.PADLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
@@ -118,13 +119,13 @@ implements PropertyChangeListener{
         subpanels.setLayout(new java.awt.BorderLayout());
         scrollPane.setViewportView(subpanels);
 
-        descriptionLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        descriptionLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         descriptionLabel.setText("Modifiers");
 
-        finalDescLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        finalDescLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         finalDescLabel.setText("jLabel1");
 
-        finalValueLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        finalValueLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         finalValueLabel.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import VirtualDesktop.Ability.AbilityAdapter;
-import VirtualDesktop.Attack.AttackTarget.HitLocation;
+import VirtualDesktop.Attack.AttackAdapter.HitLocation;
 import VirtualDesktop.Attack.DamageAmount;
 import VirtualDesktop.Attack.KnockbackResult;
 import VirtualDesktop.Attack.ToHitModifiers.Concealment;
@@ -80,7 +80,7 @@ public class AttackAdapterTest extends BaseAttackAdapterTest{
 		AttackResultAdapter result = _attack.completeAttack();
 		
 		//assert
-		assertAttackHit(_attack.getAttackTarget(), result);
+		assertAttackHit(_attack, result);
 		assertAttackDamage(result, defender);
 	}
 
@@ -115,7 +115,7 @@ public class AttackAdapterTest extends BaseAttackAdapterTest{
 		attack.activateAbility();
 		attack.targetDefender(defender);
 		
-		changeModifersAndAssertToHitRollHasChanged(attack.attackTarget);
+		changeModifersAndAssertCorrectModifiersHaveChanged(attack);
 		attack.completeAttack();
 	}
 
@@ -200,10 +200,8 @@ public class AttackAdapterTest extends BaseAttackAdapterTest{
 		
 	}
 
-	
-
 	@Test
-	public void attackerAttacksSpecificHitLocationOfDefender_AttackIsAimedAtHead()
+	public void attackerAttacksHeadOfDefender_AttackIsAimedAtHead()
 	{
 		//arrange
 		attack = (AttackAdapter) attacker.getAbilityWrapper("Strike");
@@ -216,7 +214,7 @@ public class AttackAdapterTest extends BaseAttackAdapterTest{
 		AttackResultAdapter r = attack.completeAttack();
 		
 		//assert
-		AttackTarget.HitLocation hitLocationUsed = r.getLocationHit();
+		HitLocation hitLocationUsed = r.getLocationHit();
 		
 		assertEquals(HitLocation.HEAD, hitLocationUsed);
 	}
@@ -231,11 +229,11 @@ public class AttackAdapterTest extends BaseAttackAdapterTest{
 		attack.activateAbility();
 		attack.targetDefender(defender);
 		
-		
 		//act
 		attack.placeObjectDirectlyBehindDefender(collidingWith,2);
 		AttackResultAdapter r = attack.completeAttack();
 		
+		//assert
 		assertObjectWasCollidedIntoAndAndObjectTookCorrectDamageAndObjectWasDestroyed(collidingWith, r);
 	}
 

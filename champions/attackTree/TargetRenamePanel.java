@@ -8,6 +8,7 @@ package champions.attackTree;
 
 import champions.Battle;
 import champions.BattleEvent;
+import champions.GlobalFontSettings;
 import champions.Roster;
 import champions.Target;
 import java.util.Iterator;
@@ -113,7 +114,7 @@ public class TargetRenamePanel extends JPanel implements AttackTreeInputPanel{
             }
         });
 
-        rosterInfoField.setFont(new java.awt.Font("SansSerif", 0, 11));
+        rosterInfoField.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         rosterInfoField.setForeground(java.awt.Color.red);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

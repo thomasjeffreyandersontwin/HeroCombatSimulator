@@ -171,7 +171,7 @@ implements PropertyChangeListener, PADValueListener, Destroyable {
         statGroup.setLayout(new java.awt.GridBagLayout());
 
         baseRadio.setSelected(true);
-        baseRadio.setFont(new java.awt.Font("Arial", 0, 11));
+        baseRadio.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         baseRadio.setText("Base Stats");
         baseRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +181,7 @@ implements PropertyChangeListener, PADValueListener, Destroyable {
 
         statGroup.add(baseRadio, new java.awt.GridBagConstraints());
 
-        currentRadio.setFont(new java.awt.Font("Arial", 0, 11));
+        currentRadio.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         currentRadio.setText("Current Stats");
         currentRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,14 +194,14 @@ implements PropertyChangeListener, PADValueListener, Destroyable {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         statGroup.add(currentRadio, gridBagConstraints);
 
-        statHeader.setFont(new java.awt.Font("Arial", 0, 9));
+        statHeader.setFont(new java.awt.Font("Arial", 0, 18));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         statGroup.add(statHeader, gridBagConstraints);
 
-        statPanel.setFont(new java.awt.Font("Arial", 0, 11));
+        statPanel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;

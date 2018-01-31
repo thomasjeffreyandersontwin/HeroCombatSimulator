@@ -40,7 +40,7 @@ public class DockingBarButton extends JToggleButton {
         
         setSelectedColor(new Color(254,254,254));
         
-        setFont( Font.getFont("SanSerif-9") );
+        setFont( Font.getFont("SanSerif-18") );
         
         setRolloverEnabled(true);
         

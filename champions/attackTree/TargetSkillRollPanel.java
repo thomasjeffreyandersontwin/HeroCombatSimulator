@@ -201,7 +201,7 @@ public class TargetSkillRollPanel extends JPanel implements PADValueListener, At
         jLabel1.setText("Skill Roll Needed: ");
         rollGroup.add(jLabel1, new java.awt.GridBagConstraints());
 
-        TargetneededLabel.setFont(new java.awt.Font("Dialog", 0, 12));
+        TargetneededLabel.setFont(new java.awt.Font("Dialog", 0, (int) (24 * GlobalFontSettings.SizeMagnification)));;
         TargetneededLabel.setForeground(java.awt.Color.blue);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;

@@ -168,6 +168,7 @@ public class SweepSetupPanel extends JPanel implements AttackTreeInputPanel, Tre
         return ad;
     }
     
+    
     /** Getter for property battleEvent.
      * @return Value of property battleEvent.
      */

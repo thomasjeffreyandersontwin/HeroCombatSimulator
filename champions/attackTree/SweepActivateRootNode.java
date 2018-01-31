@@ -19,12 +19,13 @@ import champions.battleMessage.SweepMessageGroup;
 public class SweepActivateRootNode extends DefaultAttackTreeNode implements BattleMessageGroupProvider {
     
     private SweepMessageGroup messageGroup;
-    
+    public static SweepActivateRootNode SARNode;
     /** Creates new ProcessActivateRoot */
     public SweepActivateRootNode(String name, BattleEvent be) {
         super();
         this.name = name;
         setBattleEvent(be);
+        SARNode =this;
     }
     
     public boolean activateNode(boolean manualOverride) {

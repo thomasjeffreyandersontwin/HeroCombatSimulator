@@ -7,7 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.Ability.AbstractBattleClassAdapter;
-import VirtualDesktop.Attack.AttackTarget.HitLocation;
+import VirtualDesktop.Attack.AttackAdapter.HitLocation;
 import VirtualDesktop.Attack.DamageAmount.DamageType;
 import VirtualDesktop.Character.CharacterAdaptor;
 import VirtualDesktop.Character.CharacterEffectsAdapter;
@@ -72,6 +72,7 @@ public class AttackResultAdapter extends AbstractBattleClassAdapter{
 		ArrayList<AttackResultAdapter> results = new ArrayList<AttackResultAdapter>();
 	
 		ObstructionList ol = getActivationInfo().getObstructionList(targetIndex);
+
 		if(ol!=null) {
 			for(int i=0;i<ol.size();i++) {
 				Target ob = ol.getObstruction(i);

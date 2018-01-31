@@ -879,7 +879,11 @@ public class BattleEvent extends DetailList {
         }
         
         if ( be.getParentEvent() != null ) {
-            throw new IllegalArgumentException("BattleEvent can not be embedded if Parent is Non-Null!");
+ 
+        	
+//        	throw new IllegalArgumentException("BattleEvent can not be embedded if Parent is Non-Null!");
+//        	be.remove("BattleEvent.PARENTEVENT");
+
         }
         
         // To embed an event, we must add it to the Messages Array...

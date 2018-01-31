@@ -1544,7 +1544,8 @@ public class BattleEngine extends Thread
         Ability ability = battleEvent.getAbility();
 
         ActivationInfo ai = battleEvent.getActivationInfo();
-        boolean continuing = ai.isContinuing();
+        
+       // boolean continuing = ai.isContinuing();
 
         if (battleEvent.is("AUTOFIRE")) {
             Integer maxshots = ability.getIntegerValue("Ability.MAXSHOTS");
@@ -1568,15 +1569,18 @@ public class BattleEngine extends Thread
             ai.add("Attack.ISSPREADM", "FALSE", true);
             ai.add("Attack.SPREADWIDTH", new Integer(1), true);
         }
-
-        ai.add("Attack.BURNSTUN", "TRUE", true);
-
-        battleEvent.add("Normal.STR", new Integer(battleEvent.getSource().getCurrentStat("STR")), true);
+        if(ai!=null) {
+        	ai.add("Attack.BURNSTUN", "TRUE", true);
+        }
+        if(battleEvent.getSource()!=null) 
+        {
+        	battleEvent.add("Normal.STR", new Integer(battleEvent.getSource().getCurrentStat("STR")), true);
+        }
         battleEvent.add("Pushed.STR", new Integer(0), true);
-
-        //Integer minStr = ability.getIntegerValue("Minimum.STR");
-        if (ability.isSTRMiniumSet()) {
-            battleEvent.add("Minimum.STR", ability.getSTRMinimum(), true);
+        
+        
+        if (ability!=null && ability.isSTRMiniumSet()) {
+        	battleEvent.add("Minimum.STR", ability.getSTRMinimum(), true);
         }
     }
 
@@ -4409,7 +4413,7 @@ public class BattleEngine extends Thread
 
         // Check the ActivationInfo instead of the ability...
         if (!ai.getState().equals(AI_STATE_NEW)) {
-            throw new BattleEventException("ActivationInfo for " + ability.getInstanceName() + " not in NEW state.");
+            //jeff change throw new BattleEventException("ActivationInfo for " + ability.getInstanceName() + " not in NEW state.");
         }
 
         // Set ability to Activated

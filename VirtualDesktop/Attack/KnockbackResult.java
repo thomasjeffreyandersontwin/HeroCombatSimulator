@@ -37,12 +37,17 @@ public class KnockbackResult extends AbstractBattleClassAdapter{
 		int kbi = battleEvent.getKnockbackIndex(t, "KB");
 		
 		String name = t.getName();
-
+		IndexIterator i = battleEvent.getKnockbackTargets(".KB."+ name);
+	
+	
+		
+		
 		int distance = battleEvent.getKnockbackAmount(kbi);
+		
 		if(distance>0) {
 		
 			if(battleEvent.getKnockbackEffect(kbi)== KnockbackEffect.POSSIBLECOLLISION) {
-				int i=0;
+				
 				
 				IndexIterator kbindex = getActivationInfo().getTargetGroupIterator(".KB."+ name);
 				//IndexIterator kbindex = battleEvent.getKnockbackTargets(name);

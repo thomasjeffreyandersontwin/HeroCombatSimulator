@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.Attack.AttackTargetCommand;
+import VirtualDesktop.Attack.BasicTargetAdapter;
 import VirtualDesktop.Attack.AreaEffect.AreaEffectAttackResultAdapter;
 import VirtualDesktop.Attack.MultiAttack.MultiAttackAdapter;
 import VirtualDesktop.Attack.MultiAttack.MultiAttackResultAdapter;
@@ -31,17 +32,10 @@ import champions.interfaces.IndexIterator;
 
 public class AutofireAttackAdapter extends MultiAttackAdapter {
 
-	private int numberOfShots;
-	private int widthOfAttack;
 	private AttackParametersPanel attackParameterPanel;
-	private boolean spray;
-	
-	
 	public AutofireAttackAdapter(String name, CharacterAdaptor character) {
 		super(name, character);
 	}
-
-	
 
 	public void SetAutoFireSprayMode(boolean b) {	
 		AttackParametersNode.Node.activateNode(true);
@@ -50,9 +44,6 @@ public class AutofireAttackAdapter extends MultiAttackAdapter {
 		attackParameterPanel.sprayButton.setSelected(b);
 		attackParameterPanel.sprayButtonActionPerformed(null);
 	}
-
-
-
 	public void SetAutoFireShots(int autofireShots) {
 		AttackParametersNode.Node.activateNode(true);
 		attackParameterPanel = AttackParametersPanel.ad;
@@ -62,9 +53,6 @@ public class AutofireAttackAdapter extends MultiAttackAdapter {
 				"autofireShots", autofireShots, attackParameterPanel.autofireShots.getValue());
 		attackParameterPanel.PADValueChanging(evt);		
 	}
-
-
-
 	public void SetAutoFireWidth(int autofireWidth) {
 		AttackParametersNode.Node.activateNode(true);
 		attackParameterPanel = AttackParametersPanel.ad;
@@ -76,62 +64,27 @@ public class AutofireAttackAdapter extends MultiAttackAdapter {
 		
 	}
 
-	
-	
-	public JSONObject ExportBasedOnBattleEvent(String token, BattleEvent battleEvent) {
-		
-		String type= "AttackMultiTargetResult";
-		JSONObject attackJSON = new JSONObject();
-		attackJSON.put("Type", type);
-		/*String ab=null;
-		ab=battleEvent.getAbility().getName();
-		attackJSON.put("Ability", ab);
-		
-		JSONArray targets = new JSONArray(); 
-		attackJSON.put("Targets", targets );
-		
-		
-		attackJSON.put("Token", token);
-		
-		int shots = (int) battleEvent.getActivationInfo().getValue("Attack.SHOTS");
-		
-		for(int i=1; i<=shots; i++) {
-			IndexIterator index =battleEvent.getActivationInfo().getTargetGroupIterator(".ATTACK.Shot "+i);
-			while(index.hasNext()) {
-				int  j =  index.nextIndex();
-				Target t  = battleEvent.getActivationInfo().getTarget(j);
-				if(t!=null) {
-					int tindex = battleEvent.getActivationInfo().getTargetIndex(t, ".ATTACK.Shot "+i) ;
-					JSONObject targetJSON = new JSONObject();
-					ExportSingleAttackResults(targetJSON, battleEvent,tindex);
-					ExportSingleKnockback( targetJSON, battleEvent,tindex);
-					
-					targets.add(targetJSON);
-				}
-				
-			}
-		}
-		*/
-		
-		return attackJSON;
-	}
-
-
-
 	@Override
 	public void Process() {
 		try {		Thread.sleep(500);}catch(Exception e) {}
 	}
-
-
-
-
 	@Override
 	protected MultiAttackResultAdapter BuildNewMultiAttackResult(BattleEvent battleEvent) {
 		
 		return  new AutofireAttackResultAdapter(battleEvent);
 	}
-
+	@Override
+	protected void preProcessJSON(JSONObject attackJSON) {
+		if(attackJSON.get("Spray Fire")!=null) {
+			this.SetAutoFireSprayMode((boolean) attackJSON.get("Spray Fire"));
+		}
+		if(attackJSON.get("Width")!=null) {
+			this.SetAutoFireWidth((int) attackJSON.get("Width"));
+		}
+		if(attackJSON.get("Shots")!=null) {
+			this.SetAutoFireShots((int) attackJSON.get("Shots"));
+		}
+	}
 
 	@Override
 	protected DefaultAttackTreeNode getRootAttackNode() {
@@ -141,9 +94,20 @@ public class AutofireAttackAdapter extends MultiAttackAdapter {
 	@Override
 	protected SingleTargetNode getSelectTargetingNode(int i) {
 		DefaultAttackTreeNode rootNode =  getRootAttackNode();
-		 AFShotNode afsn= (AFShotNode) rootNode.getChildAt(i);
-         return (SingleTargetNode) afsn.getChildAt(0);
+		AFShotNode afsn= (AFShotNode) rootNode.getChildAt(i);
+		return (SingleTargetNode) afsn.getChildAt(0);
 	}
+	@Override
+	public DefaultAttackTreeNode getSelectTargetingNodeForTarget(Target target) {
 
-
+		if( AutofireAttackNode.AFNode!=null) {
+			for(int i=0; i < AutofireAttackNode.AFNode.getChildCount();i++) {
+				SingleTargetNode node = (SingleTargetNode) AutofireAttackNode.AFNode.getChildAt(i).getChildAt(0);
+				if(node.getTarget() == target) {
+					return  (DefaultAttackTreeNode) node;
+				}
+			}
+		}
+		return null;
+	}
 }

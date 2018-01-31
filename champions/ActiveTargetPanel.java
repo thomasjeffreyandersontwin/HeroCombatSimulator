@@ -599,7 +599,7 @@ public class ActiveTargetPanel extends JPanel implements BattleListener, Propert
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         statGroup.add(ocvLabel, gridBagConstraints);
 
-        ocvValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        ocvValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -617,7 +617,7 @@ public class ActiveTargetPanel extends JPanel implements BattleListener, Propert
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         statGroup.add(dcvLabel, gridBagConstraints);
 
-        dcvValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        dcvValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
@@ -635,7 +635,7 @@ public class ActiveTargetPanel extends JPanel implements BattleListener, Propert
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         statGroup.add(ecvLabel, gridBagConstraints);
 
-        ecvValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        ecvValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
@@ -662,14 +662,14 @@ public class ActiveTargetPanel extends JPanel implements BattleListener, Propert
 
         pdGroup.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 5));
 
-        pdValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        pdValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         pdGroup.add(pdValue);
 
-        jLabel17.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel17.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         jLabel17.setText("/");
         pdGroup.add(jLabel17);
 
-        rpdValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        rpdValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         pdGroup.add(rpdValue);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -691,14 +691,14 @@ public class ActiveTargetPanel extends JPanel implements BattleListener, Propert
 
         edGroup.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 5));
 
-        edValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        edValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         edGroup.add(edValue);
 
-        jLabel20.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel20.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         jLabel20.setText("/");
         edGroup.add(jLabel20);
 
-        redValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        redValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         edGroup.add(redValue);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -718,7 +718,7 @@ public class ActiveTargetPanel extends JPanel implements BattleListener, Propert
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         statGroup.add(mdLabel, gridBagConstraints);
 
-        mdValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        mdValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 1;
@@ -736,7 +736,7 @@ public class ActiveTargetPanel extends JPanel implements BattleListener, Propert
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         statGroup.add(endLabel, gridBagConstraints);
 
-        endValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        endValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -754,7 +754,7 @@ public class ActiveTargetPanel extends JPanel implements BattleListener, Propert
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         statGroup.add(stunLabel, gridBagConstraints);
 
-        stunValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        stunValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
@@ -772,7 +772,7 @@ public class ActiveTargetPanel extends JPanel implements BattleListener, Propert
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         statGroup.add(bodyLabel, gridBagConstraints);
 
-        bodyValue.setFont(new java.awt.Font("SansSerif", 0, 11));
+        bodyValue.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 2;

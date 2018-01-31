@@ -186,7 +186,7 @@ class MyGridBagLayoutInfo implements java.io.Serializable {
  *         MyGridBagLayout gridbag = new MyGridBagLayout();
  *         MyGridBagConstraints c = new MyGridBagConstraints();
  *
- *         setFont(new Font("Helvetica", Font.PLAIN, 14));
+ *         setFont(new Font("Helvetica", Font.PLAIN, 28));
  *         setLayout(gridbag);
  *
  *         c.fill = MyGridBagConstraints.BOTH;

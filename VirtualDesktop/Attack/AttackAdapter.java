@@ -3,13 +3,17 @@ package VirtualDesktop.Attack;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.sun.corba.se.spi.oa.ObjectAdapter;
 
 import VirtualDesktop.Ability.AbilityAdapter;
-import VirtualDesktop.Attack.AttackTarget.HitLocation;
+import VirtualDesktop.Attack.AttackAdapter.CombatRole;
+import VirtualDesktop.Attack.MultiAttack.MultiAttackAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 import VirtualDesktop.Character.CharacterSensesAdapter;
 import VirtualDesktop.Character.SenseAdapter;
@@ -30,15 +34,18 @@ import champions.attackTree.AttackParametersPanel;
 import champions.attackTree.AttackTreeModel;
 import champions.attackTree.AttackTreeNode;
 import champions.attackTree.AttackTreePanel;
+import champions.attackTree.AttackTreeSelectionModel;
 import champions.attackTree.DefaultAttackTreeNode;
 import champions.attackTree.HitLocationNode;
 import champions.attackTree.HitLocationPanel;
 import champions.attackTree.KnockbackEffectNode;
 import champions.attackTree.KnockbackTargetNode;
 import champions.attackTree.ObstructionNode;
+import champions.attackTree.ProcessActivateRootNode;
 import champions.attackTree.SelectTargetPanel;
 import champions.attackTree.SingleTargetNode;
 import champions.attackTree.SummaryNode;
+import champions.attackTree.SweepActivateRootNode;
 import champions.attackTree.ToHitNode;
 import champions.exception.BadDiceException;
 import champions.exception.BattleEventException;
@@ -47,48 +54,44 @@ import champions.interfaces.IndexIterator;
 
 public class AttackAdapter extends AbilityAdapter {
 	
-	
+	private MultiAttackAdapter parentAttack;
 	protected AttackResultAdapter Result;
 	public AttackAdapter(String name, CharacterAdaptor character) {
 		super(name, character);
 		
 		battleEvent = UnderlyingAbility.getActivateAbilityBattleEvent(UnderlyingAbility, null, character.target);
-		battleEvent.setSource(character.target);
-		attackTarget = new AttackTarget(targetIndex, battleEvent);
-		BattleEngine.setupAttackParameters(battleEvent);
+		if(battleEvent!=null)
+		{
+			setBattleEvent(battleEvent);
+		}
+	}
+	
+	
+	public AttackAdapter(CharacterAdaptor defender, int tindex, BattleEvent event, MultiAttackAdapter parent) {
+		super(defender,tindex, event);
+		parentAttack =parent;
+		
 	}
 
+	public void setBattleEvent(BattleEvent be) {
+		//attackTarget = new AttackTarget(targetIndex, be);
+		//BattleEngine.setupAttackParameters(battleEvent);
+		//attackTarget.battleEvent = be;
+	}
+
+	
 	public AttackResultAdapter activateAbility() {
 		AttackTreeModel.treeModel.battleEvent = this.battleEvent;
-		Dice dice;
-        IndexIterator ii = battleEvent.getDiceIterator(".ATTACK");
-        int dindex;
-        while ( ii.hasNext() ) {
-            dindex = ii.nextIndex();
-            dice = battleEvent.getDiceRoll(dindex);
-            if ( dice == null ) {
-            	String size = battleEvent.getIndexedStringValue(dindex, "Die", "SIZE");    
-                try {
-					dice = new Dice( size, true);
-				} catch (BadDiceException e) {
-					e.printStackTrace();
-					return null;
-				}   
-                battleEvent.setDiceRoll(dindex, dice);
-                battleEvent.setDiceAutoRoll(dindex, true);
-            }
-        }
-     	
         battle.addEvent( battleEvent );
         while(AttackTreePanel.Panel.isShowing()==false)
         {
-        	try {Thread.sleep(100);}catch(Exception e) {}
+        	try {Thread.sleep(150);}catch(Exception e) {}
         }
         DefaultAttackTreeNode node = DefaultAttackTreeNode.Node;
         node.setBattleEvent(battleEvent);
         
         
-        if(getDefender()!=null) {
+        if(getActivationInfo()!=null && getDefender()!=null) {
         	AttackResultAdapter result = new AttackResultAdapter(battleEvent, targetIndex);
         	Result = result;
         	return result;
@@ -113,8 +116,8 @@ public class AttackAdapter extends AbilityAdapter {
 			AttackTreePanel.Panel.model.advanceAndActivate(aNode,null);
 		
 		}
-	
 	public AttackResultAdapter completeAttack() {	
+		
 		AttackResultAdapter result=null;
 		if(AttackTreePanel.Panel.isShowing()) {
 			if(AttackTreePanel.Panel.model.battleEvent==null)
@@ -144,6 +147,19 @@ public class AttackAdapter extends AbilityAdapter {
 		//targetNum=0;
 		
 	}
+	public void ForceHit() {
+		enterToHitModifiers();
+		battleEvent.getActivationInfo().addIndexed(targetIndex, "Target", "HITMODE","FORCEHIT",true);
+		AttackTreePanel.Panel.model.advanceAndActivate(ToHitNode.Node,ToHitNode.Node);
+		
+	}
+	
+	public ToHitModifiers enterToHitModifiers() {
+		ToHitModifiers = new ToHitModifiers(battleEvent, targetIndex, this);
+		return ToHitModifiers;
+	}
+	
+
 	public int getToHitRoll() {
 		getToHitModifiers();
 		CVList cvl = (CVList) battleEvent.getActivationInfo().getIndexedValue(targetIndex, "Target", "CVLIST");
@@ -151,40 +167,28 @@ public class AttackAdapter extends AbilityAdapter {
 		int DCV= cvl.getTargetCV();
 		return 11 + OCV - DCV;
 	}
+	
+	
 	public int getAttackerOCV() {
 		getToHitModifiers();
 		CVList cvl = (CVList) battleEvent.getActivationInfo().getIndexedValue(targetIndex, "Target", "CVLIST");
 		return  cvl.getSourceCV();
 	}
-	public int getDamageClass() {
+	
+	public ToHitModifiers getToHitModifiers() {
+		//if(ToHitModifiers==null) {
+			enterToHitModifiers();
+	//	}	
+		return ToHitModifiers;
+	}
+	
+	public int getDefenderDCV() {
 		return (int) battleEvent.getAbility().getDamageDie();
 		
 	}
 	
 	
 	ToHitModifiers ToHitModifiers;
-	public ToHitModifiers enterToHitModifiers() {
-		return attackTarget.enterToHitModifiers();
-	}
-	public ToHitModifiers getToHitModifiers() 
-	{
-		return attackTarget.getToHitModifiers();
-	}
-		
-	public CharacterSensesAdapter getAttackerSenses() {
-		return attackTarget.getAttackerSenses();
-	}
-	
-	public JSONObject processJSON (JSONObject attackJSON) {
-		
-		super.processJSON(attackJSON);
-		processAttackerJSON(attackJSON);
-		
-		JSONObject r = attackTarget.processJSON(attackJSON);
-		Result = attackTarget.Result;
-		return r;
-
-	}
 
 	protected void processAttackerJSON(JSONObject attackJSON) {
 		int push =0;
@@ -209,55 +213,221 @@ public class AttackAdapter extends AbilityAdapter {
 	}
 	
 	
-	protected AttackTarget attackTarget;
-	public CharacterAdaptor getDefender() 
-	{
-		return attackTarget.getDefender();
+	public CharacterSensesAdapter getAttackerSenses() {
+		CharacterSensesAdapter senses = new CharacterSensesAdapter(battleEvent,targetIndex,CombatRole.Attacker, this);
+		return senses;
 	}
-	public void targetDefender(BasicTargetAdapter defender)
+	public boolean isAttackActivated() 
 	{
-		if(isAttackActivated()==false)
-        {
-        	Activate();
-        }
-		attackTarget.targetDefender(defender);
+		// TODO Auto-generated method stub
+		return AttackTreePanel.Panel.isShowing() && battleEvent!=null&&battleEvent.getAbility().getName().equals(this.UnderlyingAbility.getName());
+	}
+	public int getDamageClass() {
+		 return (int) battleEvent.getAbility().getDamageDie();
+	}
+
+	public CharacterAdaptor getDefender() {
+		ActivationInfo ai = battleEvent.getActivationInfo();
+		Target t = ai.getTarget(targetIndex);
+		CharacterAdaptor defender = new CharacterAdaptor(t);
+		return defender;
+	}
+	public SingleTargetNode SingleTargetNode;
+	public void targetDefender(BasicTargetAdapter defender)
+	{		
+		targetDefenderNoActivate(defender);
+		
+        AttackTreePanel.Panel.advanceNode();
+        targetIndex = getActivationInfo().getTargetIndex(defender.target);
 	}
 	
-	private boolean isAttackActivated() {
-		// TODO Auto-generated method stub
-		return AttackTreePanel.Panel.isShowing() && battleEvent.getAbility().getName().equals(this.UnderlyingAbility.getName());
+	public void targetDefenderNoActivate(BasicTargetAdapter ta) {
+		if(SingleTargetNode==null)
+			SingleTargetNode=SingleTargetNode.Node;
+		
+		if(SingleTargetNode==null) {
+			SingleTargetNode= new SingleTargetNode("");
+		}
+		
+	    Target target= ta.target;
+	    if(battleEvent!=null) {
+	    	SingleTargetNode.battleEvent = battleEvent;
+	    }
+	    
+	    SingleTargetNode.activateNode(true);
+	    SingleTargetNode.setTarget(target);
 	}
 
-	public int getDefenderDCV() {
-		return attackTarget.getDefenderDCV();
-	}
-	public void addObstruction(PhysicalObjectAdapter obstruction) {;
-		attackTarget.addObstruction(obstruction);
+	ArrayList<PhysicalObjectAdapter> obstructions = new ArrayList<PhysicalObjectAdapter>();
+	public void addObstruction(PhysicalObjectAdapter obstruction) {
+		ObstructionNode node = (ObstructionNode) activateSubNodeOfTarget(ObstructionNode.class); 
+		
+		ObstructionList ol = getActivationInfo().getObstructionList(targetIndex);
+		if(ol!=null) {
+			if(obstruction.target != null){
+				ol.addObstruction(obstruction.target);
+			}
+		}
+		if(node!=null) {
+			node.activateNode(true);
+		
+			AttackTreePanel.Panel.advanceNode();
+		}
 	}
 	public void removeObstruction(PhysicalObjectAdapter obstruction) {
-		attackTarget.removeObstruction(obstruction);
+		ObstructionList ol = getActivationInfo().getObstructionList(targetIndex);
+		if(ol!=null) {
+			if(obstruction.target != null){
+				ol.remove(obstruction.getName());
+			}
+		}
 	}
 	public PhysicalObjectAdapter getObstruction(int i) {
-		return attackTarget.getObstruction(i);
+		ObstructionList ol = getActivationInfo().getObstructionList(targetIndex);
+		if(ol!=null) {
+			return  new PhysicalObjectAdapter(ol.getObstruction(i));
+		}
+		return null;
 	}
 	public int getObstructionCount() {
-		return attackTarget.getObstructionCount();
+		ObstructionList ol = getActivationInfo().getObstructionList(targetIndex);
+		if(ol!=null) {
+			return getActivationInfo().getObstructionList(targetIndex).size();
+		}
+		return 0;
 	}
-	public void ForceHit() {
-		attackTarget.ForceHit();	
-	}
-	public void targetHitLocation(HitLocation location) {
-		attackTarget.targetHitLocation(location);
-	}
-	public void placeObjectDirectlyBehindDefender(PhysicalObjectAdapter obj, int distance) 
-	{
-		attackTarget.placeObjectDirectlyBehindDefender(obj, distance);
-	}
-	private int getKnockbackDistance() {
-		return attackTarget.getKnockbackDistance();
+	
+	public enum HitLocation{ HEAD, SHOULDERS, ARMS, HANDS, CHEST, STOMACH, VITALS, THIGHS, LEGS, FEET}
+	public void targetHitLocation(HitLocation head) {
+		HitLocationNode node = (HitLocationNode) activateSubNodeOfTarget(HitLocationNode.class);	
+		String hitLocation = head.toString();
+		HitLocationPanel panel = HitLocationPanel.Panel;
+		if(panel == null)
+		{
+			panel = new HitLocationPanel();
+		}
+		panel.setHitLocation(hitLocation);
+		AttackTreePanel.Panel.model.advanceAndActivate(null,null);
 	}
 
-	public AttackTarget getAttackTarget() {
-		return attackTarget;
+	public void placeObjectDirectlyBehindDefender(PhysicalObjectAdapter obj, int distance) {
+		KnockbackTargetNode node = getKnockbackNodeForTarget();
+		while(node==null && getActivationInfo().getTargetHit(targetIndex))
+		{
+			node = getKnockbackNodeForTarget();
+		}
+		placeObjectDirectlyBehindDefenderUsingKnockbackNode(obj, distance, node);	
+	}
+	protected void placeObjectDirectlyBehindDefenderUsingKnockbackNode(PhysicalObjectAdapter obj, int distance,KnockbackTargetNode node) {
+		KnockbackEffectNode n = (KnockbackEffectNode) node.getChildAt(1);
+		if(n==null) {
+			n = KnockbackEffectNode.Node;
+		}
+	
+		int knockbackDistance = getKnockbackDistance();
+		if(knockbackDistance!=0 && knockbackDistance  > distance) {
+			SingleTargetNode snode = (SingleTargetNode) n.getChildAt(n.getChildCount()-1);
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
+			//dont mess with this mode of selecting knockback target!
+			AttackTreeModel.treeModel.activateNode(snode, snode);
+			SelectTargetPanel.ad.selectTarget(obj.target);
+		}
+		
+		try{Thread.sleep(500);} catch (InterruptedException e) {}
+	}
+	protected KnockbackTargetNode getKnockbackNodeForTarget() {
+		KnockbackTargetNode knode=null;
+		if(AttackTreeModel.treeModel.getRoot() instanceof SweepActivateRootNode)
+		{
+			//change
+			knode = (KnockbackTargetNode) parentAttack.getSelectTargetingNodeForTarget(getTarget()).getParent().getChildAt(5);
+			
+		}
+		else
+		{
+			ProcessActivateRootNode pNode = ProcessActivateRootNode.PNode;
+			for(int i = 0; i < pNode.getChildCount();i++)
+			{
+				DefaultAttackTreeNode node = (DefaultAttackTreeNode) pNode.getChildAt(i);
+				if(node instanceof KnockbackTargetNode) {
+					knode = (KnockbackTargetNode)node;
+					Target t = knode.getTarget();
+					if(getTarget() == t) {
+						break;
+					}
+				}
+			}
+			
+		}
+		while(knode.getTarget()!=getTarget())
+		{
+			int order = knode.getParent().getIndex(knode);
+			knode = (KnockbackTargetNode) knode.getParent().getChildAt(order+1);
+		}
+		return knode;
+	}
+	public int getKnockbackDistance() {
+		int kbIndex = getKBIndexOfTarget();
+		return battleEvent.getKnockbackDistance(kbIndex);
+	}
+	protected int getKBIndexOfTarget() {
+		return battleEvent.getKnockbackIndex(getTarget(), "KB");
+	}
+
+	public JSONObject processJSON(JSONObject attackJSON) {
+		super.processJSON(attackJSON);
+		processAttackerJSON(attackJSON);
+		processDefenderObstructionsAndModifiersInJSON(attackJSON);
+		if(attackJSON.get("Targeting Sense")!=null) {
+			SenseAdapter sense = getAttackerSenses().getSense((String) attackJSON.get("Targeting Sense"));
+			sense.Activate();
+		}
+		processPotentialCollisionsInJSON(attackJSON);
+		AttackResultAdapter r = new AttackResultAdapter(battleEvent, targetIndex);
+		Result = r;
+		return r.exportToJSON();
+	}
+	public void processDefenderObstructionsAndModifiersInJSON(JSONObject attackJSON) {
+		targetDefender(new CharacterAdaptor((String)attackJSON.get("Defender")));
+		
+		processObstructionsInJSON(attackJSON);
+	}
+	public void processObstructionsInJSON(JSONObject attackJSON) {
+		JSONArray physicalObjects = (JSONArray) attackJSON.get("Obstructions");
+		for(int i = 0; i < physicalObjects.size();i++) {
+			addObstruction(new PhysicalObjectAdapter((String) physicalObjects.get(i)));
+		}
+		
+		JSONObject modifiersJSON = (JSONObject) attackJSON.get("To Hit Modifiers");
+		ToHitModifiers modifiers = enterToHitModifiers();
+		modifiers.processJSON(modifiersJSON);
+	}
+	public void processPotentialCollisionsInJSON(JSONObject attackJSON) {
+		JSONArray potentialCollisions = (JSONArray) attackJSON.get("Potential Knockback Collisions");
+		for(int i = 0; i < potentialCollisions.size();i++) {
+			JSONObject pcoJSON = (JSONObject)potentialCollisions.get(i);
+			String co = (String) pcoJSON.get("Collision Object");
+			int distance  = (int) pcoJSON.get("Collision Distance");
+			placeObjectDirectlyBehindDefender(new PhysicalObjectAdapter(co), distance);
+		}
+	}
+	
+	public TreeNode activateSubNodeOfTarget(Class nodeClass) {
+		DefaultAttackTreeNode node=null;
+		try
+		{
+			if(parentAttack!=null) 
+			{
+				return parentAttack.activateSubNodeOfSpecificTarget(nodeClass, getTarget());
+			}
+			else {
+				node= (DefaultAttackTreeNode) nodeClass.getField("Node").get(null);
+				node.activateNode(true);
+			}	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return node;
 	}
 }

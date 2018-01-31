@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import VirtualDesktop.Ability.AbstractBattleClassAdapter;
 import VirtualDesktop.Attack.*;
-import VirtualDesktop.Attack.AttackTarget.HitLocation;
+import VirtualDesktop.Attack.AttackAdapter.HitLocation;
 import VirtualDesktop.Attack.MultiAttack.MultiAttackAdapter;
 import VirtualDesktop.Attack.MultiAttack.MultiAttackAdapterTest;
 import VirtualDesktop.Character.CharacterAdaptor;
@@ -25,14 +25,8 @@ import champions.Roster;
 
 class AreaEffectAttackAdapterTest extends MultiAttackAdapterTest{
 	
-	
-	
-	
-	
-	
 	@Test
 	void areaAttackHitsThreeDefendersAndHits_AttackHitsCenter() {
-		
 		//act
 		AreaEffectAttackAdapter attack = (AreaEffectAttackAdapter) targetAllDefendersWithAttack();
 		AreaEffectAttackResultAdapter result = (AreaEffectAttackResultAdapter) attack.completeAttack();
@@ -53,59 +47,11 @@ class AreaEffectAttackAdapterTest extends MultiAttackAdapterTest{
 		attack.targetCenter(new PhysicalObjectAdapter("Hex"));
 		return attack;
 	}
-	
-	@Test
-	public void jSONWithFullAttackParametersPassedToCharacter_CharacterInvokesAttackAndResponseIsCreatedCorrectly()
-	{
-		//arrange
-		JSONObject attackJSON = buildAttackJSON();
-		
-		//act
-		JSONObject resultJSON =  attacker.processJSON(attackJSON);
-		try {Thread.sleep(500);		} catch (InterruptedException e) {	e.printStackTrace();}
-		
-		//assert
-		AreaEffectAttackAdapter attack = (AreaEffectAttackAdapter) attacker.getActiveAbilty();
-		AreaEffectAttackResultAdapter result = (AreaEffectAttackResultAdapter) attack.getLastResult();
-		
-		
-		JSONArray rJSONs = (JSONArray) resultJSON.get("Affected Targets");
-		
-		AttackResultAdapter r = result.getAffectedTargetResults().get(0);
-		JSONObject rJSON = (JSONObject) rJSONs.get(0);
-		assertJSONResultEqualsResult(rJSON, r);
-		
-		r = result.getAffectedTargetResults().get(1);
-		rJSON = (JSONObject) rJSONs.get(1);
-		assertJSONResultEqualsResult(rJSON, r);
-		
-		r = result.getAffectedTargetResults().get(2);
-		rJSON = (JSONObject) rJSONs.get(2);
-		assertJSONResultEqualsResult(rJSON, r);
-		
-		
 
-
-	}
-	
-	private JSONObject buildAttackJSON() {
+	protected JSONObject buildBaseAttackJSON() {
 		JSONObject attackJSON = new JSONObject();
 		attackJSON.put("Ability", "Air - Strike");
 		attackJSON.put("AOE Center", "Hex");
-		JSONArray attackTargets = new JSONArray();
-		attackJSON.put("Attack Targets",attackTargets);
-		
-		JSONObject attackTarget = new JSONObject();
-		buildAttackTargetJSON(attackTarget, "Ogun", "Interior wood door","Magnetic lock", 2);
-		attackTargets.add(attackTarget);
-		
-		attackTarget = new JSONObject();
-		buildAttackTargetJSON(attackTarget, "Spyder", "Barrel","Bicycle", 3);
-		attackTargets.add(attackTarget);
-		
-		attackTarget = new JSONObject();
-		buildAttackTargetJSON(attackTarget, "Saviour", "Chamber pot","Padlock", 4);
-		attackTargets.add(attackTarget);
 		return attackJSON;
 	}
 

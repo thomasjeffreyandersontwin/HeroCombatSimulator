@@ -241,24 +241,24 @@ public class PerceptionPanel extends JPanel
 
         jLabel1.setText("Selected Sense");
 
-        selectedLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        selectedLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
 
         jLabel4.setText("Can Sense Target");
 
-        canSenseLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        canSenseLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         canSenseLabel.setText("Yes");
 
         cvLabel.setText("OCV Modifier");
 
         cvModifierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        warningLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        warningLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         warningLabel.setForeground(javax.swing.UIManager.getDefaults().getColor("nb.errorForeground"));
         warningLabel.setText("<html>Warning: This sense is a non-targeting sense and is not marked as being able to perceive the attacker.  By selecting this sense, you are overriding standard sense rules and perception rolls.  Typically, the defender should abort to a half-phase perception roll instead.</html> ");
 
         jLabel7.setText("Modifiers");
 
-        modifiersLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        modifiersLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

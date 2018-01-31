@@ -6,6 +6,7 @@
 
 package champions.abilityTree2;
 
+import champions.GlobalFontSettings;
 import champions.Roster;
 import champions.Target;
 import tjava.Filter;
@@ -151,7 +152,7 @@ public class ATNode extends DefaultTreeTableNode {
      * If null is returned, the default renderer font will be used.
      */
     public Font getColumnFont(int column) {
-        return null;
+        return new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification));
     }
     
     /** Tells the Node that it should trigger it's default action. 

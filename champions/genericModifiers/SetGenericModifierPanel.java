@@ -12,6 +12,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import javax.swing.Icon;
 import javax.swing.UIManager;
+
+import champions.GlobalFontSettings;
 import tjava.Destroyable;
 
 /**
@@ -152,10 +154,10 @@ public class SetGenericModifierPanel extends GenericModifierPanel
             }
         });
 
-        descriptionLabel.setFont(new java.awt.Font("Arial", 0, 11));
+        descriptionLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         descriptionLabel.setText("description");
 
-        valueLabel.setFont(new java.awt.Font("Arial", 0, 11));
+        valueLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         valueLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         valueLabel.setText("value");
         valueLabel.setMinimumSize(new java.awt.Dimension(38, 14));

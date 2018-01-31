@@ -151,14 +151,14 @@ implements ListModel, BattleListener {
         else {
             invalid = true;
         }
-        
+        /* jeff fix performance
         new BattleSequenceUpdateExporter().ExportBattleSequence(onDeckCombatants, "OnDeckCombatants");
         for (int i = 0; i < onDeckCombatants.size(); i++) {
         	if(onDeckCombatants.get(i).getTarget().getClass()== Target.class) {
         		Target character = (Target) onDeckCombatants.get(i).getTarget();
 				new CharacterJSONExporter().ExportCharacterStates(character);
         }
+        */
 		}
     }
 
-}

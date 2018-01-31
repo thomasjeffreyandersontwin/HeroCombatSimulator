@@ -722,7 +722,7 @@ implements Serializable, MouseListener {
             w = 2 * margin;
         Font font = getFont();
         FontMetrics f = getFontMetrics(
-        font==null ? new Font("Helvetica", Font.PLAIN, 12) : font); // NOI18N
+        font==null ? new Font("Helvetica", Font.PLAIN, 24) : font); // NOI18N
         
         int h = 2 * margin + f.getHeight() ;
         return new Dimension(w, h);
@@ -753,7 +753,7 @@ implements Serializable, MouseListener {
     private FontMetrics getFontM() {
         Font font = getFont();
         return getFontMetrics(
-        font==null ? new Font("Helvetica", Font.PLAIN, 12) : font); // NOI18N
+        font==null ? new Font("Helvetica", Font.PLAIN, 24) : font); // NOI18N
     }
     
     private int stringWidth(FontMetrics f, String s) {

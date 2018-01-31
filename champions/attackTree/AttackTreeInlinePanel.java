@@ -166,9 +166,9 @@ public class AttackTreeInlinePanel extends JPanel{// implements InlinePanel, Tre
         instructionGroup.setLayout(new java.awt.BorderLayout());
         
         instructionGroup.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 204)));
-        instructionGroup.setBackground(new java.awt.Color(204, 204, 255));
+        instructionGroup.setBackground(new java.awt.Color(255, 255, 255));
         instructionsLabel.setForeground(java.awt.Color.black);
-        instructionsLabel.setBackground(new java.awt.Color(204, 204, 255));
+        instructionsLabel.setBackground(new java.awt.Color(255, 255, 255));
         instructionsLabel.setOpaque(true);
         instructionGroup.add(instructionsLabel, java.awt.BorderLayout.CENTER);
         

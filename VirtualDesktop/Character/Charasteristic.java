@@ -19,6 +19,7 @@ public class Charasteristic {
 
 	public double getStartingValue() {
 		if(target.getCharacteristic(name)!=null) {
+			 
 			return target.getCharacteristic(name).getAdjustedStat() ;
 		}
 		return -999d;

@@ -117,7 +117,7 @@ public class PADComboEditor extends PADAbstractEditor {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         add(descriptionLabel, gridBagConstraints);
 
-        combo.setFont(new java.awt.Font("Arial", 0, 11));
+        combo.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         combo.setOpaque(false);
         combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

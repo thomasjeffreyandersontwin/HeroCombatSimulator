@@ -146,28 +146,28 @@ public class VPPConfigurationPanel extends javax.swing.JPanel implements Framewo
 
         jScrollPane1.setViewportView(atTree);
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel1.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         jLabel1.setText("Framework Name:");
 
-        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel3.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         jLabel3.setText("Currently Configuration");
 
-        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel5.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         jLabel5.setText("Proposed Configuration");
 
-        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel7.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         jLabel7.setText("Skill Roll Difficulty");
 
-        currentlyConfigurationLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        currentlyConfigurationLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         currentlyConfigurationLabel.setText("jLabel8");
 
-        proposedConfigurationLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        proposedConfigurationLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         proposedConfigurationLabel.setText("jLabel8");
 
-        skillRollLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        skillRollLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         skillRollLabel.setText("jLabel8");
 
-        nameLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        nameLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         nameLabel.setText("jLabel8");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

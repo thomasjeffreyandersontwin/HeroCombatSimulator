@@ -94,12 +94,12 @@ public class CVRangePanel extends javax.swing.JPanel {
 
         add(activeCheck, new java.awt.GridBagConstraints());
 
-        descriptionLabel.setFont(new java.awt.Font("Arial", 0, 11));
+        descriptionLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(descriptionLabel, gridBagConstraints);
 
-        valueText.setFont(new java.awt.Font("Arial", 0, 11));
+        valueText.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         valueText.setMinimumSize(new java.awt.Dimension(30, 25));
         valueText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

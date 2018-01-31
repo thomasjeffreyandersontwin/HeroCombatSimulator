@@ -326,15 +326,22 @@ public class ControlPanelDockingPanel extends SavedDockingPanel
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
-
+        UIManager.put("MenuBar.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
+        UIManager.put("MenuItem.font", new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         jMenuBar1 = new javax.swing.JMenuBar();
+       
         fileMenu = new javax.swing.JMenu();
+        fileMenu.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         performance = new javax.swing.JMenuItem();
         preferencesMenu = new javax.swing.JMenuItem();
         stressTestMenu = new javax.swing.JMenuItem();
+        
         jSeparator3 = new javax.swing.JSeparator();
         exitMenu = new javax.swing.JMenuItem();
+        exitMenu .setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         battleMenu = new javax.swing.JMenu();
+        battleMenu.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
+        
         newBattle = new javax.swing.JMenuItem();
         openBattle = new javax.swing.JMenuItem();
         saveBattle = new javax.swing.JMenuItem();
@@ -344,19 +351,29 @@ public class ControlPanelDockingPanel extends SavedDockingPanel
         jSeparator5 = new javax.swing.JSeparator();
         purgeBattleEvents = new javax.swing.JMenuItem();
         rosterMenu = new javax.swing.JMenu();
+        rosterMenu.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
+        
         newRoster = new javax.swing.JMenuItem();
         openRoster = new javax.swing.JMenuItem();
         characterMenu = new javax.swing.JMenu();
+        characterMenu .setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
+                
         newCharacter = new javax.swing.JMenuItem();
+        
         openCharacter = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         importMenu = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JSeparator();
         editProfiles = new javax.swing.JMenuItem();
+        
         objectMenu = new javax.swing.JMenu();
+        objectMenu.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
+        
         newObjectMenu = new javax.swing.JMenuItem();
         openObjectMenu = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
+        helpMenu.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
+        
         about = new javax.swing.JMenuItem();
         undoButton = new javax.swing.JButton();
         redoButton = new javax.swing.JButton();
@@ -536,6 +553,7 @@ public class ControlPanelDockingPanel extends SavedDockingPanel
         objectMenu.add(newObjectMenu);
 
         openObjectMenu.setText("Open Object...");
+        openObjectMenu.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         openObjectMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openObjectMenuActionPerformed(evt);

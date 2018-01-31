@@ -146,14 +146,14 @@ public class ObjectEditorStatPanel extends javax.swing.JPanel implements Propert
 
         statGroup.setLayout(new java.awt.GridBagLayout());
 
-        statHeader.setFont(new java.awt.Font("Arial", 0, 9));
+        statHeader.setFont(new java.awt.Font("Arial", 0, 18));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         statGroup.add(statHeader, gridBagConstraints);
 
-        statPanel.setFont(new java.awt.Font("Arial", 0, 11));
+        statPanel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;

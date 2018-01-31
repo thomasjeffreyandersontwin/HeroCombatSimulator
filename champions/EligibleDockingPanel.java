@@ -11,6 +11,8 @@ import champions.event.SequenceChangedEvent;
 import champions.event.TargetSelectedEvent;
 import champions.interfaces.BattleListener;
 import dockable.DockingFrameListener;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -303,11 +305,12 @@ public class EligibleDockingPanel extends SavedDockingPanel {
 
         eligiblePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 1, 1));
 
-        eligiblePanel.setFont(new java.awt.Font("Dialog", 0, 11));
+        eligiblePanel.setFont(new java.awt.Font("Dialog", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         eligiblePanel.setMinimumSize(new java.awt.Dimension(100, 10));
         eligiblePanel.setName("Eligible");
         eligiblePanel.setOpaque(false);
         listGroup.add(eligiblePanel, java.awt.BorderLayout.CENTER);
+        eligiblePanel.setBackground(Color.WHITE);
 
         listScroll.setViewportView(listGroup);
 
@@ -515,7 +518,9 @@ public class EligibleDockingPanel extends SavedDockingPanel {
 //          public void windowDeactivated(WindowEvent e) {
 //          }
 //
-//  /*  public void initSkin() {
+ public void initSkin() {
+	getContentPane().setBackground((Color) UIManager.get("AbilityEditor.background"));
+}
 //        Object o;
 //
 //        if ( (o = UIManager.get("Info.background") ) != null ) {

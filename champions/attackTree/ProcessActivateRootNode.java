@@ -258,7 +258,8 @@ public class ProcessActivateRootNode extends DefaultAttackTreeNode {
                 if ( position + 1 < children.size() ) {
                     String nextNodeName = nextNodeName( atn.getName() );
                     AttackTreeNode nextNode = (AttackTreeNode)children.get(position + 1);
-                    if ( nextNodeName == null || nextNodeName.equals(nextNode.getName())==false) {
+                    //jeff removed nextNodeName == null || from below 
+                    if (  nextNodeName != null && nextNodeName.equals(nextNode.getName())==false) {
                         // There either shouldn't be an additional node, or the node is the wrong one.
                         // Destroy everything after the current node.
                         int index = children.size() - 1;

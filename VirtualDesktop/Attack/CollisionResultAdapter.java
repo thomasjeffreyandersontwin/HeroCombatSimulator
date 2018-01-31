@@ -33,6 +33,13 @@ public PhysicalObjectAdapter getObjectCollidingWith() {
 		DamageAmount d = new DamageAmount(battleEvent, targetIndex, DamageType.Attack);
 		return d;
 	}
+	
+	
+	public KnockbackResult getKnockbackResult() {
+		
+		KnockbackResult k = new KnockbackResult(battleEvent, targetIndex);
+		return k;
+	}
 
 	public JSONObject exportToJSON() {
 		// TODO Auto-generated method stub

@@ -47,6 +47,7 @@ public class SWTAbilityNode extends SWTNode {
     /** Holds this ability/maneuver combinations position in SweepBattleEvent. */
     private int position;
     
+    public static SWTAbilityNode SWTNode;
     /** Indicates the delete option should be shown.
      */
     // private boolean deleteEnabled = false;
@@ -62,6 +63,7 @@ public class SWTAbilityNode extends SWTNode {
         setManeuver(maneuver);
         setPosition(position);
         setCount(count);
+        SWTNode = this;
     }
     
     /**

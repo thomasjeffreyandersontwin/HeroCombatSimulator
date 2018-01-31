@@ -21,7 +21,9 @@ import javax.swing.event.ChangeListener;
  */
 public class SweepSetupNode extends DefaultAttackTreeNode implements ChangeListener {
 
-    /**
+    public static SweepSetupNode SSNNode;
+
+	/**
      * Stores Variable indicating this is the first time this node has been selected.
      * 
      * If it is the first time, it will always show the attack parameters
@@ -55,6 +57,7 @@ public class SweepSetupNode extends DefaultAttackTreeNode implements ChangeListe
             changeOccurred = false;
             
             acceptActivation = true;
+            SSNNode = this;
         }
         
         if ( AttackTreeModel.DEBUG > 0 ) System.out.println("Node " + name + " activated.");

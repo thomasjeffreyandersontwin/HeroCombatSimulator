@@ -523,7 +523,7 @@ public class ObjectEditorPanel extends javax.swing.JPanel implements PropertyCha
             }
         });
 
-        massDescriptionLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        massDescriptionLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         massDescriptionLabel.setText("Test");
 
         jLabel2.setText("Material");
@@ -534,7 +534,7 @@ public class ObjectEditorPanel extends javax.swing.JPanel implements PropertyCha
             }
         });
 
-        materialDescriptionLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        materialDescriptionLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         materialDescriptionLabel.setText("Test");
 
         jLabel3.setText("Type");
@@ -545,7 +545,7 @@ public class ObjectEditorPanel extends javax.swing.JPanel implements PropertyCha
             }
         });
 
-        typeDescriptionLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        typeDescriptionLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         typeDescriptionLabel.setText("Test");
 
         knockbackCheckbox.setText("Affected by knockback");
@@ -577,10 +577,10 @@ public class ObjectEditorPanel extends javax.swing.JPanel implements PropertyCha
             }
         });
 
-        knockbackDescriptionLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        knockbackDescriptionLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         knockbackDescriptionLabel.setText("Test");
 
-        knockbackDescriptionLabel2.setFont(new java.awt.Font("SansSerif", 0, 11));
+        knockbackDescriptionLabel2.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         knockbackDescriptionLabel2.setText("Test");
 
         javax.swing.GroupLayout miscGroupLayout = new javax.swing.GroupLayout(miscGroup);

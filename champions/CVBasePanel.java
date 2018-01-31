@@ -87,11 +87,11 @@ public class CVBasePanel extends JPanel {
         checkPanel.setPreferredSize(new java.awt.Dimension(18, 18));
         add(checkPanel, new java.awt.GridBagConstraints());
 
-        descriptionLabel.setFont(new java.awt.Font("Arial", 0, 11));
+        descriptionLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         descriptionLabel.setText("Base CV");
         add(descriptionLabel, new java.awt.GridBagConstraints());
 
-        valueLabel.setFont(new java.awt.Font("Arial", 0, 11));
+        valueLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         valueLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         valueLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -106,7 +106,7 @@ public class CVBasePanel extends JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(valueLabel, gridBagConstraints);
 
-        valueText.setFont(new java.awt.Font("Arial", 0, 11));
+        valueText.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         valueText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         valueText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

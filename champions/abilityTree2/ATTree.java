@@ -12,6 +12,7 @@ package champions.abilityTree2;
 import champions.Battle;
 import champions.BattleChangeEvent;
 import champions.BattleChangeType;
+import champions.GlobalFontSettings;
 import champions.Roster;
 import champions.Target;
 import champions.event.SegmentAdvancedEvent;
@@ -113,12 +114,12 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
         c = UIManager.getColor( "AbilityTree.background" );
         if ( c != null ) this.setBackground(c);
         
-        Font f = UIManager.getFont("AbilityTree.headerFont");
+        Font f = new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification));//UIManager.getFont("AbilityTree.headerFont");
         if ( treeTableHeader != null && f != null ) {
             treeTableHeader.setFont(f);
         }
         
-        Font f2 = UIManager.getFont("AbilityTree.defaultFont");
+        Font f2 =new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification));// UIManager.getFont("AbilityTree.defaultFont");
         if ( f2 != null ) {
             setFont(f2);
         }

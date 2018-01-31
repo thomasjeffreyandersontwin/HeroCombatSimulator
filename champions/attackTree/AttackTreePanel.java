@@ -396,13 +396,10 @@ public class AttackTreePanel extends JPanel implements TreeWillSelectListener {
         if ( model != null ) model.setError( new BattleEventException("BattleEvent Cancelled", false) );
     }//GEN-LAST:event_cancelButtonActionPerformed
     
-    private void okayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okayButtonActionPerformed
+    public void okayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okayButtonActionPerformed
     	OKCLicked = true;
     	advanceNode();
         OKCLicked = false;
-       // Battle b = Battle.currentBattle;
-       // BattleEvent be = b.getCompletedEventList().get(b.getCompletedEventList().size()-1);
-       // be.getMessage
     }//GEN-LAST:event_okayButtonActionPerformed
     
     private void advanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advanceButtonActionPerformed

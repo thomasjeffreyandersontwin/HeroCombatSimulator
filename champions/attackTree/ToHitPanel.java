@@ -119,7 +119,7 @@ public class ToHitPanel extends JPanel implements AttackTreeInputPanel, Champion
 
         setLayout(new java.awt.GridBagLayout());
 
-        infoLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        infoLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         infoLabel.setText("Additional Information Label");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;

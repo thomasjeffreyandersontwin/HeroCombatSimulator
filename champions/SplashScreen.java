@@ -110,11 +110,13 @@ implements ActionListener {
 
         versionLabel.setBackground( Color.black );
         versionLabel.setForeground( new Color(77,177,81));
-        versionLabel.setFont(new java.awt.Font ("SansSerif", Font.BOLD, 11));
+        versionLabel.setFont(new java.awt.Font (GlobalFontSettings.Font, Font.BOLD, (int) (22 * GlobalFontSettings.SizeMagnification)));
+        
+        
 
         statusLabel.setBackground( Color.black );
         statusLabel.setForeground( new Color(77,177,81));
-        statusLabel.setFont(new java.awt.Font ("SansSerif", Font.BOLD, 11));
+        statusLabel.setFont(new java.awt.Font (GlobalFontSettings.Font, Font.BOLD, (int) GlobalFontSettings.SizeMagnification));
 
         this.getContentPane().setBackground( Color.black );
 

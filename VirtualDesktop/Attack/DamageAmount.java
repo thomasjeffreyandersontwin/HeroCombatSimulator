@@ -60,6 +60,7 @@ public class DamageAmount extends AbstractBattleClassAdapter{
 	}
 	
 	public int getBODY() {
+		
 		String stat="BODY";
 		if(!forObject) 
 		{

@@ -126,7 +126,7 @@
         <Component class="javax.swing.JLabel" name="ocvValue">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="11" style="0"/>
+              <Font name=GlobalFontSettings.Font size="11" style="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -148,7 +148,7 @@
         <Component class="javax.swing.JLabel" name="dcvValue">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="11" style="0"/>
+              <Font name=GlobalFontSettings.Font size="11" style="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -170,7 +170,7 @@
         <Component class="javax.swing.JLabel" name="ecvValue">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="11" style="0"/>
+              <Font name=GlobalFontSettings.Font size="11" style="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -213,14 +213,14 @@
             <Component class="javax.swing.JLabel" name="pdValue">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="SansSerif" size="11" style="0"/>
+                  <Font name=GlobalFontSettings.Font size="11" style="0"/>
                 </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel17">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="SansSerif" size="11" style="0"/>
+                  <Font name=GlobalFontSettings.Font size="11" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="/"/>
               </Properties>
@@ -228,7 +228,7 @@
             <Component class="javax.swing.JLabel" name="rpdValue">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="SansSerif" size="11" style="0"/>
+                  <Font name=GlobalFontSettings.Font size="11" style="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -259,14 +259,14 @@
             <Component class="javax.swing.JLabel" name="edValue">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="SansSerif" size="11" style="0"/>
+                  <Font name=GlobalFontSettings.Font size="11" style="0"/>
                 </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel20">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="SansSerif" size="11" style="0"/>
+                  <Font name=GlobalFontSettings.Font size="11" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="/"/>
               </Properties>
@@ -274,7 +274,7 @@
             <Component class="javax.swing.JLabel" name="redValue">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="SansSerif" size="11" style="0"/>
+                  <Font name=GlobalFontSettings.Font size="11" style="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -293,7 +293,7 @@
         <Component class="javax.swing.JLabel" name="mdValue">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="11" style="0"/>
+              <Font name=GlobalFontSettings.Font size="11" style="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -315,7 +315,7 @@
         <Component class="javax.swing.JLabel" name="endValue">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="11" style="0"/>
+              <Font name=GlobalFontSettings.Font size="11" style="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -337,7 +337,7 @@
         <Component class="javax.swing.JLabel" name="stunValue">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="11" style="0"/>
+              <Font name=GlobalFontSettings.Font size="11" style="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -359,7 +359,7 @@
         <Component class="javax.swing.JLabel" name="bodyValue">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="11" style="0"/>
+              <Font name=GlobalFontSettings.Font size="11" style="0"/>
             </Property>
           </Properties>
           <Constraints>

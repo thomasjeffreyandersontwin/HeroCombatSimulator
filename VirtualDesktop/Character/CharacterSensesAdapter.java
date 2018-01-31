@@ -12,12 +12,14 @@ import champions.exception.BattleEventException;
 
 public class CharacterSensesAdapter extends AbstractBattleClassAdapter {
 	CombatRole CombatRole;
-	public CharacterSensesAdapter(BattleEvent battleEvent, int targetIndex,CombatRole  role) {
+	AttackAdapter parentAttack;
+	public CharacterSensesAdapter(BattleEvent battleEvent, int targetIndex,CombatRole  role, AttackAdapter parent) {
+		parentAttack = parent;
 		this.battleEvent = battleEvent;
 		this.targetIndex = targetIndex;
 		DefaultAttackTreeNode node;
 		if(role==CombatRole.Defender) {
-			node = (DefaultAttackTreeNode) activateSubNodeOfTarget(TargetPerceptionsNode.class);
+			node = (DefaultAttackTreeNode) parentAttack.activateSubNodeOfTarget(TargetPerceptionsNode.class);
 			if(node==null)
 			{
 				node = new TargetPerceptionsNode("target");
@@ -25,7 +27,7 @@ public class CharacterSensesAdapter extends AbstractBattleClassAdapter {
 		}
 		else 
 		{
-			node =(DefaultAttackTreeNode) activateSubNodeOfTarget(SourcePerceptionsNode.class);
+			node =(DefaultAttackTreeNode) parentAttack.activateSubNodeOfTarget(SourcePerceptionsNode.class);
 			if(node==null)
 			{
 				node = new SourcePerceptionsNode("source");

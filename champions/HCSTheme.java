@@ -65,7 +65,7 @@ public class HCSTheme extends DefaultMetalTheme {
     public FontUIResource getControlTextFont() { 
 	if (controlFont == null) {
 	    try {		
-		controlFont = new FontUIResource(Font.getFont("swing.plaf.metal.controlFont", new Font("Dialog", Font.BOLD, 12)));
+		controlFont = new FontUIResource(Font.getFont("swing.plaf.metal.controlFont", new Font("Dialog", Font.BOLD, 24)));
 	    } catch (Exception e) {
 		controlFont = new FontUIResource("Dialog", Font.BOLD, 12);
 	    }
@@ -76,7 +76,7 @@ public class HCSTheme extends DefaultMetalTheme {
     public FontUIResource getSystemTextFont() { 
 	if (systemFont == null) {
 	    try {		
-		systemFont = new FontUIResource(Font.getFont("swing.plaf.metal.systemFont", new Font("Dialog", Font.PLAIN, 12)));
+		systemFont = new FontUIResource(Font.getFont("swing.plaf.metal.systemFont", new Font("Dialog", Font.PLAIN, 24)));
 	    } catch (Exception e) {
 		systemFont =  new FontUIResource("Dialog", Font.PLAIN, 12);
 	    }
@@ -87,7 +87,7 @@ public class HCSTheme extends DefaultMetalTheme {
     public FontUIResource getUserTextFont() { 
 	if (userFont == null) {
 	    try {		
-		userFont = new FontUIResource(Font.getFont("swing.plaf.metal.userFont", new Font("Dialog", Font.PLAIN, 12)));
+		userFont = new FontUIResource(Font.getFont("swing.plaf.metal.userFont", new Font("Dialog", Font.PLAIN, 24)));
 	    } catch (Exception e) {
 		userFont =  new FontUIResource("Dialog", Font.PLAIN, 12);
 	    }
@@ -98,7 +98,7 @@ public class HCSTheme extends DefaultMetalTheme {
     public FontUIResource getMenuTextFont() { 
 	if (controlFont == null) {
 	    try {		
-		controlFont = new FontUIResource(Font.getFont("swing.plaf.metal.controlFont", new Font("Dialog", Font.BOLD, 12)));
+		controlFont = new FontUIResource(Font.getFont("swing.plaf.metal.controlFont", new Font("Dialog", Font.BOLD, 24)));
 	    } catch (Exception e) {
 		controlFont = new FontUIResource("Dialog", Font.BOLD, 12);
 	    }
@@ -109,7 +109,7 @@ public class HCSTheme extends DefaultMetalTheme {
     public FontUIResource getWindowTitleFont() { 
 	if (controlFont == null) {
 	    try {		
-		controlFont = new FontUIResource(Font.getFont("swing.plaf.metal.controlFont", new Font("Dialog", Font.BOLD, 12)));
+		controlFont = new FontUIResource(Font.getFont("swing.plaf.metal.controlFont", new Font("Dialog", Font.BOLD, 24)));
 	    } catch (Exception e) {
 		controlFont = new FontUIResource("Dialog", Font.BOLD, 12);
 	    }
@@ -119,7 +119,7 @@ public class HCSTheme extends DefaultMetalTheme {
     public FontUIResource getSubTextFont() { 
 	if (smallFont == null) {
 	    try {		
-		smallFont = new FontUIResource(Font.getFont("swing.plaf.metal.smallFont", new Font("Dialog", Font.PLAIN, 10)));
+		smallFont = new FontUIResource(Font.getFont("swing.plaf.metal.smallFont", new Font("Dialog", Font.PLAIN, 20)));
 	    } catch (Exception e) {
 		smallFont = new FontUIResource("Dialog", Font.PLAIN, 10);
 	    }

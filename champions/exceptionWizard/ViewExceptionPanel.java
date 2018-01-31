@@ -55,7 +55,7 @@ implements WizardPanel, PropertyChangeListener {
         descriptionText.setWrapStyleWord(true);
         descriptionText.setLineWrap(true);
         descriptionText.setEditable(false);
-        descriptionText.setFont(new java.awt.Font ("SansSerif", 0, 11));
+        descriptionText.setFont(new java.awt.Font (GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         descriptionText.setText("Exceptions are low-level errors indicating an internal problem with the Hero Combat Simulator.\n\nAfter an exception occurs, it is best to save your battle and restart the Simulator since exceptions often leave the Simulator in an undefined state.");
         descriptionText.setEnabled(false);
         descriptionText.setOpaque(false);

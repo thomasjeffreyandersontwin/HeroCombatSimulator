@@ -120,10 +120,10 @@ public class CVModPanel extends JPanel {
 
         add(activeCheck, new java.awt.GridBagConstraints());
 
-        descriptionLabel.setFont(new java.awt.Font("Arial", 0, 11));
+        descriptionLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         add(descriptionLabel, new java.awt.GridBagConstraints());
 
-        valueLabel.setFont(new java.awt.Font("Arial", 0, 11));
+        valueLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         valueLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         valueLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

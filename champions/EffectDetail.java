@@ -151,24 +151,24 @@ implements PropertyChangeListener, Destroyable {
 
         label1.setText("Effect:");
 
-        nameLabel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        nameLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification))); // NOI18N
         nameLabel.setText("name");
 
         label2.setText("Target:");
 
-        targetLabel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        targetLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification))); // NOI18N
         targetLabel.setText("target");
 
         label3.setText("Linked to: ");
 
-        linkedLabel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        linkedLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification))); // NOI18N
         linkedLabel.setText("linked");
 
         descriptionLabel.setText("Description");
 
         descriptionArea.setEditable(false);
         descriptionArea.setBackground(new java.awt.Color(204, 204, 204));
-        descriptionArea.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        descriptionArea.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification))); // NOI18N
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
         descriptionArea.setMargin(new java.awt.Insets(4, 4, 4, 4));

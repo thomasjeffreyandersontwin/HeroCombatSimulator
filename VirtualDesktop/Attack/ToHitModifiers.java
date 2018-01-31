@@ -20,17 +20,19 @@ public class ToHitModifiers extends AbstractBattleClassAdapter {
 	private ToHitPanel ToHitPanel;
 	
 	public Concealment setTargetConcealement; 
-	
-	public ToHitModifiers(BattleEvent battleEvent, int targetIndex) {
+	AttackAdapter parentAttack;
+	public ToHitModifiers(BattleEvent battleEvent, int targetIndex, AttackAdapter attack) {
+		this.parentAttack = attack;
 		this.battleEvent = battleEvent;
 		this.targetIndex = targetIndex;
 		
 	    ToHitPanel = ToHitPanel.getToHitPanel(battleEvent, getTarget(),".Attack", getTargetReferenceNumber());
 		
-	    ToHitNode node = (ToHitNode) activateSubNodeOfTarget(ToHitNode.class);	
+	    ToHitNode node = (ToHitNode) attack.activateSubNodeOfTarget(ToHitNode.class);	
 	}
 	
 	public void setGenericAttacker(int generic) {
+		parentAttack.activateSubNodeOfTarget(ToHitNode.class);
 		updateCVListContainingModifier("Source0", true, generic );	
 	}
 	public int getGenericAttacker() {
@@ -203,7 +205,7 @@ public class ToHitModifiers extends AbstractBattleClassAdapter {
 	public int getCVModifierValue(String key) {
 		CVList list = battleEvent.getActivationInfo().getCVList(targetIndex);
 		try {
-			if(list.getBooleanValue(key+".ACTIVE"))
+			if(list.getBooleanValue(key+".ACTIVE") || key.equals("Source6"))
 				return list.getIntegerValue(key +".VALUE");
 		}catch(Exception e) {}
 		return 0;
@@ -215,14 +217,25 @@ public class ToHitModifiers extends AbstractBattleClassAdapter {
 		total = total - getDefenderSurprised();
 		total = total - getAttackFromBehind();
 		total = total - getGenericDefender();
-		total = total + getRangeModifier();
+		//total = total + getRangeModifier();
 		total = total + getTargetConcealment();
 		total = total + getSurpriseMove();
 		total = total + getEncumbrance();
 		total = total + getUnfamiliarWeapon();
 		total = total + getOffHand();
 		total = total + getGenericAttacker();
+		//total = total + getSweepModifier();
+		//total = total + getMartialModifiers();
 		return total;
+	}
+
+	private int getMartialModifiers() {
+		return  getCVModifierValue("Source6");
+	}
+
+	private int getSweepModifier() {
+		// TODO Auto-generated method stub
+	 return  getCVModifierValue("Source7");
 	}
 
 	public void processJSON(JSONObject modifiersJSON) {

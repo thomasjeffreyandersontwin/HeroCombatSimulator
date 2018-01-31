@@ -231,7 +231,7 @@ public class DiceRollInfoPanel extends javax.swing.JPanel {
         stunField = new javax.swing.JTextField();
         stunFieldLabel = new javax.swing.JLabel();
 
-        descriptionLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        descriptionLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         descriptionLabel.setText("Enter Dice Roll for");
 
         bodyField.setText("0");
@@ -250,10 +250,10 @@ public class DiceRollInfoPanel extends javax.swing.JPanel {
             }
         });
 
-        bodyFieldLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        bodyFieldLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         bodyFieldLabel.setText("Body");
 
-        autoCheck.setFont(new java.awt.Font("SansSerif", 0, 11));
+        autoCheck.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         autoCheck.setText("AutoRoll");
         autoCheck.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -277,7 +277,7 @@ public class DiceRollInfoPanel extends javax.swing.JPanel {
             }
         });
 
-        stunFieldLabel.setFont(new java.awt.Font("SansSerif", 0, 11));
+        stunFieldLabel.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         stunFieldLabel.setText("Stun");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

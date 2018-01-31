@@ -53,6 +53,8 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.EventListenerList;
+
+import champions.GlobalFontSettings;
 import tjava.PartialWeakMap;
 
 /**
@@ -193,7 +195,7 @@ public class DockingPanel extends JLayeredPane
         setLayout(new DockingPanel.DockingPanelLayoutManager());
         updateFullTitleBar();
 
-        setFont(new Font("Dialog", 0, 9));
+        setFont(new Font("Dialog", 0, (int) (18 * GlobalFontSettings.SizeMagnification)));
 
         setOpaque(true);
     }

@@ -105,7 +105,7 @@ public class KnockbackPanel extends javax.swing.JPanel implements PropertyChange
         finalRollGroup.add(finalRollLabel, gridBagConstraints3);
         
         finalRollValue.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        finalRollValue.setFont(new java.awt.Font("Arial", 0, 11));
+        finalRollValue.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints3 = new java.awt.GridBagConstraints();
         gridBagConstraints3.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints3.fill = java.awt.GridBagConstraints.HORIZONTAL;

@@ -152,7 +152,7 @@ public class AttackDescriptionPanel extends JPanel implements AttackTreeInputPan
 
         setLayout(new java.awt.GridBagLayout());
 
-        attackDescription.setBackground(new java.awt.Color(204, 204, 204));
+        attackDescription.setBackground(new java.awt.Color(255, 255, 255));
         attackDescription.setEditable(false);
         attackDescription.setLineWrap(true);
         attackDescription.setWrapStyleWord(true);
@@ -169,7 +169,7 @@ public class AttackDescriptionPanel extends JPanel implements AttackTreeInputPan
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(abilityLabel, gridBagConstraints);
 
-        abilityDescription.setBackground(new java.awt.Color(204, 204, 204));
+        abilityDescription.setBackground(new java.awt.Color(255, 255, 255));
         abilityDescription.setEditable(false);
         abilityDescription.setLineWrap(true);
         abilityDescription.setWrapStyleWord(true);
@@ -185,7 +185,7 @@ public class AttackDescriptionPanel extends JPanel implements AttackTreeInputPan
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(maneuverLabel, gridBagConstraints);
 
-        maneuverDescription.setBackground(new java.awt.Color(204, 204, 204));
+        maneuverDescription.setBackground(new java.awt.Color(255, 255, 255));
         maneuverDescription.setEditable(false);
         maneuverDescription.setLineWrap(true);
         maneuverDescription.setWrapStyleWord(true);

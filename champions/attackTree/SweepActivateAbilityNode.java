@@ -26,13 +26,16 @@ public class SweepActivateAbilityNode extends DefaultAttackTreeNode {
     /** Holds the index of the Ability in the SweepBattleEvent */
     int linkedAbilityIndex = -1;
     
-    private SweepBattleEvent sweepBattleEvent = null;
+     SweepBattleEvent sweepBattleEvent = null;
+
+	public static SweepActivateAbilityNode SAANode;
     
     /** Creates new ProcessActivateAbilityNode */
     public SweepActivateAbilityNode(String name) {
         this.name = name;
         
         setVisible(true);
+        SAANode = this;
     }
     
     public boolean activateNode(boolean manualOverride) {

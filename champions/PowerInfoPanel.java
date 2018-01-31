@@ -88,7 +88,7 @@ public class PowerInfoPanel extends javax.swing.JPanel {
         
         nameLabel.setText("No Power Set");
         nameLabel.setForeground(java.awt.Color.black);
-        nameLabel.setFont(new java.awt.Font ("SansSerif", 0, 12));
+        nameLabel.setFont(new java.awt.Font (GlobalFontSettings.Font, 0, (int) (24 * GlobalFontSettings.SizeMagnification)));
         
         gridBagConstraints1 = new java.awt.GridBagConstraints();
         gridBagConstraints1.gridwidth = 0;
@@ -107,7 +107,7 @@ public class PowerInfoPanel extends javax.swing.JPanel {
         
         
         descriptionEditorPane.setEditable(false);
-        descriptionEditorPane.setFont(new java.awt.Font ("SansSerif", 0, 12));
+        descriptionEditorPane.setFont(new java.awt.Font (GlobalFontSettings.Font, 0, (int) (24 * GlobalFontSettings.SizeMagnification)));
         descriptionEditorPane.setBackground((java.awt.Color) javax.swing.UIManager.getDefaults ().get ("Label.background"));
         
         gridBagConstraints1 = new java.awt.GridBagConstraints();
@@ -128,7 +128,7 @@ public class PowerInfoPanel extends javax.swing.JPanel {
         
         
         caveatEditorPane.setEditable(false);
-        caveatEditorPane.setFont(new java.awt.Font ("SansSerif", 0, 12));
+        caveatEditorPane.setFont(new java.awt.Font (GlobalFontSettings.Font, 0, (int) (24 * GlobalFontSettings.SizeMagnification)));
         caveatEditorPane.setBackground((java.awt.Color) javax.swing.UIManager.getDefaults ().get ("Label.background"));
         
         gridBagConstraints1 = new java.awt.GridBagConstraints();
@@ -150,7 +150,7 @@ public class PowerInfoPanel extends javax.swing.JPanel {
           
         dynamicLabel.setText("N/A");
           dynamicLabel.setForeground(java.awt.Color.black);
-          dynamicLabel.setFont(new java.awt.Font ("SansSerif", 0, 12));
+          dynamicLabel.setFont(new java.awt.Font (GlobalFontSettings.Font, 0, (int) (24 * GlobalFontSettings.SizeMagnification)));
           gridBagConstraints2 = new java.awt.GridBagConstraints();
           gridBagConstraints2.gridwidth = 0;
           gridBagConstraints2.fill = java.awt.GridBagConstraints.HORIZONTAL;

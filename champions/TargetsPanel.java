@@ -52,11 +52,11 @@ public class TargetsPanel extends javax.swing.JPanel {
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 2));
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel1.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         jLabel1.setText("Filter:");
         jPanel1.add(jLabel1);
 
-        deadCheckbox.setFont(new java.awt.Font("SansSerif", 0, 11));
+        deadCheckbox.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         deadCheckbox.setText("Dead");
         deadCheckbox.setToolTipText("When checked, dead character will be filtered from the target panel.");
         deadCheckbox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -69,7 +69,7 @@ public class TargetsPanel extends javax.swing.JPanel {
 
         jPanel1.add(deadCheckbox);
 
-        unconsciousCheckbox.setFont(new java.awt.Font("SansSerif", 0, 11));
+        unconsciousCheckbox.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         unconsciousCheckbox.setText("Unconscious");
         unconsciousCheckbox.setToolTipText("When checked, unconscious characters will be filter from the target panel.  However, dying unconscious characters will still be displayed.");
         unconsciousCheckbox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));

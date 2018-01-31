@@ -84,7 +84,7 @@ implements PropertyChangeListener {
      */
     private void initComponents() {//GEN-BEGIN:initComponents
         setLayout(new java.awt.FlowLayout(0, 2, 2));
-        setFont(new java.awt.Font ("Arial", 0, 11));
+        setFont(new java.awt.Font ("Arial", 0, 22));
     }//GEN-END:initComponents
 
 

@@ -591,6 +591,7 @@ public class SelectTargetPanel extends JPanel implements MouseListener, AttackTr
     		//jeff
     		atip.advanceNode();
     	}
+    	//SummaryNode.Node.activateNode(true);
     }
     
     public void mouseReleased(MouseEvent e) {

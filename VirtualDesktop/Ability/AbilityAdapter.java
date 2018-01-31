@@ -12,6 +12,7 @@ import VirtualDesktop.Attack.AreaEffect.AreaEffectAttackAdapter;
 import VirtualDesktop.Attack.Autofire.AutofireAttackAdapter;
 import VirtualDesktop.Attack.MoveThrough.MoveThroughAdapter;
 import VirtualDesktop.Attack.Sweep.SimulatorSweepAttack;
+import VirtualDesktop.Attack.Sweep.SweepAttackAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 import VirtualDesktop.Controller.GLOBALS;
 import champions.Ability;
@@ -22,6 +23,7 @@ import champions.attackTree.AttackParametersPanel;
 import champions.attackTree.AttackTreeModel;
 import champions.attackTree.AttackTreePanel;
 import champions.attackTree.SelectTargetPanel;
+import champions.attackTree.SingleTargetNode;
 import champions.exception.BattleEventException;
 import champions.powers.advantageAreaEffect;
 import champions.powers.advantageAutofire;
@@ -78,6 +80,13 @@ public class AbilityAdapter extends AbstractBattleClassAdapter {
 	}
 	
 	
+	public AbilityAdapter(CharacterAdaptor defender, int tindex, BattleEvent event) {
+		Character = defender;
+		battleEvent = event;
+		targetIndex = tindex;
+		UnderlyingAbility = event.getAbility();
+	}
+
 	public AttackResultAdapter activateAbility() {
 		
 		if(UnderlyingAbility!=null) {
@@ -117,6 +126,11 @@ public class AbilityAdapter extends AbstractBattleClassAdapter {
 			}
 			if(a.hasAdvantage(advantageAutofire.advantageName)) {
 				ability = new AutofireAttackAdapter(abilityName, character);
+				return ability;
+			}
+			if(a.getName().equals("Sweep"))
+			{
+				ability = new SweepAttackAdapter( character);
 				return ability;
 			}
 			if(a.isAttack()) {
@@ -191,6 +205,7 @@ public class AbilityAdapter extends AbstractBattleClassAdapter {
 		attackPanel.advanceNode();
 	}
 	
+	protected SingleTargetNode getSelectTargetingNode(int i) {return null;}
 	
 	public JSONObject toJSON() {
 		JSONObject jso = new JSONObject();

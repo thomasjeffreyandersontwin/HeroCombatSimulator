@@ -344,8 +344,8 @@ public class SingleTargetNode extends DefaultAttackTreeNode
             ActivationInfo ai = getBattleEvent().getActivationInfo();
             
             //afsn.buildNextChild(afsn);           
-           // DefaultAttackTreeNode n2 = (DefaultAttackTreeNode) getModel().getRoot();
-           // n2.buildNextChild(afsn);
+           DefaultAttackTreeNode n2 = (DefaultAttackTreeNode) getModel().getRoot();
+           
             
             
          

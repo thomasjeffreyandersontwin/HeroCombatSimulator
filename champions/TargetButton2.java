@@ -400,7 +400,7 @@ public class TargetButton2 extends JPanel
 
         targetStats.setLayout(new java.awt.FlowLayout());
 
-        targetStats.setFont(new java.awt.Font("Arial", 0, 11));
+        targetStats.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -411,7 +411,7 @@ public class TargetButton2 extends JPanel
 
         effectPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 2));
 
-        effectsLabel.setFont(new java.awt.Font("Arial", 0, 11));
+        effectsLabel.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         effectsLabel.setText("Effects:  ");
         effectPanel.add(effectsLabel);
 

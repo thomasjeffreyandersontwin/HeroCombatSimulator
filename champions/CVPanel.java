@@ -243,7 +243,7 @@ implements PropertyChangeListener, ChampionsConstants{
         finalSourceGroup.add(finalSourceLabel, new java.awt.GridBagConstraints());
 
         finalSourceValue.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        finalSourceValue.setFont(new java.awt.Font("Arial", 0, 11));
+        finalSourceValue.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -295,7 +295,7 @@ implements PropertyChangeListener, ChampionsConstants{
         jPanel3.add(finalTargetLabel, new java.awt.GridBagConstraints());
 
         finalTargetValue.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        finalTargetValue.setFont(new java.awt.Font("Arial", 0, 11));
+        finalTargetValue.setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;

@@ -3,7 +3,6 @@ package VirtualDesktop.Attack.AreaEffect;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import VirtualDesktop.Attack.AttackTarget;
 import VirtualDesktop.Attack.BasicTargetAdapter;
 import VirtualDesktop.Attack.PhysicalObjectAdapter;
 import VirtualDesktop.Attack.MultiAttack.MultiAttackAdapter;
@@ -51,7 +50,7 @@ public class AreaEffectAttackAdapter extends MultiAttackAdapter{
 	@Override
 	public void Process() {
 		//hack to get collisions on last node with knock back working
-		if(!getIndividualAttackTarget(getCountOfIndividualAttackTarget()-1).getDefender().getName().equals("Hex"))
+		if(!getIndividualAttack(getCountOfIndividualAttackTarget()-1).getDefender().getName().equals("Hex"))
 		{
 			targetDefender(new PhysicalObjectAdapter("Hex"));
 		}
@@ -60,44 +59,22 @@ public class AreaEffectAttackAdapter extends MultiAttackAdapter{
 	protected MultiAttackResultAdapter BuildNewMultiAttackResult(BattleEvent battleEvent) {
 		return new AreaEffectAttackResultAdapter(battleEvent);
 	}
-
 	public AreaEffectAttackResultAdapter completeAttack() {
 		//hack to get collisions on last node with knock back working
-		if(!getIndividualAttackTarget(getCountOfIndividualAttackTarget()-1).getDefender().getName().equals("Hex"))
+		if(!getIndividualAttack(getCountOfIndividualAttackTarget()-1).getDefender().getName().equals("Hex"))
 		{
 			targetDefender(new PhysicalObjectAdapter("Hex"));
 		}
 		completeMultiAttack();
 		return (AreaEffectAttackResultAdapter) Result;
 	}
-	
-	public JSONObject processJSON(JSONObject attackJSON)
-	{
-		super.Activate();
-		processAttackerJSON(attackJSON);
+	protected void preProcessJSON(JSONObject attackJSON) {
 		BasicTargetAdapter aoeCenter = new PhysicalObjectAdapter((String)attackJSON.get("AOE Center"));
 		if(aoeCenter.target==null) {
 			aoeCenter = new CharacterAdaptor((String)attackJSON.get("AOE Center"));
 		}
 		try {Thread.sleep(500);}catch(Exception e) {}
 		targetCenter(aoeCenter);
-		
-		JSONArray attackTargetsJSON = (JSONArray) attackJSON.get("Attack Targets");
-		for(int i=0;i< attackTargetsJSON.size();i++)
-		{
-			JSONObject attackTargetJSON = (JSONObject) attackTargetsJSON.get(i);
-			AttackTarget attackTarget = new AttackTarget(battleEvent);
-			attackTarget.processDefenderObstructionsAndModifiersInJSON(attackTargetJSON);
-		}
-		Process();
-		for(int i=0;i< attackTargetsJSON.size();i++)
-		{
-			JSONObject attackTargetJSON = (JSONObject) attackTargetsJSON.get(i);
-			AttackTarget attackTarget = getIndividualAttackTarget(i);
-			attackTarget.processPotentialCollisionsInJSON(attackTargetJSON);
-		}
-		Result = completeAttack();
-		return Result.exportToJSON();
 	}
 
 	protected DefaultAttackTreeNode getRootAttackNode()
@@ -110,7 +87,15 @@ public class AreaEffectAttackAdapter extends MultiAttackAdapter{
 		return (SingleTargetNode) rootNode.getChildAt(i);
 
 	}
+	@Override
+	public DefaultAttackTreeNode getSelectTargetingNodeForTarget(Target target) {
+		int tindex = getActivationInfo().getTargetIndex(target);
+		if(AEAffectedTargetsNode.AENode!=null) {
+			return (DefaultAttackTreeNode) AEAffectedTargetsNode.AENode.getChildAt(tindex - 1);
+		}
+		return null;
+	}
 
 	
 	
-	}
+}

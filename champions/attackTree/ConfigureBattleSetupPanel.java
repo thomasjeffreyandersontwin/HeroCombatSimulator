@@ -75,7 +75,7 @@ public class ConfigureBattleSetupPanel extends JPanel implements AttackTreeInput
 
         setLayout(new java.awt.GridBagLayout());
 
-        instructionTextArea.setBackground(new java.awt.Color(204, 204, 204));
+        instructionTextArea.setBackground(new java.awt.Color(255, 255, 255));
         instructionTextArea.setEditable(false);
         instructionTextArea.setFont(UIManager.getFont("CombatSimulator.defaultFont"));
         instructionTextArea.setLineWrap(true);

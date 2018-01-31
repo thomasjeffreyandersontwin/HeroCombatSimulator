@@ -10,6 +10,7 @@ import champions.Ability;
 import champions.Battle;
 import champions.BattleEvent;
 import champions.GenericAbilityBattleEvent;
+import champions.GlobalFontSettings;
 import champions.abilityTree.PADTree.PADTreeTableNode;
 import champions.interfaces.ChampionsConstants;
 import java.awt.event.MouseAdapter;
@@ -157,7 +158,7 @@ public class GenericAbilitySelectPanel extends JPanel implements AttackTreeInput
 
         selectGroup.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        warningLabel.setFont(new java.awt.Font("Dialog", 0, 12));
+        warningLabel.setFont(new java.awt.Font("Dialog", 0, (int) (24 * GlobalFontSettings.SizeMagnification)));;
         warningLabel.setForeground(java.awt.Color.red);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

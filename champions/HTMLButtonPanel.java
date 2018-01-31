@@ -114,7 +114,7 @@ implements ListDataListener {
 
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
 
-        setFont(new java.awt.Font("Arial", 0, 11));
+        setFont(new java.awt.Font("Arial", 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
     }//GEN-END:initComponents
 
 

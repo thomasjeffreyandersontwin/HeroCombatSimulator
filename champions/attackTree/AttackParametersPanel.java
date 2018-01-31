@@ -266,7 +266,7 @@ public class AttackParametersPanel extends JPanel implements PADValueListener, A
         autofireGroup.setLayout(new java.awt.GridBagLayout());
 
         autofireGroup.setBorder(new javax.swing.border.TitledBorder("Autofire Settings"));
-        autofireButton.setFont(new java.awt.Font("SansSerif", 0, 11));
+        autofireButton.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         autofireButton.setSelected(true);
         autofireButton.setText("Autofire");
         autofireButton.addActionListener(new java.awt.event.ActionListener() {
@@ -281,7 +281,7 @@ public class AttackParametersPanel extends JPanel implements PADValueListener, A
         gridBagConstraints.weightx = 1.0;
         autofireGroup.add(autofireButton, gridBagConstraints);
 
-        sprayButton.setFont(new java.awt.Font("SansSerif", 0, 11));
+        sprayButton.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         sprayButton.setText("Autofire Spray");
         sprayButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -338,7 +338,7 @@ public class AttackParametersPanel extends JPanel implements PADValueListener, A
         spreadGroup.setLayout(new java.awt.GridBagLayout());
 
         spreadGroup.setBorder(new javax.swing.border.TitledBorder("Spread EB Settings"));
-        noSpreadButton.setFont(new java.awt.Font("SansSerif", 0, 11));
+        noSpreadButton.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         noSpreadButton.setSelected(true);
         noSpreadButton.setText("No Spread");
         noSpreadButton.addActionListener(new java.awt.event.ActionListener() {
@@ -353,7 +353,7 @@ public class AttackParametersPanel extends JPanel implements PADValueListener, A
         gridBagConstraints.weightx = 1.0;
         spreadGroup.add(noSpreadButton, gridBagConstraints);
 
-        spreadButton.setFont(new java.awt.Font("SansSerif", 0, 11));
+        spreadButton.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         spreadButton.setText("Spread (Single Target)");
         spreadButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -366,7 +366,7 @@ public class AttackParametersPanel extends JPanel implements PADValueListener, A
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         spreadGroup.add(spreadButton, gridBagConstraints);
 
-        spreadmButton.setFont(new java.awt.Font("SansSerif", 0, 11));
+        spreadmButton.setFont(new java.awt.Font(GlobalFontSettings.Font, 0, (int) (22 * GlobalFontSettings.SizeMagnification)));
         spreadmButton.setText("Spread (Multi-Target)");
         spreadmButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -434,7 +434,7 @@ public class AttackParametersPanel extends JPanel implements PADValueListener, A
         gridBagConstraints.weighty = 1.0;
         add(fillerGroup, gridBagConstraints);
 
-        warningLabel.setFont(new java.awt.Font("Dialog", 0, 12));
+        warningLabel.setFont(new java.awt.Font("Dialog", 0, (int) (24 * GlobalFontSettings.SizeMagnification)));;
         warningLabel.setForeground(java.awt.Color.red);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
