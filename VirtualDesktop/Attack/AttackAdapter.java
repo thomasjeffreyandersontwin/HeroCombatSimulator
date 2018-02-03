@@ -54,7 +54,7 @@ import champions.interfaces.IndexIterator;
 
 public class AttackAdapter extends AbilityAdapter {
 	
-	private MultiAttackAdapter parentAttack;
+	public MultiAttackAdapter parentAttack;
 	protected AttackResultAdapter Result;
 	public AttackAdapter(String name, CharacterAdaptor character) {
 		super(name, character);
@@ -190,7 +190,7 @@ public class AttackAdapter extends AbilityAdapter {
 	
 	ToHitModifiers ToHitModifiers;
 
-	protected void processAttackerJSON(JSONObject attackJSON) {
+	protected void setPushedAmount(JSONObject attackJSON) {
 		int push =0;
 		if(attackJSON.get("PushedStr")!=null) {
 			if( attackJSON.get("PushedStr") instanceof Long) {
@@ -270,9 +270,9 @@ public class AttackAdapter extends AbilityAdapter {
 		}
 		if(node!=null) {
 			node.activateNode(true);
-		
 			AttackTreePanel.Panel.advanceNode();
 		}
+		
 	}
 	public void removeObstruction(PhysicalObjectAdapter obstruction) {
 		ObstructionList ol = getActivationInfo().getObstructionList(targetIndex);
@@ -376,8 +376,12 @@ public class AttackAdapter extends AbilityAdapter {
 
 	public JSONObject processJSON(JSONObject attackJSON) {
 		super.processJSON(attackJSON);
-		processAttackerJSON(attackJSON);
-		processDefenderObstructionsAndModifiersInJSON(attackJSON);
+		setPushedAmount(attackJSON);
+		String defName = (String) attackJSON.get("Defender");
+		CharacterAdaptor defender = new CharacterAdaptor(defName);
+		targetDefender(defender);
+		processObstructionsInJSON(attackJSON);
+		processToHitModifiersInJSON(attackJSON);
 		if(attackJSON.get("Targeting Sense")!=null) {
 			SenseAdapter sense = getAttackerSenses().getSense((String) attackJSON.get("Targeting Sense"));
 			sense.Activate();
@@ -387,17 +391,16 @@ public class AttackAdapter extends AbilityAdapter {
 		Result = r;
 		return r.exportToJSON();
 	}
-	public void processDefenderObstructionsAndModifiersInJSON(JSONObject attackJSON) {
-		targetDefender(new CharacterAdaptor((String)attackJSON.get("Defender")));
-		
-		processObstructionsInJSON(attackJSON);
-	}
+	
 	public void processObstructionsInJSON(JSONObject attackJSON) {
 		JSONArray physicalObjects = (JSONArray) attackJSON.get("Obstructions");
 		for(int i = 0; i < physicalObjects.size();i++) {
 			addObstruction(new PhysicalObjectAdapter((String) physicalObjects.get(i)));
 		}
 		
+		
+	}
+	public void processToHitModifiersInJSON(JSONObject attackJSON) {
 		JSONObject modifiersJSON = (JSONObject) attackJSON.get("To Hit Modifiers");
 		ToHitModifiers modifiers = enterToHitModifiers();
 		modifiers.processJSON(modifiersJSON);

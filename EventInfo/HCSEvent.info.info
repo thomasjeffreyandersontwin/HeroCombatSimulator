@@ -1,13 +1,5 @@
 Event: 
-	Name:Expand Character Node
-character:
-	name:Spyder
-	costume:
-	model:
-	MaxStun:48
-	MaxEndurance:60
-	CurrStun:-172
-	CurrEndurance:56
+	Name:Expand Roster Node
 	Crowd: 
 		Name:Unnamed
 		Characters:

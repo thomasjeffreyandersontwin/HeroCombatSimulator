@@ -31,44 +31,7 @@ public class effectDamageReduction extends LinkedEffect{
         setAbility(ability);
     }
 
-    /*  public void postdefense(BattleEvent be, Effect effect)
-    throws BattleEventException {
-    int i, count;
-    String type, defense,special;
-    Double value, newValue;
-    Object versus;
-    
-    String damageType = this.getStringValue("Effect.DAMAGETYPE");
-    Integer percent = this.getIntegerValue("Effect.PERCENT");
-    boolean resistant = this.getBooleanValue("Effect.RESISTANT");
-    
-    count = effect.getIndexedSize("Subeffect");
-    for ( i=0;i<count;i++) {
-    if (
-    (type = effect.getIndexedStringValue( i, "Subeffect", "EFFECTTYPE" )) != null
-    && (value = effect.getIndexedDoubleValue( i, "Subeffect", "VALUE" )) != null
-    && (defense = effect.getIndexedStringValue( i, "Subeffect", "DEFTYPE" )) != null
-    && (special = effect.getIndexedStringValue( i, "Subeffect", "DEFSPECIAL" )) != null
-    && (versus = effect.getIndexedValue( i, "Subeffect", "VERSUS" )) != null
-    ) {
-    if ( value.intValue() == 0 ) continue;
-    if ( defense.equals(damageType) == false ) continue;
-    if ( special.equals("NORMAL")
-    || special.equals("NND")
-    || special.equals("AVDL")
-    ||  ( special.equals("KILLING") && resistant == true )
-    ){
-    newValue = new Double( Math.round( value.doubleValue() * (100 - percent.doubleValue()) / 100.0 ));
-    if (! value.equals( newValue ) ) {
-    effect.addIndexed( i, "Subeffect","VALUE",newValue, true);
-    be.addMessage( this.getName() + " reduced " + versus.toString() + " effect from " + value.toString()
-    + " to " + newValue.toString(), BattleEvent.MSG_ABILITY );
-    }
-    }
-    }
-    }
-    
-    } */
+
     public boolean addEffect(BattleEvent be, Target target)
             throws BattleEventException {
         if (super.addEffect(be, target)) {

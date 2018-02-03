@@ -402,7 +402,12 @@ implements AbilityList, Serializable {
             }
             
             //index = createIndexed(insertIndex, "Ability", "ABILITY", ability );
-            abilities.add(insertIndex, ability);
+            try {
+        		abilities.add(insertIndex, ability);
+        	}catch(Exception e)
+        	{
+        		abilities.add( ability);
+        	}
             
             //if ( ability.getAbilityList() != this ) {
             ability.setAbilityList(this);
@@ -423,7 +428,12 @@ implements AbilityList, Serializable {
             //moveIndexed(index, insertIndex, "Ability", false);
             abilities.remove(index);
             if ( insertIndex <= index+1 ) {
-                abilities.add(insertIndex, ability);
+            	try {
+            		abilities.add(insertIndex, ability);
+            	}catch(IndexOutOfBoundsException e)
+            	{
+            		abilities.add( ability);
+            	}
             }
             else {
                 // Shift by one, since we removed one before insert index
