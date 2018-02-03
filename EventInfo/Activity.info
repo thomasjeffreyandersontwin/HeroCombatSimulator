@@ -1,12 +1,12 @@
 
 character:
-	name:Blind Justice
+	name:Ogun
 	costume:
 	model:
-	MaxStun:77
-	MaxEndurance:560
-	CurrStun:77
-	CurrEndurance:132
+	MaxStun:27
+	MaxEndurance:36
+	CurrStun:-787
+	CurrEndurance:37
 Activate: True
 
 	Crowd: 
@@ -38,21 +38,5 @@ Activate: True
 				model:
 			Saviour:
 				name:Saviour
-				costume:
-				model:
-			Barrel:
-				name:Barrel
-				costume:
-				model:
-			Bicycle:
-				name:Bicycle
-				costume:
-				model:
-			Furniture, glass, reinforced:
-				name:Furniture, glass, reinforced
-				costume:
-				model:
-			Cart, small:
-				name:Cart, small
 				costume:
 				model:

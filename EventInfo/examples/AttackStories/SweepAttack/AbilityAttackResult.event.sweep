@@ -1,40 +1,193 @@
 {
-	"Type": "AttackSweepTargetsResult",
-	"Attacks": [{
-		"Ability": "Offensive Strike",
-		"Type": "AttackSingleTargetResult",
-		"Target": {
-			"STUN": {},
-			"Name": "Light machinery"
-		},
-		"Results": {
+	"Ability": "Sweep",
+	"Affected Targets": [{
+		"Hit": true,
+		"Obstruction Damage Results": [{
+			"Ability": "Defensive Strike",
 			"Hit": true,
-			"Knockback": {
-				"Distance": "1"
+			"Defender": {
+				"Effects": ["Partially Destroyed"],
+				"BODY": {
+					"Starting": 3.0,
+					"Currrent": 0,
+					"Name": "BODY"
+				},
+				"STUN": {
+					"Name": "STUN"
+				},
+				"Name": "Interior wood door"
 			},
-			"Effects": ["Dead"]
-		}
-	}, {
-		"Ability": "Sacrifice Strike",
-		"Type": "AttackSingleTargetResult",
-		"Target": {
-			"STUN": {},
-			"Name": "test"
+			"Damage Results": {
+				"STUN": 183,
+				"BODY": 183
+			},
+			"Knockback Result": {
+				"Distance": 0
+			}
+		}],
+		"Defender": {
+			"Effects": ["Unconsious"],
+			"BODY": {
+				"Starting": 10.0,
+				"Currrent": 2,
+				"Name": "BODY"
+			},
+			"STUN": {
+				"Starting": 37.0,
+				"Currrent": -787,
+				"Name": "STUN"
+			},
+			"Name": "Ogun"
 		},
-		"Results": {
-			"Hit": true,
-			"Effects": []
-		}
-	}, {
-		"Ability": "Martial Strike",
-		"Type": "AttackSingleTargetResult",
-		"Target": {
-			"STUN": {},
-			"Name": "City gates, small"
+		"Damage Results": {
+			"STUN": 183,
+			"BODY": 3
 		},
-		"Results": {
+		"Knockback Result": {
+			"Collisions": [{
+				"Object Collided With": {
+					"Effects": ["Dead",
+					"Destroyed"],
+					"BODY": {
+						"Starting": 3.0,
+						"Currrent": -10,
+						"Name": "BODY"
+					},
+					"Name": "Magnetic lock"
+				},
+				"Collision Damage Results": {
+					"STUN": 0,
+					"BODY": 13
+				}
+			}],
+			"Distance": 20
+		}
+	},
+	{
+		"Hit": true,
+		"Obstruction Damage Results": [{
+			"Ability": "Offensive Strike",
 			"Hit": true,
-			"Effects": []
+			"Defender": {
+				"Effects": ["Partially Destroyed"],
+				"BODY": {
+					"Starting": 3.0,
+					"Currrent": 0,
+					"Name": "BODY"
+				},
+				"STUN": {
+					"Name": "STUN"
+				},
+				"Name": "Barrel"
+			},
+			"Damage Results": {
+				"STUN": 180,
+				"BODY": 180
+			},
+			"Knockback Result": {
+				"Distance": 0
+			}
+		}],
+		"Defender": {
+			"Effects": ["Stunned",
+			"Unconsious"],
+			"BODY": {
+				"Starting": 10.0,
+				"Currrent": 3,
+				"Name": "BODY"
+			},
+			"STUN": {
+				"Starting": 48.0,
+				"Currrent": -107,
+				"Name": "STUN"
+			},
+			"Name": "Spyder"
+		},
+		"Damage Results": {
+			"STUN": 83,
+			"BODY": 7
+		},
+		"Knockback Result": {
+			"Collisions": [{
+				"Object Collided With": {
+					"Effects": ["Dead",
+					"Destroyed"],
+					"BODY": {
+						"Starting": 2.0,
+						"Currrent": -7,
+						"Name": "BODY"
+					},
+					"Name": "Bicycle"
+				},
+				"Collision Damage Results": {
+					"STUN": 0,
+					"BODY": 9
+				}
+			}],
+			"Distance": 14
+		}
+	},
+	{
+		"Hit": true,
+		"Obstruction Damage Results": [{
+			"Ability": "Martial Strike",
+			"Hit": true,
+			"Defender": {
+				"Effects": ["Partially Destroyed"],
+				"BODY": {
+					"Starting": 2.0,
+					"Currrent": 0,
+					"Name": "BODY"
+				},
+				"STUN": {
+					"Name": "STUN"
+				},
+				"Name": "Chamber pot"
+			},
+			"Damage Results": {
+				"STUN": 141,
+				"BODY": 141
+			},
+			"Knockback Result": {
+				"Distance": 0
+			}
+		}],
+		"Defender": {
+			"Effects": ["Stunned",
+			"Unconsious"],
+			"BODY": {
+				"Starting": 10.0,
+				"Currrent": 4,
+				"Name": "BODY"
+			},
+			"STUN": {
+				"Starting": 53.0,
+				"Currrent": -60,
+				"Name": "STUN"
+			},
+			"Name": "Saviour"
+		},
+		"Damage Results": {
+			"STUN": 64,
+			"BODY": 6
+		},
+		"Knockback Result": {
+			"Collisions": [{
+				"Object Collided With": {
+					"Effects": ["Partially Destroyed"],
+					"BODY": {
+						"Starting": 3.0,
+						"Currrent": -2,
+						"Name": "BODY"
+					},
+					"Name": "Padlock"
+				},
+				"Collision Damage Results": {
+					"STUN": 0,
+					"BODY": 5
+				}
+			}],
+			"Distance": 9
 		}
 	}]
 }

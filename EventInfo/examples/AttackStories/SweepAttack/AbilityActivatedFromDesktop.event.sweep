@@ -1,8 +1,48 @@
 {
-	"Type": "SweepTarget",
-	"Abilities":[
-		{"Ability":"Martial Strike", "Target":"Light machinery"},
-		{"Ability":"Sacrifice Strike", "Target":"test"},
-		{"Ability":"Martial Strike","Target":"City gates, small"}
-	]
+	"Ability": "Sweep",
+	"Attack Targets": [{
+		"Ability": "Defensive Strike",
+		"Obstructions": ["Interior wood door"],
+		"Targeting Sense": "Normal Hearing",
+		"Defender": "Ogun",
+		"To Hit Modifiers": {
+			"From Behind": true,
+			"Defender Entangled": true,
+			"Surprise Move": -3
+		},
+		"Potential Knockback Collisions": [{
+			"Collision Distance": 2,
+			"Collision Object": "Magnetic lock"
+		}]
+	},
+	{
+		"Ability": "Offensive Strike",
+		"Obstructions": ["Barrel"],
+		"Targeting Sense": "Normal Hearing",
+		"Defender": "Spyder",
+		"To Hit Modifiers": {
+			"From Behind": true,
+			"Defender Entangled": true,
+			"Surprise Move": -3
+		},
+		"Potential Knockback Collisions": [{
+			"Collision Distance": 3,
+			"Collision Object": "Bicycle"
+		}]
+	},
+	{
+		"Ability": "Martial Strike",
+		"Obstructions": ["Chamber pot"],
+		"Targeting Sense": "Normal Hearing",
+		"Defender": "Saviour",
+		"To Hit Modifiers": {
+			"From Behind": true,
+			"Defender Entangled": true,
+			"Surprise Move": -3
+		},
+		"Potential Knockback Collisions": [{
+			"Collision Distance": 4,
+			"Collision Object": "Padlock"
+		}]
+	}]
 }

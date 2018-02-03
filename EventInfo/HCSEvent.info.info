@@ -1,5 +1,41 @@
 Event: 
-	Name:Expand Roster Node
+	Name:Expand Character Node
+character:
+	name:Ogun
+	costume:
+	model:
+	MaxStun:27
+	MaxEndurance:36
+	CurrStun:-787
+	CurrEndurance:37
 	Crowd: 
 		Name:Unnamed
 		Characters:
+			Blind Justice:
+				name:Blind Justice
+				costume:
+				model:
+			Spyder:
+				name:Spyder
+				costume:
+				model:
+			Ogun:
+				name:Ogun
+				costume:
+				model:
+			Interior wood door:
+				name:Interior wood door
+				costume:
+				model:
+			Magnetic lock:
+				name:Magnetic lock
+				costume:
+				model:
+			Chamber pot:
+				name:Chamber pot
+				costume:
+				model:
+			Saviour:
+				name:Saviour
+				costume:
+				model:
