@@ -24,57 +24,45 @@ public class DesktopCommandFactory {
 	
 	public static AbstractDesktopCommand GetCommand(JSONObject message) {
 		String type = (String) message.get("Type");
-		if(type.equals("AttackSingleTarget")) {
-			return new AttackTargetCommand();
-		}
-		if(type.equals("RosterSynchronization")){
+		
+		if(type.equals("RosterSynchronization"))
+		{
 			return new RosterSynchCommand();
 		}
 		if(type.equals("CombatAction"))  {
 			return new CombatControlAction();
 		}
-		if(type.equals("Sweep") || type.equals("Rapid Fire")) {
-			return new AttackSweepTargetCommand();
+		if(type.equals("Sweep") || type.equals("Rapid Fire")) 
+		{
+			
 		}
-		
-		if(type.equals("AreaEffectTargets")) {
-			return new AttackTargetCommand();
-		}
-		
-		if(type.equals("AutofireTargets") ){
-			return new AttackTargetCommand();		}
-		if(type.equals("AbortNextAction") ){
+		if(type.equals("AbortNextAction") )
+		{
 			return new AbortNextActionCommand();
 		}
-		if(type.equals("ActivateHeldCharacter") ){
+		if(type.equals("ActivateHeldCharacter") )
+		{
 			return new ActivateHeldCharacterCommand();
 		}
-		
 		if(type.equals("SimpleAbility") ){
 			return new SimpleAbilityCommand();
 		}
 		if(type.equals("Movement") ){
 			return new MoveCommand();
 		}
-		if(type.equals("MoveThrough") || type.equals("MoveBy") ){
+		if(type.equals("MoveThrough") || type.equals("MoveBy") )
+		{
 			return new AttackMoveThroughTargetCommand ();
-		}
-		
-		if(type.equals("MoveAndAttack")){
+		}	
+		if(type.equals("MoveAndAttack"))
+		{
 			return new MoveAndAttackCommand();
 		}
-		if(type.equals("ConfirmAttack") ){
+		if(type.equals("ConfirmAttack") )
+		{
 			return new ConfirmAttack();
 		}
-		if(type.equals("Attack") ){
-			return new AttackTargetCommand();
-		}
-		if(type.equals("AreaEffect") ){
-			return new AttackTargetCommand();
-		}
-		
-		return null;
-		
+		return new AttackTargetCommand();
 	}
 	
 	

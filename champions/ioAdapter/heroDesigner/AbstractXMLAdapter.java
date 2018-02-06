@@ -49,7 +49,10 @@ public abstract class AbstractXMLAdapter implements XMLAdapter, ChampionsConstan
         if ( pl != null && ta != null ) {
             for(int index = 0; index < ta.length; index++) {
                 String xmlAttrName = ta[index][0];
-                String parameterName = ta[index][1];
+                String parameterName = "";
+                
+                	parameterName = ta[index][1];
+                
                 String specialHandler = null;
                 String specialData = null;
                 if ( ta[index].length >= 3 ) {

@@ -103,6 +103,10 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 	{
 		super.completeAttack();
 		
+		return buildAndSaveAttackResult();
+	}
+
+	private MultiAttackResultAdapter buildAndSaveAttackResult() {
 		Result = BuildNewMultiAttackResult(battleEvent);
 		return  (MultiAttackResultAdapter) Result;
 	}
@@ -132,7 +136,7 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 			AttackAdapter attackTarget = getIndividualAttack(i);
 			attackTarget.processPotentialCollisionsInJSON(attackTargetJSON);
 		}
-		Result = completeAttack();
+		Result = buildAndSaveAttackResult();
 		Result.setToken(token);
 		return Result.exportToJSON();
 	}

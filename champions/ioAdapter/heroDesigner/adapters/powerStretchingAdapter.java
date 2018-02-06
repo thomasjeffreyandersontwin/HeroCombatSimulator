@@ -22,7 +22,7 @@ public class powerStretchingAdapter extends AbstractPowerXMLAdapter implements P
     
     private static String XMLID = "STRETCHING";
     private static String[][] translationArray = {
-        {  "DistanceFromCollision"}
+    		 { "LEVELS", "DamageDie" },
     };
     
     private boolean basePower = false;
@@ -52,7 +52,8 @@ public class powerStretchingAdapter extends AbstractPowerXMLAdapter implements P
      *or override the importXML method to do more complicated import tasks.
      */
     public String[][] getTranslationArray() {
-        return translationArray;
+        String[][] t = {{ "LEVELS", "Distance" }};
+        return t;
     }
     
     public XMLParseError importXML(Ability ability, Node node) {

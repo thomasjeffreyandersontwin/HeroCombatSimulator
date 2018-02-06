@@ -123,6 +123,7 @@ public class PADRoster extends Object {
         {"Leaping","powerLeaping", "Powers"},
         {"Luck","powerLuck", "Powers"},
         {"Swimming","powerSwimming", "Powers"},
+        {"Unidentified", "powerUnidentified", "Powers"},
         //  {"Takes No Stun","powerTakesNoStun", "Powers"},
         {"Suppress","powerSuppress", "Powers"},
         {"Swinging","powerSwinging", "Powers"},

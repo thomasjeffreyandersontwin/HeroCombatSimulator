@@ -17,10 +17,13 @@ import champions.interfaces.AbilityList;
 import champions.interfaces.Advantage;
 import champions.interfaces.Limitation;
 import champions.interfaces.SpecialParameter;
+import champions.ioAdapter.heroDesigner.adapters.powerUnidentifiedAdapter;
 import champions.parameters.ParameterList;
 import champions.powers.SpecialParameterENDSource;
 import champions.powers.SpecialParameterMultipowerSlot;
 import champions.powers.powerENDReserve;
+import champions.powers.powerUnidentified;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -132,7 +135,9 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
 
         if ("COMPOUNDPOWER".equals(powerID)) {
             ability = importCompoundAbility(abilityName, node, xmlParseErrorList);
-        } else {
+        } 
+        else 
+        {
 
             XMLParseErrorList abilityErrorList = new XMLParseErrorList(abilityName + " import errors");
 
@@ -140,6 +145,7 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
             // the power list, ask the parser for an PowerXMLAdapter, and then check
             // the Adapter if it matches the XMLID.
             Iterator powerIterator = PADRoster.getAbilityIterator();
+            
             PowerXMLAdapter pxa = null;
             boolean done = false;
             while (!done && powerIterator.hasNext()) {
@@ -157,6 +163,7 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
                     }
                 }
             }
+            
             if(ability==null 
             	&& node.getAttributes().getNamedItem("XMLID").getNodeValue().equals("NAKEDMODIFIER")
             	&& node.getAttributes().getNamedItem("INPUT").getNodeValue().equals("STR"))
@@ -165,27 +172,36 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
 				ability.setName(abilityName);
 				importAbilityAdders(node, ability, abilityErrorList);
 			}
-            else {
-	            if (ability == null) {
+            else 
+            {
+            	if(ability==null)
+            	{
+            		pxa = new powerUnidentifiedAdapter();
+            		ability = PADRoster.getNewAbilityInstance("Unidentified");
+            	
+            	
+            	}
+            }
+            
+	        if (ability == null) {
 	                xmlParseErrorList.addXMLParseError(new HDImportError(abilityName + ": Ability type not recognized during import.  XMLID=\"" + powerID + "\"", HDImportError.IMPORT_FAILURE));
+	                
 	                return null;
-	            }
+	         }
 	
-	            ability.setName(abilityName);
-	            if (importAbilityParameters(node, ability, pxa, abilityErrorList) == false) {
+	         ability.setName(abilityName);
+	         if (importAbilityParameters(node, ability, pxa, abilityErrorList) == false) {
 	                // We will assume that importAbilityParameters setup the error list appropriately.
 	                if (abilityErrorList.getXMLParseErrorCount() > 0) {
 	                    xmlParseErrorList.addXMLParseError(abilityErrorList);
 	                }
 	                return null;
 	            }
+	         	if (abilityErrorList.getXMLParseErrorCount() > 0) {
+	                xmlParseErrorList.addXMLParseError(abilityErrorList);
+	            }
             }
-
-            if (abilityErrorList.getXMLParseErrorCount() > 0) {
-                xmlParseErrorList.addXMLParseError(abilityErrorList);
-            }
-            
-        }
+	
 
         return ability;
     }
@@ -502,6 +518,10 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
         } else {
             // Lookup the approprate adapter based on name...
             Power p = PADRoster.getPower(powerName);
+            if(p==null)
+            {
+            	p = new powerUnidentified();
+            }
             String powerClass = p.getClass().getName();
             int i = powerClass.lastIndexOf('.');
             if (i > 0 && i < powerClass.length() - 1) {

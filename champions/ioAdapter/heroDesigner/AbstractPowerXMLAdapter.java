@@ -9,6 +9,8 @@ package champions.ioAdapter.heroDesigner;
 import champions.Ability;
 import champions.parameters.ParameterList;
 import champions.Power;
+
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import xml.DefaultXMLParseError;
 import xml.XMLParseError;
@@ -30,6 +32,7 @@ public abstract class AbstractPowerXMLAdapter extends AbstractXMLAdapter impleme
         ParameterList pl = power.getParameterList(ability, -1);
      
         return importXML(ability, node, pl);
+        
     }
     
     /** Finilizes the Import of a power/adder from an XML source.
