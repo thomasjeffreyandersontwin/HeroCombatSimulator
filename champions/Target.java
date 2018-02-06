@@ -491,6 +491,7 @@ public class Target extends DetailList implements Comparable, ChampionsConstants
     public CharacteristicPrimary getCharacteristic(String name) {
         //return (CharacteristicPrimary) getValue("Characteristic." + name);
         int index = Characteristic.getCharacteristicIndex(name);
+        
         return ( index == -1 ? null : stats[index]);
     }
     
