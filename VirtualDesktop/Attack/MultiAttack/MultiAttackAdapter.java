@@ -111,6 +111,7 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 	public JSONObject processJSON(JSONObject attackJSON)
 	{
 		super.Activate();
+		String token = (String)attackJSON.get("Token");
 		setPushedAmount(attackJSON);
 		preProcessJSON(attackJSON);
 		
@@ -132,6 +133,7 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 			attackTarget.processPotentialCollisionsInJSON(attackTargetJSON);
 		}
 		Result = completeAttack();
+		Result.setToken(token);
 		return Result.exportToJSON();
 	}
 	protected abstract void preProcessJSON(JSONObject attackJSON) ;

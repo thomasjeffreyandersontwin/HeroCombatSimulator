@@ -375,7 +375,7 @@ public class AttackAdapter extends AbilityAdapter {
 	}
 	
 	public JSONObject processJSON(JSONObject attackJSON) {
-		String guid = (String)attackJSON.get("Token");
+		String token = (String)attackJSON.get("Token");
 		super.processJSON(attackJSON);
 		setPushedAmount(attackJSON);
 		String defName = (String) attackJSON.get("Defender");
@@ -390,7 +390,7 @@ public class AttackAdapter extends AbilityAdapter {
 		processPotentialCollisionsInJSON(attackJSON);
 		AttackResultAdapter r = new AttackResultAdapter(battleEvent, targetIndex);
 		Result = r;
-		r.setToken(guid);
+		r.setToken(token);
 		return r.exportToJSON();
 	}
 	

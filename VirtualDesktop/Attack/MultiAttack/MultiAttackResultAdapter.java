@@ -14,6 +14,7 @@ import champions.attackTree.SingleTargetNode;
 
 public abstract class MultiAttackResultAdapter extends AttackResultAdapter {
 
+	private String token;
 	public MultiAttackResultAdapter(BattleEvent battleEvent, int tindex) {
 		super(battleEvent, tindex);
 		// TODO Auto-generated constructor stub
@@ -23,7 +24,7 @@ public abstract class MultiAttackResultAdapter extends AttackResultAdapter {
 	{
 		JSONObject attackResultJSON = new JSONObject();
 		attackResultJSON.put("Ability", getAbilityName());
-		
+		attackResultJSON.put("Token", this.token);
 		JSONArray affectedTargetsJSON = new JSONArray();
 		attackResultJSON.put("Affected Targets", affectedTargetsJSON);
 		for(int i=0; i< getAffectedTargetResults().size();i++)
@@ -72,5 +73,8 @@ public abstract class MultiAttackResultAdapter extends AttackResultAdapter {
 	
 	protected abstract DefaultAttackTreeNode getRootAttackNode();
 	
-
+	public void setToken(String guid) {
+		this.token = guid;
+		
+	}
 }
