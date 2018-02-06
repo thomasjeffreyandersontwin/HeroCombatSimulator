@@ -34,7 +34,7 @@ public class Charasteristic {
 		ex.put("Name", getName());
 		if(getStartingValue() != -999d){
 			ex.put("Starting", getStartingValue());
-			ex.put("Currrent", getCurrentVaue());
+			ex.put("Current", getCurrentVaue());
 		}
 		return ex;
 	}

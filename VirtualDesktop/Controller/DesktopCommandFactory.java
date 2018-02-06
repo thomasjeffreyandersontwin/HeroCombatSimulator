@@ -69,6 +69,9 @@ public class DesktopCommandFactory {
 		if(type.equals("Attack") ){
 			return new AttackTargetCommand();
 		}
+		if(type.equals("AreaEffect") ){
+			return new AttackTargetCommand();
+		}
 		
 		return null;
 		

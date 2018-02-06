@@ -38,7 +38,7 @@ public class CharacterEffectsAdapter {
 		if(t.isStunned()) 
 			effects.add("Stunned");
 		if(t.isUnconscious()) 
-			effects.add("Unconsious");
+			effects.add("Unconscious");
 		if(t.isDying()) 
 			effects.add("Dying");
 		if(t.isDead()) 
@@ -62,7 +62,7 @@ public class CharacterEffectsAdapter {
 		if(t.isStunned()) 
 			ex.add("Stunned");
 		if(t.isUnconscious()) 
-			ex.add("Unconsious");
+			ex.add("Unconscious");
 		if(t.isDying()) 
 			ex.add("Dying");
 		if(t.isDead()) 

@@ -373,8 +373,9 @@ public class AttackAdapter extends AbilityAdapter {
 	protected int getKBIndexOfTarget() {
 		return battleEvent.getKnockbackIndex(getTarget(), "KB");
 	}
-
+	
 	public JSONObject processJSON(JSONObject attackJSON) {
+		String guid = (String)attackJSON.get("Token");
 		super.processJSON(attackJSON);
 		setPushedAmount(attackJSON);
 		String defName = (String) attackJSON.get("Defender");
@@ -389,6 +390,7 @@ public class AttackAdapter extends AbilityAdapter {
 		processPotentialCollisionsInJSON(attackJSON);
 		AttackResultAdapter r = new AttackResultAdapter(battleEvent, targetIndex);
 		Result = r;
+		r.setToken(guid);
 		return r.exportToJSON();
 	}
 	
@@ -410,7 +412,7 @@ public class AttackAdapter extends AbilityAdapter {
 		for(int i = 0; i < potentialCollisions.size();i++) {
 			JSONObject pcoJSON = (JSONObject)potentialCollisions.get(i);
 			String co = (String) pcoJSON.get("Collision Object");
-			int distance  = (int) pcoJSON.get("Collision Distance");
+			int distance  = ((Long) pcoJSON.get("Collision Distance")).intValue();
 			placeObjectDirectlyBehindDefender(new PhysicalObjectAdapter(co), distance);
 		}
 	}

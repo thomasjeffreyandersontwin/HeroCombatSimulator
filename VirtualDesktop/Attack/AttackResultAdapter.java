@@ -31,6 +31,7 @@ public class AttackResultAdapter extends AbstractBattleClassAdapter{
 	}
 	
 	public boolean forObject=false;
+	private String token;
 	public CharacterEffectsAdapter getDefenderEffects()
 	{
 		return new CharacterEffectsAdapter(getTarget());
@@ -124,6 +125,7 @@ public class AttackResultAdapter extends AbstractBattleClassAdapter{
 	protected void exportAffectedTargetToJSON(AttackResultAdapter attackResultAdapter, JSONObject attackResultJSON) {
 		CharacterAdaptor defender = new CharacterAdaptor(attackResultAdapter.getTarget());
 		JSONObject defenderJSON = defender.exportToJSON();
+		attackResultJSON.put("Token", this.token);
 		attackResultJSON.put("Defender", defenderJSON);
 		
 		JSONObject damageJSON = attackResultAdapter.getDamageResults().exportToJSON();
@@ -145,6 +147,11 @@ public class AttackResultAdapter extends AbstractBattleClassAdapter{
 			
 			attackResultJSON.put("Obstruction Damage Results", objstructionsJSON);
 		}
+	}
+
+	public void setToken(String guid) {
+		this.token = guid;
+		
 	}
 	
 }
