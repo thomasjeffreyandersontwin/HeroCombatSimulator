@@ -3,7 +3,7 @@
  *
  * Created on September 17, 2000, 11:04 AM
  */
-package champions;
+package champions;    
 
 import champions.attackTree.AttackProcessNode;
 import champions.attackTree.AttackTreeModel;
@@ -40,6 +40,7 @@ import champions.interfaces.Undoable;
 import champions.parameters.ParameterList;
 import champions.powers.SizeModifierEffect;
 import champions.powers.advantageAutofire;
+import champions.powers.advantageReducedEndurance;
 import champions.powers.effectBlock;
 import champions.powers.effectCombatLevel;
 import champions.powers.effectCombatModifier;
@@ -48,6 +49,7 @@ import champions.powers.effectEND;
 import champions.powers.effectInterruptible;
 import champions.powers.effectNoHitLocations;
 import champions.powers.effectStacked;
+import champions.powers.powerCharacteristic;
 import champions.powers.powerPass;
 import champions.undoableEvent.ActivationInfoLastTimeProcessUndoable;
 import champions.undoableEvent.EffectUndoable;
@@ -64,6 +66,8 @@ import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+
+import VirtualDesktop.Character.Charasteristic;
 
 /** Processes BattleEvent placed into the BattleEvent queue.
  *
@@ -4148,7 +4152,7 @@ public class BattleEngine extends Thread
             if (ability.getBooleanValue("Ability.ISAUTOFIRE")) {
                 count = ai.getIntegerValue("Attack.SHOTS").intValue();
             } else {
-                count = 1;
+                count = 1;   
             }
 
             // Process END for Ability
@@ -4200,16 +4204,43 @@ public class BattleEngine extends Thread
 
             Integer str = be.getIntegerValue("Normal.STR_USED");
             Integer pushed = be.getIntegerValue("Pushed.STR_USED");
-
-            if (str != null) {
-                // We have to charge normal strenth end for the both the normal end
-                // and for the pushed end "normal" cost.  See 5Ep427.
-                // We do both here since pushed can be a partial point of end...
-                // For example if we used 17 normal str and 3 pushed strength, we should
-                // charge 2 end for strength overall (assuming superheroic) and another
-                // 3 end for the pushing.  The additional for push is accounted for below.
-                endCost = ChampionsUtilities.strToEnd(str + (pushed == null ? 0 : pushed));
-
+            //jeff desparate hack to endurance reduction working with added str powers
+            if (str >0) {
+                for(AbilityIterator i = source.getAbilities();i.hasNext();)
+                {
+                			
+                	Ability a = i.next();
+                			
+                	if(a.getPower() instanceof powerCharacteristic )
+                	{
+                		ParameterList pl =  ((powerCharacteristic)a.getPower()).getParameterList(a, 0);
+                    	String stat = pl.getParameterStringValue("Stat");    	
+                		if(stat.equals("STR") && a.isActivated(source))
+                		
+                		{
+                			if(a.hasAdvantage(new advantageReducedEndurance().getName()))
+                			{
+                				endCost+=a.getENDCost();
+                			}
+                		}
+                	}
+                	
+                }
+            	CharacteristicPrimary STR = source.getCharacteristic("STR");
+                endCost+= ChampionsUtilities.strToEnd(pushed == null ? 0 : pushed);
+                
+                
+             
+                
+               /* int radi = ability.getAdvantageIndex("reducedEndurance");
+                if(radi!=-1)
+                {	
+                	advantageReducedEndurance are = (advantageReducedEndurance)ability.getAdvantage(radi);
+                	double multiplier = are.getMultiplier();
+                	endCost =  (int) (endCost * multiplier);
+                	
+                }
+                */
                 if (endCost > 0) {
                     sourceName = ability.getStrengthENDSource();
                     if ((endSource = source.getENDSource(sourceName)) == null) {

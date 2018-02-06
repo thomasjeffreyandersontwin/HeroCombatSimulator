@@ -5,54 +5,42 @@ character:
 	model:
 	MaxStun:68
 	MaxEndurance:70
-	CurrStun:68
-	CurrEndurance:68
+	CurrStun:73
+	CurrEndurance:55
 Activate: True
 
 	Crowd: 
-		Name:heroes2
+		Name:heroes
 		Characters:
 			Ogun:
 				name:Ogun
-				costume:
-				model:
-			Spyder:
-				name:Spyder
-				costume:
-				model:
-			Off-Road:
-				name:Off-Road
-				costume:
-				model:
-			WALL:
-				name:WALL
-				costume:
-				model:
-			test:
-				name:test
-				costume:
-				model:
-			Blind Justice:
-				name:Blind Justice
 				costume:
 				model:
 			Pre-Emptive Strike:
 				name:Pre-Emptive Strike
 				costume:
 				model:
-			Light machinery:
-				name:Light machinery
-				costume:
-				model:
 			City gates, small:
 				name:City gates, small
 				costume:
 				model:
-			Phone Booth:
-				name:Phone Booth
+			Off-Road:
+				name:Off-Road
 				costume:
 				model:
-			Metal drum:
-				name:Metal drum
+			Spyder:
+				name:Spyder
+				costume:
+				model:
+			Blind Justice:
+				name:Blind Justice
+				costume:
+				model:
+			Airlock Door:
+				name:Airlock Door
+				costume:
+				model:
+			Magnetic lock:
+				name:Magnetic lock
 				costume:
 				model:

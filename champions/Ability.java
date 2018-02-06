@@ -416,6 +416,7 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
             if ( maneuver != null ) {
                 be.setManeuver(maneuver);
             }
+            
             try {
             	if(DamageDiceOverride==0) {
             		be.add("Normal.STR",  new Integer( source.getCurrentStat("STR")), true, false);
@@ -2657,7 +2658,6 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
         if ( endCost == -1 ) {
             return calculateENDCost();
         }
-            
         return endCost;
     }
     

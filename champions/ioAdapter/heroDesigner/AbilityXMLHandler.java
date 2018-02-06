@@ -157,24 +157,34 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
                     }
                 }
             }
-
-            if (ability == null) {
-                xmlParseErrorList.addXMLParseError(new HDImportError(abilityName + ": Ability type not recognized during import.  XMLID=\"" + powerID + "\"", HDImportError.IMPORT_FAILURE));
-                return null;
-            }
-
-            ability.setName(abilityName);
-            if (importAbilityParameters(node, ability, pxa, abilityErrorList) == false) {
-                // We will assume that importAbilityParameters setup the error list appropriately.
-                if (abilityErrorList.getXMLParseErrorCount() > 0) {
-                    xmlParseErrorList.addXMLParseError(abilityErrorList);
-                }
-                return null;
+            if(ability==null 
+            	&& node.getAttributes().getNamedItem("XMLID").getNodeValue().equals("NAKEDMODIFIER")
+            	&& node.getAttributes().getNamedItem("INPUT").getNodeValue().equals("STR"))
+			{
+				ability = PADRoster.getNewAbilityInstance("Hand-to-Hand Attack");
+				ability.setName(abilityName);
+				importAbilityAdders(node, ability, abilityErrorList);
+			}
+            else {
+	            if (ability == null) {
+	                xmlParseErrorList.addXMLParseError(new HDImportError(abilityName + ": Ability type not recognized during import.  XMLID=\"" + powerID + "\"", HDImportError.IMPORT_FAILURE));
+	                return null;
+	            }
+	
+	            ability.setName(abilityName);
+	            if (importAbilityParameters(node, ability, pxa, abilityErrorList) == false) {
+	                // We will assume that importAbilityParameters setup the error list appropriately.
+	                if (abilityErrorList.getXMLParseErrorCount() > 0) {
+	                    xmlParseErrorList.addXMLParseError(abilityErrorList);
+	                }
+	                return null;
+	            }
             }
 
             if (abilityErrorList.getXMLParseErrorCount() > 0) {
                 xmlParseErrorList.addXMLParseError(abilityErrorList);
             }
+            
         }
 
         return ability;
@@ -239,234 +249,7 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
 
 
 
-            // Now lets run through the Adders and modifiers manually.  I think we
-            // can skip all adders, but I am not certain yet...however, we must
-            // hit all of the modifiers.
-            Node child = node.getFirstChild();
-            while (child != null) {
-                if ("MODIFIER".equals(child.getNodeName())) {
-                    NamedNodeMap mAttrs = child.getAttributes();
-                    String modifierID = mAttrs.getNamedItem("XMLID").getNodeValue();
-
-                    Node privateNode = mAttrs.getNamedItem("PRIVATE");
-                    String privateModifier = privateNode != null ? privateNode.getNodeValue() : "No";
-
-                    boolean done = false;
-                    if (!done) {
-                        Iterator i = PADRoster.getAdvantageIterator();
-                        ModifierXMLAdapter mxa = null;
-                        while (i.hasNext()) {
-                            String modifierName = (String) i.next();
-//                        Advantage s = PADRoster.getSharedAdvantageInstance(modifierName);
-//                        String className = s.getClass().toString();
-//                        className = className.substring( className.lastIndexOf(".")+1);
-
-                            mxa = getModifierAdapter(modifierName);
-                            if (mxa != null && mxa.identifyXML(modifierID, child) == true) {
-                                Advantage a = PADRoster.getNewAdvantageInstance(modifierName);
-                                if (ability.addPAD(a, null)) {
-                                    //int index = ability.findExactIndexed("Advantage","ADVANTAGE", a);
-                                    int index = ability.findExactAdvantage(a);
-                                    XMLParseError error = mxa.importXML(ability, a, index, child);
-                                    a.configurePAD(ability, a.getParameterList(ability, index));
-                                    //ability.addIndexed(index, "Advantage", "FINIALIZER", mxa);
-                                    a.setFinalizer(mxa);
-
-                                    a.setPrivate("Yes".equals(privateModifier));
-
-                                    if (error != null) {
-                                        if (abilityErrorList == null) {
-                                            abilityErrorList = new XMLParseErrorList(ability.getName() + " import errors");
-                                        }
-
-                                        if (error instanceof XMLParseErrorList) {
-                                            for (int j = 0; j < ((XMLParseErrorList) error).getXMLParseErrorCount(); j++) {
-                                                abilityErrorList.addXMLParseError(((XMLParseErrorList) error).getXMLParseError(j));
-                                            }
-                                        } else {
-                                            abilityErrorList.addXMLParseError(error);
-                                        }
-                                    }
-                                }
-                                done = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!done) {
-                        Iterator i = PADRoster.getLimitationIterator();
-                        ModifierXMLAdapter mxa = null;
-                        while (i.hasNext()) {
-                            String modifierName = (String) i.next();
-//                        Limitation s = PADRoster.getSharedLimitationInstance(modifierName);
-//                        String className = s.getClass().toString();
-//                        className = className.substring( className.lastIndexOf(".")+1);
-
-                            mxa = getModifierAdapter(modifierName);
-                            if (mxa != null && mxa.identifyXML(modifierID, child) == true) {
-                                Limitation lim = PADRoster.getNewLimitationInstance(modifierName);
-                                if (ability.addPAD(lim, null)) {
-                                    //int index = ability.findExactIndexed("Limitation","LIMITATION", a);
-                                    int index = ability.findExactLimitation(lim);
-                                    XMLParseError error = mxa.importXML(ability, lim, index, child);
-                                    lim.configurePAD(ability, lim.getParameterList(ability, index));
-                                    //ability.addIndexed(index, "Limitation", "FINIALIZER", mxa);
-                                    lim.setFinalizer(mxa);
-
-                                    // Set the private modifier on Limitation...
-                                    lim.setPrivate(("Yes".equals(privateModifier)));
-
-                                    if (error != null) {
-                                        if (abilityErrorList == null) {
-                                            abilityErrorList = new XMLParseErrorList(ability.getName() + " import errors");
-                                        }
-
-                                        if (error instanceof XMLParseErrorList) {
-                                            for (int j = 0; j < ((XMLParseErrorList) error).getXMLParseErrorCount(); j++) {
-                                                abilityErrorList.addXMLParseError(((XMLParseErrorList) error).getXMLParseError(j));
-                                            }
-                                        } else {
-                                            abilityErrorList.addXMLParseError(error);
-                                        }
-                                    }
-                                }
-                                done = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!done) {
-                        Iterator i = PADRoster.getSpecialParameterIterator();
-                        ModifierXMLAdapter mxa = null;
-                        while (i.hasNext()) {
-                            String modifierName = (String) i.next();
-//                        Limitation s = PADRoster.getSharedLimitationInstance(modifierName);
-//                        String className = s.getClass().toString();
-//                        className = className.substring( className.lastIndexOf(".")+1);
-
-                            mxa = getModifierAdapter(modifierName);
-                            if (mxa != null && mxa.identifyXML(modifierID, child) == true) {
-                                SpecialParameter a;
-                                int index;
-                                boolean configure = true;
-                                if (ability.hasSpecialParameter(modifierName)) {
-                                    a = ability.findSpecialParameter(modifierName);
-                                } else {
-                                    a = PADRoster.getNewSpecialParameterInstance(modifierName);
-                                    configure = ability.addSpecialParameter(a);
-                                }
-
-                                if (configure) {
-                                    index = ability.getSpecialParameterIndex(a);
-                                    XMLParseError error = mxa.importXML(ability, a, index, child);
-                                    a.configure(ability, a.getParameterList(ability, index));
-                                    ability.addIndexed(index, "SpecialParameter", "FINIALIZER", mxa);
-
-                                    if (error != null) {
-                                        if (abilityErrorList == null) {
-                                            abilityErrorList = new XMLParseErrorList(ability.getName() + " import errors");
-                                        }
-
-                                        if (error instanceof XMLParseErrorList) {
-                                            for (int j = 0; j < ((XMLParseErrorList) error).getXMLParseErrorCount(); j++) {
-                                                abilityErrorList.addXMLParseError(((XMLParseErrorList) error).getXMLParseError(j));
-                                            }
-                                        } else {
-                                            abilityErrorList.addXMLParseError(error);
-                                        }
-                                    }
-                                }
-                                done = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!done) {
-                        // This is an unrecognized modifier...probably want to just load it
-                        // as a generic advantage/limitation...
-                        String description = null;
-                        String baseCodeString = null;
-                        String xmlString = null;
-
-                        Node aliasNode = mAttrs.getNamedItem("ALIAS");
-                        if (aliasNode != null) {
-                            description = aliasNode.getNodeValue();
-                        }
-
-                        Node xmlNode = mAttrs.getNamedItem("XMLID");
-                        if (xmlNode != null) {
-                            xmlString = xmlNode.getNodeValue();
-                        }
-
-                        Node baseCostNode = mAttrs.getNamedItem("BASECOST");
-                        if (baseCostNode != null) {
-                            baseCodeString = baseCostNode.getNodeValue();
-                        }
-
-                        if (description != null && description.equals("") == false && baseCodeString != null && baseCodeString.equals("") == false) {
-
-                            double baseCost = Double.parseDouble(baseCodeString);
-
-                            if (baseCost > 0) {
-                                Advantage a = PADRoster.getNewAdvantageInstance("Generic Advantage");
-
-                                if (ability.addPAD(a, null)) {
-                                    //int index = ability.findExactIndexed("Advantage","ADVANTAGE", a);
-                                    ParameterList pl = a.getParameterList();
-
-                                    pl.setParameterValue("Description", description);
-                                    pl.setParameterValue("Multiplier", baseCost);
-
-                                    a.configurePAD(ability, pl);
-
-                                    a.setPrivate("Yes".equals(privateModifier));
-                                    //ability.setAdvantagePrivate(index, ("Yes".equals(privateModifier)));
-                                    done = true;
-
-                                    if (abilityErrorList == null) {
-                                        abilityErrorList = new XMLParseErrorList(ability.getName() + " import errors");
-                                    }
-
-                                    DefaultXMLParseError error = new DefaultXMLParseError("Advantage '" + description +
-                                            "' not recognized.  Added as +" + baseCost + " generic advantage." +
-                                            (xmlString == null ? "" : " XMLID=\"" + xmlString + "\""), 0);
-                                    abilityErrorList.addXMLParseError(error);
-                                }
-                            } else if (baseCost < 0) {
-                                Limitation a = PADRoster.getNewLimitationInstance("Generic Limitation");
-
-                                if (ability.addPAD(a, null)) {
-                                    //int index = ability.findExactIndexed("Limitation","LIMITATION", a);
-                                    int index = ability.findExactLimitation(a);
-
-                                    ParameterList pl = a.getParameterList(ability, index);
-
-                                    pl.setParameterValue("Description", description);
-                                    pl.setParameterValue("Multiplier", baseCost);
-
-                                    a.configurePAD(ability, pl);
-
-                                    a.setPrivate(("Yes".equals(privateModifier)));
-                                    done = true;
-
-                                    if (abilityErrorList == null) {
-                                        abilityErrorList = new XMLParseErrorList(ability.getName() + " import errors");
-                                    }
-
-                                    DefaultXMLParseError error = new DefaultXMLParseError("Limitation '" + description +
-                                            "' not recognized.  Added as " + baseCost + " generic limitation." +
-                                            (xmlString == null ? "" : " XMLID=\"" + xmlString + "\""), 0);
-                                    abilityErrorList.addXMLParseError(error);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                child = child.getNextSibling();
-            }
+            importAbilityAdders(node, ability, abilityErrorList);
 
             ability.calculateMultiplier();
 
@@ -480,6 +263,237 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
 
         return true;
     }
+
+	public static void importAbilityAdders(Node node, Ability ability, XMLParseErrorList abilityErrorList) {
+		// Now lets run through the Adders and modifiers manually.  I think we
+		// can skip all adders, but I am not certain yet...however, we must
+		// hit all of the modifiers.
+		Node child = node.getFirstChild();
+		while (child != null) {
+		    if ("MODIFIER".equals(child.getNodeName())) {
+		        NamedNodeMap mAttrs = child.getAttributes();
+		        String modifierID = mAttrs.getNamedItem("XMLID").getNodeValue();
+
+		        Node privateNode = mAttrs.getNamedItem("PRIVATE");
+		        String privateModifier = privateNode != null ? privateNode.getNodeValue() : "No";
+
+		        boolean done = false;
+		        if (!done) {
+		            Iterator i = PADRoster.getAdvantageIterator();
+		            ModifierXMLAdapter mxa = null;
+		            while (i.hasNext()) {
+		                String modifierName = (String) i.next();
+//                        Advantage s = PADRoster.getSharedAdvantageInstance(modifierName);
+//                        String className = s.getClass().toString();
+//                        className = className.substring( className.lastIndexOf(".")+1);
+
+		                mxa = getModifierAdapter(modifierName);
+		                if (mxa != null && mxa.identifyXML(modifierID, child) == true) {
+		                    Advantage a = PADRoster.getNewAdvantageInstance(modifierName);
+		                    if (ability.addPAD(a, null)) {
+		                        //int index = ability.findExactIndexed("Advantage","ADVANTAGE", a);
+		                        int index = ability.findExactAdvantage(a);
+		                        XMLParseError error = mxa.importXML(ability, a, index, child);
+		                        a.configurePAD(ability, a.getParameterList(ability, index));
+		                        //ability.addIndexed(index, "Advantage", "FINIALIZER", mxa);
+		                        a.setFinalizer(mxa);
+
+		                        a.setPrivate("Yes".equals(privateModifier));
+
+		                        if (error != null) {
+		                            if (abilityErrorList == null) {
+		                                abilityErrorList = new XMLParseErrorList(ability.getName() + " import errors");
+		                            }
+
+		                            if (error instanceof XMLParseErrorList) {
+		                                for (int j = 0; j < ((XMLParseErrorList) error).getXMLParseErrorCount(); j++) {
+		                                    abilityErrorList.addXMLParseError(((XMLParseErrorList) error).getXMLParseError(j));
+		                                }
+		                            } else {
+		                                abilityErrorList.addXMLParseError(error);
+		                            }
+		                        }
+		                    }
+		                    done = true;
+		                    break;
+		                }
+		            }
+		        }
+		        if (!done) {
+		            Iterator i = PADRoster.getLimitationIterator();
+		            ModifierXMLAdapter mxa = null;
+		            while (i.hasNext()) {
+		                String modifierName = (String) i.next();
+//                        Limitation s = PADRoster.getSharedLimitationInstance(modifierName);
+//                        String className = s.getClass().toString();
+//                        className = className.substring( className.lastIndexOf(".")+1);
+
+		                mxa = getModifierAdapter(modifierName);
+		                if (mxa != null && mxa.identifyXML(modifierID, child) == true) {
+		                    Limitation lim = PADRoster.getNewLimitationInstance(modifierName);
+		                    if (ability.addPAD(lim, null)) {
+		                        //int index = ability.findExactIndexed("Limitation","LIMITATION", a);
+		                        int index = ability.findExactLimitation(lim);
+		                        XMLParseError error = mxa.importXML(ability, lim, index, child);
+		                        lim.configurePAD(ability, lim.getParameterList(ability, index));
+		                        //ability.addIndexed(index, "Limitation", "FINIALIZER", mxa);
+		                        lim.setFinalizer(mxa);
+
+		                        // Set the private modifier on Limitation...
+		                        lim.setPrivate(("Yes".equals(privateModifier)));
+
+		                        if (error != null) {
+		                            if (abilityErrorList == null) {
+		                                abilityErrorList = new XMLParseErrorList(ability.getName() + " import errors");
+		                            }
+
+		                            if (error instanceof XMLParseErrorList) {
+		                                for (int j = 0; j < ((XMLParseErrorList) error).getXMLParseErrorCount(); j++) {
+		                                    abilityErrorList.addXMLParseError(((XMLParseErrorList) error).getXMLParseError(j));
+		                                }
+		                            } else {
+		                                abilityErrorList.addXMLParseError(error);
+		                            }
+		                        }
+		                    }
+		                    done = true;
+		                    break;
+		                }
+		            }
+		        }
+
+		        if (!done) {
+		            Iterator i = PADRoster.getSpecialParameterIterator();
+		            ModifierXMLAdapter mxa = null;
+		            while (i.hasNext()) {
+		                String modifierName = (String) i.next();
+//                        Limitation s = PADRoster.getSharedLimitationInstance(modifierName);
+//                        String className = s.getClass().toString();
+//                        className = className.substring( className.lastIndexOf(".")+1);
+
+		                mxa = getModifierAdapter(modifierName);
+		                if (mxa != null && mxa.identifyXML(modifierID, child) == true) {
+		                    SpecialParameter a;
+		                    int index;
+		                    boolean configure = true;
+		                    if (ability.hasSpecialParameter(modifierName)) {
+		                        a = ability.findSpecialParameter(modifierName);
+		                    } else {
+		                        a = PADRoster.getNewSpecialParameterInstance(modifierName);
+		                        configure = ability.addSpecialParameter(a);
+		                    }
+
+		                    if (configure) {
+		                        index = ability.getSpecialParameterIndex(a);
+		                        XMLParseError error = mxa.importXML(ability, a, index, child);
+		                        a.configure(ability, a.getParameterList(ability, index));
+		                        ability.addIndexed(index, "SpecialParameter", "FINIALIZER", mxa);
+
+		                        if (error != null) {
+		                            if (abilityErrorList == null) {
+		                                abilityErrorList = new XMLParseErrorList(ability.getName() + " import errors");
+		                            }
+
+		                            if (error instanceof XMLParseErrorList) {
+		                                for (int j = 0; j < ((XMLParseErrorList) error).getXMLParseErrorCount(); j++) {
+		                                    abilityErrorList.addXMLParseError(((XMLParseErrorList) error).getXMLParseError(j));
+		                                }
+		                            } else {
+		                                abilityErrorList.addXMLParseError(error);
+		                            }
+		                        }
+		                    }
+		                    done = true;
+		                    break;
+		                }
+		            }
+		        }
+
+		        if (!done) {
+		            // This is an unrecognized modifier...probably want to just load it
+		            // as a generic advantage/limitation...
+		            String description = null;
+		            String baseCodeString = null;
+		            String xmlString = null;
+
+		            Node aliasNode = mAttrs.getNamedItem("ALIAS");
+		            if (aliasNode != null) {
+		                description = aliasNode.getNodeValue();
+		            }
+
+		            Node xmlNode = mAttrs.getNamedItem("XMLID");
+		            if (xmlNode != null) {
+		                xmlString = xmlNode.getNodeValue();
+		            }
+
+		            Node baseCostNode = mAttrs.getNamedItem("BASECOST");
+		            if (baseCostNode != null) {
+		                baseCodeString = baseCostNode.getNodeValue();
+		            }
+
+		            if (description != null && description.equals("") == false && baseCodeString != null && baseCodeString.equals("") == false) {
+
+		                double baseCost = Double.parseDouble(baseCodeString);
+
+		                if (baseCost > 0) {
+		                    Advantage a = PADRoster.getNewAdvantageInstance("Generic Advantage");
+
+		                    if (ability.addPAD(a, null)) {
+		                        //int index = ability.findExactIndexed("Advantage","ADVANTAGE", a);
+		                        ParameterList pl = a.getParameterList();
+
+		                        pl.setParameterValue("Description", description);
+		                        pl.setParameterValue("Multiplier", baseCost);
+
+		                        a.configurePAD(ability, pl);
+
+		                        a.setPrivate("Yes".equals(privateModifier));
+		                        //ability.setAdvantagePrivate(index, ("Yes".equals(privateModifier)));
+		                        done = true;
+
+		                        if (abilityErrorList == null) {
+		                            abilityErrorList = new XMLParseErrorList(ability.getName() + " import errors");
+		                        }
+
+		                        DefaultXMLParseError error = new DefaultXMLParseError("Advantage '" + description +
+		                                "' not recognized.  Added as +" + baseCost + " generic advantage." +
+		                                (xmlString == null ? "" : " XMLID=\"" + xmlString + "\""), 0);
+		                        abilityErrorList.addXMLParseError(error);
+		                    }
+		                } else if (baseCost < 0) {
+		                    Limitation a = PADRoster.getNewLimitationInstance("Generic Limitation");
+
+		                    if (ability.addPAD(a, null)) {
+		                        //int index = ability.findExactIndexed("Limitation","LIMITATION", a);
+		                        int index = ability.findExactLimitation(a);
+
+		                        ParameterList pl = a.getParameterList(ability, index);
+
+		                        pl.setParameterValue("Description", description);
+		                        pl.setParameterValue("Multiplier", baseCost);
+
+		                        a.configurePAD(ability, pl);
+
+		                        a.setPrivate(("Yes".equals(privateModifier)));
+		                        done = true;
+
+		                        if (abilityErrorList == null) {
+		                            abilityErrorList = new XMLParseErrorList(ability.getName() + " import errors");
+		                        }
+
+		                        DefaultXMLParseError error = new DefaultXMLParseError("Limitation '" + description +
+		                                "' not recognized.  Added as " + baseCost + " generic limitation." +
+		                                (xmlString == null ? "" : " XMLID=\"" + xmlString + "\""), 0);
+		                        abilityErrorList.addXMLParseError(error);
+		                    }
+		                }
+		            }
+		        }
+		    }
+
+		    child = child.getNextSibling();
+		}
+	}
 
     protected PowerXMLAdapter getPowerAdapter(String powerName) {
     

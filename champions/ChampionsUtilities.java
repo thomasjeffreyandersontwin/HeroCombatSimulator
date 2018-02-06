@@ -17,6 +17,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.util.Hashtable;
+
+import com.sun.org.glassfish.external.statistics.impl.AverageRangeStatisticImpl;
 /**
  *
  * @author  unknown
@@ -441,12 +443,15 @@ implements ChampionsConstants {
             be.add("AdjustedBase.BASE_DC", baseAbilityDC, true);
             
             if ( ability.getPower() instanceof powerHandToHandAttack ) {
+            	
                 // This isn't a killing attack, BTW
                 // Special STR rule for HA power...
                 double availableStr = Math.min(maximumStrength, Math.max(0, normalStr - minimumStr) ); 
+                availableStr = normalStr;
                 double strDC;
 
                 // You can have 1/2 DCs, so you have to round by 0.5
+                strDC = Math.floor(2 * availableStr * realStrMultiplier / baseAbilityPointsPerDC) / 2;
                 strDC = Math.floor(2 * availableStr * realStrMultiplier / baseAbilityPointsPerDC) / 2;
                 double usedStr = strDC / realStrMultiplier * baseAbilityPointsPerDC;
                 
