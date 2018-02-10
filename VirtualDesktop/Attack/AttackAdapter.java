@@ -236,6 +236,10 @@ public class AttackAdapter extends AbilityAdapter {
 	public void targetDefender(BasicTargetAdapter defender)
 	{		
 		targetDefenderNoActivate(defender);
+		if(getActivationInfo().getSource()==null)
+		{
+			getActivationInfo().setSource(Character.target);
+		}
 		
         AttackTreePanel.Panel.advanceNode();
         targetIndex = getActivationInfo().getTargetIndex(defender.target);
@@ -422,7 +426,14 @@ public class AttackAdapter extends AbilityAdapter {
 		for(int i = 0; i < potentialCollisions.size();i++) {
 			JSONObject pcoJSON = (JSONObject)potentialCollisions.get(i);
 			String co = (String) pcoJSON.get("Collision Object");
-			int distance  = ((Long) pcoJSON.get("Collision Distance")).intValue();
+			int distance =0;
+			try {
+				 distance  = ((Long) pcoJSON.get("Collision Distance")).intValue();
+			}
+			catch (Exception e)
+			{
+				distance = (int) pcoJSON.get("Collision Distance");
+			}
 			placeObjectDirectlyBehindDefender(new PhysicalObjectAdapter(co), distance);
 		}
 	}

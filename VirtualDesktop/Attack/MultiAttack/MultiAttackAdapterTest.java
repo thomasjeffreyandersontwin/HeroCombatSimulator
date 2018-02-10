@@ -21,6 +21,7 @@ import champions.Battle;
 import champions.BattleEvent;
 import champions.Roster;
 import champions.SweepBattleEvent;
+import champions.attackTree.AttackTreePanel;
 
 public abstract class MultiAttackAdapterTest extends BaseAttackAdapterTest {
 
@@ -38,9 +39,18 @@ public abstract class MultiAttackAdapterTest extends BaseAttackAdapterTest {
 	
 	@BeforeEach
 	void RosterHasFourCharactersLoaded() {
+		AttackTreePanel attackPanel = AttackTreePanel.defaultAttackTreePanel;
+		attackPanel.cancelAttack();
 		roster = Battle.currentBattle.findRoster("Unnamed");	
 		
 		roster.removeAll();
+		
+		Roster obstructions = Battle.currentBattle.findRoster("Obstructions");
+		if(obstructions!=null)
+		{
+			obstructions.removeAll();
+		}
+		
 		defender1 = new CharacterAdaptor(System.getProperty("user.dir") + "\\eventinfo\\testdata\\Spyder\\Spyder");
 		defender3 = new CharacterAdaptor(System.getProperty("user.dir") + "\\eventinfo\\testdata\\Saviour\\Saviour");
 		defender2 = new CharacterAdaptor(System.getProperty("user.dir") + "\\eventinfo\\testdata\\Ogun\\Ogun");

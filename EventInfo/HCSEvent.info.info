@@ -1,13 +1,9 @@
 Event: 
 	Name:RosterRemove
 character:
-	name:Saviour
+	name:Barrel
 	costume:
 	model:
-	MaxStun:25
-	MaxEndurance:40
-	CurrStun:53
-	CurrEndurance:40
 	Crowd: 
-		Name:Unnamed
+		Name:Obstructions
 		Characters:

@@ -915,35 +915,36 @@ public class MessagePanel extends JPanel
 		    				
 		    				t = new PhysicalObjectAdapter(targetName).target;
 		    			}
-		    			
-		    			if((t.stunned==true ||t.isUnconscious()==true) && message.contains(" STUN.")) {
-		    				g.setColor( Color.RED);
-		    				if(message.contains("and is ")) {
-		    					end = message.indexOf("and is ");
-		    					message = message.substring(0, end);	
-		    				}
-		    				message+="and is ";
-			    			if(t.stunned==true){
-			    				message+= "Stunned";
-							}
-			    			if(t.unconscious==true){
-			    				message+= ", Unconsious";
-							}	
-		    			}
-		    			if( (t.isDying()==true ||t.isDead()==true) && message.contains(" BODY.")) 
-		    			{
-		    				g.setColor( Color.RED);
-		    				if(message.contains("and is ")) {
-		    					end = message.indexOf("and is ");
-		    					message = message.substring(0, end);	
-		    				}
-		    				message+="and is ";
-			    			if(t.isDying()==true){
-			    				message+= "Dying";
-							}
-			    			if(t.isDead()==true){
-			    				message+= "Dead";
-							}	
+		    			if(t!=null) {
+			    			if((t.stunned==true ||t.isUnconscious()==true) && message.contains(" STUN.")) {
+			    				g.setColor( Color.RED);
+			    				if(message.contains("and is ")) {
+			    					end = message.indexOf("and is ");
+			    					message = message.substring(0, end);	
+			    				}
+			    				message+="and is ";
+				    			if(t.stunned==true){
+				    				message+= "Stunned";
+								}
+				    			if(t.unconscious==true){
+				    				message+= ", Unconsious";
+								}	
+			    			}
+			    			if( (t.isDying()==true ||t.isDead()==true) && message.contains(" BODY.")) 
+			    			{
+			    				g.setColor( Color.RED);
+			    				if(message.contains("and is ")) {
+			    					end = message.indexOf("and is ");
+			    					message = message.substring(0, end);	
+			    				}
+			    				message+="and is ";
+				    			if(t.isDying()==true){
+				    				message+= "Dying";
+								}
+				    			if(t.isDead()==true){
+				    				message+= "Dead";
+								}	
+			    			}
 		    			}
 		    		}
             		 g.drawString(message, x, y + fontAscent);

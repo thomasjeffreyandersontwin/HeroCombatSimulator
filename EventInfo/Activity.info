@@ -1,19 +1,19 @@
 
 character:
-	name:Spyder
+	name:Blind Justice
 	costume:
 	model:
-	MaxStun:48
-	MaxEndurance:60
-	CurrStun:48
-	CurrEndurance:56
+	MaxStun:77
+	MaxEndurance:560
+	CurrStun:77
+	CurrEndurance:133
 Activate: True
 
 	Crowd: 
 		Name:Unnamed
 		Characters:
-			Off-Road:
-				name:Off-Road
+			Blind Justice:
+				name:Blind Justice
 				costume:
 				model:
 			Spyder:

@@ -78,9 +78,16 @@ public class AutofireAttackAdapter extends MultiAttackAdapter {
 		if(attackJSON.get("Spray Fire")!=null) {
 			this.SetAutoFireSprayMode((boolean) attackJSON.get("Spray Fire"));
 		}
+		int width=0;
 		if(attackJSON.get("Width")!=null) {
-			int width = new Long((long) attackJSON.get("Width")).intValue();
-
+			try {
+				width = new Long((long) attackJSON.get("Width")).intValue();
+			}
+			catch(Exception e)
+			{
+				width = (int) attackJSON.get("Width");
+				
+			}
 			this.SetAutoFireWidth(width );
 		}
 		if(attackJSON.get("Shots")!=null) {
