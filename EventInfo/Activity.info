@@ -1,22 +1,46 @@
 
 character:
-	name:Spider-Man
+	name:Off-Road
 	costume:
 	model:
-	MaxStun:49
-	MaxEndurance:56
-	CurrStun:49
-	CurrEndurance:56
+	MaxStun:28
+	MaxEndurance:44
+	CurrStun:28
+	CurrEndurance:26
 Activate: True
 
 	Crowd: 
-		Name:Unnamed
+		Name:heroes
 		Characters:
-			Wolverine:
-				name:Wolverine
+			Ogun:
+				name:Ogun
 				costume:
 				model:
-			Spider-Man:
-				name:Spider-Man
+			Pre-Emptive Strike:
+				name:Pre-Emptive Strike
+				costume:
+				model:
+			City gates, small:
+				name:City gates, small
+				costume:
+				model:
+			Off-Road:
+				name:Off-Road
+				costume:
+				model:
+			Spyder:
+				name:Spyder
+				costume:
+				model:
+			Blind Justice:
+				name:Blind Justice
+				costume:
+				model:
+			Airlock Door:
+				name:Airlock Door
+				costume:
+				model:
+			Magnetic lock:
+				name:Magnetic lock
 				costume:
 				model:

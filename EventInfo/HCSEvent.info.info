@@ -1,21 +1,45 @@
 Event: 
-	Name:Open Character
+	Name:Expand Character Node
 character:
-	name:Spider-Man
+	name:Pre-Emptive Strike
 	costume:
 	model:
-	MaxStun:49
-	MaxEndurance:56
-	CurrStun:49
-	CurrEndurance:56
+	MaxStun:68
+	MaxEndurance:70
+	CurrStun:73
+	CurrEndurance:34
 	Crowd: 
-		Name:Unnamed
+		Name:heroes
 		Characters:
-			The Hulk:
-				name:The Hulk
+			Ogun:
+				name:Ogun
 				costume:
 				model:
-			Spider-Man:
-				name:Spider-Man
+			Pre-Emptive Strike:
+				name:Pre-Emptive Strike
+				costume:
+				model:
+			City gates, small:
+				name:City gates, small
+				costume:
+				model:
+			Off-Road:
+				name:Off-Road
+				costume:
+				model:
+			Spyder:
+				name:Spyder
+				costume:
+				model:
+			Blind Justice:
+				name:Blind Justice
+				costume:
+				model:
+			Airlock Door:
+				name:Airlock Door
+				costume:
+				model:
+			Magnetic lock:
+				name:Magnetic lock
 				costume:
 				model:

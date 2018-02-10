@@ -316,7 +316,9 @@ public class AttackAdapter extends AbilityAdapter {
 		{
 			node = getKnockbackNodeForTarget();
 		}
-		placeObjectDirectlyBehindDefenderUsingKnockbackNode(obj, distance, node);	
+		if(node!=null) {
+			placeObjectDirectlyBehindDefenderUsingKnockbackNode(obj, distance, node);	
+		}
 	}
 	protected void placeObjectDirectlyBehindDefenderUsingKnockbackNode(PhysicalObjectAdapter obj, int distance,KnockbackTargetNode node) {
 		KnockbackEffectNode n = (KnockbackEffectNode) node.getChildAt(1);
@@ -359,10 +361,12 @@ public class AttackAdapter extends AbilityAdapter {
 			}
 			
 		}
-		while(knode.getTarget()!=getTarget())
-		{
-			int order = knode.getParent().getIndex(knode);
-			knode = (KnockbackTargetNode) knode.getParent().getChildAt(order+1);
+		if(knode!=null) {
+			while(knode.getTarget()!=getTarget())
+			{
+				int order = knode.getParent().getIndex(knode);
+				knode = (KnockbackTargetNode) knode.getParent().getChildAt(order+1);
+			}
 		}
 		return knode;
 	}
