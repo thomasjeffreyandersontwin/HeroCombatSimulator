@@ -1,45 +1,13 @@
 Event: 
-	Name:Expand Character Node
+	Name:RosterRemove
 character:
-	name:Pre-Emptive Strike
+	name:Saviour
 	costume:
 	model:
-	MaxStun:68
-	MaxEndurance:70
-	CurrStun:73
-	CurrEndurance:34
+	MaxStun:25
+	MaxEndurance:40
+	CurrStun:53
+	CurrEndurance:40
 	Crowd: 
-		Name:heroes
+		Name:Unnamed
 		Characters:
-			Ogun:
-				name:Ogun
-				costume:
-				model:
-			Pre-Emptive Strike:
-				name:Pre-Emptive Strike
-				costume:
-				model:
-			City gates, small:
-				name:City gates, small
-				costume:
-				model:
-			Off-Road:
-				name:Off-Road
-				costume:
-				model:
-			Spyder:
-				name:Spyder
-				costume:
-				model:
-			Blind Justice:
-				name:Blind Justice
-				costume:
-				model:
-			Airlock Door:
-				name:Airlock Door
-				costume:
-				model:
-			Magnetic lock:
-				name:Magnetic lock
-				costume:
-				model:

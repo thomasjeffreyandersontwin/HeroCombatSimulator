@@ -125,9 +125,18 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 			JSONObject attackTargetJSON = (JSONObject) attackTargetsJSON.get(i);	
 			String defenderName = (String)attackTargetJSON.get("Defender");
 			CharacterAdaptor defender = new CharacterAdaptor(defenderName);
-			targetDefender(defender);
-			processObstructionsInJSON(attackTargetJSON);
-			processToHitModifiersInJSON(attackTargetJSON);
+			if(defender.target!=null) {
+				targetDefender(defender);
+				processObstructionsInJSON(attackTargetJSON);
+				processToHitModifiersInJSON(attackTargetJSON);
+			}
+			else 
+			{
+				Exception e = new Exception("target " + defenderName + " is not a valid target!");
+				e.printStackTrace();
+				attackTargetsJSON.remove(i);
+				i--;
+			}
 		}
 		Process();
 		for(int i=0;i< attackTargetsJSON.size();i++)

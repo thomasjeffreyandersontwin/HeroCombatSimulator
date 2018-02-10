@@ -165,7 +165,7 @@ public class DefaultAttackTreeNode implements AttackTreeNode, ChampionsConstants
      */
     @Override
     public int getChildCount() {
-        int count = 0;
+        int count = 0; 
         AttackTreeNode atn;
         if (children != null) {
             // Iterate through the children.  If the child is hidden, count it's
@@ -179,6 +179,7 @@ public class DefaultAttackTreeNode implements AttackTreeNode, ChampionsConstants
                 else {
                     count++;
                 }
+             //   if(count >999) return 999;
             }
         }
         return count;

@@ -1,29 +1,17 @@
 
 character:
-	name:Off-Road
+	name:Spyder
 	costume:
 	model:
-	MaxStun:28
-	MaxEndurance:44
-	CurrStun:28
-	CurrEndurance:26
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:48
+	CurrEndurance:56
 Activate: True
 
 	Crowd: 
-		Name:heroes
+		Name:Unnamed
 		Characters:
-			Ogun:
-				name:Ogun
-				costume:
-				model:
-			Pre-Emptive Strike:
-				name:Pre-Emptive Strike
-				costume:
-				model:
-			City gates, small:
-				name:City gates, small
-				costume:
-				model:
 			Off-Road:
 				name:Off-Road
 				costume:
@@ -32,15 +20,23 @@ Activate: True
 				name:Spyder
 				costume:
 				model:
-			Blind Justice:
-				name:Blind Justice
+			Ogun:
+				name:Ogun
 				costume:
 				model:
-			Airlock Door:
-				name:Airlock Door
+			Interior wood door:
+				name:Interior wood door
 				costume:
 				model:
 			Magnetic lock:
 				name:Magnetic lock
+				costume:
+				model:
+			Chamber pot:
+				name:Chamber pot
+				costume:
+				model:
+			Saviour:
+				name:Saviour
 				costume:
 				model:

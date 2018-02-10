@@ -312,9 +312,15 @@ public class AttackAdapter extends AbilityAdapter {
 
 	public void placeObjectDirectlyBehindDefender(PhysicalObjectAdapter obj, int distance) {
 		KnockbackTargetNode node = getKnockbackNodeForTarget();
+		//int count=0;
 		while(node==null && getActivationInfo().getTargetHit(targetIndex))
 		{
 			node = getKnockbackNodeForTarget();
+			//count++;
+			//if(count>1000) {
+			//	return ;
+		//	}
+			
 		}
 		if(node!=null) {
 			placeObjectDirectlyBehindDefenderUsingKnockbackNode(obj, distance, node);	

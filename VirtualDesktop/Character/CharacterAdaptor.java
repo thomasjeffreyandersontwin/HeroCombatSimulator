@@ -122,6 +122,13 @@ public class CharacterAdaptor extends BasicTargetAdapter {
 		
 		AbilityAdapter a = getAbilityWrapper((String) abilityJSON.get("Ability"));
 		ActiveAbility = a;
+		if(a==null) {
+			Exception e = new Exception("Character "+ getName() + 
+					" does not have ability " + (String) abilityJSON.get("Ability") +"!!!");
+			
+			e.printStackTrace();
+			return null;
+		}
 		JSONObject r = a.processJSON(abilityJSON);
 		if(a instanceof AttackAdapter) 
 			a.WriteJSON(r);
