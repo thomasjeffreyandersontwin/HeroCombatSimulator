@@ -1,9 +1,13 @@
 Event: 
 	Name:RosterRemove
 character:
-	name:Barrel
+	name:Spyder
 	costume:
 	model:
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:48
+	CurrEndurance:56
 	Crowd: 
-		Name:Obstructions
+		Name:Unnamed
 		Characters:

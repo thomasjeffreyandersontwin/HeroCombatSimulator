@@ -1,42 +1,22 @@
 
 character:
-	name:Blind Justice
+	name:Spyder
 	costume:
 	model:
-	MaxStun:77
-	MaxEndurance:560
-	CurrStun:77
-	CurrEndurance:133
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:48
+	CurrEndurance:56
 Activate: True
 
 	Crowd: 
 		Name:Unnamed
 		Characters:
-			Blind Justice:
-				name:Blind Justice
-				costume:
-				model:
-			Spyder:
-				name:Spyder
-				costume:
-				model:
 			Ogun:
 				name:Ogun
 				costume:
 				model:
-			Interior wood door:
-				name:Interior wood door
-				costume:
-				model:
-			Magnetic lock:
-				name:Magnetic lock
-				costume:
-				model:
-			Chamber pot:
-				name:Chamber pot
-				costume:
-				model:
-			Saviour:
-				name:Saviour
+			Spyder:
+				name:Spyder
 				costume:
 				model:
