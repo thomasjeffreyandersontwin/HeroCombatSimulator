@@ -1,5 +1,5 @@
 /*
- * CHARACTERXMLHandler.java
+s * CHARACTERXMLHandler.java
  *
  * Created on March 27, 2004, 5:30 PM
  */

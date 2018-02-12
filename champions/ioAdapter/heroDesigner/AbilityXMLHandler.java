@@ -91,6 +91,8 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
                 sublist = sublist.findSublist(listName);
             }
         }
+        
+        
 
         Ability ability = importAbility(node, xmlParseErrorList);
         if (ability == null) {

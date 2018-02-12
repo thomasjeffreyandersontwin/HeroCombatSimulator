@@ -1,13 +1,29 @@
 Event: 
-	Name:RosterRemove
+	Name:Open Character
 character:
-	name:Spyder
+	name:Wonder Woman
 	costume:
 	model:
-	MaxStun:48
-	MaxEndurance:60
-	CurrStun:48
-	CurrEndurance:56
+	MaxStun:43
+	MaxEndurance:20
+	CurrStun:43
+	CurrEndurance:20
 	Crowd: 
-		Name:Unnamed
+		Name:DC Heroes
 		Characters:
+			Superman:
+				name:Superman
+				costume:
+				model:
+			Batman:
+				name:Batman
+				costume:
+				model:
+			The Flash:
+				name:The Flash
+				costume:
+				model:
+			Wonder Woman:
+				name:Wonder Woman
+				costume:
+				model:

@@ -1,22 +1,38 @@
 
 character:
-	name:Spyder
+	name:Ghost Rider
 	costume:
 	model:
-	MaxStun:48
+	MaxStun:53
 	MaxEndurance:60
-	CurrStun:48
-	CurrEndurance:56
+	CurrStun:53
+	CurrEndurance:60
 Activate: True
 
 	Crowd: 
-		Name:Unnamed
+		Name:Marvel Heroes
 		Characters:
-			Ogun:
-				name:Ogun
+			Black Widow:
+				name:Black Widow
 				costume:
 				model:
-			Spyder:
-				name:Spyder
+			Captain America:
+				name:Captain America
+				costume:
+				model:
+			Daredevil:
+				name:Daredevil
+				costume:
+				model:
+			Ghost Rider:
+				name:Ghost Rider
+				costume:
+				model:
+			Iron Man:
+				name:Iron Man
+				costume:
+				model:
+			Luke Cage:
+				name:Luke Cage
 				costume:
 				model:
