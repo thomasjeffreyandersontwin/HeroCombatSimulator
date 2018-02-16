@@ -25,6 +25,8 @@ import champions.parameters.Parameter;
 import champions.parameters.ParameterList;
 import champions.powers.effectAdjusted;
 import champions.powers.effectUnconscious;
+import champions.powers.effectVulnerability;
+import champions.powers.limitationVulnerable;
 import champions.powers.powerInvisibility;
 import champions.senseFilters.SensesOnlySenseFilter;
 import champions.senseTree.STSensePanel;
@@ -48,6 +50,7 @@ import javax.swing.JFrame;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -77,7 +80,54 @@ import javax.imageio.ImageIO;
  */
 public class Target extends DetailList implements Comparable, ChampionsConstants, ENDSource {
     
+	//jeff
+	public void AddApropriateModifersFromParentAbility(Ability ability, BattleEvent be)
+	{
+		AddVulnerabilityEffect(ability, be);
+	}
+
+	private void AddVulnerabilityEffect(Ability ability, BattleEvent be) {
+		int index =ability.findLimitation("Vulnerable");
+        if( index!=-1)
+        {
+        	limitationVulnerable vulnerableAbility = (limitationVulnerable) ability.getLimitation(index);
+        	String common = vulnerableAbility.getParameterList().getParameterStringValue("attackType");
+        	String specialEffect = vulnerableAbility.getParameterList().getParameterStringValue("effect");        	
+        	
+        	Ability vulnerabilityAbility =  PADRoster.getNewAbilityInstance("Vulnerability");
+        	vulnerabilityAbility.setName("Vulnerability");    	
+
+        	ParameterList l = new ParameterList(vulnerabilityAbility.getPower().getParameterArray());
+        	
+        	l.setParameterValue("AttackIs", common);
+        	l.setParameterValue("Multiplier", "x2");
+        	l.setParameterValue("ApplyTo", "BODY");
+        	vulnerabilityAbility.getPower().configurePAD(vulnerabilityAbility, l);
+        	
+        	SpecialEffect se = new SpecialEffect(specialEffect);
+        	vulnerabilityAbility.addSpecialEffect(se);
+        	
+        	AddAbilityAndEffect(be, vulnerabilityAbility);
+        }
+	}
 	
+	private void AddAbilityAndEffect(BattleEvent be, Ability vulnerabilityAbility) {
+		DefaultAbilityList disads = findOrCreateDisadvantagesSubList();
+    	disads.addAbility(vulnerabilityAbility);
+		
+		Effect vulnerabilityEffect = vulnerabilityAbility.getPower().getEffect(vulnerabilityAbility);
+		try { vulnerabilityEffect.addEffect(be, this);} catch (BattleEventException e) {e.printStackTrace();}
+	}
+	private DefaultAbilityList findOrCreateDisadvantagesSubList() {
+		DefaultAbilityList disads = (DefaultAbilityList) this.getAbilityList().findSublist("Disadvantages");
+		if(disads==null)
+		{
+			disads = new DefaultAbilityList();
+			disads.setName("Disadvantages");
+			this.getAbilityList().addSublist(disads);
+		}
+		return disads;
+	}
 	private int _lastStun;
 	public void setLastStunTaken(int totalStunDamage) {
 		_lastStun = totalStunDamage;
@@ -3699,10 +3749,12 @@ public class Target extends DetailList implements Comparable, ChampionsConstants
             	ArrayList senses = (ArrayList) p.getParameterValue("Senses");
             	 
             	for (Object o: senses) {
-            		SenseGroup group = (SenseGroup)o;
-            		if(group.getSenseName().equals(s.getSenseGroupName()))
-            		{
-            			invisibleToSense= true;
+            		if(o instanceof SenseGroup) {
+            			SenseGroup group = (SenseGroup)o;
+            			if(group.getSenseName().equals(s.getSenseGroupName()))
+            			{
+            				invisibleToSense= true;
+            			}
             		}
 				}
             }

@@ -1682,11 +1682,21 @@ public class BattleEngine extends Thread
                 if (ol != null && processObstructions(be, ol, effect, knockbackGroup) == false) {
                     continue;
                 }
-
+                //jeff does KB
                 // Do Knockback addition
                 Double body;
                 if (be.doesKnockback()) {
                     int totalBodyDamage = effect.getTotalBodyDamage();
+                    if(totalBodyDamage==0) 
+                    {
+                    	int dindex = be.getDiceIndex( "DamageDie", targetGroup );
+                    
+                    	if( dindex !=-1)
+						{
+                    		Dice dice = be.getDiceRoll(dindex);
+                    		totalBodyDamage = dice.getBody();
+						}
+                    }
                     addKnockback(be, target, knockbackGroup, totalBodyDamage);
                 }
 

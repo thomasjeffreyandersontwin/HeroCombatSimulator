@@ -98,6 +98,8 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
         if (ability == null) {
             return null;
         }
+        
+        
 
         sublist.addAbility(ability);
 
@@ -295,8 +297,9 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
 		        Node privateNode = mAttrs.getNamedItem("PRIVATE");
 		        String privateModifier = privateNode != null ? privateNode.getNodeValue() : "No";
 
+		        String alias = mAttrs.getNamedItem("ALIAS").getNodeValue();
 		        boolean done = false;
-		        if (!done) {
+		        if (!done && !alias.equals("Vulnerability Multiplier")) { //jeff 
 		            Iterator i = PADRoster.getAdvantageIterator();
 		            ModifierXMLAdapter mxa = null;
 		            while (i.hasNext()) {
@@ -427,7 +430,7 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
 		            }
 		        }
 
-		        if (!done) {
+		        if (!done && !alias.equals("Vulnerability Multiplier")) { //jeff
 		            // This is an unrecognized modifier...probably want to just load it
 		            // as a generic advantage/limitation...
 		            String description = null;

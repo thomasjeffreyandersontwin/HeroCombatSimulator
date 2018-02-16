@@ -99,20 +99,7 @@ public class effectFlash extends Effect {
     throws BattleEventException {
         Chronometer time = Battle.currentBattle.getTime();
         
-        
-        
-//        if (t.isPostTurn() == true) {
-//
-//        }
-//
-        
-//        if ( getBooleanValue("Effect.FIRSTPHASE" ) == true ) {
-//                    System.out.println("flash presegment first phase");
-//            add("Effect","FIRSTPHASE.FALSE",  true );
-//            return false;
-//        }
-//                    System.out.println("flash presegment!");
-       // int duration = getDuration();
+       
         
         if (getCurrenttime() != time.getSegment()) {
             setCurrenttime(time.getSegment());
@@ -133,14 +120,7 @@ public class effectFlash extends Effect {
         }
     }
     
-//    public boolean presegment(BattleEvent be, Target t)
-//    throws BattleEventException {
-//        Battle cb = Battle.getCurrentBattle();
-//        Chronometer time = (Chronometer)Battle.getCurrentBattle().getTime().clone();
-//        long currenttime = cb.getTime().getTime();
-//        System.out.println("target: " + t + " time: " + currenttime);
-//        return false;
-//    }
+   
     
     public String getDescription() {
         Integer duration = new Integer(getDuration());

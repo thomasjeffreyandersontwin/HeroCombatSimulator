@@ -334,6 +334,7 @@ public class PADRoster extends Object {
      * name can be colon delimited to include subfolders. (i.e. "Advantages:Adjustment Powers").
      */
     private static String[][] advantagesList = {
+    	{"advantageDoesKnockback", "Advantages"},
         {"advantageAffectsDesolidified", "Advantages"},
         {"advantageAVLD", "Advantages"},
         {"advantageAreaEffect", "Advantages"},
@@ -345,6 +346,7 @@ public class PADRoster extends Object {
         {"advantageReducedEndurance", "Advantages"},
         {"advantageNND", "Advantages"},
         {"advantageNoRangePenalty", "Advantages"},
+        {"advantageLineOfSight", "Advantages"},
         {"advantageAutofire", "Advantages"},
         {"advantageGenericAdvantage", "Advantages"},
         {"advantageDelayedEffect", "Advantages"},
@@ -388,6 +390,8 @@ public class PADRoster extends Object {
      * name can be colon delimited to include subfolders. (i.e. "Limitations:Adjustment Powers").
      */
     private static String[][] limitationsList = {
+    	{"limitationVulnerable", "Limitations"},
+    	{"limitationLimitedRange", "Limitations"},
         {"limitationActivation", "Limitations"},
         {"limitationAffectsBodyOnly", "Limitations"},
         {"limitationBeam", "Limitations"},
@@ -397,6 +401,7 @@ public class PADRoster extends Object {
         {"limitationChameleon", "Limitations"},
         {"limitationCharges", "Limitations"},
         {"limitationConcentration", "Limitations"},
+        {"limitationLimitedClassOfPowersAvailable", "Limitations"},
         {"limitationNoFiguredCharacteristics", "Limitations"},
         {"limitationEDApplies", "Limitations"},
         {"limitationExtraTime", "Limitations"},
@@ -459,7 +464,7 @@ public class PADRoster extends Object {
         { "Ice", null, "Special Effects"},
         { "Magic", "SpecialEffect.MagicIcon", "Special Effects"},
         { "Heat", null, "Special Effects"},
-        { "Cold 1", "SpecialEffect.Cold1Icon", "Special Effects"},
+        { "Cold", "SpecialEffect.Cold1Icon", "Special Effects"},
         { "Chi", "SpecialEffect.ChiIcon", "Special Effects"},
         { "Electricity", "SpecialEffect.Electrical1Icon", "Special Effects"},
         { "Visible Light", "SpecialEffect.VisibleLightIcon", "Special Effects"},
@@ -471,7 +476,7 @@ public class PADRoster extends Object {
         { "Magnetism", "SpecialEffect.MagnetismIcon", "Special Effects"},
         { "Water", "SpecialEffect.WaterIcon", "Special Effects"},
         { "Wind", null, "Special Effects"},
-        { "Air 1", "SpecialEffect.Air1Icon", "Special Effects"},
+        { "Air", "SpecialEffect.Air1Icon", "Special Effects"},
         {"Air 2", "SpecialEffect.Air2Icon", "Special Effects"},
         { "Cold 2", "SpecialEffect.Cold2Icon", "Special Effects"},
         { "Earth","SpecialEffect.EarthIcon", "Special Effects"},
@@ -483,7 +488,7 @@ public class PADRoster extends Object {
         {"Poison","SpecialEffect.PoisonIcon", "Special Effects"},
         {"Psionic","SpecialEffect.PsionicIcon", "Special Effects"},
         {"Sonic","SpecialEffect.SonicIcon", "Special Effects"},
-        {"Technology 1","SpecialEffect.Tech1Icon", "Special Effects"},
+        {"Technology","SpecialEffect.Tech1Icon", "Special Effects"},
         {"Technology 2","SpecialEffect.Tech2Icon", "Special Effects"},
         {"Technology 3","SpecialEffect.Tech3Icon", "Special Effects"},
         {"Technology 4","SpecialEffect.Tech4Icon", "Special Effects"},
@@ -571,7 +576,7 @@ public class PADRoster extends Object {
      * all abilities will be listed as strictly the Ability class and all special effects
      * will be listed as just SpecialEffect class.
      */
-    private static Map padClassMap;
+    public static Map padClassMap;
     
     /** Maps the PAD name to the shared instance of the PAD.
      *
@@ -1146,23 +1151,12 @@ public class PADRoster extends Object {
             SplashScreen.setDescription("Initializing SFX(" + name + ")");
             
             // Store the Class type as Special Effect
-            padClassMap.put(name, SpecialEffect.class);
-            
-            // Create an instance of the SFX.
-            SpecialEffect se = new SpecialEffect( name );
-            if ( iconKey != null ) {
-                Icon icon = UIManager.getIcon(iconKey);
-                if ( icon != null ) se.setIcon(icon);
-            }
-            
-            // Store the shared instance.
-            padSharedInstanceMap.put(name, se);
-            
-            // Add the PAD to the folder structure
-            addPADtoFolder(name, folder);
+            AddSpecialEffect(name, folder, iconKey);
             
             SplashScreen.advangeProgress();
         }
+        
+       
         
         sensesList = new ArrayList();
         for(int i = 0; i < sensesNameList.length; i++) {
@@ -1171,6 +1165,23 @@ public class PADRoster extends Object {
         
         loadIOAdapters();
     }
+
+	public static void AddSpecialEffect(String name, String folder, String iconKey) {
+		padClassMap.put(name, SpecialEffect.class);
+		
+		// Create an instance of the SFX.
+		SpecialEffect se = new SpecialEffect( name );
+		if ( iconKey != null ) {
+		    Icon icon = UIManager.getIcon(iconKey);
+		    if ( icon != null ) se.setIcon(icon);
+		}
+		
+		// Store the shared instance.
+		padSharedInstanceMap.put(name, se);
+		
+		// Add the PAD to the folder structure
+		addPADtoFolder(name, folder);
+	}
     
     /** Returns a new instance of the indicated sense, with the default configuration.
      *

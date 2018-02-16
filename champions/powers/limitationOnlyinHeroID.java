@@ -240,7 +240,10 @@ public class limitationOnlyinHeroID extends LimitationAdapter implements Champio
         ComboParameter param = (ComboParameter)pl.getParameter("HeroIDName");
         if ( param.getModel() == null) {
             limitationOnlyinHeroID.HeroIDModel hidm = new HeroIDModel();
-            hidm.setSource(ability.getSource());
+            //jeff 
+            if(ability!=null) {
+            	hidm.setSource(ability.getSource());
+            }
             param.setModel(hidm);
         }
         return pl;

@@ -186,11 +186,15 @@ implements ChampionsConstants {
             
             List<Sense> senses = parameterList.getIndexedParameterValues("Senses");
             for(Sense sense : senses) {
-                Effect effect = new effectFlash( dice.getBody().intValue(), sense);
+            	effectFlash effect = new effectFlash( dice.getBody().intValue(), sense);
+            	
                 effectList.createIndexed(  "Effect","EFFECT",effect) ;
             }
         }
+       
+        
     }
+   
     
 /*    public int calculateCPCost(Ability ability) {
         ParameterList parameterList = getParameterList(ability);

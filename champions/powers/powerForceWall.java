@@ -246,6 +246,13 @@ implements ChampionsConstants{
         Effect e = new effectForceWall(ability, defensepd.intValue(), defenseed.intValue(), defensemd.intValue() );
         int index = effectList.createIndexed("Effect","EFFECT",e,false );
         effectList.addIndexed( index,  "Effect","TTYPE","SOURCE", true);
+        
+        
+        effectForceWall effectForce = (effectForceWall)e;
+    	TargetForceWall targetForce = effectForce.getTargetForceWall();
+    	
+    	targetForce.AddApropriateModifersFromParentAbility(ability, be);
+
     }
     
 /*    public int calculateCPCost(Ability ability) {
@@ -277,9 +284,13 @@ implements ChampionsConstants{
             
             TargetForceWall targetForceWall = new TargetForceWall(ability.getSource() + "'s " + ability.getName(), this, ability.getSource(), pddef, eddef, mddef );
             add("Effect.TARGETFORCEWALL",  targetForceWall,  true);
-            
+            wall = targetForceWall;
         }
         
+        TargetForceWall wall = null;
+        public TargetForceWall getTargetForceWall(){
+        	return wall;
+        }
         public boolean addEffect(BattleEvent be, Target target) throws BattleEventException {
             if ( ! super.addEffect(be,target) ) return false;
             
@@ -295,7 +306,7 @@ implements ChampionsConstants{
                 be.addRosterEvent(r,(Target)targetForceWall,true);
                 be.addBattleMessage( new GenericSummaryMessage(target,  " created " + targetForceWall.getName())); 
                 targetForceWall.setForceWallRoster(r);
-                
+                wall =targetForceWall;
             }
             else {
                 return false;

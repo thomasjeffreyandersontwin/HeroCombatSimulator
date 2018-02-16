@@ -10,10 +10,13 @@ import champions.Ability;
 import champions.AbilityImport;
 import champions.BattleEvent;
 import champions.ChampionsUtilities;
+import champions.DefaultAbilityList;
 import champions.DetailList;
 import champions.Dice;
 import champions.Effect;
+import champions.PADRoster;
 import champions.Power;
+import champions.SpecialEffect;
 import champions.Target;
 import champions.exception.BattleEventException;
 import champions.interfaces.Advantage;
@@ -198,6 +201,11 @@ public class powerEntangle extends Power implements ChampionsConstants {
             dice = be.getDiceRoll(dindex);
             Effect effect = new effectEntangle( ability, dice );
             effectList.createIndexed(  "Effect","EFFECT",effect) ;
+            
+            effectEntangle effectEnt = (effectEntangle)effect;
+        	TargetEntangle targetEntangle= effectEnt.getTargetEntangle();
+        	
+        	targetEntangle.AddApropriateModifersFromParentAbility(ability, be);
         }
     }
     

@@ -1,38 +1,26 @@
 
 character:
-	name:Ghost Rider
+	name:Green Lantern
 	costume:
 	model:
-	MaxStun:53
-	MaxEndurance:60
-	CurrStun:53
-	CurrEndurance:60
+	MaxStun:31
+	MaxEndurance:30
+	CurrStun:19
+	CurrEndurance:30
 Activate: True
 
 	Crowd: 
-		Name:Marvel Heroes
+		Name:Unnamed
 		Characters:
-			Black Widow:
-				name:Black Widow
+			Superman:
+				name:Superman
 				costume:
 				model:
-			Captain America:
-				name:Captain America
+			Green Lantern:
+				name:Green Lantern
 				costume:
 				model:
-			Daredevil:
-				name:Daredevil
-				costume:
-				model:
-			Ghost Rider:
-				name:Ghost Rider
-				costume:
-				model:
-			Iron Man:
-				name:Iron Man
-				costume:
-				model:
-			Luke Cage:
-				name:Luke Cage
+			Green Lantern's Ring’s Charge:
+				name:Green Lantern's Ring’s Charge
 				costume:
 				model:

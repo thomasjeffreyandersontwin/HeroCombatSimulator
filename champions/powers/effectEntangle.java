@@ -9,16 +9,26 @@ package champions.powers;
 import champions.Ability;
 import champions.AbilityAction;
 import champions.Battle;
+import champions.BattleEngine;
 import champions.BattleEvent;
 import champions.CVList;
+import champions.DefaultAbilityList;
 import champions.Dice;
 import champions.Effect;
+import champions.PADRoster;
+import champions.Power;
 import champions.Roster;
+import champions.SpecialEffect;
 import champions.Target;
 import champions.battleMessage.GenericSummaryMessage;
 import champions.exception.BadDiceException;
 import champions.exception.BattleEventException;
+import champions.interfaces.AbilityList;
+import champions.interfaces.Limitation;
 import champions.interfaces.Undoable;
+import champions.ioAdapter.heroDesigner.adapters.disadvantageVulnerabilityAdapter;
+import champions.parameters.ParameterList;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -43,8 +53,7 @@ public class effectEntangle extends Effect {
         super( ability.getName(), "PERSISTENT" );
         
         int def;
-        int body;
-        
+        int body;      
         // String die = (String)ability.ge(parameterArray, "EntangleDie");
         String die = ability.getStringValue("Power.ENTANGLEDIE");
         
@@ -56,10 +65,10 @@ public class effectEntangle extends Effect {
             def = 0;
         }
         
-        body = dice.getBody().intValue();
-        
+        body = dice.getBody().intValue();       
         champions.powers.TargetEntangle targetEntangle = new TargetEntangle( this, body, def );
         
+                
         
         add("Effect.TARGETENTANGLE",  targetEntangle,  true);
     }

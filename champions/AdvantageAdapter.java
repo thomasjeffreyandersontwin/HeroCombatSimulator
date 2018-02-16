@@ -467,7 +467,6 @@ public abstract class AdvantageAdapter implements Advantage, Serializable {
     public Ability getAbility() {
         return ability;
     }
-
     public void setAbility(Ability ability) {
         if ( this.ability != ability ) {
             if ( this.ability != null && ability != null) {
@@ -481,7 +480,6 @@ public abstract class AdvantageAdapter implements Advantage, Serializable {
     public boolean isAddedByFramework() {
         return addedByFramework;
     }
-
     public void setAddedByFramework(boolean addedByFramework) {
         this.addedByFramework = addedByFramework;
     }
@@ -489,7 +487,6 @@ public abstract class AdvantageAdapter implements Advantage, Serializable {
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         if ( this.description != description ) {
         
@@ -504,7 +501,6 @@ public abstract class AdvantageAdapter implements Advantage, Serializable {
     public double getMultiplier() {
         return multiplier;
     }
-
     public void setMultiplier(double multiplier) {
         this.multiplier = multiplier;
     }
@@ -512,7 +508,6 @@ public abstract class AdvantageAdapter implements Advantage, Serializable {
     public int getPriority() {
         return priority;
     }
-
     public void setPriority(int priority) {
         this.priority = priority;
     }

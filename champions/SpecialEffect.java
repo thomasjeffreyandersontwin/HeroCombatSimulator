@@ -34,11 +34,19 @@ public class SpecialEffect implements AdjustmentClass, Serializable
     public SpecialEffect(String name) {
         setName(name);
         setIcon( UIManager.getIcon( "SpecialEffect.DefaultIcon" ) );
+        if(!PADRoster.padClassMap.containsKey(getName())) 
+    	{
+    		PADRoster.AddSpecialEffect(getName(), "Special Effects", getIcon().toString());
+    	}
     }
     
     public SpecialEffect(String name, Icon icon) {
         setName(name);
         setIcon(icon);
+        if(!PADRoster.padClassMap.containsKey(getName())) 
+    	{
+    		PADRoster.AddSpecialEffect(getName(), "Special Effects", getIcon().toString());
+    	}
     }
     
     /** Getter for property name.

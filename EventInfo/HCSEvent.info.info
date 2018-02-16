@@ -1,29 +1,21 @@
 Event: 
-	Name:Open Character
+	Name:RosterRemove
 character:
-	name:Wonder Woman
+	name:Superman
 	costume:
 	model:
-	MaxStun:43
+	MaxStun:20
 	MaxEndurance:20
-	CurrStun:43
-	CurrEndurance:20
+	CurrStun:128
+	CurrEndurance:51
 	Crowd: 
-		Name:DC Heroes
+		Name:Unnamed
 		Characters:
-			Superman:
-				name:Superman
+			Green Lantern:
+				name:Green Lantern
 				costume:
 				model:
-			Batman:
-				name:Batman
-				costume:
-				model:
-			The Flash:
-				name:The Flash
-				costume:
-				model:
-			Wonder Woman:
-				name:Wonder Woman
+			Green Lantern's Ring’s Charge:
+				name:Green Lantern's Ring’s Charge
 				costume:
 				model:

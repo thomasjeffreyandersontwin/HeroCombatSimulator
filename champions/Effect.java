@@ -265,17 +265,21 @@ public class Effect extends DetailList implements ChampionsConstants, Serializab
                 }
             }
             
-            target.addEffectEntry(this);
-
-            int aindex;
-            ActivationInfo ai = be.getActivationInfo();
+        target.addEffectEntry(this);
+            
+            
+        int aindex;
+        
+        ActivationInfo ai = be.getActivationInfo();
             if (ai != null) {
                 aindex = ai.createIndexed("Effect", "EFFECT", this);
                 ai.addIndexed(aindex, "Effect", "TARGET", target);
                 add("Effect.AILINK", ai);
             }
-            add("Effect.TARGET", target);
         }
+        add("Effect.TARGET", target);
+        
+        
 
 
         // Everything is good.  Post event for undo
@@ -1262,7 +1266,7 @@ public class Effect extends DetailList implements ChampionsConstants, Serializab
     }
 
     public void postEvent(BattleEvent be, Target target, boolean added) {
-        be.addEffectEvent(this, target, added);
+        if(be!=null) {be.addEffectEvent(this, target, added);}
     }
 
     public String toString() {

@@ -39,7 +39,9 @@ public abstract class Power implements PAD, ChampionsConstants, AdjustmentClass,
     };
     
     public static Icon genericPowerIcon = null;
-    
+    public Effect getEffect(Ability ability) {
+    	return null;
+    }
     /**
      * Creates new Power
      */

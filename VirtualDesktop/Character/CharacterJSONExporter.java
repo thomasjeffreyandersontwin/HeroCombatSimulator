@@ -350,12 +350,14 @@ public class CharacterJSONExporter {
 					if(!key.equals("Private")) {
 						Object val = parameters.getParameterValue(key);
 						if(!key.equals("Private")) {
-							if(ClassUtils.isPrimitiveOrWrapper(val.getClass())){
-								limitationJSON.put(key, val);
+							if(val!=null) {
+								if(ClassUtils.isPrimitiveOrWrapper(val.getClass())){
+									limitationJSON.put(key, val);
+								}
+								else {
+									limitationJSON.put(key, "");
+								};
 							}
-							else {
-								limitationJSON.put(key, "");
-							};
 						}
 					}
 				}
