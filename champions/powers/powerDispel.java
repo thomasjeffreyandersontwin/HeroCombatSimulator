@@ -70,7 +70,7 @@ public class powerDispel extends AdjustmentPower implements ChampionsConstants {
     };
     
     // Power Definition Variables
-    private static String powerName = "Drain"; // The Name of the Power
+    private static String powerName = "Dispel"; // The Name of the Power
     private static String targetType = "SINGLE"; // The Type of Attack: Either "SINGLE" or "SELF"
     private static String persistenceType = "INSTANT"; // The Length of Time power stays active: "INSTANT","CONSTANT","PERSISTENT"
     private static String activationTime = "ATTACK"; // Time required to activate Ability: "INSTANT", "ATTACK", "FULL", "HALF"

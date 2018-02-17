@@ -4215,7 +4215,7 @@ public class BattleEngine extends Thread
             Integer str = be.getIntegerValue("Normal.STR_USED");
             Integer pushed = be.getIntegerValue("Pushed.STR_USED");
             //jeff desparate hack to endurance reduction working with added str powers
-            if (str >0) {
+            if (str !=null && str >0) {
                 for(AbilityIterator i = source.getAbilities();i.hasNext();)
                 {
                 			

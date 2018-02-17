@@ -181,6 +181,7 @@ implements ChampionsConstants {
         effectDefenseModifier2 effect = new effectDefenseModifier2(ability.getName(), ability);
         
         effectList.createIndexed(   "Effect","EFFECT", effect,  false );
+       
     }
     
     /*public int calculateCPCost(Ability ability) {

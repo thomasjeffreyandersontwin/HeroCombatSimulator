@@ -1,21 +1,21 @@
 Event: 
-	Name:RosterRemove
+	Name:Expand Character Node
 character:
-	name:Superman
+	name:Pre-Emptive Strike
 	costume:
 	model:
-	MaxStun:20
-	MaxEndurance:20
-	CurrStun:128
-	CurrEndurance:51
+	MaxStun:98
+	MaxEndurance:70
+	CurrStun:98
+	CurrEndurance:35
 	Crowd: 
 		Name:Unnamed
 		Characters:
-			Green Lantern:
-				name:Green Lantern
+			Pre-Emptive Strike:
+				name:Pre-Emptive Strike
 				costume:
 				model:
-			Green Lantern's Ring’s Charge:
-				name:Green Lantern's Ring’s Charge
+			Ogun:
+				name:Ogun
 				costume:
 				model:

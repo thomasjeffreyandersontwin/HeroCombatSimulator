@@ -6,8 +6,10 @@
 
 package champions.ioAdapter.heroDesigner.adapters;
 
+import champions.Ability;
 import champions.ioAdapter.heroDesigner.AbstractModifierXMLAdapter;
 import champions.ioAdapter.heroDesigner.ModifierXMLAdapter;
+import champions.parameters.ParameterList;
 
 /**
  *
@@ -30,6 +32,7 @@ public class limitationConcentrationAdapter extends AbstractModifierXMLAdapter i
     public String getXMLID() {
         return XMLID;
     }
+    
     
     /** Returns the Translation Array for the PowerAdapter.
      *

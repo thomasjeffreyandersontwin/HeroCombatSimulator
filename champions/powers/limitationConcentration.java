@@ -133,6 +133,9 @@ public class limitationConcentration extends LimitationAdapter implements Limita
         } else if ( level.equals("Throughout & 0 DCV") ) {
             level = "Throughout, 0 DCV";
             parameterList.setParameterValue("ConcentrationLevel", level );
+            
+            
+            
         }
         
         
@@ -190,6 +193,7 @@ public class limitationConcentration extends LimitationAdapter implements Limita
         // Update the Stored Description for this Limitation
         setDescription( getConfigSummary() );
         
+        ability.setNormallyOn(false);
         // Return True to indicate success in configuringPAD
         return true;
     }

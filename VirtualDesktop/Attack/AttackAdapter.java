@@ -410,31 +410,43 @@ public class AttackAdapter extends AbilityAdapter {
 	
 	public void processObstructionsInJSON(JSONObject attackJSON) {
 		JSONArray physicalObjects = (JSONArray) attackJSON.get("Obstructions");
-		for(int i = 0; i < physicalObjects.size();i++) {
-			addObstruction(new PhysicalObjectAdapter((String) physicalObjects.get(i)));
+		if(physicalObjects!=null)
+		{
+			for(int i = 0; i < physicalObjects.size();i++) {
+				addObstruction(new PhysicalObjectAdapter((String) physicalObjects.get(i)));
+			}
 		}
 		
 		
 	}
+
+
+
 	public void processToHitModifiersInJSON(JSONObject attackJSON) {
 		JSONObject modifiersJSON = (JSONObject) attackJSON.get("To Hit Modifiers");
-		ToHitModifiers modifiers = enterToHitModifiers();
-		modifiers.processJSON(modifiersJSON);
+		if(modifiersJSON!=null)
+		{
+			ToHitModifiers modifiers = enterToHitModifiers();
+			modifiers.processJSON(modifiersJSON);
+		}
 	}
 	public void processPotentialCollisionsInJSON(JSONObject attackJSON) {
+		
 		JSONArray potentialCollisions = (JSONArray) attackJSON.get("Potential Knockback Collisions");
-		for(int i = 0; i < potentialCollisions.size();i++) {
-			JSONObject pcoJSON = (JSONObject)potentialCollisions.get(i);
-			String co = (String) pcoJSON.get("Collision Object");
-			int distance =0;
-			try {
-				 distance  = ((Long) pcoJSON.get("Collision Distance")).intValue();
+		if(potentialCollisions!=null) {
+			for(int i = 0; i < potentialCollisions.size();i++) {
+				JSONObject pcoJSON = (JSONObject)potentialCollisions.get(i);
+				String co = (String) pcoJSON.get("Collision Object");
+				int distance =0;
+				try {
+					 distance  = ((Long) pcoJSON.get("Collision Distance")).intValue();
+				}
+				catch (Exception e)
+				{
+					distance = (int) pcoJSON.get("Collision Distance");
+				}
+				placeObjectDirectlyBehindDefender(new PhysicalObjectAdapter(co), distance);
 			}
-			catch (Exception e)
-			{
-				distance = (int) pcoJSON.get("Collision Distance");
-			}
-			placeObjectDirectlyBehindDefender(new PhysicalObjectAdapter(co), distance);
 		}
 	}
 	

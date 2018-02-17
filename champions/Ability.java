@@ -226,7 +226,7 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
     
     protected boolean generateDefaultEffects = false;
     protected String ctype;
-    protected Boolean normallyOn = null;
+    public Boolean normallyOn = null;
     protected String atype = null;
     protected String ptype = null;
     

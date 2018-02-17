@@ -178,6 +178,8 @@ public class powerTunneling extends Power implements ChampionsConstants {
         
         // Update the Ability Description based on the new configuration
         ability.setPowerDescription( getConfigSummary(ability, -1));
+       
+        
         
         // Return true to indicate success
         return true;

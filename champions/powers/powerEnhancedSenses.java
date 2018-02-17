@@ -146,36 +146,14 @@ public class powerEnhancedSenses extends Power implements ChampionsConstants{
      * All value/pairs should be copied into the ability for direct access.
      */
     public boolean configurePAD(Ability ability, ParameterList parameterList) {
-        // Fail immediately if ability is null
         if ( ability == null ) return false;
         
         // Always Set the ParameterList to the parameterList
         setParameterList(ability,parameterList);
-        
-        // Read in any parameters that will be needed to configure the power or
-        // Determine the validity of the power configuration.  Read the parameters
-        // from the parameterList, instead of directly from the ability, since the
-        // Ability isn't configured yet.
         String enhancedSense = (String)parameterList.getParameterValue("EnhancedSense");
-//        String senseimport = (String)parameterList.getParameterValue("SenseImport");
         String senseChange = (String)parameterList.getParameterValue("SenseChange");
-//        String merge = (String)parameterList.getParameterValue("Merge");
         boolean discriminatory = (Boolean)parameterList.getParameterValue("Discriminatory");
-//        String microscopicsense = (String)parameterList.getParameterValue("MicroscopicSense");
-//        String telescopicsense = (String)parameterList.getParameterValue("TelescopicSense");
-//        String arcOfPerception = (String)parameterList.getParameterValue("ArcOfPerception");
-//        String ranged = (String)parameterList.getParameterValue("Ranged");
-//        String detectsense = (String)parameterList.getParameterValue("DetectSense");
-//        String targeting = (String)parameterList.getParameterValue("Targeting");
-//        Integer telescopicLevel = (Integer)parameterList.getParameterValue("TelescopicLevel");
-//        Integer enhancedperception = (Integer)parameterList.getParameterValue("EnhancedPerception");
-//        Integer magnification = (Integer)parameterList.getParameterValue("Magnification");
-//        Integer magnificationimport = (Integer)parameterList.getParameterValue("MagnificationImport");
-//        Integer rangemultiplier = (Integer)parameterList.getParameterValue("RangeMultiplier");
-//        Integer rangeimport = (Integer)parameterList.getParameterValue("RangeImport");
-        // Check for the validity of the parameters that will be set.  If the parameters
-        // Fail for any reason, return false from the method immediately, indicating a
-        // failure to configure.
+
         
         // Setup the necessary visible parameters if the sense has changed...
         if ( enhancedSense == null || enhancedSense.equals(senseChange) == false ) {
@@ -189,83 +167,10 @@ public class powerEnhancedSenses extends Power implements ChampionsConstants{
             parameterList.setVisible("Analyze", false);
             parameterList.setParameterValue("Analyze", "FALSE");
         }
-        
-        // No Validation Necessary
-//        int i;
-//        if (magnificationimport.intValue() > 0) {
-//            int mag = magnificationimport.intValue();
-//            for (i=0;mag > 1;i++) {
-//                mag = mag /10;
-//            }
-//            parameterList.setParameterValue("Magnification", new Integer(i) );
-//            parameterList.setParameterValue("MagnificationImport", new Integer(0) );
-//
-//            magnification = (Integer)parameterList.getParameterValue("Magnification");
-//            magnificationimport = (Integer)parameterList.getParameterValue("MagnificationImport");
-//
-//
-//        }
-        
-//        int j;
-//        int total;
-//        total = 0;
-//        if (clairsentience.equals("TRUE") ){
-//            total = total +20;
-//
-//            if (rangeimport.intValue() > 0) {
-//                int range = rangeimport.intValue();
-//
-//                if (seeintime.equals("Future"))  {
-//                    total = total +20;
-//                }
-//                if (seeintime.equals("Past") ) {
-//                    total = total +20;
-//                }
-//                if (seeintime.equals("Future and Past") ) {
-//                    total = total +40;
-//                }
-//                if (dimensions.equals("TRUE") ) {
-//                    total = total +20;
-//                }
-//                if ( enhancedSense.equals("Sight Group")
-//                || enhancedSense.equals("Hearing Group")
-//                || enhancedSense.equals("Radio Group")
-//                || enhancedSense.equals("Smell/Taste Group")
-//                || enhancedSense.equals("Mental Group")
-//                || enhancedSense.equals("Unusual Senses Group") ) {
-//                    total = total + 10;
-//                }
-//            }
-//
-//            //            rangemultiplier = rangeimport.intValue()/total;
-//
-//            total = total *5;
-//            int k;
-//            //Math.pow(10, magnification.intValue() )
-//            for (k = 0;total < rangeimport.intValue();k++) {
-//                total = total * 2;
-//            }
-//
-//            System.out.println("range import: " +rangeimport + "total: " + total);
-//            parameterList.setParameterValue("RangeMultiplier", new Integer(k) );
-//            parameterList.setParameterValue("RangeImport", new Integer(0) );
-//
-//            rangemultiplier = (Integer)parameterList.getParameterValue("RangeMultiplier");
-//            rangeimport = (Integer)parameterList.getParameterValue("RangeImport");
-//
-//
-//        }
-        
-        
-        // Always copy the configuration parameters directly into the ability.  This will
-        // take the parameters stored in the parameter list and copy them into the
-        // ability using the appropriate keys and values.
+
         parameterList.copyValues(ability);
         
         // Start to Actually Configure the Power.
-        // The Add Power Info should always be executed to add information to the ability.
-        // All of this information should be set in the Power Definition Variables at the
-        // top of this file
         ability.addPowerInfo( this, powerName, targetType, persistenceType, activationTime);
         if ( attackType != null ) {
             ability.addAttackInfo( attackType,damageType );
@@ -273,71 +178,12 @@ public class powerEnhancedSenses extends Power implements ChampionsConstants{
         }
         ability.setGenerateDefaultEffects(generateDefaultDamage);
         if ( endMultiplier != 1 ) ability.setENDMultiplier(endMultiplier);
-        
-        // Add any dice information which is necessary to use this power.
-        //ability.addDiceInfo( "DamageDie", die, "Energy Blast Damage");
-        
-        // Add A Damage Class Info
-        //ability.add("Base.DC",  new Double(ChampionsUtilities.StringToNormalDC(die)), true);
-        
-        // Add Extra Value/Pairs used by the Power/BattleEngine
-        //ability.add("Ability.NAME", enhancedSense , true);
-        
-        // static public String[] sensesOptions = {"None","Active Sonar"
-        //,"High Range Radio Perception","Infrared Vision","Mental Awareness","Microscopic Vision","N-Ray Vision",
-        //"Radar Sense","Radio Hearing","Radio Listen and Transmit",
-        //"Spatial Awareness","Tracking Scent","Ultrasonic Hearing","Ultraviolet Vision",
-        //"360 Degree Sensing","Normal Sight","Normal Hearing","Normal Taste","Normal Touch","Normal Smell","Detect"};
-        
-//        if (microscopicsense.equals("TRUE") ) {
-//            //parameterList.setParameterValue("Magnification", new Integer(0) );
-//            parameterList.setVisible( "Magnification", true);
-//        }
-//        else {
-//            if (!enhancedSense.equals("Microscopic Vision") ){
-//                parameterList.setParameterValue("Magnification", new Integer(0) );
-//                parameterList.setVisible( "Magnification", false);
-//            }
-//        }
-//
-//        if (telescopicsense.equals("TRUE") ) {
-//            //parameterList.setParameterValue("TelescopicLevel", new Integer(0) );
-//            parameterList.setVisible( "TelescopicLevel", true);
-//        }
-//        else {
-//            parameterList.setParameterValue("TelescopicLevel", new Integer(0) );
-//            parameterList.setVisible( "TelescopicLevel", false);
-//        }
-//
-//        if (clairsentience.equals("TRUE") ) {
-//            parameterList.setVisible( "Dimensions", true);
-//            parameterList.setVisible( "SeeInTime", true);
-//        }
-//        else {
-//            parameterList.setVisible( "Clairsentience", true);
-//            parameterList.setVisible( "Dimensions", false);
-//            //parameterList.setParameterValue("Dimensions", "FALSE" );
-//            parameterList.setVisible( "SeeInTime", false);
-//            //parameterList.setParameterValue("SeeInTime", "FALSE" );
-//        }
-//
-//
-//        ////System.out.println("telescopicLevel: " + telescopicLevel);
-//        changeShown(parameterList, enhancedSense, senseChange, senseimport, enhancedperception, ranged, telescopicsense, microscopicsense, telescopicLevel, merge, clairsentience);
-        
-        
-        
-        ////System.out.println(enhancedSense + " " + senseChange);
-        
-//        enhancedSense = (String)parameterList.getParameterValue("EnhancedSense");
-//        parameterList.setParameterValue("SenseChange", enhancedSense );
-        ////System.out.println(enhancedSense + " " + senseChange);
-        
+       
         parameterList.copyValues(ability);
         
         // Update the Ability Description based on the new configuration
         ability.setPowerDescription( getConfigSummary(ability, -1));
-        
+         
         // Return true to indicate success
         return true;
     }
@@ -475,51 +321,11 @@ public class powerEnhancedSenses extends Power implements ChampionsConstants{
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
         String enhancedSense = (String)parameterList.getParameterValue("EnhancedSense");
-//        String senseChange = (String)parameterList.getParameterValue("SenseChange");
-//        String discriminatory = (String)parameterList.getParameterValue("Discriminatory");
-//        String merge = (String)parameterList.getParameterValue("Merge");
-//        //String microscopicsense = (String)parameterList.getParameterValue("MicroscopicSense");
-//        Integer magnification = (Integer)parameterList.getParameterValue("Magnification");
-//        String telescopicsense = (String)parameterList.getParameterValue("TelescopicSense");
-//        String ranged = (String)parameterList.getParameterValue("Ranged");
-//        String targeting = (String)parameterList.getParameterValue("Targeting");
-//        Integer telescopicLevel = (Integer)parameterList.getParameterValue("TelescopicLevel");
-//        Integer enhancedperception = (Integer)parameterList.getParameterValue("EnhancedPerception");
-//        String arcOfPerception = (String)parameterList.getParameterValue("ArcOfPerception");
-//        String detectsense = (String)parameterList.getParameterValue("DetectSense");
-//        String detect = (String)parameterList.getParameterValue("Detect");
+   
         
         StringBuffer sb = new StringBuffer();
         sb.append( "Sense: " + enhancedSense );
-        
-//        if (discriminatory.equals("TRUE")){
-//            sb.append(", discriminatory");
-//        }
-//        if (microscopicsense.equals("TRUE")){
-//            sb.append(", " + ((int)Math.pow(10, magnification.intValue() ) ) + " microscopic magnification");
-//        }
-//        if (telescopicsense.equals("TRUE")){
-//            sb.append(", " + telescopicLevel.intValue() + "\" telescopic range penalty reduction");
-//        }
-//        if (ranged.equals("TRUE")){
-//            sb.append(", ranged");
-//        }
-//        if (targeting.equals("TRUE")){
-//            sb.append(", targeting");
-//        }
-//        if (arcOfPerception.equals("TRUE")){
-//            sb.append(", 360 degree sensing");
-//        }
-//        if (enhancedperception.intValue() > 0){
-//            sb.append(", +" + enhancedperception + "\" PER");
-//        }
-//
-//        if (enhancedSense.equals("Detect")){
-//            sb.append(", Detect: " + detect );
-//        }
-//        if (detectsense.equals("TRUE")){
-//            sb.append(", sense" );
-//        }
+   
         
         return sb.toString();
     }

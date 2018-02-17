@@ -152,4 +152,8 @@ public class CharacterAdaptor extends BasicTargetAdapter {
 		return ex;
 	}
 
+	public boolean hasEffect(String string) {
+		return this.target.getEffect(string)!=null;
+	}
+
 }

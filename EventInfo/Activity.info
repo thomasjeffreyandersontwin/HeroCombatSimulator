@@ -1,26 +1,22 @@
 
 character:
-	name:Green Lantern
+	name:Pre-Emptive Strike
 	costume:
 	model:
-	MaxStun:31
-	MaxEndurance:30
-	CurrStun:19
-	CurrEndurance:30
+	MaxStun:98
+	MaxEndurance:70
+	CurrStun:98
+	CurrEndurance:41
 Activate: True
 
 	Crowd: 
 		Name:Unnamed
 		Characters:
-			Superman:
-				name:Superman
+			Pre-Emptive Strike:
+				name:Pre-Emptive Strike
 				costume:
 				model:
-			Green Lantern:
-				name:Green Lantern
-				costume:
-				model:
-			Green Lantern's Ring’s Charge:
-				name:Green Lantern's Ring’s Charge
+			Ogun:
+				name:Ogun
 				costume:
 				model:

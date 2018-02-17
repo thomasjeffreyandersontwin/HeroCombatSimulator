@@ -68,6 +68,8 @@ public class AttackAdapterTest extends BaseAttackAdapterTest{
 		
 	}
 	
+
+	
 	@Test
 	public void attackerAttacksDefender_DefenderIsHitAndLosesStunEqualToAttackStunDamage() {
 		//arrange

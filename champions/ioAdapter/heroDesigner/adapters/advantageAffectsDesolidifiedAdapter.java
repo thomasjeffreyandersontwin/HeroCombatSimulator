@@ -17,24 +17,14 @@ public class advantageAffectsDesolidifiedAdapter extends AbstractModifierXMLAdap
     
     private static String XMLID = "AFFECTSDESOLID";
     private static String[][] translationArray = {
-        { "", "AffectsDesolidified", "trueSpecial" }, // Always just set this parameter as true...
-        //{ "ADDER(XMLID=ODDPOWER).TRUE", "OddPower" } // Not supported by HCS
+        { "", "AffectsDesolidified", "trueSpecial" }, 
     };
     
-    /** Returns the XMLID for this Power.
-     *
-     * Subclass should either override this to return their XMLID or override
-     * the identify method to do more complicated identification tasks.
-     */
     public String getXMLID() {
         return XMLID;
     }
     
-    /** Returns the Translation Array for the Power.
-     *
-     * The Subclass should either override this to return their translationArray
-     *or override the importXML method to do more complicated import tasks.
-     */
+
     public String[][] getTranslationArray() {
         return translationArray;
     }
