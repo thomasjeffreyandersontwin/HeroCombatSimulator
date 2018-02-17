@@ -11,34 +11,7 @@ import champions.interfaces.*;
 import champions.exception.*;
 import champions.event.*;
 import champions.parameters.ParameterList;
-/**
- *
- * @author  unknown
- * @version
- *
- * To Convert from old format powers, to new format powers:
- *
- * 1) Add implements ChampionsConstants to class definition.<P>
- * 2) Copy and Fill in Power Definition Variables. <P>
- * 3) Move Parameter Information to parameterArray. <P>
- * 4) Delete getParameters method (unless special parameter handling is necessary.<P>
- * 5) Change configurePAD(Ability,DetailList) method to configurePAD(Ability ability, ParameterList parameterList).<P>
- * 6) Edit configurePAD method to use format specified below.<P>
- * 7) Change checkParameter method to checkParameter(Ability ability, <i>int padIndex</i>,
- * String key, Object value, Object oldValue);
- * 8) Edit getConfigSummary method to use parameterList instead of parseParameter methods.<P>
- * 9) Change all instances of parseParameter to getParameterValue.<P>
- * 10) Add getParameterArray method.<P>
- * 11) Edit getName method to return powerName variable.
- * 12) Change serialVersionUID by some amount.
- * 13) Add patterns array and define import patterns.<P>
- * 14) Add getImportPatterns() method.<P>
- *
- * The Following Steps must be performed to upgrade Power to Reconfigurable Format:
- * 1) Create costArray.
- * 2) Add the getCostArray() method, returning costArray.
- * 3) Remove existing calculateCPCost.
- */
+
 public class powerGliding extends Power implements ChampionsConstants {
     static final long serialVersionUID = 2002080930347033561L;
     
@@ -132,7 +105,15 @@ public class powerGliding extends Power implements ChampionsConstants {
         // Determine the validity of the power configuration.  Read the parameters
         // from the parameterList, instead of directly from the ability, since the
         // Ability isn't configured yet.
-        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+        Integer distance = null;
+        if(parameterList.contains("DistanceFromCollision"))
+		{
+        	 distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+             
+		}
+        else {
+        	distance = (Integer)parameterList.getParameterValue("Distance");
+        }
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         
         // Check for the validity of the parameters that will be set.  If the parameters
@@ -177,29 +158,22 @@ public class powerGliding extends Power implements ChampionsConstants {
         return true;
     }
     
- /*   public int calculateCPCost(Ability ability) {
-        ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
-        Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
-        
-        int cost = 10;
-        
-        if ( distance.intValue() > 5) cost += (distance.intValue() - 5) * 2;
-        cost += (NoncombatX.intValue() - 2) * 5;
-        return cost;
-    } */
     
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+        Integer distance = null;
+        if(parameterList.contains("DistanceFromCollision"))
+		{
+        	 distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+             
+		}
+        else {
+        	distance = (Integer)parameterList.getParameterValue("Distance");
+        }
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         return distance.toString() + "\" Gliding (NC: " + Integer.toString( distance.intValue() * NoncombatX.intValue() ) + "\")";
     }
     
-            /** Attempt to identify power
-     * This method is called when an unknown AbilityImport exists and the CharacterImport is trying to
-     * determine the correct power to assign to it.
-     */
     public int identifyPower(Ability template, AbilityImport ai) {
         String power = ai.getPowerName();
         
@@ -208,84 +182,12 @@ public class powerGliding extends Power implements ChampionsConstants {
         }
         return 0;
     }
-        /** Returns the patterns necessary to import the Power from CW.
- * The Object[][] returned should be in the following format:
- * patterns = Object[][] {
- *  { "PATTERN" , new Object[] { "PARAMETER1", parameter1.class, "PARAMETER2", parameter2.class, ... },
- *  ...
- *  }
- *
- * PATTERN should be a regular expression pattern.  For every PARAMETER* where should be one
- * parathesis group in the expression. The PARAMETERS sub-array can be null, if the line has no parameter
- * and is just informational.
- *
- * By default, the importPower will check each line of the getImportPatterns() array and if a match is
- * found, the specified parameters will be set in the powers parameter list.  It is assumed that each 
- * PATTERN will only occur once.  If the pattern can occur multiple times in a valid import, a custom
- * importPower method will have to be used.
- */
-    /** Returns Power Cost array for this Power.
-     *
-     * The Power cost array is an Object[] array, which contains information detailing how to 
-     * calculate the cost of a power and reconfigure a power when the CP for an ability is adjusted.
-     *
-     * It is in the follow format:
-     * Object[][] costArray = {
-     * { Parameter, Type, Dynamic, ReconfigPercent, Type Options ... },
-     * ...
-     * }
-     *
-     * Where:
-     * Parameter -> String representing the parameterName.  Must be parameter from getParameterArray() array.
-     * Type -> Type of Cost Calculation: NORMAL_DICE_COST, KILLING_DICE_COST, GEOMETRIC_COST, LOGRITHMIC_COST,
-     *     LIST_COST, BOOLEAN_COST, COMBO_COST.
-     * Dynamic -> Indicater of Dynamic or Static reconfigurability: DYNAMIC_RECONFIG or STATIC_RECONFIG.
-     * ReconfigPercent -> Integer indicate what percent of reconfigured CP should be allocated to this parameter 
-     *     by default.  Can be 0 to 100 or PROPORTIONAL_RECONFIG.  PROPORTIONAL_RECONFIG will base the proportion
-     *     on the configuration of the base power.
-     * Type Options -> Custom options depending on the specified type, as follows:
-     *     NORMAL_DICE_COST -> PtsPerDC:Integer, Base:Integer, Minimum:Integer.
-     *     KILLING_DICE_COST -> PtsPerDC:Integer, Base:Integer, Minimum:Integer.
-     *     GEOMETRIC_COST -> X:Integer, Y:Integer, Base:Integer, Minimum:Integer.
-     *     LOGRITHMIC_COST -> PtsPerMultiple:Integer, Multiple:Integer, Base:Integer, Minimum:Integer.
-     *     LIST_COST -> PtsPerItem:Integer, Base:Integer.
-     *     BOOLEAN_COST -> PtsForOption:Integer.
-     *     COMBO_COST -> OptionCostArray:Integer[], OptionNames:String[].
-     *
- */
+     
     public Object[][] getImportPatterns() {
         return patterns;
     }
     
-    /** Returns Power Cost array for this Power.
-     *
-     * The Power cost array is an Object[] array, which contains information detailing how to
-     * calculate the cost of a power and reconfigure a power when the CP for an ability is adjusted.
-     *
-     * It is in the follow format:
-     * Object[][] costArray = {
-     * { Parameter, Type, Dynamic, ReconfigPercent, Type Options ... },
-     * ...
-     * }
-     *
-     * Where:
-     * Parameter -> String representing the parameterName.  Must be parameter from getParameterArray() array.
-     * Type -> Type of Cost Calculation: NORMAL_DICE_COST, KILLING_DICE_COST, GEOMETRIC_COST, LOGRITHMIC_COST,
-     *     LIST_COST, BOOLEAN_COST, COMBO_COST.
-     * Dynamic -> Indicater of Dynamic or Static reconfigurability: DYNAMIC_RECONFIG or STATIC_RECONFIG.
-     * ReconfigPercent -> Integer indicate what percent of reconfigured CP should be allocated to this parameter
-     *     by default.  Can be 0 to 100 or PROPORTIONAL_RECONFIG.  PROPORTIONAL_RECONFIG will base the proportion
-     *     on the configuration of the base power.
-     * Type Options -> Custom options depending on the specified type, as follows:
-     *     NORMAL_DICE_COST -> PtsPerDC:Integer, Base:Integer, Minimum:Integer.
-     *     KILLING_DICE_COST -> PtsPerDC:Integer, Base:Integer, Minimum:Integer.
-     *     GEOMETRIC_COST -> X:Integer, Y:Integer, Base:Integer, Minimum:Integer.
-     *     LOGRITHMIC_COST -> PtsPerMultiple:Integer, Multiple:Integer, Base:Integer, Minimum:Integer.
-     *     LIST_COST -> PtsPerItem:Integer, Base:Integer.
-     *     BOOLEAN_COST -> PtsForOption:Integer.
-     *     COMBO_COST -> OptionCostArray:Integer[], OptionNames:String[].
-     *
-     */
+    
     public Object[][] getCostArray(Ability ability) {
         return costArray;
     }
@@ -302,14 +204,7 @@ public class powerGliding extends Power implements ChampionsConstants {
         return dynamic;
     }
     
-    /**
-     * Returns a String[] of Caveats about the Power
-     * Power uses this method to automatically build the getCaveats()
-     * String.  The Strings returns by getCaveatArray() will be assembled into
-     * list form and returned via getCaveats().
-     * 
-     * Return an empty array if there are no known caveats for this power.
-     */
+
     public String[] getCaveatArray() {
         return caveats;
     }

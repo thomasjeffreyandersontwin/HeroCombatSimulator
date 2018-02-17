@@ -58,6 +58,7 @@ public class CharacterAdaptor extends BasicTargetAdapter {
 	public void MoveByName(String movementName, int distance) throws Exception {
 		ActivateAbilityByName( movementName);
 		((MovementAdapter)this.ActiveAbility).setDistance(distance);
+		try {Thread.sleep(200);}catch(Exception e) {}
 		this.ActiveAbility.ConfirmAttack();
 		this.ActiveAbility.ConfirmAttack();
 	}

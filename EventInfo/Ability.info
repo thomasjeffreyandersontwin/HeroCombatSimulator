@@ -1,32 +1,46 @@
-ability:
-	Name: Strike
+Ability:
+	Name:Leaping
 character:
 	name:Pre-Emptive Strike
-	Crowd:
-		name:Unnamed
-	MaxStun:98
+	costume:
+	model:
+	MaxStun:68
 	MaxEndurance:70
-	CurrStun:98
-	CurrEndurance:16
-type: single
-target: 
-	name: Ogun
-
-	MaxStun:27
-	MaxEndurance:36
-	CurrStun:-52
-	CurrEndurance:46
-	Roster:
-		name:Unnamed
-result: hit
-Effects: 
-	- Stunned
-	- Unconsious
-Knockback
-	- 
-		target:
-			name:Ogun
-			Roster:
-				name:Unnamed
-		distance:17
-		effect:knockedback
+	CurrStun:73
+	CurrEndurance:42
+	Crowd: 
+		Name:heroes
+		Characters:
+			Ogun:
+				name:Ogun
+				costume:
+				model:
+			Pre-Emptive Strike:
+				name:Pre-Emptive Strike
+				costume:
+				model:
+			City gates, small:
+				name:City gates, small
+				costume:
+				model:
+			Off-Road:
+				name:Off-Road
+				costume:
+				model:
+			Spyder:
+				name:Spyder
+				costume:
+				model:
+			Blind Justice:
+				name:Blind Justice
+				costume:
+				model:
+			Airlock Door:
+				name:Airlock Door
+				costume:
+				model:
+			Magnetic lock:
+				name:Magnetic lock
+				costume:
+				model:
+MiscItem: True

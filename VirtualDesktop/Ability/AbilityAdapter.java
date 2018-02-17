@@ -91,9 +91,15 @@ public class AbilityAdapter extends AbstractBattleClassAdapter {
 		
 		if(UnderlyingAbility!=null) {
 			battleEvent = null;
-			if(!UnderlyingAbility.isActivated(Character.target)) {
+			if(UnderlyingAbility.isMovementPower() || !UnderlyingAbility.isActivated(Character.target)) {
 				battleEvent = UnderlyingAbility.getActivateAbilityBattleEvent(UnderlyingAbility, null, null);
 				battle.addEvent( battleEvent );
+			  	//jeff
+	        	
+	        	if (UnderlyingAbility.getPower().getName().equals("Recovery") && AttackTreePanel.Panel.isShowing()){
+	        		try {Thread.sleep(500);}catch(Exception e) {}
+	        		AttackTreePanel.Panel.okayButtonActionPerformed(null);
+	        	}
 			}
 			else {
 				try {

@@ -116,8 +116,15 @@ public class powerLeaping extends Power implements ChampionsConstants {
         // Determine the validity of the power configuration.  Read the parameters
         // from the parameterList, instead of directly from the ability, since the
         // Ability isn't configured yet.
-        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
-        Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
+        Integer distance = null;
+        if(parameterList.contains("DistanceFromCollision"))
+		{
+        	 distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+             
+		}
+        else {
+        	distance = (Integer)parameterList.getParameterValue("Distance");
+        }Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         
         // Check for the validity of the parameters that will be set.  If the parameters
         // Fail for any reason, return false from the method immediately, indicating a
@@ -165,7 +172,15 @@ public class powerLeaping extends Power implements ChampionsConstants {
     
 public int calculateCPCost(Ability ability) {
     ParameterList parameterList = getParameterList(ability);
-    Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+    Integer distance = null;
+    if(parameterList.contains("DistanceFromCollision"))
+	{
+    	 distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+         
+	}
+    else {
+    	distance = (Integer)parameterList.getParameterValue("Distance");
+    }
     Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
 
     int cost = 0;
@@ -177,7 +192,15 @@ public int calculateCPCost(Ability ability) {
     
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+        Integer distance = null;
+        if(parameterList.contains("DistanceFromCollision"))
+		{
+        	 distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+             
+		}
+        else {
+        	distance = (Integer)parameterList.getParameterValue("Distance");
+        };
         Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         int total = getMovementDistance(ability);
         return "Leaping (" + Integer.toString( distance.intValue() ) + "\", " + Integer.toString(total) + "\", NC: " + Integer.toString( total * noncombatX.intValue() ) + "\")";
@@ -198,7 +221,15 @@ public int calculateCPCost(Ability ability) {
         
    public int getMovementDistance(Ability ability) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+        Integer distance = null;
+        if(parameterList.contains("DistanceFromCollision"))
+		{
+        	 distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+             
+		}
+        else {
+        	distance = (Integer)parameterList.getParameterValue("Distance");
+        };
        // Integer noncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         boolean base = (Boolean)parameterList.getParameterValue("Base");
         boolean addsToBase = (Boolean)parameterList.getParameterValue("AddsToBase");

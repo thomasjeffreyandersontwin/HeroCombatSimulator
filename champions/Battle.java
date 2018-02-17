@@ -7,6 +7,8 @@
 package champions;
 
 import java.io.BufferedWriter;
+
+import champions.attackTree.AttackTreePanel;
 import champions.event.RosterAddEvent;
 import champions.event.RosterRemoveEvent;
 import champions.event.SegmentAdvancedEvent;
@@ -591,6 +593,8 @@ public class Battle extends Object implements RosterListener, TargetingListener,
         //}
         if ( isStopped() == false && (b|| battleEngine.isProcessing() == false )) {
         	battleEngine.startProcessing();
+        	
+      
         }
         
         return new Battle.AddBattleEventUndoable(be, first);

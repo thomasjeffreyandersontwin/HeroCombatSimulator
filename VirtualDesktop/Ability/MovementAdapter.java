@@ -3,6 +3,7 @@ package VirtualDesktop.Ability;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.Character.CharacterAdaptor;
+import champions.attackTree.AttackTreePanel;
 import champions.attackTree.MovementDistancePanel;
 
 public class MovementAdapter extends AbilityAdapter {
@@ -17,6 +18,7 @@ public class MovementAdapter extends AbilityAdapter {
 	public void setDistance(int distance) {
 		this.Distance= distance;
 		MovementDistancePanel.defaultPanel.setDistance(distance);
+		AttackTreePanel.Panel.model.advanceNode();
 		
 		//MovementDistancePanel.defaultPanel.setFullMoveAllowed(false);
 		
