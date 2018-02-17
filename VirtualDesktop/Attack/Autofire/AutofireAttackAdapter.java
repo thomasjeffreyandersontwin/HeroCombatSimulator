@@ -62,6 +62,9 @@ public class AutofireAttackAdapter extends MultiAttackAdapter {
 				"autofireWidth", autofireWidth, attackParameterPanel.autofireWidth.getValue());
 		attackParameterPanel.PADValueChanging(evt);	
 		
+		
+		
+		
 	}
 
 	@Override
@@ -75,6 +78,9 @@ public class AutofireAttackAdapter extends MultiAttackAdapter {
 	}
 	@Override
 	protected void preProcessJSON(JSONObject attackJSON) {
+	
+		
+		try {Thread.sleep(500);}catch(Exception e) {}
 		if(attackJSON.get("Spray Fire")!=null) {
 			this.SetAutoFireSprayMode((boolean) attackJSON.get("Spray Fire"));
 		}
@@ -91,8 +97,18 @@ public class AutofireAttackAdapter extends MultiAttackAdapter {
 			this.SetAutoFireWidth(width );
 		}
 		if(attackJSON.get("Shots")!=null) {
-			this.SetAutoFireShots((int) attackJSON.get("Shots"));
+			try {
+				this.SetAutoFireShots((int) attackJSON.get("Shots"));
+			}
+			catch(Exception e)
+			{
+				this.SetAutoFireShots(((Long) attackJSON.get("Shots")).intValue());
+				
+			}
+			
 		}
+		try {Thread.sleep(500);}catch(Exception e) {}
+		
 	}
 
 	@Override

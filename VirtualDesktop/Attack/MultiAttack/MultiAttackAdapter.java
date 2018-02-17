@@ -16,6 +16,7 @@ import champions.BattleEvent;
 import champions.SweepBattleEvent;
 import champions.Target;
 import champions.attackTree.AEAffectedTargetsNode;
+import champions.attackTree.AttackTreePanel;
 import champions.attackTree.DefaultAttackTreeNode;
 import champions.attackTree.SingleTargetNode;
 import champions.exception.BattleEventException;
@@ -117,6 +118,8 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 		super.Activate();
 		String token = (String)attackJSON.get("Token");
 		setPushedAmount(attackJSON);
+		preProcessJSON(attackJSON);
+		AttackTreePanel.Panel.okayButtonActionPerformed(null);
 		preProcessJSON(attackJSON);
 		
 		JSONArray attackTargetsJSON = (JSONArray) attackJSON.get("Attack Targets");

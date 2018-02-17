@@ -7,7 +7,7 @@ character:
 	MaxStun:68
 	MaxEndurance:70
 	CurrStun:73
-	CurrEndurance:42
+	CurrEndurance:22
 	Crowd: 
 		Name:heroes
 		Characters:
