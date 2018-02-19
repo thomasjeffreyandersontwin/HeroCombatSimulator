@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
 import champions.Battle;
+import champions.ObjectTarget;
 import champions.PADRoster;
 import champions.Target;
 import champions.TargetList;
@@ -32,6 +33,10 @@ public class PhysicalObjectAdapter extends BasicTargetAdapter {
 		if(target==null) 
 		{
 			target = loadFromFile(name,".tgt");
+		}
+		if(target==null)
+		{
+			target  = new ObjectTarget(name, 100, "Unliving", "Other", 5, 5, true);
 		}
 		this.target =target;
 	}

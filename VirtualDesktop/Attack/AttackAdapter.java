@@ -147,6 +147,16 @@ public class AttackAdapter extends AbilityAdapter {
 		//targetNum=0;
 		
 	}
+	
+	protected BasicTargetAdapter getTargetByNameFromCurrentBattle(String defenderName) {
+		BasicTargetAdapter defender = new CharacterAdaptor(defenderName);
+		if(defender.target==null)
+		{
+			defender = new PhysicalObjectAdapter(defenderName);
+		}
+		return defender;
+	}
+	
 	public void ForceHit() {
 		enterToHitModifiers();
 		battleEvent.getActivationInfo().addIndexed(targetIndex, "Target", "HITMODE","FORCEHIT",true);
@@ -314,12 +324,12 @@ public class AttackAdapter extends AbilityAdapter {
 		AttackTreePanel.Panel.model.advanceAndActivate(null,null);
 	}
 
-	public void placeObjectDirectlyBehindDefender(PhysicalObjectAdapter obj, int distance) {
+	public void placeObjectDirectlyBehindDefender(BasicTargetAdapter obj, int distance) {
 		KnockbackTargetNode node = getKnockbackNodeForTarget();
 		//int count=0;
-		while(node==null && getActivationInfo().getTargetHit(targetIndex))
+	//	while(node==null && getActivationInfo().getTargetHit(targetIndex))
 		{
-			node = getKnockbackNodeForTarget();
+//			node = getKnockbackNodeForTarget();
 			//count++;
 			//if(count>1000) {
 			//	return ;
@@ -330,7 +340,7 @@ public class AttackAdapter extends AbilityAdapter {
 			placeObjectDirectlyBehindDefenderUsingKnockbackNode(obj, distance, node);	
 		}
 	}
-	protected void placeObjectDirectlyBehindDefenderUsingKnockbackNode(PhysicalObjectAdapter obj, int distance,KnockbackTargetNode node) {
+	protected void placeObjectDirectlyBehindDefenderUsingKnockbackNode(BasicTargetAdapter obj, int distance,KnockbackTargetNode node) {
 		KnockbackEffectNode n = (KnockbackEffectNode) node.getChildAt(1);
 		if(n==null) {
 			n = KnockbackEffectNode.Node;
@@ -368,7 +378,10 @@ public class AttackAdapter extends AbilityAdapter {
 						break;
 					}
 				}
+				knode=null;
 			}
+			
+			
 			
 		}
 		if(knode!=null) {
@@ -445,7 +458,9 @@ public class AttackAdapter extends AbilityAdapter {
 				{
 					distance = (int) pcoJSON.get("Collision Distance");
 				}
-				placeObjectDirectlyBehindDefender(new PhysicalObjectAdapter(co), distance);
+				BasicTargetAdapter ta;
+				ta = getTargetByNameFromCurrentBattle(co);
+				placeObjectDirectlyBehindDefender(ta, distance);
 			}
 		}
 	}

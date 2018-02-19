@@ -107,7 +107,7 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 		return buildAndSaveAttackResult();
 	}
 
-	private MultiAttackResultAdapter buildAndSaveAttackResult() {
+	protected MultiAttackResultAdapter buildAndSaveAttackResult() {
 		Result = BuildNewMultiAttackResult(battleEvent);
 		return  (MultiAttackResultAdapter) Result;
 	}
@@ -119,15 +119,18 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 		String token = (String)attackJSON.get("Token");
 		setPushedAmount(attackJSON);
 		preProcessJSON(attackJSON);
-		AttackTreePanel.Panel.okayButtonActionPerformed(null);
-		preProcessJSON(attackJSON);
+		//AttackTreePanel.Panel.okayButtonActionPerformed(null);
+		//preProcessJSON(attackJSON);
 		
 		JSONArray attackTargetsJSON = (JSONArray) attackJSON.get("Attack Targets");
 		for(int i=0;i< attackTargetsJSON.size();i++)
 		{
 			JSONObject attackTargetJSON = (JSONObject) attackTargetsJSON.get(i);	
 			String defenderName = (String)attackTargetJSON.get("Defender");
-			CharacterAdaptor defender = new CharacterAdaptor(defenderName);
+			
+			BasicTargetAdapter defender = getTargetByNameFromCurrentBattle(defenderName);
+			
+			
 			if(defender.target!=null) {
 				targetDefender(defender);
 				processObstructionsInJSON(attackTargetJSON);
@@ -152,6 +155,9 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 		Result.setToken(token);
 		return Result.exportToJSON();
 	}
+
+	
+	
 	protected abstract void preProcessJSON(JSONObject attackJSON) ;
 
 	protected abstract DefaultAttackTreeNode getRootAttackNode();

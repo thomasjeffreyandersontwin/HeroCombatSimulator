@@ -6,6 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import VirtualDesktop.Attack.AttackResultAdapter;
+import champions.Ability;
 import champions.BattleEvent;
 import champions.Target;
 import champions.attackTree.AEAffectedTargetsNode;
@@ -32,6 +33,8 @@ public abstract class MultiAttackResultAdapter extends AttackResultAdapter {
 			JSONObject arJSON = new JSONObject();
 			AttackResultAdapter res = getAffectedTargetResults().get(i);
 			exportAffectedTargetToJSON(res,arJSON);
+			Ability a  = res.battleEvent.getAbility();
+			arJSON.put("Ability", a.getName());
 			affectedTargetsJSON.add(arJSON);
 			
 		}

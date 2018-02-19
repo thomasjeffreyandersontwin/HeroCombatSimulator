@@ -1,12 +1,12 @@
 
 character:
-	name:Pre-Emptive Strike
+	name:Blind Justice
 	costume:
 	model:
-	MaxStun:68
-	MaxEndurance:70
-	CurrStun:73
-	CurrEndurance:28
+	MaxStun:77
+	MaxEndurance:56
+	CurrStun:77
+	CurrEndurance:56
 Activate: True
 
 	Crowd: 

@@ -75,11 +75,15 @@ public class DamageAmount extends AbstractBattleClassAdapter{
 		{	
 			if(type.equals(DamageType.Knockback)&&battleEvent.getKnockbackDamageEffect(targetIndex)!=null) 
 			{
-				return battleEvent.getKnockbackDamageEffect(targetIndex).getTotalAdjustedStunDamage();
+				if(battleEvent.getDamageEffect(targetIndex)!=null)
+					return battleEvent.getKnockbackDamageEffect(targetIndex).getTotalAdjustedStunDamage();
+				return 0;
 			}
 			else 
 			{
-				return battleEvent.getDamageEffect(targetIndex).getTotalAdjustedStunDamage();
+				if(battleEvent.getDamageEffect(targetIndex)!=null)
+					return battleEvent.getDamageEffect(targetIndex).getTotalAdjustedStunDamage();
+				return 0;
 			}
 		}
 		return 0;

@@ -62,13 +62,8 @@ public class SweepAttackAdapter extends MultiAttackAdapter {
 			targetDefender(new CharacterAdaptor((String)attackTargetJSON.get("Defender")));
 			String attackName = (String) attackTargetJSON.get("Ability");
 			AttackAdapter adapter = getIndividualAttack(i);
-		//	adapter.parentAttack =this;
-		//	adapter.battleEvent = battleEvent;
-		//	adapter.targetIndex = battleEvent.getActivationInfo().getTargetIndex((getTarget()));
 			adapter.processObstructionsInJSON(attackTargetJSON);
 			adapter.processToHitModifiersInJSON(attackTargetJSON);
-			
-		
 		}
 		Process();
 		battleEvent = event;
@@ -80,8 +75,22 @@ public class SweepAttackAdapter extends MultiAttackAdapter {
 			attack.processPotentialCollisionsInJSON(attackTargetJSON);
 			
 		}
-		Result = completeAttack();
-		return Result.exportToJSON();
+		Result = buildAndSaveAttackResult();
+		
+		JSONObject resultjson =  Result.exportToJSON();
+		JSONArray responsesJson = (JSONArray)resultjson.get("Affected Targets");
+		for(int i = 0; i < responsesJson.size();i++) 
+		{
+			JSONObject attackJson = (JSONObject) attackTargetsJSON.get(i);
+			String token = (String) attackJson.get("Token");
+			JSONObject responseJson = (JSONObject) responsesJson.get(i);
+			responseJson.put("Token", token);
+		}
+		resultjson.put("Token", attackJSON.get("Token"));
+		
+		
+		return resultjson;
+		
 	}
 	@Override
 	protected void preProcessJSON(JSONObject attackJSON) {
