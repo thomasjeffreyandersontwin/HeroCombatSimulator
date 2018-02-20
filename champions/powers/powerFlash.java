@@ -59,7 +59,6 @@ implements ChampionsConstants {
     static private Object[][] parameterArray = {
         {"DamageDie","Power.DAMAGEDIE", String.class, "1d6", "Flash Dice", DICE_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
         {"Senses","Sense*.SENSE", Sense.class, null, "Senses", LIST_PARAMETER, VISIBLE, ENABLED, REQUIRED}
-      //  {"Targeting","Power.TARGETING", String.class, "TRUE", "Targeting", BOOLEAN_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED}
     };
     
     // Cost Array - See Power.getCostArray()

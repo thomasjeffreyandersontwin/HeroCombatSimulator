@@ -103,7 +103,7 @@ public abstract class AbstractXMLAdapter implements XMLAdapter, ChampionsConstan
                         Parameter parameter = pl.getParameter(parameterName);
                         NamedNodeMap attrs = parentNode.getAttributes();
                         Node attr = attrs.getNamedItem(finalAttrName);
-                        if ( attr != null ) {
+                        if ( attr != null && parameter!=null) {
                             String value = attr.getNodeValue();
                             if ( pl.isParameterIndexed(parameterName) ) {
                                 pl.addIndexedParameterValue(parameterName, value);

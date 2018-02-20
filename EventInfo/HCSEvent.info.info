@@ -1,5 +1,13 @@
 Event: 
-	Name:Expand Roster Node
+	Name:Expand Character Node
+character:
+	name:Pre-Emptive Strike
+	costume:
+	model:
+	MaxStun:68
+	MaxEndurance:70
+	CurrStun:73
+	CurrEndurance:34
 	Crowd: 
 		Name:heroes
 		Characters:

@@ -1,12 +1,12 @@
 
 character:
-	name:Blind Justice
+	name:Ogun
 	costume:
 	model:
-	MaxStun:77
-	MaxEndurance:56
-	CurrStun:77
-	CurrEndurance:56
+	MaxStun:27
+	MaxEndurance:36
+	CurrStun:27
+	CurrEndurance:30
 Activate: True
 
 	Crowd: 

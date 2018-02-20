@@ -334,6 +334,8 @@ public class PADRoster extends Object {
      * name can be colon delimited to include subfolders. (i.e. "Advantages:Adjustment Powers").
      */
     private static String[][] advantagesList = {
+    	{"advantageStopsAGivenSense", "Advantages"},
+    	{"advantageEntangleAndCharacter", "Advantages"},
     	{"advantageCombatAcceleration", "Advantages"},
     	{"advantageDoesKnockback", "Advantages"},
         {"advantageAffectsDesolidified", "Advantages"},
@@ -391,7 +393,9 @@ public class PADRoster extends Object {
      * name can be colon delimited to include subfolders. (i.e. "Limitations:Adjustment Powers").
      */
     private static String[][] limitationsList = {
-    	
+    	{"limitationAlwaysDirect", "Limitations"},	
+    	{"limitationUnifiedPower", "Limitations"},	
+    	{"limitationExtraTimeRegen", "Limitations"},	
     	{"limitationInstant", "Limitations"},	
     	{"limitationNoNonCombat", "Limitations"},
     	{"limitationVulnerable", "Limitations"},

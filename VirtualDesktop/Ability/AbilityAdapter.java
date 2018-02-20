@@ -124,32 +124,33 @@ public class AbilityAdapter extends AbstractBattleClassAdapter {
 		Ability a = character.target.getAbility(abilityName);	
 		if(a==null) {
 			 a = Battle.getCurrentBattle().getDefaultAbilities().getAbility(abilityName, true);
+			 
 		}
-		if(a!= null) {
-			if(a.hasAdvantage(advantageAreaEffect.advantageName)) {
-				ability = new AreaEffectAttackAdapter(abilityName, character);
-				return ability;
-			}
-			if(a.hasAdvantage(advantageAutofire.advantageName)) {
-				ability = new AutofireAttackAdapter(abilityName, character);
-				return ability;
-			}
-			if(a.getName().equals("Sweep"))
-			{
-				ability = new SweepAttackAdapter( character);
-				return ability;
-			}
-			if(a.isAttack()) {
-				ability = new AttackAdapter(abilityName, character);
-				return ability;
-			}
-				
-			ability  = new AbilityAdapter(abilityName, character);
+		
+		if(a.hasAdvantage(advantageAreaEffect.advantageName)) {
+			ability = new AreaEffectAttackAdapter(abilityName, character);
 			return ability;
 		}
-		return null;
+		if(a.hasAdvantage(advantageAutofire.advantageName)) {
+			ability = new AutofireAttackAdapter(abilityName, character);
+			return ability;
+		}
+		if(a.getName().equals("Sweep") || a.getName().equals("Rapid Fire"))
+		{
+			ability = new SweepAttackAdapter( character, a.getName());
+			return ability;
+		}
+		if(a.isAttack()) 
+		{
+			ability = new AttackAdapter(abilityName, character);
+			return ability;
+		}
+
+		ability  = new AbilityAdapter(abilityName, character);
+		return ability;
 		
 	}
+
 	public static AbilityAdapter CreateAbility(String abilityName, CharacterAdaptor character)
 	{
 		AbilityAdapter ability=null;

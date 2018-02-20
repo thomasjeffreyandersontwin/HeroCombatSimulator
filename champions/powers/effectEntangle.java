@@ -71,6 +71,22 @@ public class effectEntangle extends Effect {
                 
         
         add("Effect.TARGETENTANGLE",  targetEntangle,  true);
+        
+        if(ability.findAdvantage("Takes No Damage from Attacks") >-1l)
+        {
+        	targetEntangle.setTakesNoDamageFromAttack(true);
+        }
+        else {
+        	targetEntangle.setTakesNoDamageFromAttack(false);
+        }
+        if(ability.findAdvantage("Entangle And Character Both Take Damage") >-1l)
+        {
+        	targetEntangle.setBothTakesDamageFromAttack(true);
+        }
+        else {
+        	targetEntangle.setBothTakesDamageFromAttack(false);
+        }
+       
     }
     
     public boolean addEffect(BattleEvent be, Target target) throws BattleEventException {
@@ -102,7 +118,6 @@ public class effectEntangle extends Effect {
             }
         }
         
-        //be.addBattleMessage( new champions.battleMessage.LegacyBattleMessage( target.getName() + " has been entangled!", BattleEvent.MSG_ABILITY )); // .addBattleMessage( new champions.battleMessage.LegacyBattleMessage( target.getName() + " has been entangled!", BattleEvent.MSG_ABILITY )); // .addMessage( target.getName() + " has been entangled!", BattleEvent.MSG_ABILITY );
         be.addBattleMessage( new GenericSummaryMessage(target, "has been entangled"));
         
         Undoable u = target.addObstruction(targetEntangle);

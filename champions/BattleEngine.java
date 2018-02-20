@@ -42,10 +42,13 @@ import champions.powers.SizeModifierEffect;
 import champions.powers.advantageAutofire;
 import champions.powers.advantageReducedEndurance;
 import champions.powers.effectBlock;
+import champions.powers.TargetEntangle;
+
 import champions.powers.effectCombatLevel;
 import champions.powers.effectCombatModifier;
 import champions.powers.effectDeflection;
 import champions.powers.effectEND;
+import champions.powers.effectEntangle;
 import champions.powers.effectInterruptible;
 import champions.powers.effectNoHitLocations;
 import champions.powers.effectStacked;
@@ -590,6 +593,7 @@ public class BattleEngine extends Thread
         }
 
         // Modify the Effect to represent actual damage through defenses.
+        
         applyDefenses(be, effect, target, targetReferenceNumber, targetGroup, defenses);
 
         for (priority = 0; priority < 6; priority++) {
@@ -3521,10 +3525,20 @@ public class BattleEngine extends Thread
 
         if (obstructions != null) {
             IndexIterator ii = obstructions.getObstructionIterator();
+            boolean attackBoth=false;
             while (ii.hasNext() && effect.damageSubeffectsRemain()) {
                 oindex = ii.nextIndex();
                 obstruction = obstructions.getObstruction(oindex);
-
+                //jeff if entangle check to see how entangle processes damage
+                if(obstruction instanceof TargetEntangle) 
+                {
+                	TargetEntangle  e = (TargetEntangle)obstruction;
+                	if(e.getTakesNoDamageFromAttack()==true)
+                		return true;
+                	if(e.getBothTakesDamageFromAttack()==true)
+                		pentratedObstructions = true;
+                		attackBoth=true;
+                }
                 if (!obstruction.isDead()) { // Make sure it isn't destroyed
                     int initialBody = effect.getTotalBodyDamage();
 
@@ -3547,27 +3561,40 @@ public class BattleEngine extends Thread
                             }
                         }
                     }
-
+                  
+                    int body = effect.getTotalBodyDamage();
+                    int stun = effect.getTotalStunDamage();
                     applyEffectToTarget(be, obstruction, effect, knockbackGroup, false);
+                   
+                    //jeff if obstruction is an entangle and both damage set than reset damage values
+                    if(attackBoth==true && obstruction instanceof TargetEntangle)
+                    {
+                    	effect.setSubeffectValue(0, body);
+                    	effect.setSubeffectValue(1, stun);
+                    }
+                    
+                    
 
                     // Put the limits back
-                    for (int index = 0; index < effect.getSubeffectCount(); index++) {
-                        if (effect.getSubeffectVersusObject(index).equals("BODY")) {
-                            effect.setSubeffectLimit(index, initialLimit);
-                        }
-                    }
-
-                    int currentBody = effect.getTotalBodyDamage();
-                    // This is a bit of a hack to allow for stun only attack to pass through
-                    // obstructions.  Although it is not always the case, there are attacks that
-                    // are unaffected by obstacles (EGO) but do no body.  Normally, 0 body
-                    // attack don't penetrate, but we will allow them if the body wasn't affected
-                    // by the obstacle.
-                    if (initialBody != currentBody && currentBody <= 0) {
-                        be.addBattleMessage(new champions.battleMessage.LegacyBattleMessage("The Obstructions between " + be.getSource().getName() + " and the target absorbed all attack body.", BattleEvent.MSG_COMBAT)); // .addBattleMessage( new champions.battleMessage.LegacyBattleMessage("The Obstructions between " + be.getSource().getName() + " and the target absorbed all attack body.", BattleEvent.MSG_COMBAT)); // .addMessage("The Obstructions between " + be.getSource().getName() + " and the target absorbed all attack body.", BattleEvent.MSG_COMBAT);
-
-                        pentratedObstructions = false;
-                        break;
+	                if(attackBoth==false) {
+	                    for (int index = 0; index < effect.getSubeffectCount(); index++) {
+	                        if (effect.getSubeffectVersusObject(index).equals("BODY")) {
+	                            effect.setSubeffectLimit(index, initialLimit);
+	                        }
+	                    }
+	
+	                    int currentBody = effect.getTotalBodyDamage();
+	                    // This is a bit of a hack to allow for stun only attack to pass through
+	                    // obstructions.  Although it is not always the case, there are attacks that
+	                    // are unaffected by obstacles (EGO) but do no body.  Normally, 0 body
+	                    // attack don't penetrate, but we will allow them if the body wasn't affected
+	                    // by the obstacle.
+	                    if (initialBody != currentBody && currentBody <= 0) {
+	                        be.addBattleMessage(new champions.battleMessage.LegacyBattleMessage("The Obstructions between " + be.getSource().getName() + " and the target absorbed all attack body.", BattleEvent.MSG_COMBAT)); // .addBattleMessage( new champions.battleMessage.LegacyBattleMessage("The Obstructions between " + be.getSource().getName() + " and the target absorbed all attack body.", BattleEvent.MSG_COMBAT)); // .addMessage("The Obstructions between " + be.getSource().getName() + " and the target absorbed all attack body.", BattleEvent.MSG_COMBAT);
+	
+	                        pentratedObstructions = false;
+	                        break;
+	                    }
                     }
                 }
             }

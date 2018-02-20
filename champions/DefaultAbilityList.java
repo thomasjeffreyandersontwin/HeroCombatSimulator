@@ -387,6 +387,9 @@ implements AbilityList, Serializable {
 //            insertIndex = abilities.size();
 //        }
         
+    	
+    	//jeff
+    	ability.setSource(getSource());
         int index = getAbilityIndex(ability);
         if ( index == -1 ) {
             Target oldSource = null;

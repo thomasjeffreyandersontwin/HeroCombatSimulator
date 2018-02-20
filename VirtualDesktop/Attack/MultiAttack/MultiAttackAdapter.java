@@ -45,7 +45,8 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 	{
 		BattleEvent event = battleEvent;
 		return getIndividualAttackTargetForBattleEvent(i, event);
-	}	
+	}
+	
 	protected AttackAdapter getIndividualAttackTargetForBattleEvent(int i, BattleEvent event) {
 		Target t = getSelectTargetingNode(i).getTarget();
 		AttackAdapter at=null;
@@ -54,8 +55,8 @@ public abstract class MultiAttackAdapter extends AttackAdapter{
 			CharacterAdaptor defender =  new CharacterAdaptor(t);
 			int tindex = event.getActivationInfo().getTargetIndex(t);
 		
-			//jeff think about passing in the i index to constructor as targetIndex doesnt always match up
 			at = new AttackAdapter(defender,tindex, event, this);
+			at.currentIndexInParent = i;
 		}
 		else
 			at = new AttackAdapter(null,0, event, this);

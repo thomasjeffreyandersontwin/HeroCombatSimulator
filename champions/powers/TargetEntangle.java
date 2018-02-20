@@ -26,6 +26,8 @@ import java.util.Vector;
  */
 public class TargetEntangle extends Target {
     static final long serialVersionUID = 5295848683348707403L;
+	private boolean takeNoDamageFromAttacks;
+	private boolean bothTakeDamage;
     
 
     
@@ -84,6 +86,10 @@ public class TargetEntangle extends Target {
         add("Entangle.EFFECT",  e, true );
     }
     
+    public effectEntangle getEntangleEffect() {
+        return (effectEntangle) getValue("Entangle.EFFECT");
+    }
+    
     public void setEntangleRoster(Roster e) {
         add("Entangle.ROSTER",  e, true );
     }
@@ -128,4 +134,20 @@ public class TargetEntangle extends Target {
         be.addBattleMessage( new champions.battleMessage.LegacyBattleMessage( target.getName() + " is no longer entangled.", BattleEvent.MSG_NOTICE )); // .addBattleMessage( new champions.battleMessage.LegacyBattleMessage( target.getName() + " is no longer entangled.", BattleEvent.MSG_NOTICE )); // .addMessage( target.getName() + " is no longer entangled.", BattleEvent.MSG_NOTICE );
         //if ( Battle.currentBattle != null ) Battle.currentBattle.addCompletedEvent(be);
     }
+
+	public void setTakesNoDamageFromAttack(boolean b) {
+		takeNoDamageFromAttacks = b;
+	}
+
+	public void setBothTakesDamageFromAttack(boolean b) {
+		bothTakeDamage = b;
+	}
+	
+	public boolean getBothTakesDamageFromAttack() {
+		return bothTakeDamage;
+	}
+
+	public boolean getTakesNoDamageFromAttack() {
+		return takeNoDamageFromAttacks;
+	}
 }

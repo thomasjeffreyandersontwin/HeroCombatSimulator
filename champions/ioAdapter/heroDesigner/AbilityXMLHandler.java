@@ -301,6 +301,7 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
 		        boolean done = false;
 		        if (!done && !alias.equals("Vulnerability Multiplier")) { //jeff 
 		            Iterator i = PADRoster.getAdvantageIterator();
+		            
 		            ModifierXMLAdapter mxa = null;
 		            while (i.hasNext()) {
 		                String modifierName = (String) i.next();
@@ -351,11 +352,23 @@ public class AbilityXMLHandler extends DefaultXMLHandler implements XMLHandler {
 
 		                mxa = getModifierAdapter(modifierName);
 		                if (mxa != null && mxa.identifyXML(modifierID, child) == true) {
-		                    Limitation lim = PADRoster.getNewLimitationInstance(modifierName);
+		                	//jeff custom limitations import
+		                	Limitation lim = null;
+		                	String abilityAlias = child.getAttributes().getNamedItem("ALIAS").getNodeValue();
+		                	if(abilityAlias.equals("Unified Power"))
+		                	{
+		                		lim = PADRoster.getNewLimitationInstance("Unified Power");
+		                		mxa = getModifierAdapter("Unified Power");
+		                	}
+		                	else
+		                	{
+		                		lim = PADRoster.getNewLimitationInstance(modifierName);
+		                	}
 		                    if (ability.addPAD(lim, null)) {
 		                        //int index = ability.findExactIndexed("Limitation","LIMITATION", a);
 		                        int index = ability.findExactLimitation(lim);
 		                        XMLParseError error = mxa.importXML(ability, lim, index, child);
+		                        
 		                        lim.configurePAD(ability, lim.getParameterList(ability, index));
 		                        //ability.addIndexed(index, "Limitation", "FINIALIZER", mxa);
 		                        lim.setFinalizer(mxa);

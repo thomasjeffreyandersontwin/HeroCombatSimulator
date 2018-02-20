@@ -313,29 +313,6 @@ implements TreeModel {
         }
         
         if ( attackTreePanel != null ) attackTreePanel.setProcessing(false);
-        
-       /* try{
-        	if(this.isAttackTreePanelVisible() && this.attackTreePanel.OKCLicked==true)
-            {
-        		SingleAttackAdapter a=null;
-            
-        		if(battleEvent.getPrimaryBattleMessageGroup() instanceof SweepMessageGroup) {
-        			a = new SimulatorSweepAttack(null, null);
-        		}
-        		else if (battleEvent.getAbility().hasAdvantage("Autofire"))
-        		{
-        			a = new AutofireAttackAdapter(null, null);
-        		}
-        		else {
-        			a = new SingleAttackAdapter(null, null);
-        		}
-        		a.battleEvent = battleEvent;
-    			JSONObject att = a.ExportBasedOnBattleEvent(AttackTargetCommand.Token, battleEvent);
-    			a.WriteJSON(att);
-            }
-        	}catch(Exception e) {
-        		e.printStackTrace();
-        	}*/
     }
     
     /** Advance the current node and return the next node in the tree.

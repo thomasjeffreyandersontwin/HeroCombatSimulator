@@ -39,6 +39,10 @@ public class SweepAttackAdapter extends MultiAttackAdapter {
 		super("Sweep", character);
 	}
 	
+	public SweepAttackAdapter( CharacterAdaptor character, String ability) {
+		super(ability, character);
+	}
+	
 	@Override
 	public void Process() {
 	}
@@ -92,6 +96,8 @@ public class SweepAttackAdapter extends MultiAttackAdapter {
 		return resultjson;
 		
 	}
+	
+	
 	@Override
 	protected void preProcessJSON(JSONObject attackJSON) {
 	
@@ -117,11 +123,13 @@ public class SweepAttackAdapter extends MultiAttackAdapter {
 		SingleTargetNode node = (SingleTargetNode) rootNode.getChildAt(i+1).getChildAt(3);
 		return node;
 	}
+	
+	public int indexSweepNumber=0;
 	public DefaultAttackTreeNode getSelectTargetingNodeForTarget(Target target) {
 		if( SweepActivateRootNode.SARNode!=null) {
 			for(int i=0; i < SweepActivateRootNode.SARNode.getChildCount();i++) {
 				SingleTargetNode node = (SingleTargetNode) SweepActivateRootNode.SARNode.getChildAt(i+1).getChildAt(3);
-				if(node.getTarget() == target) {
+				if(node.getTarget() == target && i== indexSweepNumber) {
 					return  (DefaultAttackTreeNode) node;
 				}
 			}
@@ -138,7 +146,7 @@ public class SweepAttackAdapter extends MultiAttackAdapter {
 			if(node instanceof KnockbackTargetNode) {
 				KnockbackTargetNode knode = (KnockbackTargetNode)node;
 				Target t = knode.getTarget();
-				if(getTarget() == t) {
+				if(getTarget() == t && i== currentIndexInParent) {
 					return knode;
 				}
 			}
@@ -161,11 +169,13 @@ public class SweepAttackAdapter extends MultiAttackAdapter {
         targetIndex = snode.battleEvent.getActivationInfo().getTargetIndex(defender.target);
         targetIndexes.add(targetIndex);
 	}
+	
 	@Override
 	public AttackAdapter getIndividualAttack(int i)
 	{
 		BattleEvent event =  ((SweepBattleEvent)battleEvent).getLinkedBattleEvent(i);
 		AttackAdapter a =   getIndividualAttackTargetForBattleEvent(i, event);
+		
 		return a;		
 	}
 	@Override

@@ -7,8 +7,7 @@
 package champions.powers;
 
 import champions.*;
-import champions.Power;
-import champions.SpecialEffect;
+import champions.PADRoster.AbilityTemplate;
 import champions.adjustmentPowers.Adjustable;
 import champions.adjustmentPowers.AdjustmentPower;
 import champions.adjustmentPowers.adjustmentTree.AdjParameterEditor;
@@ -19,40 +18,8 @@ import champions.attackTree.*;
 import champions.parameters.ParameterList;
 
 import java.util.*;
-/**
- *
- * @author  unknown
- * @version
- *
- * To Convert from old format powers, to new format powers:
- *
- * 1) Add implements ChampionsConstants to class definition.<P>
- * 2) Copy and Fill in Power Definition Variables. <P>
- * 3) Move Parameter Information to parameterArray. <P>
- * 4) Delete getParameters method (unless special parameter handling is necessary.<P>
- * 5) Change configurePAD(Ability,DetailList) method to configurePAD(Ability ability, ParameterList parameterList).<P>
- * 6) Edit configurePAD method to use format specified below.<P>
- * 7) Change checkParameter method to checkParameter(Ability ability, <i>int padIndex</i>,
- * String key, Object value, Object oldValue);
- * 8) Edit getConfigSummary method to use parameterList instead of parseParameter methods.<P>
- * 9) Change all instances of parseParameter to getParameterValue.<P>
- * 10) Add getParameterArray method.<P>
- * 11) Edit getName method to return powerName variable.
- * 12) Change serialVersionUID by some amount.
- * 13) Add patterns array and define import patterns.<P>
- * 14) Add getImportPatterns() method.<P>
- *
- * The Following Steps must be performed to upgrade Power to Reconfigurable Format:
- * 1) Create costArray.
- * 2) Add the getCostArray() method, returning costArray.
- * 3) Remove existing calculateCPCost.
- *
- * The Following Steps must be performed to upgrade Power to PowerInfo format:
- * 1) Create caveatArray.  If there are no caveats, create an empty caveat array.
- * 2) Add the dynamic Power Definition Variable.
- * 3) Add the description Power Definition Variable.
- * 4) Add the getCaveat(), getDescription(), and isDynamic() methods.
- */
+
+
 public class powerDispel extends AdjustmentPower implements ChampionsConstants {
     static final long serialVersionUID =5295848483348707401L;
     
@@ -63,8 +30,7 @@ public class powerDispel extends AdjustmentPower implements ChampionsConstants {
         {"ImportDrainFrom","Power.IMPORTDRAINFROM", String.class, "Import Drain From", "Import Drain From", STRING_PARAMETER, HIDDEN, ENABLED, NOTREQUIRED}
         
     };
-    
-    // Cost Array - See Power.getCostArray()
+
     static private Object[][] costArray = {
         { "DrainDie", NORMAL_DICE_COST, DYNAMIC_RECONFIG, ALL_RECONFIG, new Integer(3), new Integer(0), new Integer(0) },
     };
@@ -98,11 +64,6 @@ public class powerDispel extends AdjustmentPower implements ChampionsConstants {
     // Custom Adders
     private static Object[] customAdders = {
         Advantage.class, "Variable Effect",
-//        Limitation.class, "Limited Special Effect",
-//        Limitation.class, "Self Only",
-//        Limitation.class, "Others Only",
-//        Limitation.class, "PD Applies",
-//        Limitation.class, "ED Applies",
     };
     
     // Known Caveats Array
@@ -136,29 +97,11 @@ public class powerDispel extends AdjustmentPower implements ChampionsConstants {
     public boolean configurePAD(Ability ability, ParameterList parameterList) {
         // Fail immediately if ability is null
         if ( ability == null ) return false;
-        
-        // Always Set the ParameterList to the parameterList
         setParameterList(ability,parameterList);
         
-        // Read in any parameters that will be needed to configure the power or
-        // Determine the validity of the power configuration.  Read the parameters
-        // from the parameterList, instead of directly from the ability, since the
-        // Ability isn't configured yet.
         String die = (String)parameterList.getParameterValue("DrainDie");
-        
-        // Check for the validity of the parameters that will be set.  If the parameters
-        // Fail for any reason, return false from the method immediately, indicating a
-        // failure to configure
-        
-        // Always copy the configuration parameters directly into the ability.  This will
-        // take the parameters stored in the parameter list and copy them into the
-        // ability using the appropriate keys and values.
         parameterList.copyValues(ability);
         
-        // Start to Actually Configure the Power.
-        // The Add Power Info should always be executed to add information to the ability.
-        // All of this information should be set in the Power Definition Variables at the
-        // top of this file
         ability.addPowerInfo( this, powerName, targetType, persistenceType, activationTime);
         if ( attackType != null ) {
             ability.addAttackInfo( attackType,damageType );
@@ -166,19 +109,11 @@ public class powerDispel extends AdjustmentPower implements ChampionsConstants {
         }
         ability.setGenerateDefaultEffects(generateDefaultDamage);
         if ( endMultiplier != 1 ) ability.setENDMultiplier(endMultiplier);
-        
-        // Add any dice information which is necessary to use this power.
+
         ability.addDiceInfo( "DrainDie", die, "Drain Amount");
-        
-        // Add A Damage Class Info
-        
-        // Add Extra Value/Pairs used by the Power/BattleEngine
         ability.add("Ability.DOESKNOCKBACK", "FALSE", true);
-        
-        // Update the Ability Description based on the new configuration
         ability.setPowerDescription( getConfigSummary(ability, -1));
-        
-        // Return true to indicate success
+
         return true;
     }
     
@@ -189,10 +124,6 @@ public class powerDispel extends AdjustmentPower implements ChampionsConstants {
         return die + " Dispel";
     }
     
-    /** Attempt to identify power
-     * This method is called when an unknown AbilityImport exists and the CharacterImport is trying to
-     * determine the correct power to assign to it.
-     */
     public int identifyPower(Ability template, AbilityImport ai) {
         String power = ai.getPowerName();
         
@@ -217,6 +148,8 @@ public class powerDispel extends AdjustmentPower implements ChampionsConstants {
         // Grab the New AdjustmentList
         AdjustmentList newList = (AdjustmentList)ai.getIndexedValue(tindex, "Target", "DRAINFROMLIST");
         
+        
+
         // Grab the effectDrainTracker && Old AdjustmentList
         effectDrainTracker eat = findDrainTracker( be.getSource(), ability);
         AdjustmentList oldList = null;
@@ -267,21 +200,43 @@ public class powerDispel extends AdjustmentPower implements ChampionsConstants {
         
         // Calculate the Drain Adjustment
         double adjustmentAmount = die.getStun().doubleValue();
-        
-        // Create New Adjustment Effects here
+
+      //add any unified powers
+        String powerSource;
         int index, count;
         count = newList.getAdjustableCount();
         for(index=0;index<count;index++) {
             Adjustable adjustable = newList.getAdjustableObject(index);
-            int percentage = newList.getAdjustablePercentage(index);
-            
-            effectDrain ea = new effectDrain(adjustable, be.getSource(), ability, Math.round( adjustmentAmount / 100 * percentage), decayInterval, decayRate);
+        	Ability adjust = (Ability) adjustable;
+        	int percentage = newList.getAdjustablePercentage(index);
+        	double amount = Math.round( adjustmentAmount / 100 * percentage);
+        	tirggerAdjustmentsForUnifiedPowers(be, ability, effectList, target, decayInterval, decayRate, newList,
+					adjust, amount);
+        	effectDrain ea = new effectDrain(adjustable, be.getSource(), ability,amount , decayInterval, decayRate);
             effectList.createIndexed("Effect", "EFFECT", ea);
-        }
-        
+        	
+        }     
         // Change to the New List from the Old list
         be.addUndoableEvent( eat.setAdjustmentList(target, newList) );
     }
+
+	private void tirggerAdjustmentsForUnifiedPowers(BattleEvent be, Ability ability, DetailList effectList,
+			Target target, long decayInterval, int decayRate, AdjustmentList newList, Ability adjust, double amount) {
+		String powerSource;
+		int i =adjust.findLimitation("Unified Power");
+		if(i> -1)
+		{
+			Limitation up = adjust.getLimitation(i);
+			powerSource = up.getParameterList().getParameterStringValue("powerSource");
+			ArrayList<Ability> unifiedAbilities =(ArrayList<Ability>) target.getValue("Unified." + powerSource);
+			for (int j = 0; j < unifiedAbilities.size(); j++) {
+				Ability unified  = unifiedAbilities.get(j); 
+		        newList.createIndexed("Adjustable", "ADJUSTABLE", unified);
+		        effectDrain ea = new effectDrain(unified, be.getSource(), ability,amount , decayInterval, decayRate);
+		    	effectList.createIndexed("Effect", "EFFECT", ea);
+			}  		
+		}
+	}
     
     public AttackTreeNode getTriggerPowerNode(BattleEvent be, Target target, String TargetGroup, int refNumber) {
         Ability ability = be.getAbility();
@@ -302,217 +257,12 @@ public class powerDispel extends AdjustmentPower implements ChampionsConstants {
         return pl;
     }
     
-    /** Returns the patterns necessary to import the Power from CW.
-     * The Object[][] returned should be in the following format:
-     * patterns = Object[][] {
-     *  { "PATTERN" , new Object[] { "PARAMETER1", parameter1.class, "PARAMETER2", parameter2.class, ... },
-     *  ...
-     *  }
-     *
-     * PATTERN should be a regular expression pattern.  For every PARAMETER* where should be one
-     * parathesis group in the expression. The PARAMETERS sub-array can be null, if the line has no parameter
-     * and is just informational.
-     *
-     * By default, the importPower will check each line of the getImportPatterns() array and if a match is
-     * found, the specified parameters will be set in the powers parameter list.  It is assumed that each
-     * PATTERN will only occur once.  If the pattern can occur multiple times in a valid import, a custom
-     * importPower method will have to be used.
-     */
+
     public Object[][] getImportPatterns() {
         return patterns;
     }
     
-//    public void importPower(Ability ability, AbilityImport ai) {
-//        // First Do the standard import.  This will parse the RegExp andpopulate
-//        super.importPower(ability,ai);
-//        
-//        ParameterList pl = getParameterList(ability);
-//        
-//        String stringValue, affectsType;
-//        String line;
-//        
-//        
-//        for(int lineIndex = 0; lineIndex < ai.getImportLineCount(); lineIndex++) {
-//            
-//            //commented out this line to allow the import to pull drainfrom information
-//            //don't know the ramifications of doing this in the long run
-//            // if ( ai.isLineUsed(lineIndex) ) continue;
-//            
-//            line = ai.getImportLine(lineIndex);
-//
-//            //first match is for HD drainfrom within the power description...rest are MC
-//            if ( ChampionsMatcher.matches( "(.*) [0-9]*d6.*vs. (.*)\\).*", line ) || ChampionsMatcher.matches( "Drain (.*) [0-9]*d6.*\\((.*)\\).*", line ) || ChampionsMatcher.matches( "Adjust Single Power/Stat \\((.*)\\): (.*)", line ) || ChampionsMatcher.matches( "Affects \\((.*)\\): (.*)", line ) || ChampionsMatcher.matches( "Variable Effect \\((.*)\\) \\((.*)", line ) ) {
-//                stringValue = ChampionsMatcher.getMatchedGroup(1);
-//                affectsType = ChampionsMatcher.getMatchedGroup(2);
-//                
-//                StringTokenizer st = new StringTokenizer(stringValue, ",");
-//                
-//                boolean used = true;
-//                while ( st.hasMoreTokens() ) {
-//                    String token = st.nextToken();
-//                    
-//                    // Cut out beginning and ending spaces, if any
-//                    if ( token.startsWith( " " ) ) {
-//                        token = token.substring(1);
-//                    }
-//                    
-//                    if ( token.endsWith( " " ) ) {
-//                        token = token.substring(0, token.length()-1);
-//                    }
-//                    
-//                    // Search the Possible Sources for this Token...
-//                    
-//                    boolean found = false;
-//                    
-//                    // First look for a Stat...
-//                    
-//                    for(int i = 0; i< Characteristic.characteristicNames.length; i++) {
-//                        if ( token.equals(Characteristic.characteristicNames[i]) ) {
-//                            Characteristic c = new Characteristic(token);
-//                            if ( pl.findIndexed("DrainFrom", "OBJECT", c) == -1 ) {
-//                                // This is a new one, so add it to the parameter list...
-//                                pl.createIndexed("DrainFrom", "OBJECT", c, false);
-//                                pl.setParameterSet("DrainFrom", true);
-//                            }
-//                            found = true;
-//                        }
-//                    }
-//                    
-//                    if ( ! found ) {
-//                        // Not a stat, so iterate through the Powers Types...
-//                        Iterator i = PADRoster.getAbilityIterator();
-//                        while(i.hasNext()) {
-//                            String name = (String)i.next();
-//                            if ( name.equals( token ) ){
-//                                Ability a = PADRoster.getSharedAbilityInstance(name);
-//                                Power p = a.getPower();
-//                                if ( pl.findIndexed("DrainFrom", "OBJECT", p) == -1 ) {
-//                                    // This is a new one, so add it to the parameter list...
-//                                    pl.createIndexed("DrainFrom", "OBJECT", p, false);
-//                                    pl.setParameterSet("DrainFrom", true);
-//                                }
-//                                found = true;
-//                            }
-//                        }
-//                    }
-//                    
-//                    if ( ! found ) {
-//                        // Not a power, so iterate through the known Special Effects...
-//                        Iterator i = PADRoster.getSpecialEffectIterator();
-//                        while(i.hasNext()) {
-//                            String name = (String)i.next();
-//                            if ( name.equals( token ) ){
-//                                SpecialEffect s = PADRoster.getSharedSpecialEffectInstance(name);
-//                                if ( pl.findIndexed("DrainFrom", "OBJECT", s) == -1 ) {
-//                                    // This is a new one, so add it to the parameter list...
-//                                    pl.createIndexed("DrainFrom", "OBJECT", s, false);
-//                                    pl.setParameterSet("DrainFrom", true);
-//                                }
-//                                found = true;
-//                            }
-//                        }
-//                    }
-//                    
-//                    if ( ! found ) {
-//                        // It could be a specific ability, so store the ability information and
-//                        // clean it up in the finalizeImport method, after all the other abilities
-//                        // have been loaded.
-//                        int cindex = pl.createIndexed("DrainFrom", "NAME", stringValue, false);
-//                        pl.addIndexed(cindex, "DrainFrom", "LINE", new Integer(lineIndex), true, false );
-//                    }
-//                }
-//                
-//                // If all the specified DrainFrom types were used, mark the line as used.
-//                // Only mark Single Power affects lines as used, since the Advantage will
-//                // need to use the line also.
-//                if ( used && affectsType.equals("Single Power, +0") || affectsType.equals("Single Power): +0") || affectsType.equals("+0" ) ){
-//                    ai.setLineUsed(lineIndex, this);
-//                }
-//            }
-//        }
-//        
-//    }
-//    
-//    /* Finishes Importing Ability.
-//     *
-//     * This method is called after the character has been completely built, with all abilities
-//     * that are going to be added already added.  This method can be used to finalize any necessary
-//     * ability changes, such as translating from Strings to actual Ability objects.
-//     *
-//     * This method should return true if it wants the configurePAD to be run once it is done
-//     * finalizing the method.
-//     */
-//    public boolean finalizeImport(Ability ability, AbilityImport ai) {
-//        ParameterList parameterList = getParameterList(ability);
-//        Target source = ability.getSource();
-//        boolean set = false;
-//        
-//        int count = parameterList.getIndexedSize("DrainFrom");
-//        for ( int index = 0; index < count; index++) {
-//            Object o = (Object) parameterList.getIndexedValue(index, "DrainFrom", "OBJECT");
-//            String name = parameterList.getIndexedStringValue(index, "DrainFrom", "NAME");
-//            
-//            if ( o == null && name != null ) {
-//                // Here is a name with no associated ability...see if you can find an ability...
-//                Ability a = source.getAbility(name);
-//                if ( a != null ) {
-//                    parameterList.addIndexed(index, "DrainFrom", "OBJECT", a, true, false);
-//                    parameterList.removeIndexed(index, "DrainFrom", "NAME", false);
-//                    parameterList.removeIndexed(index, "DrainFrom", "LINE", false);
-//                }
-//                else {
-//                    a = Battle.getDefaultAbilities().getAbility(name, true);
-//                    if ( a != null ) {
-//                        parameterList.addIndexed(index, "DrainFrom", "OBJECT", a, true, false);
-//                        parameterList.removeIndexed(index, "DrainFrom", "NAME", false);
-//                        parameterList.removeIndexed(index, "DrainFrom", "LINE", false);
-//                    }
-//                    else {
-//                        Integer line = parameterList.getIndexedIntegerValue(index, "DrainFrom", "LINE");
-//                        ai.setLineUnused(line.intValue());
-//                        parameterList.removeAllIndexed(index, "DrainFrom", false);
-//                        index--;
-//                    }
-//                    
-//                }
-//            }
-//        }
-//        
-//        count = parameterList.getIndexedSize("DrainFrom");
-//        parameterList.setParameterSet("DrainFrom", count > 0);
-//        
-//        return true;
-//    }
-//    
-    /** Returns Power Cost array for this Power.
-     *
-     * The Power cost array is an Object[] array, which contains information detailing how to
-     * calculate the cost of a power and reconfigure a power when the CP for an ability is adjusted.
-     *
-     * It is in the follow format:
-     * Object[][] costArray = {
-     * { Parameter, Type, Dynamic, ReconfigPercent, Type Options ... },
-     * ...
-     * }
-     *
-     * Where:
-     * Parameter -> String representing the parameterName.  Must be parameter from getParameterArray() array.
-     * Type -> Type of Cost Calculation: NORMAL_DICE_COST, KILLING_DICE_COST, GEOMETRIC_COST, LOGRITHMIC_COST,
-     *     LIST_COST, BOOLEAN_COST, COMBO_COST.
-     * Dynamic -> Indicater of Dynamic or Static reconfigurability: DYNAMIC_RECONFIG or STATIC_RECONFIG.
-     * ReconfigPercent -> Integer indicate what percent of reconfigured CP should be allocated to this parameter
-     *     by default.  Can be 0 to 100 or PROPORTIONAL_RECONFIG.  PROPORTIONAL_RECONFIG will base the proportion
-     *     on the configuration of the base power.
-     * Type Options -> Custom options depending on the specified type, as follows:
-     *     NORMAL_DICE_COST -> PtsPerDC:Integer, Base:Integer, Minimum:Integer.
-     *     KILLING_DICE_COST -> PtsPerDC:Integer, Base:Integer, Minimum:Integer.
-     *     GEOMETRIC_COST -> X:Integer, Y:Integer, Base:Integer, Minimum:Integer.
-     *     LOGRITHMIC_COST -> PtsPerMultiple:Integer, Multiple:Integer, Base:Integer, Minimum:Integer.
-     *     LIST_COST -> PtsPerItem:Integer, Base:Integer.
-     *     BOOLEAN_COST -> PtsForOption:Integer.
-     *     COMBO_COST -> OptionCostArray:Integer[], OptionNames:String[].
-     *
-     */
+
     public Object[][] getCostArray(Ability ability) {
         return costArray;
     }
@@ -563,84 +313,5 @@ public class powerDispel extends AdjustmentPower implements ChampionsConstants {
     public String getAdjustableParameterName() {
         return "DrainFrom";
     }
-    
-    /*static public Vector getAvailableAdjustables(Ability sourceAbility, Target target) {
-        Vector v = new Vector();
-        
-        // First Grab all of the Abilities
-        AbilityIterator ai = target.getAbilities();
-        int index, count;
-        
-        String indexName = "DrainFrom";
-        
-        ParameterList pl = sourceAbility.getPower().getParameterList(sourceAbility, -1);
-        count = pl.getIndexedParameterSize( indexName );
-        
-        Object[] adjustables = new Object[count];
-        
-        for( index = 0; index < count; index++ ) {
-            // Why do we do this?  Wouldn't it be better to 
-            // do a double iteration with this as the outer loop?
-            // The only thing we are saving this way is that we 
-            // only have to walk the ability tree once...
-            adjustables[index] = pl.getIndexedParameterValue(indexName, index);
-        }
-        
-        // Now Grab all of the available stats...
-        for( index = 0; index < count; index++ ) {
-            if ( adjustables[index] instanceof Characteristic ) {
-                if ( target.hasStat( ((Characteristic)adjustables[index]).getName() ) ) {
-                    v.add( adjustables[index] );
-                }
-                adjustables[index] = null;
-            }
-        }
-        
-        while ( ai.hasNext() ) {
-            Ability targetAbility = ai.nextAbility();
-            
-            for(index = 0; index < count; index++) {
-                if ( adjustables[index] != null  && isAbilityAdjustable(targetAbility, adjustables[index]) ) {
-                    v.add( targetAbility );
-                    break;
-                }
-            }
-        }
-        
-        return v;
-    } */
-    
-    /*static private boolean isAbilityAdjustable(Ability targetAbility, Object adjustable) {
-        boolean rv = false;
-        
-        if ( adjustable instanceof Ability ) {
-            rv = ( targetAbility.equals(adjustable) );
-        }
-        else if ( adjustable instanceof SpecialEffect ) {
-            rv = ( targetAbility.hasSpecialEffect( ((SpecialEffect)adjustable).getName() ) );
-        }
-        else if ( adjustable instanceof Power ) {
-            rv = ( targetAbility.getPower().getClass().equals( adjustable.getClass() ) );
-        }
-        
-        return rv;
-    }*/
-    
-    /** Returns the Maximum Number of Abilities/Stats which can be affected at a single time.
-     */
-    /*static private int getMaximumAdjustables(Ability sourceAbility) {
-        switch ( sourceAbility.getAdjustmentLevel() ) {
-            case ADJ_SINGLE_ADJUSTMENT:
-                return 1;
-            case ADJ_VARIABLE_1_ADJUSTMENT:
-                return 1;
-            case ADJ_VARIABLE_2_ADJUSTMENT:
-                return 2;
-            case ADJ_VARIABLE_4_ADJUSTMENT:
-                return 4;
-            case ADJ_VARIABLE_ALL_ADJUSTMENT:
-                return Integer.MAX_VALUE;
-        }
-        return 1;
-    } */
+
 }

@@ -6,8 +6,17 @@
 
 package champions.ioAdapter.heroDesigner.adapters;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.w3c.dom.Node;
+
+import champions.Ability;
+import champions.PADRoster;
+import champions.Sense;
 import champions.ioAdapter.heroDesigner.AbstractPowerXMLAdapter;
 import champions.ioAdapter.heroDesigner.PowerXMLAdapter;
+import champions.parameters.ParameterList;
 
 /**
  *
@@ -18,53 +27,23 @@ public class powerEntangleAdapter extends AbstractPowerXMLAdapter implements Pow
     private static String XMLID = "ENTANGLE";
     private static String[][] translationArray = {
         { "LEVELS", "EntangleDie" },
+        { "ADDER(XMLID=STOPSENSEGROUP).ALIAS", null, "sensesSpecial"},
 
     };
     
-    /** Returns the XMLID for this Power.
-     *
-     * Subclass should either override this to return their XMLID or override
-     * the identify method to do more complicated identification tasks.
-     */
+    public void sensesSpecial(Ability ability, Node node, String attrValue, ParameterList pl, String parameterName, String specialData) {
+    
+     String senseStr = node.getAttributes().getNamedItem("OPTION_ALIAS").getNodeValue();
+     pl.addIndexedParameterValue("Senses", PADRoster.getNewSense(senseStr));
+   }
     public String getXMLID() {
         return XMLID;
     }
     
-    /** Returns the Translation Array for the PowerAdapter.
-     *
-     * The Subclass should either override this to return their translationArray
-     *or override the importXML method to do more complicated import tasks.
-     */
+  
     public String[][] getTranslationArray() {
         return translationArray;
     }
     
-    /** Imports Parameters.
-     *
-     * Override this method to provide custom import stuff.  This should be 
-     * necessary in most cases!!!
-     */
-   /*  public boolean importXML(Ability ability, Node node) {
-         // Make sure we do the normal import first...
-         boolean result = super.importXML(ability,node);
-         
-        // Stupid STUN Only implemented as an advantage in Hero Designer...
-         // How the hell is that an Advantage?!?
-         
-         // Search the children for a node with name of "MODIFIER" and 
-         // XMLID of STUNONLY
-         Node child = node.getFirstChild();
-         while( child != null ) {
-             if ( "MODIFIER".equals(child.getNodeName()) && 
-                  "STUNONLY".equals(child.getAttributes().getNamedItem("XMLID").getNodeValue() ) ) {
-                  ParameterList pl = ability.getPower().getParameterList(ability,-1);
-                  pl.setParameterValue("StunOnly", "TRUE");
-                  break;
-             }
-             
-             child = child.getNextSibling();
-         }
-         
-         return result;
-     }*/
+ 
 }

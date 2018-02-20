@@ -14,6 +14,7 @@ import com.sun.corba.se.spi.oa.ObjectAdapter;
 import VirtualDesktop.Ability.AbilityAdapter;
 import VirtualDesktop.Attack.AttackAdapter.CombatRole;
 import VirtualDesktop.Attack.MultiAttack.MultiAttackAdapter;
+import VirtualDesktop.Attack.Sweep.SweepAttackAdapter;
 import VirtualDesktop.Character.CharacterAdaptor;
 import VirtualDesktop.Character.CharacterSensesAdapter;
 import VirtualDesktop.Character.SenseAdapter;
@@ -326,16 +327,6 @@ public class AttackAdapter extends AbilityAdapter {
 
 	public void placeObjectDirectlyBehindDefender(BasicTargetAdapter obj, int distance) {
 		KnockbackTargetNode node = getKnockbackNodeForTarget();
-		//int count=0;
-	//	while(node==null && getActivationInfo().getTargetHit(targetIndex))
-		{
-//			node = getKnockbackNodeForTarget();
-			//count++;
-			//if(count>1000) {
-			//	return ;
-		//	}
-			
-		}
 		if(node!=null) {
 			placeObjectDirectlyBehindDefenderUsingKnockbackNode(obj, distance, node);	
 		}
@@ -362,6 +353,7 @@ public class AttackAdapter extends AbilityAdapter {
 		if(AttackTreeModel.treeModel.getRoot() instanceof SweepActivateRootNode)
 		{
 			//change
+			((SweepAttackAdapter)parentAttack).indexSweepNumber = this.currentIndexInParent;
 			knode = (KnockbackTargetNode) parentAttack.getSelectTargetingNodeForTarget(getTarget()).getParent().getChildAt(5);
 			
 		}
@@ -374,7 +366,7 @@ public class AttackAdapter extends AbilityAdapter {
 				if(node instanceof KnockbackTargetNode) {
 					knode = (KnockbackTargetNode)node;
 					Target t = knode.getTarget();
-					if(getTarget() == t) {
+					if(getTarget() == t && i== currentIndexInParent) {
 						break;
 					}
 				}
@@ -483,4 +475,6 @@ public class AttackAdapter extends AbilityAdapter {
 		}
 		return node;
 	}
+
+	public int currentIndexInParent;
 }
