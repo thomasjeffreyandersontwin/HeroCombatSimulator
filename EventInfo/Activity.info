@@ -6,7 +6,7 @@ character:
 	MaxStun:27
 	MaxEndurance:36
 	CurrStun:27
-	CurrEndurance:30
+	CurrEndurance:36
 Activate: True
 
 	Crowd: 

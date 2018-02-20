@@ -1,6 +1,9 @@
 package VirtualDesktop.Attack.Sweep;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -54,10 +57,91 @@ public class SweepAttackAdapter extends MultiAttackAdapter {
 	{
 		Activate();
 		BattleEvent event= battleEvent;
-		
-		JSONArray attackTargetsJSON = (JSONArray) attackJSON.get("Attack Targets");	
 		preProcessJSON(attackJSON);
+		JSONArray attackTargetsJSON = (JSONArray) attackJSON.get("Attack Targets");	
 		
+		
+		processAllAttacksInSweep(attackJSON, attackTargetsJSON);
+		
+		Process();
+		battleEvent = event;
+		
+		ArrayList<AttackAdapter> attacks = iterateThroughIndividualAttacksAndEnableLongestKnockbackOnly(attackTargetsJSON);
+		
+		processPotentialCollisionsForAllAttacksInSweep(attackTargetsJSON, attacks);
+		
+		Result = buildAndSaveAttackResult();
+		JSONObject resultjson =  Result.exportToJSON();
+		passTokenFromRequestToResponseForEachIndividualAttack(attackTargetsJSON, resultjson);
+		resultjson.put("Token", attackJSON.get("Token"));
+		
+		
+		return resultjson;
+		
+	}
+
+	private void passTokenFromRequestToResponseForEachIndividualAttack(JSONArray attackTargetsJSON,
+			JSONObject resultjson) {
+		JSONArray responsesJson = (JSONArray)resultjson.get("Affected Targets");
+		for(int i = 0; i < responsesJson.size();i++) 
+		{
+			JSONObject attackJson = (JSONObject) attackTargetsJSON.get(i);
+			String token = (String) attackJson.get("Token");
+			JSONObject responseJson = (JSONObject) responsesJson.get(i);
+			responseJson.put("Token", token);
+		}
+	}
+
+	private void processPotentialCollisionsForAllAttacksInSweep(JSONArray attackTargetsJSON, ArrayList<AttackAdapter> attacks) {
+		for(int i=0;i< attackTargetsJSON.size();i++)
+		{
+			JSONObject attackTargetJSON = (JSONObject) attackTargetsJSON.get(i);
+		    
+			AttackAdapter attack = attacks.get(i);;
+			if(attack.getKnockbackDisabled()==false)
+			{
+				attack.processPotentialCollisionsInJSON(attackTargetJSON);
+			}
+			else
+			{
+				attack.disableKnockback();
+			}
+			
+		}
+	}
+
+	private ArrayList<AttackAdapter> iterateThroughIndividualAttacksAndEnableLongestKnockbackOnly(
+			JSONArray attackTargetsJSON) {
+		ArrayList<AttackAdapter> attacks = new ArrayList<AttackAdapter>();
+		HashMap<Target, AttackAdapter> knockbackresults = new HashMap<Target, AttackAdapter>(); 
+		for(int i=0;i< attackTargetsJSON.size();i++)
+		{
+			AttackAdapter attack = getIndividualAttack(i);
+			CharacterAdaptor c = attack.getDefender();
+			if(attack.getHit()==true)
+			{
+				if(knockbackresults.containsKey(c.target))
+				{ 
+					int lastKnockbackDistance = knockbackresults.get(c.target).getKnockbackDistance();
+					int thisKnockbackDistance = attack.getKnockbackDistance();
+					if( lastKnockbackDistance > thisKnockbackDistance)
+					{
+						attack.disableKnockback();
+					}
+					else {
+						knockbackresults.get(c.target).disableKnockback();
+						knockbackresults.put(c.target, attack);
+					}
+				}else {
+					knockbackresults.put(c.target, attack);
+				}
+			}
+			 attacks.add(attack);  	   
+		}
+		return attacks;
+	}
+
+	private void processAllAttacksInSweep(JSONObject attackJSON, JSONArray attackTargetsJSON) {
 		for(int i=0;i< attackTargetsJSON.size();i++)
 		{
 			JSONObject attackTargetJSON = (JSONObject) attackTargetsJSON.get(i);
@@ -69,32 +153,6 @@ public class SweepAttackAdapter extends MultiAttackAdapter {
 			adapter.processObstructionsInJSON(attackTargetJSON);
 			adapter.processToHitModifiersInJSON(attackTargetJSON);
 		}
-		Process();
-		battleEvent = event;
-		for(int i=0;i< attackTargetsJSON.size();i++)
-		{
-			JSONObject attackTargetJSON = (JSONObject) attackTargetsJSON.get(i);
-		    
-			AttackAdapter attack = getIndividualAttack(i);
-			attack.processPotentialCollisionsInJSON(attackTargetJSON);
-			
-		}
-		Result = buildAndSaveAttackResult();
-		
-		JSONObject resultjson =  Result.exportToJSON();
-		JSONArray responsesJson = (JSONArray)resultjson.get("Affected Targets");
-		for(int i = 0; i < responsesJson.size();i++) 
-		{
-			JSONObject attackJson = (JSONObject) attackTargetsJSON.get(i);
-			String token = (String) attackJson.get("Token");
-			JSONObject responseJson = (JSONObject) responsesJson.get(i);
-			responseJson.put("Token", token);
-		}
-		resultjson.put("Token", attackJSON.get("Token"));
-		
-		
-		return resultjson;
-		
 	}
 	
 	

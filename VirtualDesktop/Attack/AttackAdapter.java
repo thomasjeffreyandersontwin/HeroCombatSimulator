@@ -51,8 +51,8 @@ import champions.attackTree.ToHitNode;
 import champions.exception.BadDiceException;
 import champions.exception.BattleEventException;
 import champions.interfaces.IndexIterator;
-
-
+import javafx.scene.control.SelectionModel;
+import champions.attackTree.KnockbackEffectPanel;
 public class AttackAdapter extends AbilityAdapter {
 	
 	public MultiAttackAdapter parentAttack;
@@ -61,10 +61,7 @@ public class AttackAdapter extends AbilityAdapter {
 		super(name, character);
 		
 		battleEvent = UnderlyingAbility.getActivateAbilityBattleEvent(UnderlyingAbility, null, character.target);
-		if(battleEvent!=null)
-		{
-			setBattleEvent(battleEvent);
-		}
+	
 	}
 	
 	
@@ -333,6 +330,8 @@ public class AttackAdapter extends AbilityAdapter {
 	}
 	protected void placeObjectDirectlyBehindDefenderUsingKnockbackNode(BasicTargetAdapter obj, int distance,KnockbackTargetNode node) {
 		KnockbackEffectNode n = (KnockbackEffectNode) node.getChildAt(1);
+		
+		
 		if(n==null) {
 			n = KnockbackEffectNode.Node;
 		}
@@ -354,8 +353,17 @@ public class AttackAdapter extends AbilityAdapter {
 		{
 			//change
 			((SweepAttackAdapter)parentAttack).indexSweepNumber = this.currentIndexInParent;
-			knode = (KnockbackTargetNode) parentAttack.getSelectTargetingNodeForTarget(getTarget()).getParent().getChildAt(5);
+			try
+			{
 			
+				knode = (KnockbackTargetNode) parentAttack.getSelectTargetingNodeForTarget(getTarget()).getParent().getChildAt(5);
+			}
+			catch(java.lang.ClassCastException ce)
+			{
+				//we disabled knockback so this failed , return null
+				
+				return null;
+			}
 		}
 		else
 		{
@@ -477,4 +485,41 @@ public class AttackAdapter extends AbilityAdapter {
 	}
 
 	public int currentIndexInParent;
+	private boolean knockbackDisabled=false;
+	public void disableKnockback() {
+		//go to parent node first because this panel sometimes shares info
+		getKnockbackNodeForTarget().activateNode(true);
+
+		//disable knockback
+		KnockbackEffectNode  node =(KnockbackEffectNode) getKnockbackNodeForTarget().getChildAt(1);
+		node.activateNode(true);
+		KnockbackEffectPanel  panel = KnockbackEffectPanel.panel;
+		panel.noEffectButton.setSelected(true);
+		panel.noEffectButtonActionPerformed(null);
+		
+		getKnockbackNodeForTarget().activateNode(true);
+		//IMPORTANT process the sction
+		AttackTreePanel.Panel.model.advanceAndActivate(null,null);
+		
+		
+		this.knockbackDisabled =true;
+		
+	}
+
+
+	public boolean getHit() {
+	    return getActivationInfo().getHasHitTargets();
+	}
+
+
+	public boolean getKnockbackDisabled() {
+		
+		KnockbackTargetNode knode = getKnockbackNodeForTarget();
+		if(knode==null)
+			return true;
+		KnockbackEffectNode  node =(KnockbackEffectNode) getKnockbackNodeForTarget().getChildAt(1);
+		if(node==null)
+			return true;
+		return knockbackDisabled;
+	}
 }

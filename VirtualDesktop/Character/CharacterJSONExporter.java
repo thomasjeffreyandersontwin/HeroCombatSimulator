@@ -270,7 +270,68 @@ public class CharacterJSONExporter {
 				k++;
 				key = ability.getKey(k);
 			}
-			  
+			
+			abilityJSON.put("IsTalent", ability.isTalent());
+			abilityJSON.put("IsSkill", ability.isSkill());
+			abilityJSON.put("IsDisadvantage", ability.isDisadvantage());
+			abilityJSON.put("IsPerk", ability.isPerk());
+			abilityJSON.put("IsPower", ability.isPower());
+			
+			abilityJSON.put("IsAlwaysOn", ability.isAlwaysOn());
+			abilityJSON.put("IsConstant", ability.isConstant());
+			abilityJSON.put("IsInherent", ability.isInherent());
+			
+			abilityJSON.put("IsAttack", ability.isAttack());
+			abilityJSON.put("IsDefense", ability.isDefense());
+			abilityJSON.put("IsNND", ability.isNND());
+			abilityJSON.put("IsNormal", ability.isNormalAttack());
+			abilityJSON.put("IsKilling", ability.isKillingAttack());
+			
+			abilityJSON.put("IsRanged", ability.isRangedAttack());
+			abilityJSON.put("IsMeleeAttack", ability.isMeleeAttack());
+			abilityJSON.put("IsMovement", ability.isMovementPower());
+			abilityJSON.put("IsThrow", ability.isThrow());
+			abilityJSON.put("IsGrab", ability.isGrab());
+			abilityJSON.put("IsEgoBased", ability.isEgoBased());
+			
+			try {
+			abilityJSON.put("DamageDice", ability.getDamageDie());
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				abilityJSON.put("DamageDice", ability.getDamageDie());
+			}
+			abilityJSON.put("Damage", ability.getDamageString());
+			abilityJSON.put("DoesKnockback", ability.getDoesKnockback());
+			
+			abilityJSON.put("END Cost", ability.getENDCost());
+			
+			abilityJSON.put("IsEnabled", ability.isEnabled(null));
+			abilityJSON.put("IsActivated", ability.isActivated(null));
+			abilityJSON.put("IsDelayed", ability.isDelayed());
+			abilityJSON.put("IsDelayedInActivating", ability.isDelayActivating(null));
+			
+			abilityJSON.put("RealCost", ability.getRealCost());
+			
+			String spread = (String) ability.getValue("Ability.CANSPREAD");
+			if(spread!=null)
+			{
+				if(spread=="TRUE")
+				{
+					abilityJSON.put("CanSpread",true);
+				}
+				else
+				{
+					abilityJSON.put("CanSpread",false);
+				}
+			}
+			else 
+			{
+				abilityJSON.put("CanSpread",false);
+			}
+			
+			
+			
 			
 			powers.put(ability.getName(), abilityJSON);
 			ExportAdvantages(ability, abilityJSON);

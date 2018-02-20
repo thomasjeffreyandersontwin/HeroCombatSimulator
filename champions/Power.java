@@ -458,8 +458,21 @@ public abstract class Power implements PAD, ChampionsConstants, AdjustmentClass,
                 Integer Y = (Integer)costArray[index][5];
                 Integer base = (Integer)costArray[index][6];
                 
-                Integer level = (Integer)parameterList.getParameterValue(parameter);
-                
+                Integer level=null;
+                try {
+                	level = (Integer)parameterList.getParameterValue(parameter);
+                }
+                catch(Exception e)
+                {
+                	if(parameter.equals("DistanceFromCollision"))
+                	{
+                		level = (Integer)parameterList.getParameterValue("Distance");
+                	}
+                	else 
+                	{
+                		throw e;
+                	}
+                }
                 cost += ChampionsUtilities.calculateGeometricCost(level.intValue(), X.intValue(), Y.intValue(), base.intValue());
             }
             else if ( type.equals( LOGRITHMIC_COST ) ) {

@@ -25,6 +25,8 @@ import javax.swing.event.EventListenerList;
 public class KnockbackEffectPanel extends JPanel implements AttackTreeInputPanel, ChampionsConstants {
     
     static private KnockbackEffectPanel defaultPanel = null;
+
+	public static KnockbackEffectPanel panel;
     
     private AttackTreePanel atip = null;
     
@@ -64,6 +66,7 @@ public class KnockbackEffectPanel extends JPanel implements AttackTreeInputPanel
         bg.add(noEffectButton);
         bg.add(possibleCollisionButton);
         bg.add(onlyKnockdownButton);
+        panel = this;
         
         //knockbackDamagePanel.setDescription("Knockback Damage");
     }
@@ -247,7 +250,7 @@ public class KnockbackEffectPanel extends JPanel implements AttackTreeInputPanel
         }
     }//GEN-LAST:event_noCollisionButtonActionPerformed
     
-    private void noEffectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noEffectButtonActionPerformed
+    public void noEffectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noEffectButtonActionPerformed
         // Add your handling code here:
         if ( noEffectButton.isSelected() ) {
             setEffect( KnockbackEffect.NOEFFECT );
@@ -295,7 +298,13 @@ public class KnockbackEffectPanel extends JPanel implements AttackTreeInputPanel
         
         KnockbackEffect effect = be.getKnockbackEffect(kbindex);
         
-        setEffect( (effect==null) ? KnockbackEffect.POSSIBLECOLLISION : effect );
+        if(effect!=null)
+        {
+        	setEffect(effect);
+        }
+        else {
+        	setEffect(  KnockbackEffect.POSSIBLECOLLISION );
+        }
         
         this.atip = atip;
         setupPanel();
@@ -354,7 +363,8 @@ public class KnockbackEffectPanel extends JPanel implements AttackTreeInputPanel
      * @param effect New value of property effect.
      */
     public final void setEffect(KnockbackEffect effect) {
-        if ( effect != null ) {
+        if ( effect != null ) 
+        {
             this.effect = effect;
 
             if ( this.effect.equals(KnockbackEffect.COLLISION)  ) {
@@ -374,8 +384,10 @@ public class KnockbackEffectPanel extends JPanel implements AttackTreeInputPanel
             }
             else if ( this.effect.equals(KnockbackEffect.KNOCKDOWNONLY)) {
                 if ( onlyKnockdownButton.isSelected() == false ) onlyKnockdownButton.setSelected(true);
+            
             }
-        }
+       }
+        
     }
     
     public String getAutoBypassOption() {
@@ -501,7 +513,7 @@ public class KnockbackEffectPanel extends JPanel implements AttackTreeInputPanel
     private javax.swing.JLabel distanceLabel;
     private javax.swing.JPanel effectGroup;
     private javax.swing.JRadioButton noCollisionButton;
-    private javax.swing.JRadioButton noEffectButton;
+    public javax.swing.JRadioButton noEffectButton;
     private javax.swing.JRadioButton onlyKnockdownButton;
     private javax.swing.JRadioButton possibleCollisionButton;
     // End of variables declaration//GEN-END:variables

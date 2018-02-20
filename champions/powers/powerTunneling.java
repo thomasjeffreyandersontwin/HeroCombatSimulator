@@ -131,7 +131,14 @@ public class powerTunneling extends Power implements ChampionsConstants {
         // Determine the validity of the power configuration.  Read the parameters
         // from the parameterList, instead of directly from the ability, since the
         // Ability isn't configured yet.
-        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+        Integer distance ;
+        try {
+        	distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+        }
+        catch(Exception e)
+        {
+        	distance = (Integer)parameterList.getParameterValue("Distance");
+        }
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         Integer totalDEF = (Integer)parameterList.getParameterValue("TotalDEF");
         
@@ -199,7 +206,14 @@ public class powerTunneling extends Power implements ChampionsConstants {
     
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
-        Integer distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+        Integer distance ;
+        try {
+        	distance = (Integer)parameterList.getParameterValue("DistanceFromCollision");
+        }
+        catch(Exception e)
+        {
+        	distance = (Integer)parameterList.getParameterValue("Distance");
+        }
         Integer extraDEF = (Integer)parameterList.getParameterValue("ExtraDEF");
         Integer NoncombatX = (Integer)parameterList.getParameterValue("NoncombatX");
         boolean fillIn = (Boolean)parameterList.getParameterValue("FillIn");
