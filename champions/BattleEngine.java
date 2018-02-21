@@ -4390,7 +4390,8 @@ public class BattleEngine extends Thread
 
     /** Processes The Attack Tree Node via the Attack Tree Mechanism */
     public static void processAttackTreeNode(AttackTreeNode node) throws BattleEventException {
-        AttackTreeModel atm = new AttackTreeModel(node);
+        
+    	AttackTreeModel atm = new AttackTreeModel(node);
         atm.processAttackTree();
     }
 

@@ -18,6 +18,7 @@ import champions.Effect;
 import champions.PADRoster;
 import champions.Power;
 import champions.Roster;
+import champions.Sense;
 import champions.SpecialEffect;
 import champions.Target;
 import champions.battleMessage.GenericSummaryMessage;
@@ -48,6 +49,8 @@ import java.util.Vector;
 
 public class effectEntangle extends Effect {
     static private Ability unknockdown = null;
+	private Ability ability;
+	public Target Target;
     
     public effectEntangle( Ability ability, Dice dice ) {
         super( ability.getName(), "PERSISTENT" );
@@ -86,7 +89,7 @@ public class effectEntangle extends Effect {
         else {
         	targetEntangle.setBothTakesDamageFromAttack(false);
         }
-       
+        this.ability= ability;
     }
     
     public boolean addEffect(BattleEvent be, Target target) throws BattleEventException {
@@ -135,6 +138,17 @@ public class effectEntangle extends Effect {
             if ( u != null ) be.addUndoableEvent(u);
         }
         be.addBattleMessage( new GenericSummaryMessage(target, "is no longer entangled"));
+    
+        Power power = ability.getPower();
+    	ParameterList parameterList = power.getParameterList(ability);
+    	List<Sense> senses = parameterList.getIndexedParameterValues("Senses");
+    	
+    	for(int i=0; i< senses.size(); i++)
+    	{
+    		Sense sense = senses.get(i);
+    		Sense targetSense = target.getSense(sense.getSenseName());
+    		targetSense.setFunctioning(true);
+    	}
     }
     
     public String getDescription() {
@@ -177,6 +191,21 @@ public class effectEntangle extends Effect {
         actions.add(action);
         
     }
+
+	public void preventTargetsSensesFromWorkingIfEntangleBLocksSenses() {
+		//jeff turn off all blocked senses
+		Power power = ability.getPower();
+    	ParameterList parameterList = power.getParameterList(ability);
+    	List<Sense> senses = parameterList.getIndexedParameterValues("Senses");
+    	
+    	for(int i=0; i< senses.size(); i++)
+    	{
+    		Sense sense = senses.get(i);
+    		Sense targetSense = Target.getSense(sense.getSenseName());
+    		targetSense.setFunctioning(false);
+    	}
+		
+	}
 }
 
 

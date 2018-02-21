@@ -6,8 +6,11 @@
 
 package champions.attackTree;
 
+import champions.Ability;
 import champions.ActivationInfo;
 import champions.Target;
+import champions.powers.advantageUsableByOthers;
+
 import javax.swing.UIManager;
 
 /**
@@ -22,12 +25,68 @@ public class MovementDistanceNode extends DefaultAttackTreeNode{
         this.name = nodeName;
         icon = UIManager.getIcon("AttackTree.runningIcon");
     }
+    
+    
+public AttackTreeNode buildNextChild(AttackTreeNode activeChild) {
+        
+        AttackTreeNode nextNode = null;
+        // Compare the activeChild to the possible children, to determine what comes next.
+        if ( activeChild != null && activeChild.getName() == null ) {
+            // This is probably an error
+            int index = children.indexOf(activeChild);
+            System.out.println("Null Node name for child " + Integer.toString(index) + " of Parent " + this);
+            nextNode = null;
+        }
+        else {
+            String previousNodeName = (activeChild == null ) ? null : activeChild.getName();
+            String nextNodeName = nextNodeName(previousNodeName);
+            if ( nextNodeName != null ) {
+                if ( nextNodeName.equals("Single Attack")) {
+                    SingleAttackNode node = new SingleAttackNode(nextNodeName);
+                    nextNode = node;
+                }
+                else if ( nextNodeName.equals("Movement DistanceFromCollision") ) {
+                    MovementDistanceNode node = new MovementDistanceNode(nextNodeName);
+                    nextNode = node;
+                }
+                else if ( nextNodeName.equals("Process Movement") ) {
+                    ProcessMovementNode node = new ProcessMovementNode(nextNodeName);
+                    nextNode = node;
+                }
+            }
+        }
+        return nextNode;
+    }
+     
+    public String nextNodeName(String previousNodeName) {
+        String nextNodeName = null;
+        if(getBattleEvent().getAbility().findAdvantage("Usable On Others") > -1)
+        if ( previousNodeName == null ) {
+            nextNodeName = "Movement DistanceFromCollision";
+        }
+        else if ( previousNodeName.equals("Movement DistanceFromCollision") ) {
+            Ability ability = battleEvent.getAbility();
+            if ( ability.isRequiresTarget() ) {
+                nextNodeName = "Single Attack";
+            }
+            else {
+                nextNodeName = "Process Movement";
+            }
+        }
+        else if ( previousNodeName.equals("Single Attack") ) {
+            nextNodeName = "Process Movement";
+        }
+        
+        return nextNodeName;
+    }
 
     public boolean activateNode(boolean manualOverride) {
         boolean acceptActivation = false;
-        if(battleEvent.getAbility().isMovementPower()) {
-        	manualOverride = true;
+        if(battleEvent.getAbility().isMovementPower() 
+        		&& battleEvent.getAbility().findAdvantage(new advantageUsableByOthers().getName()) ==-1) {
+        	manualOverride = true; 
         }
+        
         if ( manualOverride || nodeRequiresInput() ) {
             acceptActivation = true;
             

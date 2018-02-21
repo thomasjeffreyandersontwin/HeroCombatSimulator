@@ -1,5 +1,5 @@
 /*
- * advantageFadeRate.java
+p * advantageFadeRate.java
  *
  * Created on April 10, 2004, 10:11 PM
  */

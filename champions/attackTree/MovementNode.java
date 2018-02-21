@@ -7,6 +7,7 @@
 package champions.attackTree;
 
 import champions.Ability;
+import champions.powers.advantageUsableByOthers;
 
 /**
  *
@@ -70,7 +71,8 @@ public class MovementNode extends DefaultAttackTreeNode {
         }
         else if ( previousNodeName.equals("Movement DistanceFromCollision") ) {
             Ability ability = battleEvent.getAbility();
-            if ( ability.isRequiresTarget() ) {
+            if ( ability.isRequiresTarget() || ability.findAdvantage(new advantageUsableByOthers().getName()) >-1) 
+            {
                 nextNodeName = "Single Attack";
             }
             else {

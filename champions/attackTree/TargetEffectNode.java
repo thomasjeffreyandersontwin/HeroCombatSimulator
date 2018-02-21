@@ -126,7 +126,8 @@ public class TargetEffectNode extends DefaultAttackTreeNode {
         
         if ( ability != null ) {
             atn = ability.getPower().getTriggerPowerNode(getBattleEvent(), getTarget(), getTargetGroup(), targetReferenceNumber );
-            if ( atn != null ) addChild(atn);
+            if ( atn != null ) 
+            	addChild(atn);
         }
         
         if ( maneuver != null ) {

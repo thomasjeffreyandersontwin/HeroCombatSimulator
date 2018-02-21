@@ -158,20 +158,12 @@ public class powerEntangle extends Power implements ChampionsConstants {
         	
         	targetEntangle.AddApropriateModifersFromParentAbility(ability, be);
         	
-        	
-        	//jeff turn off all blocked senses
-        	ParameterList parameterList = getParameterList(ability);
-        	List<Sense> senses = parameterList.getIndexedParameterValues("Senses");
-        	
-        	for(int i=0; i< senses.size(); i++)
-        	{
-        		Sense sense = senses.get(i);
-        		Sense targetSense = target.getSense(sense.getSenseName());
-        		targetSense.setFunctioning(false);
-        	}
+        	effectEnt.Target = target;
+        	effectEnt.preventTargetsSensesFromWorkingIfEntangleBLocksSenses();
         	
         }
     }
+    
     
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
@@ -193,22 +185,6 @@ public class powerEntangle extends Power implements ChampionsConstants {
         return 0;
     }
     
-    /** Returns the patterns necessary to import the Power from CW.
-     * The Object[][] returned should be in the following format:
-     * patterns = Object[][] {
-     *  { "PATTERN" , new Object[] { "PARAMETER1", parameter1.class, "PARAMETER2", parameter2.class, ... },
-     *  ...
-     *  }
-     *
-     * PATTERN should be a regular expression pattern.  For every PARAMETER* where should be one
-     * parathesis group in the expression. The PARAMETERS sub-array can be null, if the line has no parameter
-     * and is just informational.
-     *
-     * By default, the importPower will check each line of the getImportPatterns() array and if a match is
-     * found, the specified parameters will be set in the powers parameter list.  It is assumed that each
-     * PATTERN will only occur once.  If the pattern can occur multiple times in a valid import, a custom
-     * importPower method will have to be used.
-     */
     
     public Object[][] getImportPatterns() {
         return patterns;
@@ -222,18 +198,11 @@ public class powerEntangle extends Power implements ChampionsConstants {
     public String getDescription() {
         return description;
     }
-    
-    /** Returns whether power can be dynamcially reconfigured.
-     */
+
     public boolean isDynamic() {
         return dynamic;
     }
 
-    /** Returns an Array of Objects, representing custom/special advantages, limitations, special parameters usable with the power.
-     * The Array should be in the format of class type (limitation, advantage, special) followed by the class name, repeated for
-     * each additional custom added.  For example:
-     *  array[] = { Limitation.class, "limitationLimitedSpecialFX", Advantage.class, "advantageVariableEffect" };
-     */
     public Object[] getCustomAddersArray() {
         return customAdders;
     }
@@ -248,217 +217,11 @@ public class powerEntangle extends Power implements ChampionsConstants {
     }
     
 
-
-    
-    /**
-     * Returns a String[] of Caveats about the Power
-     * Power uses this method to automatically build the getCaveats()
-     * String.  The Strings returns by getCaveatArray() will be assembled into
-     * list form and returned via getCaveats().
-     * 
-     * Return an empty array if there are no known caveats for this power.
-     */
     public String[] getCaveatArray() {
         return caveats;
     }
     
-//  Everything below here was put into seperate files: effectEntangle and targetEntangle
-    
-//    public class effectEntangle extends Effect {
-//        
-//        public effectEntangle( Ability ability, Dice dice ) {
-//            super( ability.getName(), "PERSISTENT" );
-//            
-//            int def;
-//            int body;
-//            
-//            // String die = (String)ability.ge(parameterArray, "EntangleDie");
-//            String die = ability.getStringValue("Power.ENTANGLEDIE");
-//            
-//            // Figure out the defenses
-//            try {
-//                Dice d = new Dice( die );
-//                def = d.getD6();
-//            } catch (BadDiceException bde) {
-//                def = 0;
-//            }
-//            
-//            body = dice.getBody().intValue();
-//            
-//            powerEntangle.TargetEntangle targetEntangle = new powerEntangle.TargetEntangle( this, body, def );
-//            add("Effect.TARGETENTANGLE",  targetEntangle,  true);
-//        }
-//        
-//        public boolean addEffect(BattleEvent be, Target target) throws BattleEventException {
-//            if ( ! super.addEffect(be,target) ) return false;
-//            
-//            Object o = getValue("Effect.TARGETENTANGLE");
-//            if ( o == null ) return false;
-//            
-//            powerEntangle.TargetEntangle targetEntangle = (powerEntangle.TargetEntangle)o;
-//            targetEntangle.setEntangleTarget(target);
-//            
-//            HashSet rosters = Battle.currentBattle.getRosters();
-//            
-//            Iterator i = rosters.iterator();
-//            while ( i.hasNext() ) {
-//                Roster r = (Roster)i.next();
-//                Vector targets = r.getCombatants();
-//                
-//                if ( targets.contains( target ) ) {
-//                    // Found the correct roster...
-//                    r.add( (Target)targetEntangle, false );
-//                    be.addRosterEvent(r,(Target)targetEntangle,true);
-//                    
-//                    targetEntangle.setEntangleRoster(r);
-//                    
-//                    break;
-//                }
-//            }
-//            
-//            be.addBattleMessage( new champions.battleMessage.SimpleBattleMessage( target.getName() + " has been entangled!", BattleEvent.MSG_ABILITY )); // .addBattleMessage( new champions.battleMessage.SimpleBattleMessage( target.getName() + " has been entangled!", BattleEvent.MSG_ABILITY )); // .addMessage( target.getName() + " has been entangled!", BattleEvent.MSG_ABILITY );
-//            
-//            Undoable u = target.addObstruction(targetEntangle);
-//            if ( u != null ) be.addUndoableEvent(u);
-//            
-//            return true;
-//        }
-//        
-//        public void removeEffect(BattleEvent be, Target target) throws BattleEventException {
-//            super.removeEffect(be,target);
-//            
-//            Undoable u = target.removeObstruction(getTargetEntangle());
-//            if ( u != null ) be.addUndoableEvent(u);
-//        }
-//        
-//        public String getDescription() {
-//            Object target = getValue("Effect.TARGET");
-//            Object targetEntangle = getValue("Effect.TARGETENTANGLE");
-//            if ( target == null|| targetEntangle == null ) return "Effect misconfigured.";
-//            
-//            String desc = ((Target)target).getName() + " is entangled by " + this.getName() + ".\n";
-//            
-//            
-//            int body = ((Target)targetEntangle).getCurrentStat("BODY");
-//            int pd = ((Target)targetEntangle).getCurrentStat("PD");
-//            int ed = ((Target)targetEntangle).getCurrentStat("ED");
-//            
-//            desc = desc  + "Entange Stats:\n" + " Body: " + Integer.toString(body) + "\n";
-//            desc = desc  + " PD: " + Integer.toString(pd) + "\n";
-//            desc = desc   + " ED: " + Integer.toString(ed) + "\n";
-//            
-//            return desc;
-//            
-//        }
-//        
-//        public void addDCVDefenseModifiers(CVList cvList, Ability attack) {
-//            cvList.addTargetCVSet( "Entangled", 0 );
-//        }
-//        
-//        public TargetEntangle getTargetEntangle() {
-//            return (TargetEntangle)getValue("Effect.TARGETENTANGLE");
-//        }
-//    }
-    
-//    public class TargetEntangle extends Target {
-//        
-//        public TargetEntangle(Effect effect, int body, int def) {
-//            super();
-//            setEntangleEffect(effect);
-//            
-//            createCharacteristic("BODY");
-//            setBaseStat("BODY",body);
-//            setCurrentStat("BODY", body);
-//            
-//            createCharacteristic("PD");
-//            setBaseStat("PD", def);
-//            setCurrentStat("PD", def);
-//            
-//            createCharacteristic("rPD");
-//            setBaseStat("rPD", def);
-//            setCurrentStat("rPD", def);
-//            
-//            createCharacteristic("ED");
-//            setBaseStat("ED", def);
-//            setCurrentStat("ED", def);
-//            
-//            createCharacteristic("rED");
-//            setBaseStat("rED", def);
-//            setCurrentStat("rED", def);
-//            
-//            add("Target.ISALIVE",  "FALSE",  true);
-//            add("Target.CANBEKNOCKEDBACK",  "FALSE",  true);
-//            add("Target.USESHITLOCATION",  "FALSE",  true);
-//            add("Target.HASSENSES",  "FALSE",  true);
-//            add("Target.ISOBSTRUCTION", "TRUE", true);
-//            
-//            add("Target.HASDEFENSES",  "TRUE",  true);
-//        }
-//        
-//        public int getMinimumStat(String stat) {
-//            int minimum;
-//            
-//            if ( stat.equals("BODY") || stat.equals("STUN") ) {
-//                minimum = 0;
-//            } else {
-//                minimum = super.getMinimumStat(stat);
-//            }
-//            
-//            return minimum;
-//        }
-//        
-//        public void setEntangleTarget(Target t) {
-//            add("Entangle.TARGET",  t, true );
-//            setName( t.getName() + " Entangle" );
-//        }
-//        
-//        public void setEntangleEffect(Effect e) {
-//            add("Entangle.EFFECT",  e, true );
-//        }
-//        
-//        public void setEntangleRoster(Roster e) {
-//            add("Entangle.ROSTER",  e, true );
-//        }
-//        
-//        public void posteffect(BattleEvent be, Effect newEffect) throws BattleEventException {
-//            Ability ability = be.getAbility();
-//            if ( getCurrentStat("BODY") <= 0 ) {
-//                int bodyEffect = newEffect.findIndexed("Subeffect","VERSUS","BODY");
-//                
-//                if ( bodyEffect == -1 ) return;
-//                // Double value = newEffect.getIndexedDoubleValue( bodyEffect, "Subeffect", "VALUE" );
-//                double value = newEffect.getSubeffectAdjustedAmount(bodyEffect);
-//                int startBody = getCurrentStat("BODY") + (int)value;
-//                if ( value > startBody * 2 ) {
-//                    be.addBattleMessage( new champions.battleMessage.SimpleBattleMessage( "Damage to " + this.getName() + " did twice remaining body.  No action used.", BattleEvent.MSG_NOTICE)); // .addBattleMessage( new champions.battleMessage.SimpleBattleMessage( "Damage to " + this.getName() + " did twice remaining body.  No action used.", BattleEvent.MSG_NOTICE)); // .addMessage( "Damage to " + this.getName() + " did twice remaining body.  No action used.", BattleEvent.MSG_NOTICE);
-//                    be.add("Ability.TEMPTIME", "INSTANT");
-//                } else if ( value > startBody  ) {
-//                    be.addBattleMessage( new champions.battleMessage.SimpleBattleMessage( "Damage to " + this.getName() + " did remaining body.  Half action used.", BattleEvent.MSG_NOTICE)); // .addBattleMessage( new champions.battleMessage.SimpleBattleMessage( "Damage to " + this.getName() + " did remaining body.  Half action used.", BattleEvent.MSG_NOTICE)); // .addMessage( "Damage to " + this.getName() + " did remaining body.  Half action used.", BattleEvent.MSG_NOTICE);
-//                    be.add("Ability.TEMPTIME", "HALFMOVE");
-//                }
-//                
-//                triggerRemove(be);
-//            }
-//        }
-//        
-//        public void triggerRemove(BattleEvent be) throws BattleEventException {
-//            Object target = getValue("Entangle.TARGET");
-//            Object effect = getValue("Entangle.EFFECT");
-//            Object roster = getValue("Entangle.ROSTER");
-//            
-//            if ( roster != null ) {
-//                ((Roster)roster).removeTarget(be, this);
-//                //be.addRosterEvent((Roster)roster,this,false);
-//            }
-//            
-//            if ( effect == null || target == null ) return;
-//            
-//            ((Effect)effect).removeEffect(be, (Target)target);
-//            be.addBattleMessage( new champions.battleMessage.SimpleBattleMessage( ((Target)target).getName() + " is no longer entangled.", BattleEvent.MSG_NOTICE )); // .addBattleMessage( new champions.battleMessage.SimpleBattleMessage( ((Target)target).getName() + " is no longer entangled.", BattleEvent.MSG_NOTICE )); // .addMessage( ((Target)target).getName() + " is no longer entangled.", BattleEvent.MSG_NOTICE );
-//            //if ( Battle.currentBattle != null ) Battle.currentBattle.addCompletedEvent(be);
-//        }
-//    }
-//    
+   
 
 
 }

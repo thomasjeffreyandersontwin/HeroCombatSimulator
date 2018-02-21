@@ -1,13 +1,13 @@
 Event: 
 	Name:Expand Character Node
 character:
-	name:Pre-Emptive Strike
+	name:Spyder
 	costume:
 	model:
-	MaxStun:68
-	MaxEndurance:70
-	CurrStun:73
-	CurrEndurance:70
+	MaxStun:48
+	MaxEndurance:60
+	CurrStun:48
+	CurrEndurance:60
 	Crowd: 
 		Name:heroes
 		Characters:
@@ -41,5 +41,9 @@ character:
 				model:
 			Magnetic lock:
 				name:Magnetic lock
+				costume:
+				model:
+			Spider-Man:
+				name:Spider-Man
 				costume:
 				model:
