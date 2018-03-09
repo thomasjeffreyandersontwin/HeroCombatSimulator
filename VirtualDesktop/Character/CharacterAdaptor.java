@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.Iterator;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,9 +18,14 @@ import champions.Battle;
 import champions.BattleEvent;
 import champions.CVList;
 import champions.DetailList;
+import champions.Power;
 import champions.Target;
 import champions.TargetList;
 import champions.enums.DefenseType;
+import champions.interfaces.PAD;
+import champions.parameters.ParameterList;
+import champions.powers.powerCombatLevels;
+import champions.powers.skillSkillLevels;
 import jdk.nashorn.api.scripting.JSObject;
 
 public class CharacterAdaptor extends BasicTargetAdapter {
@@ -75,7 +81,7 @@ public class CharacterAdaptor extends BasicTargetAdapter {
 		 }
 		
 	}
-	public void LoadAbilityByName(String abilityName) throws Exception {
+	public void LoadAbilityByName(String abilityName) {
 		AbilityAdapter ability = getAbility(abilityName);	
 		this.ActiveAbility = ability;
 	}
@@ -106,6 +112,55 @@ public class CharacterAdaptor extends BasicTargetAdapter {
     public boolean IsAborting(){ return false;};
     public boolean IsHaymakering() { return false;}
 	
+    public enum CombatStance {OFFENSIVE, BALANCED, DEFENSIVE}
+    public CombatStance CombatStance;
+    public void ChangeCombatStance(CombatStance stance) {
+    	
+    	for (Iterator iterator = target.getAbilities(); iterator.hasNext();) 
+    	{
+			Ability a  = (Ability) iterator.next();
+			Power pc = null;
+			
+			boolean cont=false;
+			if(a.getPower() instanceof powerCombatLevels) {
+				a = a.getSource().getAbility(a.getName()).getInstanceGroup().getCurrentInstance();
+				pc = (powerCombatLevels) a.getPower() ;
+				cont =true;
+			}
+			else if(a.getPower() instanceof skillSkillLevels && a.getPower() instanceof skillSkillLevels&& a.getPower().getParameterList(a).getParameterValue("LevelType").equals("Overall Level")) 
+			{
+				a = a.getSource().getAbility(a.getName()).getInstanceGroup().getCurrentInstance();
+				pc = (skillSkillLevels) a.getPower() ;
+			
+				cont =true;
+			}
+			if(cont)
+			{
+				ParameterList pl = pc.getParameterList(a);
+				int  lvl = (int) pl.getParameterValue("Level");
+			
+				if(stance==CombatStance.OFFENSIVE)
+				{
+					pl.setParameterValue("OCVLevel", lvl);
+					pl.setParameterValue("DCVLevel", 0);
+				}
+				if(stance==CombatStance.DEFENSIVE)
+				{
+					pl.setParameterValue("OCVLevel", 0);
+					pl.setParameterValue("DCVLevel", lvl);
+				}
+			
+				if(stance==CombatStance.BALANCED)
+				{
+					pl.setParameterValue("OCVLevel", lvl/2);
+					pl.setParameterValue("DCVLevel", lvl - lvl/2);
+				}
+				pc.configurePAD(a, pl);
+			}
+
+		}
+    	CombatStance = stance;
+    }
 	private Target loadCharacterFromFile(String characterName) {
 		return loadFromFile(characterName,".hcs"); 
 	}

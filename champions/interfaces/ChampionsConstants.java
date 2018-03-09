@@ -6,6 +6,11 @@
 
 package champions.interfaces;
 
+import champions.Ability;
+import champions.BattleEvent;
+import champions.Target;
+import champions.exception.BattleEventException;
+
 /**
  *
  * @author  twalker
@@ -255,5 +260,5 @@ public interface ChampionsConstants {
     public static final int GENERIC_MASK = POWER_MASK | SKILL_MASK | 
                                         DISADVANTAGE_MASK | GENERIC_PRESETS_MASK | 
                                         GENERIC_RECENT_MASK | TALENT_MASK | PERK_MASK;
-}
+	}
 

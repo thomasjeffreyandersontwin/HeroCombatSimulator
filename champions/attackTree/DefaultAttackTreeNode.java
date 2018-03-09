@@ -5,6 +5,7 @@
  */
 package champions.attackTree;
 
+import champions.Ability;
 import champions.ActivationInfo;
 import champions.BattleEvent;
 import champions.CVList;
@@ -1179,7 +1180,9 @@ public class DefaultAttackTreeNode implements AttackTreeNode, ChampionsConstants
         }
     }
 
-    final static class PreorderEnumeration implements Enumeration {
+
+
+	final static class PreorderEnumeration implements Enumeration {
 
         protected Stack<Enumeration> stack;
 

@@ -81,10 +81,9 @@ public class AttackAdapter extends AbilityAdapter {
 	public AttackResultAdapter activateAbility() {
 		AttackTreeModel.treeModel.battleEvent = this.battleEvent;
         battle.addEvent( battleEvent );
-        while(AttackTreePanel.Panel.isShowing()==false)
-        {
+       
         	try {Thread.sleep(150);}catch(Exception e) {}
-        }
+        
         DefaultAttackTreeNode node = DefaultAttackTreeNode.Node;
         node.setBattleEvent(battleEvent);
         

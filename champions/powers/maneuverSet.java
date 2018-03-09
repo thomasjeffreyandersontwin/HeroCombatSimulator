@@ -7,7 +7,10 @@
 package champions.powers;
 
 import champions.Ability;
+import champions.BattleEvent;
 import champions.Power;
+import champions.Target;
+import champions.exception.BattleEventException;
 import champions.interfaces.ChampionsConstants;
 import champions.parameters.ParameterList;
 
@@ -139,7 +142,8 @@ public class maneuverSet extends Power implements ChampionsConstants {
 
         return "Set";
     }
-    
+
+
      /** Returns the patterns necessary to import the Power from CW.
  * The Object[][] returned should be in the following format:
  * patterns = Object[][] {

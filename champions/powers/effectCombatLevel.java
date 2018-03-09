@@ -229,7 +229,19 @@ public class effectCombatLevel extends LinkedEffect implements CombatLevelProvid
                 if (ability.isMeleeAttack()) {
                     applies = true;
                 }
-            } else if (levelType.equals("Martial Arts")) {
+            } else if (levelType.equals("HTH and Mental Combat")) {
+                if (ability.isEgoBased() || ability.isMeleeAttack()) {
+                    applies = true;
+                }
+            }else if (levelType.equals("Mental and Ranged Combat")) {
+                if (ability.isEgoBased() || ability.isRangedAttack()) {
+                    applies = true;
+                }
+            }else if (levelType.equals("HTH and Ranged Combat")) {
+                if (ability.isMeleeAttack() || ability.isRangedAttack()) {
+                    applies = true;
+                }
+            }else if (levelType.equals("Martial Arts")) {
                 if (ability.is("MARTIALMANEUVER")) {
                     applies = true;
                 }

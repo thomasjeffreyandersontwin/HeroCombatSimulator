@@ -296,22 +296,6 @@ public class KnockbackDamageApplyNode extends DefaultAttackTreeNode {
 
                         battleEvent.addBattleMessage(new KnockbackSummaryMessage(sourceTarget, "collided with " + aTarget.getName()));
                     }
-                    
-                    //jeff massive hack if knockback already applied, reverse the damage, then re-apply omg
-                    //why do i have to do this
-                   /* k = battleEvent.getDamageEffect(tindex);
-                    if(k!=null && k.getTotalAdjustedStunDamage() > 0)
-                    {
-                    	Target t = battleEvent.getActivationInfo().getTarget(tindex);
-                    	Characteristic c =  t.getCharacteristic("STUN");
-                    
-                    	int curr = t.getCurrentStat("STUN");
-                    	if(curr + k.getTotalAdjustedStunDamage() > t.getStartingStat("STUN"))
-                    		t.setCurrentStat("STUN", (int)t.getStartingStat("STUN"));
-                    	else
-                    		t.setCurrentStat("STUN", curr + k.getTotalAdjustedStunDamage());
-                    	
-                    } */
                     k = new effectKnockback(distance);
                     
                     //jeff tindex to targetindex

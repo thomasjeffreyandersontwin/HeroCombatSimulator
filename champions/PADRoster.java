@@ -334,6 +334,19 @@ public class PADRoster extends Object {
      * name can be colon delimited to include subfolders. (i.e. "Advantages:Adjustment Powers").
      */
     private static String[][] advantagesList = {
+    	{"advantageMultipleSpecialEffects", "Advantages"},
+    	{"advantageUsableUnderWater", "Advantages"},
+    	{"advantageUsableAsFlight", "Advantages"},
+    	{"advantageCannotPassThrough", "Advantages"},
+    	{"advantageUsableAsSwinging", "Advantages"},
+    	{"advantageUsableAsGliding", "Advantages"},
+    	{"advantageNoTurnMode", "Advantages"},
+    	{"advantageDecreasedReuse", "Advantages"},
+    	{"advantageNonCombatAcceleration", "Advantages"},
+    	{"advantageRapidNonCombatMovement", "Advantages"},
+    	{"advantageUsableAsGliding", "Advantages"},
+    	{"advantageOnlyInGiven", "Advantages"},
+    	{"advantageCumulative", "Advantages"},
     	{"advantageUsableByOthers", "Advantages"},
     	{"advantageStopsAGivenSense", "Advantages"},
     	{"advantageEntangleAndCharacter", "Advantages"},
@@ -394,6 +407,27 @@ public class PADRoster extends Object {
      * name can be colon delimited to include subfolders. (i.e. "Limitations:Adjustment Powers").
      */
     private static String[][] limitationsList = {
+    	{"limitationVPPOnlyBetweenAdventures", "Limitations"},
+    	{"limitationNoConsiousControl", "Limitations"},
+    	{"limitationNoVelocityDamage", "Limitations"},
+    	{"limitationMustPassThroughSpace", "Limitations"},
+    	{"limitationLevitation", "Limitations"},
+    	{"limitationRealWeapon", "Limitations"},
+    	{"limitationRealArmour", "Limitations"},
+    	{"limitationSummonedBeingInhabit", "Limitations"},
+    	{"limitationArrivesUnderOwn", "Limitations"},
+    	{"limitationForwardMovement", "Limitations"},
+    	{"limitationAllOrNothing", "Limitations"},
+    	
+    	{"limitationCannotPassThroughSolid", "Limitations"},
+    	{"limitationDoesNotProtectAgainst", "Limitations"},
+    	//{"limitationSetffect", "Limitations"},
+    	{"limitationAffectsWholeObject", "Limitations"},	
+    	{"limitationOnlyInContact", "Limitations"},
+    	{"limitationLockout", "Limitations"},	
+    	{"limitationSenseAffectedAs", "Limitations"},	
+    	{"limitationPercievable", "Limitations"},	
+    	{"limitationRangeBasedOnSTR", "Limitations"},	
     	{"limitationAlwaysDirect", "Limitations"},	
     	{"limitationUnifiedPower", "Limitations"},	
     	{"limitationExtraTimeRegen", "Limitations"},	
@@ -595,7 +629,7 @@ public class PADRoster extends Object {
      * Not all object will necessarily have an entry in this map.  As shared instances
      * are created, this map will be populated.
      */
-    private static Map padSharedInstanceMap;
+    public static Map padSharedInstanceMap;
     
     /** Maps the Ability names to the AbilityTemplate objects.
      *

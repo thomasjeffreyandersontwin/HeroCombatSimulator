@@ -441,6 +441,8 @@ public class SelectTargetPanel extends JPanel implements MouseListener, AttackTr
     
     /** Holds value of property targetSelected. */
     private boolean targetSelected;
+
+	private Target target;
     
     /*public class AllTargetListModel extends DefaultListModel
     implements ListModel {
@@ -588,7 +590,11 @@ public class SelectTargetPanel extends JPanel implements MouseListener, AttackTr
     	if(SingleTargetNode.Node!=null && t!= SingleTargetNode.Node.getTarget()) {
     		
     		fireTargetingEvent( t , preset);
-    		//jeff
+    		//jeff real damage here?
+    		
+    		
+    		//jeff 
+    		target = t;
     		atip.advanceNode();
     	}
     	//SummaryNode.Node.activateNode(true);
@@ -602,6 +608,11 @@ public class SelectTargetPanel extends JPanel implements MouseListener, AttackTr
     
     public void mouseExited(MouseEvent e) {
     }
+
+	public Target getTarget() {
+		// TODO Auto-generated method stub
+		return target;
+	}
     
     
 }

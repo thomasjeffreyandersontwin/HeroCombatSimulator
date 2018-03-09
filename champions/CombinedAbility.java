@@ -33,6 +33,8 @@ implements AbilityList, PropertyChangeListener, AbilityInstanceGroupListener {
     
     transient private EventListenerList eventListenerList = new EventListenerList();
     transient private boolean recalculatingCosts = false;
+	private boolean collapsed;
+	private boolean expanded;
     
     private static Power combinedPower = new CombinedPower();
     
@@ -1091,4 +1093,25 @@ implements AbilityList, PropertyChangeListener, AbilityInstanceGroupListener {
      
 
     }
+    
+	public void setCollapsed(boolean b) {
+		collapsed = true;
+		expanded = false;
+	}
+	
+	public void setExpanded(boolean b) {
+		 collapsed = false;
+		 expanded = true;
+		
+	}
+
+	@Override
+	public boolean getCollapsed() {
+		return collapsed;
+	}
+
+	@Override
+	public boolean getExpanded() {
+		return expanded;
+	}
 }

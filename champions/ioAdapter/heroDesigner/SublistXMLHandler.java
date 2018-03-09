@@ -38,6 +38,10 @@ public class SublistXMLHandler extends DefaultXMLHandler implements XMLHandler {
         
         hdInfo.baseSublist = baseSublist;
         
+        //jeff
+        if(node.getNodeName().equals("MARTIALARTS")){
+        	hdInfo.baseSublist = "Powers";
+        }
         super.parseNode(doc, node, userData, xmlParseErrorList);
         
         return null;

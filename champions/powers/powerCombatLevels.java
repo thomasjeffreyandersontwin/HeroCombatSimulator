@@ -18,6 +18,7 @@ import champions.exception.BattleEventException;
 import champions.interfaces.ChampionsConstants;
 import champions.interfaces.PADValueListener;
 import champions.parameters.ListParameter;
+import champions.parameters.Parameter;
 import champions.parameters.ParameterList;
 import java.awt.event.ActionEvent;
 import java.util.Vector;
@@ -26,28 +27,7 @@ import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
-/**
- *
- * @author  unknown
- * @version
- *
- * To Convert from old format powers, to new format powers:
- *
- * 1) Add implements ChampionsConstants to class definition.<P>
- * 2) Copy and Fill in Power Definition Variables. <P>
- * 3) Move Parameter Information to parameterArray. <P>
- * 4) Delete getParameters method (unless special parameter handling is necessary.<P>
- * 5) Change configurePAD(Ability,DetailList) method to configurePAD(Ability ability, ParameterList parameterList).<P>
- * 6) Edit configurePAD method to use format specified below.<P>
- * 7) Change checkParameter method to checkParameter(Ability ability, <i>int padIndex</i>,
- * String key, Object value, Object oldValue);
- * 8) Edit getConfigSummary method to use parameterList instead of parseParameter methods.<P>
- * 9) Change all instances of parseParameter to getParameterValue.<P>
- * 10) Add getParameterArray method.<P>
- * 11) Edit getName method to return powerName variable.
- * 12) Change serialVersionUID by some amount.
- * 13) Add patterns array and define import patterns.<P>
- * 14) Add getImportPatterns() method.<P> */
+
 public class powerCombatLevels extends Power implements ChampionsConstants {
 
     static final long serialVersionUID = 5295848683348607403L;
@@ -65,6 +45,7 @@ public class powerCombatLevels extends Power implements ChampionsConstants {
         "HTH Combat",
         // "Hand-To-Hand Combat",
         "Ranged Combat",
+        "HTH and Ranged Combat",
         //  "DCV vs. All Attacks",
         "DCV Against All Attacks",
         "All Combat",};
@@ -155,9 +136,11 @@ public class powerCombatLevels extends Power implements ChampionsConstants {
         if (ability == null) {
             return false;
         }
+        
+       
 
         // Always Set the ParameterList to the parameterList
-        setParameterList(ability, parameterList);
+        
 
         // Read in any parameters that will be needed to configure the power or
         // Determine the validity of the power configuration.  Read the parameters
@@ -170,6 +153,19 @@ public class powerCombatLevels extends Power implements ChampionsConstants {
         Integer dcv = (Integer) parameterList.getParameterValue("DCVLevel");
         Integer dc = (Integer) parameterList.getParameterValue("DCLevel");
 
+        int  lvl = (int) parameterList.getParameterValue("Level");
+        if(ocv+dcv+dc < lvl)
+        {
+        	int delta = lvl -(ocv+dcv+dc);
+        	ocv+=delta;
+        }
+        parameterList.setParameterValue("OCVLevel", ocv);
+        parameterList.setParameterValue("DCVLevel", dcv);
+        parameterList.setParameterValue("DCLevel", new Integer(dc));
+
+       // updateLevelType(ability, parameterList);
+        setParameterList(ability, parameterList);
+        
         String name = ability.getName();
         if (!ability.getName().startsWith("CSL: ") && !ability.getName().startsWith("Combat Skill Levels")) {
             ability.setName("CSL: " + name);
@@ -205,6 +201,13 @@ public class powerCombatLevels extends Power implements ChampionsConstants {
         // Update the Ability Description based on the new configuration
         ability.setPowerDescription(getConfigSummary(ability, -1));
 
+        
+   //      
+         
+      //   ability.add("Ability.ASSIGNEDOCV", 0, true);
+       //  ability.add("Ability.ASSIGNEDDCV", lvl, true);
+        //	 ability.add("CombatLevel.ASSIGNEDDC", 0, true);
+   
         // Return true to indicate success
         return true;
     }
@@ -227,7 +230,12 @@ public class powerCombatLevels extends Power implements ChampionsConstants {
         } else if (leveltype.equals("HTH Combat")) {
             //String canUseList = getCanUseCLString(parameterList);
             return "Combat Levels (+" + level + " with Hand-to-Hand)";
-        } else if (leveltype.equals("Ranged Combat")) {
+        }
+        else if (leveltype.equals("HTH Combat")) {
+            //String canUseList = getCanUseCLString(parameterList);
+            return "Combat Levels (+" + level + " with Ranged and Hand-to-Hand)" ;
+        }
+       else if (leveltype.equals("Ranged Combat")) {
             return "Combat Levels (+" + level + " with Ranged)";
         } else if (leveltype.equals("DCV Against All Attacks")) {
             return "Combat Levels (+" + level + " DCV Against All Attacks)";
@@ -257,7 +265,7 @@ public class powerCombatLevels extends Power implements ChampionsConstants {
         effectList.createIndexed("Effect", "EFFECT", effect);
     }
 
-    private void updateLevelType(Ability ability, ParameterList parameterList) {
+    public void updateLevelType(Ability ability, ParameterList parameterList) {
         String leveltype = (String) parameterList.getParameterValue("LevelType");
         int levels = ((Integer) parameterList.getParameterValue("Level")).intValue();
         int ocv = ((Integer) parameterList.getParameterValue("OCVLevel")).intValue();
@@ -349,7 +357,33 @@ public class powerCombatLevels extends Power implements ChampionsConstants {
                 parameterList.setParameterValue("DCVLevel", new Integer(dcv));
                 parameterList.setParameterValue("DCLevel", new Integer(dc));
             }
-        } else if (leveltype.equals("Ranged Combat")) {
+        } else if (leveltype.equals("HTH and Ranged Combat")) {
+            parameterList.setVisible("AttackType", false);
+            parameterList.setVisible("CanUseCL", false);
+            
+            parameterList.setParameterValue("AttackType", "Melee");
+
+            parameterList.setVisible("DCVLevel", true);
+            parameterList.setVisible("OCVLevel", true);
+            parameterList.setVisible("DCLevel", true);
+
+            if (levels != assignedLevels) {
+                while (levels < assignedLevels) {
+                    if (dc > 0) {
+                        dc--;
+                    } else if (dcv > 0) {
+                        dcv--;
+                    } else if (ocv > 0) {
+                        ocv--;
+                    }
+                    assignedLevels = ocv + dcv + dc * 2;
+                }
+
+                parameterList.setParameterValue("OCVLevel", new Integer(ocv));
+                parameterList.setParameterValue("DCVLevel", new Integer(dcv));
+                parameterList.setParameterValue("DCLevel", new Integer(dc));
+            }
+        }else if (leveltype.equals("Ranged Combat")) {
             parameterList.setVisible("AttackType", false);
             parameterList.setVisible("CanUseCL", false);
             parameterList.setParameterValue("AttackType", "Ranged");
@@ -460,22 +494,13 @@ public class powerCombatLevels extends Power implements ChampionsConstants {
 
     }
 
-    /** Executed for all PADs just prior to an ability being saved.
-     * All clean up should be done at this point.
-     */
-//    public void prepareToSave(Ability ability, int index) {
-//        // Make sure you clean up the CanUseCL model, since it will contain pointers to the world and
-//        // will cause havoc when reloaded.
-//        ParameterList pl = getParameterList(ability,index);
-//        if ( pl.getParameterOption("CanUseCL","MODEL") != null) {
-//            pl.setParameterOption("CanUseCL","MODEL", null);
-//        }
-//    }
     public boolean invokeMenu(JPopupMenu popup, final Ability ability) {
         Action assignAction = new AbstractAction("Adjust Levels for " + ability.getName()) {
 
             public void actionPerformed(ActionEvent e) {
                 final Ability currentAbility = ability.getInstanceGroup().getCurrentInstance();
+                
+                
                 Integer ocv = currentAbility.getIntegerValue("Ability.ASSIGNEDOCV");
                 Integer dcv = currentAbility.getIntegerValue("Ability.ASSIGNEDDCV");
                 Integer dc = currentAbility.getIntegerValue("CombatLevel.ASSIGNEDDC");

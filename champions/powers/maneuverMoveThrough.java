@@ -269,5 +269,8 @@ implements ChampionsConstants {
       return patterns;
     }
 
+
+	
+
     
 }

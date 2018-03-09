@@ -16,6 +16,8 @@ import champions.attackTree.GenericAttackTreeNode;
 import champions.attackTree.LinkedActivateRootNode;
 import champions.attackTree.ProcessActivateRootNode;
 import champions.attackTree.ProcessDeactivateRootNode;
+import champions.attackTree.SelectTargetPanel;
+import champions.attackTree.SingleTargetNode;
 import champions.attackTree.SweepActivateRootNode;
 import champions.battleMessage.ActivateAbilityMessage;
 import champions.battleMessage.ActivateAbilityMessageGroup;
@@ -41,6 +43,7 @@ import champions.parameters.ParameterList;
 import champions.powers.SizeModifierEffect;
 import champions.powers.advantageAutofire;
 import champions.powers.advantageReducedEndurance;
+import champions.powers.advantageUsableByOthers;
 import champions.powers.effectBlock;
 import champions.powers.TargetEntangle;
 
@@ -71,6 +74,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import VirtualDesktop.Character.Charasteristic;
+import VirtualDesktop.Mob.MobEffect;
 
 /** Processes BattleEvent placed into the BattleEvent queue.
  *
@@ -204,7 +208,7 @@ public class BattleEngine extends Thread
      *
      */
     public synchronized void run() {
-        BattleEvent be;
+        BattleEvent be=null;
         while (terminate == false) {
             // Wait to start processing
             while (processing == false && terminate == false) {
@@ -258,6 +262,9 @@ public class BattleEngine extends Thread
                 processing = false;
                 notifyAll();
                 battle.triggerProcessingNotify(processing);
+                
+                
+              
             }
         }
 
@@ -310,6 +317,9 @@ public class BattleEngine extends Thread
             processAttackTreeNode(new ProcessActivateRootNode("Maneuver Root", be));
         } else if (be.getType() == BattleEvent.ADVANCE_TIME) {
             advanceSegment(be.isForcedAdvance(), be.getTimeParameter());
+            
+            
+            
             return false;
         } else if (be.getType() == BattleEvent.ADD_EFFECT) {
             Effect e = be.getEffect();
@@ -388,9 +398,8 @@ public class BattleEngine extends Thread
             }
         }
 
-        /*    else if ( be.getType() == BattleEvent.KNOCKBACK ) {
-        processKnockback(be);
-        }*/
+        
+
         return true; // Advance the segment normally
     }
 
@@ -1678,6 +1687,11 @@ public class BattleEngine extends Thread
         }
 
         count = effects.getIndexedSize("Effect");
+      //  if(target.getEffect("Cumulative Effect")!=null 
+//        		&& be.getAbility() == target.getEffect("Cumulative Effect").ability)
+       // {
+        	
+       // }
         for (index = 0; index < count; index++) {
             effect = (Effect) effects.getIndexedValue(index, "Effect", "EFFECT");
             ttype = effects.getIndexedStringValue(index, "Effect", "TTYPE");
@@ -4170,27 +4184,67 @@ public class BattleEngine extends Thread
      * @param be
      * @throws BattleEventException  */
     public static void chargeEND(BattleEvent be) throws BattleEventException {
-        int endCost, count, index;
-        Ability ability = be.getAbility();
-        ActivationInfo ai = be.getActivationInfo();
-        boolean continuing = ai.isContinuing();
-        String sourceName;
-        ENDSource endSource;
-        boolean burnStun;
+    	 Ability ability = be.getAbility();
+    	 Target source = be.getSource();
+    	 ActivationInfo ai = be.getActivationInfo();
+    	 
+    	 int count;
+    	if (ability.getBooleanValue("Ability.ISAUTOFIRE")) {
+             count = ai.getIntegerValue("Attack.SHOTS").intValue();
+        } else {
+             count = 1;   
+        }
+    	if(be.getAbility().findAdvantage(new advantageUsableByOthers().getName()) >-1 && SelectTargetPanel.ad!=null)
+		{
+    		 
+         	 if (ability.getBooleanValue("Ability.ISAUTOFIRE")) {
+         		 for(int i=0 ; i< count;i++)
+         		 {
+         			if(be.getActivationInfo().getTargetHit(i) )//|| be.getActivationInfo().getIndexedStringValue(i, "Target", "HITMODE").equals("FORCEHIT")) 
+         			{
+	         			 Target t = be.getActivationInfo().getTarget(i); 
+	         			 if(t!=null) {
+	         				String sourceName = ability.getPrimaryENDSource();
+	         	            if ((t.getENDSource(sourceName)) == null) 
+	         	            {
+	         	            	chargeEndToSource(be, ability, be.getSource(), 1);
+	         	            }
+	         				 chargeEndToSource(be, ability, t, 1);
+	         			 }
+	         		}
+	         	 }
+         	 }
+	         else 
+	         {
+	        	 Target t = be.getActivationInfo().getTarget(0);
+	        	 chargeEndToSource(be, ability, t, 1);
+	         }
+		
+		}
+    	else {
+    		 chargeEndToSource(be, ability, source, count);
+    	}
+    }
 
-        if (be.isENDPaid() == false && ability != null) {
-            Target source = be.getSource();
+	private static void chargeEndToSource(BattleEvent be, Ability ability, Target source, int count) throws BattleEventException {
+		if (be.isENDPaid() == false && ability != null) {
+        	int endCost, index;
+           
+            ActivationInfo ai = be.getActivationInfo();
+            boolean continuing = ai.isContinuing();
+            String sourceName;
+            ENDSource endSource;
+            boolean burnStun;
+            
+        	
+            
             burnStun = ai.getBooleanValue("Attack.BURNSTUN");
 
             if (source == null) {
                 throw new BattleEventException("Null Source specified in BattleEvent while applying END");
             }
 
-            if (ability.getBooleanValue("Ability.ISAUTOFIRE")) {
-                count = ai.getIntegerValue("Attack.SHOTS").intValue();
-            } else {
-                count = 1;   
-            }
+            
 
             // Process END for Ability
 
@@ -4321,7 +4375,7 @@ public class BattleEngine extends Thread
 
             ai.setTimeOfLastENDPaymet(Battle.currentBattle.getTime().clone());
         }
-    }
+	}
 
     /**
      * @param ability

@@ -26,6 +26,7 @@ import champions.parameters.ParameterList;
 import champions.powers.effectAdjusted;
 import champions.powers.effectUnconscious;
 import champions.powers.effectVulnerability;
+import champions.powers.limitationLockout;
 import champions.powers.limitationVulnerable;
 import champions.powers.powerInvisibility;
 import champions.senseFilters.SensesOnlySenseFilter;
@@ -183,6 +184,8 @@ public class Target extends DetailList implements Comparable, ChampionsConstants
     protected int effectiveDexAdjustment = 0;
 
 	private List<AbilityAction> Actions= new ArrayList<AbilityAction>();
+
+	public limitationLockout LockingLimitation;
     
     public Target() {
         setFireChangeByDefault(false);
@@ -399,7 +402,7 @@ public class Target extends DetailList implements Comparable, ChampionsConstants
      *  This should only be called from Effect.removeEffect.  If you wish
      *  to remove an effect you should use removeEffect.
      */
-    protected void removeEffectEntry(Effect effect) {
+    public void removeEffectEntry(Effect effect) {
         for(int index = 0; index < effects.size(); index++) {
             TargetEffectEntry tee = effects.get(index);
             if ( tee.getEffect() == effect ) {
@@ -415,7 +418,7 @@ public class Target extends DetailList implements Comparable, ChampionsConstants
      *  This should only be called from Effect.removeEffect.  If you wish
      *  to remove an effect you should use removeEffect.
      */
-    protected void addEffectEntry(Effect effect) {
+    public void addEffectEntry(Effect effect) {
         if ( hasEffect(effect) == false ) {
             effects.add( new TargetEffectEntry(effect) );
             fireIndexedChanged("Effect");
@@ -1326,6 +1329,15 @@ public class Target extends DetailList implements Comparable, ChampionsConstants
      * @return Value of property roster.
      */
     public Roster getRoster() {
+    	if(roster==null) {
+    		for(Roster r : Battle.getCurrentBattle().getRosters())
+    		{
+    			if(r.contains(this))
+    			{
+    				return r;
+    			}
+    		}
+    	}
         return roster;
     }
     /** Setter for property roster.
@@ -4867,7 +4879,9 @@ public class Target extends DetailList implements Comparable, ChampionsConstants
         }
     }
     
-    public static class TargetEffectEntry implements Serializable, Debuggable{
+ 
+
+	public static class TargetEffectEntry implements Serializable, Debuggable{
         protected Effect effect;
         
         public TargetEffectEntry(Effect effect) {

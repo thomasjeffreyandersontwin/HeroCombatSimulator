@@ -9,9 +9,11 @@
 
 package champions.abilityTree2;
 
+import champions.Ability;
 import champions.Battle;
 import champions.BattleChangeEvent;
 import champions.BattleChangeType;
+import champions.DefaultAbilityList;
 import champions.GlobalFontSettings;
 import champions.Roster;
 import champions.Target;
@@ -20,7 +22,10 @@ import champions.event.SequenceChangedEvent;
 import champions.event.TargetSelectedEvent;
 import champions.filters.AndFilter;
 import champions.filters.NameAbilityFilter;
+import champions.interfaces.AbilityList;
 import champions.interfaces.BattleListener;
+import champions.interfaces.SpecialParameter;
+import champions.powers.SpecialParameterIsMartialManeuver;
 import tjava.Filter;
 import java.awt.Color;
 import java.awt.Font;
@@ -165,36 +170,45 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
         //Jeff Anderson Change
       
       try {
-    	  
+    	  ATNode powers =null;
     	  ATNode node2 = (ATNode)node;   
-    	  if(node2.getRoot() instanceof ATTargetNode) {
+    	  if(node2.getRoot() instanceof ATTargetNode) 
+    	  {
     		  ATTargetNode root = (ATTargetNode)node2.getRoot();
      
-	          for(int i=0;i< root.getChildCount(); i++) {
+	          for(int i=0;i< root.getChildCount(); i++)
+	          {
 	        	String name="";
-	        	if ( root.getChildAt(i) instanceof  ATAbilityListNode) {
+	        	if ( root.getChildAt(i) instanceof  ATAbilityListNode) 
+	        	{
 	        		ATAbilityListNode abilityChategory = (ATAbilityListNode) root.getChildAt(i);
 	        		abilityChategory.setExpandedByDefault(true);
-	        		if(abilityChategory.getAbilityList().getName()==null) {
-	        		
-	        			for(int j=0;j< abilityChategory.getChildCount(); j++) {
+	        		if(abilityChategory.getAbilityList().getName()==null) 
+	        		{
+	        			for(int j=0;j< abilityChategory.getChildCount(); j++) 
+	        			{
+	        				ExpandOrCollapseChildrenOf(abilityChategory);
+	        			}
+	        			/*for(int j=0;j< abilityChategory.getChildCount(); j++) 
+	        			{
 	        				if(abilityChategory.getChildAt(j) instanceof  ATAbilityListNode)
 	        				{
 	        					ATAbilityListNode powerSkillDisad = (ATAbilityListNode) abilityChategory.getChildAt(j);
-	        					if(powerSkillDisad.getAbilityList().getName().equals("Non Core")|| powerSkillDisad.getAbilityList().getName().equals("Skills") || powerSkillDisad.getAbilityList().getName().equals("Disadvantages"))
+	        					AbilityList l = powerSkillDisad.getAbilityList();
+	        					if(l.getCollapsed()==false && l.getExpanded()==false)
 	        					{
-	        						powerSkillDisad.setExpandedByDefault(false);
-	        					}	
-	        					else {
-	        						powerSkillDisad.setExpandedByDefault(true);
+	        						if(powerSkillDisad.getAbilityList().getName().equals("Skills")||powerSkillDisad.getAbilityList().getName().equals("Talents")|| powerSkillDisad.getAbilityList().getName().equals("Non Core")|| powerSkillDisad.getAbilityList().getName().equals("Perks") || powerSkillDisad.getAbilityList().getName().equals("Disadvantages"))
+	        						{
+	        							powerSkillDisad.setExpandedByDefault(false);
+	        					
+	        						}
 	        					}
-	        				}
-	        			}
-	        		}
-	        	}
-	        	
-	          }
-    	  }
+	        				}*need to get this working*/
+	        		    }
+	        	     }
+	             }
+    	      }
+    	  
       }
       catch(Exception e) {
     	 e.printStackTrace();
@@ -203,6 +217,31 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
         	
        	
     }
+	private void ExpandOrCollapseChildrenOf(ATAbilityListNode powerSkillDisad) {
+		for(int k=0; k < powerSkillDisad.getChildCount();k++)
+		{
+			ATNode powerSkillDisadChild = (ATNode)powerSkillDisad.getChildAt(k);
+			
+			if(powerSkillDisadChild instanceof ATAbilityListNode)
+			{
+				powerSkillDisadChild.setExpandedByDefault(true);
+				if(((ATAbilityListNode)powerSkillDisadChild).getAbilityList().getCollapsed()==true) 
+				{
+					powerSkillDisadChild.setExpandedByDefault(false);
+				}
+				if(((ATAbilityListNode)powerSkillDisadChild).getAbilityList().getExpanded()==true) 
+				{
+					powerSkillDisadChild.setExpandedByDefault(true);
+					ExpandOrCollapseChildrenOf((ATAbilityListNode)powerSkillDisadChild);
+				}
+			}
+			else 
+			{
+				powerSkillDisadChild.setExpandedByDefault(false);
+			} 
+			
+		}
+	}
     
     /** Expends the children of the specified path.
      *
@@ -604,7 +643,11 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
 
     public void treeExpanded(TreeExpansionEvent event) {
     	ATNode tNode =(ATNode) event.getPath().getLastPathComponent();
-    	
+    	if(tNode instanceof ATAbilityListNode)
+    	{
+    		DefaultAbilityList list = (DefaultAbilityList) ((ATAbilityListNode)tNode).getAbilityList();
+    		list.setExpanded(true);
+    	}
     	ATRosterNode rnode;
     	Roster r=null;
     	try{
@@ -615,27 +658,18 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
     		
     	}catch(Exception e){}
     	
-    	if(r!=null){
-    		VirtualDesktop.Legacy.MessageExporter.exportEvent("Expand Roster Node", null,r);
-    	}
-    	else{
-    		//if(ATTree.expandAll==false){
-    		try {
-    			Target t = tNode.getTarget();
-    			if(t!=null) {
-    				r= t.getRoster();
-    				VirtualDesktop.Legacy.MessageExporter.exportEvent("Expand Character Node", t,r);
-    			}
-    		}
-    		catch(Exception e) {}
-//    		}
-    	}
+    	
+    	
     	
     }
 
     public void treeCollapsed(TreeExpansionEvent event) {
     	ATNode tNode =(ATNode) event.getPath().getLastPathComponent();
- 
+    	if(tNode instanceof ATAbilityListNode)
+    	{
+    		DefaultAbilityList list = (DefaultAbilityList) ((ATAbilityListNode)tNode).getAbilityList();
+    		list.setCollapsed(true);
+    	}
     	ATRosterNode rnode;
     	Roster r=null;
     	try{
@@ -644,16 +678,7 @@ public class ATTree extends DefaultTreeTable implements BattleListener, TreeMode
     	}
     	catch(Exception e){}
     	
-    	if(r!=null){
-    		VirtualDesktop.Legacy.MessageExporter.exportEvent("Collapse Roster Node", null,r);
-    	}
-    	else{
-    		Target t = tNode.getTarget();
-    		if(t!=null) {
-    			r= t.getRoster();
-    			VirtualDesktop.Legacy.MessageExporter.exportEvent("Collapse Character Node", t,r);
-    		}
-    	}
+    	
     }
 
     public String getTitle() {

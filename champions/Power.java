@@ -11,10 +11,14 @@ import champions.adjustmentPowers.AdjustmentClass;
 import champions.attackTree.AttackTreeNode;
 import champions.exception.BattleEventException;
 import champions.interfaces.AbilityIterator;
+import champions.interfaces.AbilityList;
 import champions.interfaces.ChampionsConstants;
 import tjava.Filter;
 import champions.interfaces.PAD;
 import champions.parameters.ParameterList;
+import champions.powers.advantageCumulative;
+import champions.powers.limitationLockout;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.Icon;
@@ -119,10 +123,40 @@ public abstract class Power implements PAD, ChampionsConstants, AdjustmentClass,
      * @throws BattleEventException
      */
     public void triggerPower(BattleEvent be, Ability ability, DetailList effectList, Target target, int referenceNumber, String targetGroup) throws BattleEventException {
+    	
+        if(ability!=null)
+        {
+        	int index = ability.findLimitation(new limitationLockout().getName());
+        	if(index>-1)
+        	{
+        		limitationLockout lockout = (limitationLockout) ability.getLimitation(index);
+        		lockout.postTrigger( be,ability, target);
+        	}
+        	
+        	
+        }
+    
     }
     
     public boolean postTrigger(BattleEvent be,Target source) throws BattleEventException {
-        return true;
+        Ability ability = be.getAbility();
+        if(ability!=null)
+        {
+        	int index = ability.findLimitation(new limitationLockout().getName());
+        	if(index>-1)
+        	{
+        		limitationLockout lockout = (limitationLockout) ability.getLimitation(index);
+        		lockout.postTrigger( be,ability, source);
+        	}
+        	index = ability.findAdvantage(new advantageCumulative().getName());
+        	if(index>-1)
+        	{
+        		advantageCumulative adv = (advantageCumulative) ability.getAdvantage(index);
+        		adv.postTrigger( be,ability, source);
+        	}
+  	
+        }
+    	return true;
     }
     
     /** Indicates power is shutting down.
@@ -155,7 +189,8 @@ public abstract class Power implements PAD, ChampionsConstants, AdjustmentClass,
      * @return True if ability is currently usable.
      */    
     public boolean isEnabled(Ability ability, Target source) {
-        return true;
+    	return true;
+    	
     }
     
     
@@ -1134,5 +1169,6 @@ public abstract class Power implements PAD, ChampionsConstants, AdjustmentClass,
     public Filter<Target> getTargetFilter(Ability ability) {
         return null;
     }
+
     
 }

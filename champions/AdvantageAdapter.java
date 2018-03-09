@@ -17,6 +17,8 @@ import champions.parameters.ParameterList;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.Icon;
 import javax.swing.JPopupMenu;
@@ -53,23 +55,13 @@ public abstract class AdvantageAdapter implements Advantage, Serializable {
         
     }
     
-        /** Configures the ability according to the parameters in parameterList.
-         * The parameterList should be stored with the ability for configuration
-         * later on. If an existing parameterList alread exists, it should be
-         * replaced with this one.
-         *
-         * All value/pairs should be copied into the ability for direct access.
-         * Advantages/Limitations should copy thier value/pairs into the
-         * Advantage# and Limitation# indexed lists.
-         *
-         * This function does not receive an index for advantages and limitations because it
-         * is assumed that either an exact match already exists in the ability or the
-         * configurePAD is going to create the advantage entry.
-         * @param ability Ability to configure the PAD for.
-         * @param pl ParameterList to use for configuration parameters.
-         * @return True if sucessful, False if not sucessful.
-         */
-    public boolean configurePAD(Ability ability, ParameterList pl) {
+	public void postTrigger(BattleEvent be, Ability ability,Target source) throws BattleEventException {
+	}
+    
+
+    public Effect getNewEffect() {return null;}
+
+	public boolean configurePAD(Ability ability, ParameterList pl) {
         return false;
     }
     

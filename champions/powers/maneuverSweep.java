@@ -13,6 +13,7 @@ import champions.BattleEvent;
 import champions.Power;
 import champions.SweepBattleEvent;
 import champions.Target;
+import champions.exception.BattleEventException;
 import champions.filters.MeleeAbilityFilter;
 import champions.interfaces.ChampionsConstants;
 import champions.parameters.ParameterList;
@@ -223,9 +224,12 @@ public class maneuverSweep extends Power implements ChampionsConstants {
         sbe.setAbilityFilter( new SweepAbilityFilter(source) );
         
         return sbe;
-    }
     
-    public class SweepAbilityFilter extends MeleeAbilityFilter {
+    
+
+	}
+
+	public class SweepAbilityFilter extends MeleeAbilityFilter {
         Target source;
         
         public SweepAbilityFilter(Target source ) {
@@ -250,5 +254,6 @@ public class maneuverSweep extends Power implements ChampionsConstants {
         protected boolean isAutofire(Ability ability) {
             return ability.hasAdvantage( advantageAutofire.advantageName );
         }
-    }
+	}
+    
 }

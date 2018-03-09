@@ -12,9 +12,11 @@ import org.json.simple.JSONObject;
 import com.sun.prism.impl.Disposer.Target;
 import com.sun.xml.internal.ws.util.StringUtils;
 
+import VirtualDesktop.Mob.MobEffect;
 import champions.Ability;
 import champions.Battle;
 import champions.BattleEvent;
+import champions.BattleSequence;
 import champions.TargetList;
 import champions.attackTree.AttackParametersNode;
 import champions.attackTree.AttackParametersPanel;
@@ -45,6 +47,8 @@ public class FileMessageListenerThread implements Runnable{
 	   }
 	
 	public void HandleAbilityFiredFromDesktop() {
+			champions.Target lastActive= null;
+			
 			while (true) {
 
 				try {
@@ -52,6 +56,23 @@ public class FileMessageListenerThread implements Runnable{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				
+				champions.Target currentActive = battle.getCurrentBattle().getActiveTarget();
+				if(currentActive!=lastActive)
+				{
+					if(currentActive.hasEffect("Mob Effect") 
+							&& currentActive!= currentActive.getRoster().MobLeader )
+					{
+						MobEffect me =(MobEffect) currentActive.getEffect("Mob Effect");
+						if(me.launchedMobAttack==true)
+						{
+							me.selectTargetForimitatedMobLeaderAction();
+						}
+						
+				}
+				lastActive = currentActive;
+				
+				
 		       	File file = new  File(GLOBALS.EXPORT_PATH+"\\AbilityActivatedFromDesktop.event");
 		       	if(file.exists()) {
 		       		try {
@@ -70,6 +91,7 @@ public class FileMessageListenerThread implements Runnable{
 			        	file.delete();
 			        }
 			   }       
-			}
+		}
 		}
 	}
+}

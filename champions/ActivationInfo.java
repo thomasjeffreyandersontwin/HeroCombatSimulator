@@ -6,11 +6,16 @@
 
 package champions;
 
+import champions.exception.BattleEventException;
 import champions.interfaces.ChampionsConstants;
 import champions.interfaces.IndexIterator;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.ArrayBlockingQueue;
+
 import tjava.Destroyable;
 
 
@@ -661,6 +666,8 @@ implements ChampionsConstants {
         return ( o == null ) ? null : (Target)o;
     }
     
+  
+    
     public void setTarget(int tindex, Target target) {
         addIndexed(tindex, "Target", "TARGET", target, true, false);
     }
@@ -1189,7 +1196,8 @@ implements ChampionsConstants {
         return collisionOccurred;
     }
     
-    public class TargetGroupIterator extends Object
+
+	public class TargetGroupIterator extends Object
     implements IndexIterator {
         private int currentIndex;
         private ActivationInfo ai;
@@ -1252,5 +1260,21 @@ implements ChampionsConstants {
         
         
     }
+
+
+	public ArrayList<Target> getAllTargets() {
+		ArrayList<Target> targets = new ArrayList<Target>();
+		int tindex=0;
+		Target target = getTarget(tindex);
+				
+		while (target!=null)
+		{
+			targets.add(target);
+			tindex++;
+			target = getTarget(tindex);
+			
+		}
+		return targets;
+	}
     
 }

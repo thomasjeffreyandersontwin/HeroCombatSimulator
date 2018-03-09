@@ -109,7 +109,7 @@ public abstract class LimitationAdapter implements Limitation, Serializable {
      * @param padIndex Index of PAD in parameterList.
      * @return ParameterList extracted from ability.
      */
-    public final ParameterList getParameterList(Ability ability, int padIndex) {
+    public ParameterList getParameterList(Ability ability, int padIndex) {
 //        Object pl = null;
 //        if (padIndex != -1 ) {
 //            //pl = ability.getIndexedValue(padIndex,"Limitation","PARAMETERLIST");

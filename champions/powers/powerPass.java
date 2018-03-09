@@ -133,5 +133,7 @@ static final long serialVersionUID = -8669515533022224649L;
     public String getConfigSummary(Ability ability, int not_used) {
         return "Pass Action";
     }
+
+
     
 }

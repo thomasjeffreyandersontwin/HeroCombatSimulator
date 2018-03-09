@@ -13,6 +13,8 @@ import champions.Dice;
 import champions.Sense;
 import champions.Target;
 import champions.exception.BattleEventException;
+import champions.powers.advantageUsableByOthers;
+
 import javax.swing.UIManager;
 
 
@@ -159,18 +161,7 @@ public class ToHitNode extends DefaultAttackTreeNode {
         return nextNodeName;
     }
     
-    /**
-     * Causes node to process an advance and perform any work that it needs to do.
-     *
-     * This is a method introduced by DefaultAttackTreeNode.  DefaultAttackTreeNode
-     * delegates to this method if advanceNode node is called and this is the active
-     * node.  This method should do all the work of advanceNode whenever it can, since
-     * the next node processing and buildNextChild methods depend on the existing
-     * DefaultAttackTreeNode advanceNode method.
-     *
-     * Returns true if it is okay to leave the node, false if the node should
-     * be reactivated to gather more information.
-     */
+
     public boolean processAdvance() {
         // Make sure if it is a roll, that there is a dice out there...
         ActivationInfo ai = battleEvent.getActivationInfo();
@@ -186,7 +177,9 @@ public class ToHitNode extends DefaultAttackTreeNode {
             ai.addIndexed(tindex, "Target", "HITMODE", hitmode, true);
         }
         
-        if (ai.getAbility().isSkill() || ai.getAbility().isDisadvantage()) {
+        if (ai.getAbility().isSkill() || ai.getAbility().isDisadvantage() 
+        		|| ai.getAbility().findAdvantage(new advantageUsableByOthers().getName())>-1) {
+        	//jeff need to fix for usable as attack
             hitmode = FORCEHIT;
             ai.addIndexed(tindex, "Target", "HITMODE", hitmode, true);
         }
@@ -199,9 +192,7 @@ public class ToHitNode extends DefaultAttackTreeNode {
                 ai.addIndexed(tindex, "Target", "ROLLMODE", AUTO_ROLL, true);
             }
         }
-        
-        // Now that there is at least a roll out there, determine if there was a hit.
-        
+       
         try {
             
             boolean blocked = ai.getIndexedBooleanValue(tindex, "Target", "BLOCKED");

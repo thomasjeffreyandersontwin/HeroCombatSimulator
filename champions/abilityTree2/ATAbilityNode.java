@@ -64,6 +64,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.UIManager;
 import javax.swing.tree.TreePath;
+
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.ParameterList;
+
 import treeTable.DefaultTreeTable;
 import treeTable.DefaultTreeTableModel;
 import treeTable.TreeTable;
@@ -633,7 +636,9 @@ public class ATAbilityNode extends ATNode implements PropertyChangeListener, Abi
                             popup.add( forceDeactivateAbilityAction );
                         }
                     }
-                    
+                    JMenu menu2 = createActivateAtReducedPowerLevelsMenu(ability);
+                    popup.add(menu2);
+                    popup.add( new JSeparator() );
                     ability.invokeMenu(popup);
                     
                     if ( (ability.isManeuver() == false || ability.getPower() instanceof maneuverMoveThrough)
@@ -644,8 +649,10 @@ public class ATAbilityNode extends ATNode implements PropertyChangeListener, Abi
                     
                     popup.add( new JSeparator() );
                     
-                    
+                   
                 }
+                
+              
                 
                 editAction.setAbility(ability);
                 popup.add(editAction);
@@ -683,6 +690,26 @@ public class ATAbilityNode extends ATNode implements PropertyChangeListener, Abi
         }
         return rv;
     }
+    
+    public JMenu createActivateAtReducedPowerLevelsMenu(Ability ability) 
+    {
+    	JMenu reduceMenu = new MyMenu2("Activate at Reduced Power Level");
+    	AddReducedPowerActionToMenu(reduceMenu,"One Quarter", .25, ability);
+    	AddReducedPowerActionToMenu(reduceMenu,"One Third", .33 ,ability);
+    	AddReducedPowerActionToMenu(reduceMenu,"One Half", .50 ,ability);
+    	AddReducedPowerActionToMenu(reduceMenu,"Two Thirds", .66 ,ability);
+    	AddReducedPowerActionToMenu(reduceMenu,"Three Quarters", .75 ,ability);
+         
+         return reduceMenu;
+    }
+
+	private void AddReducedPowerActionToMenu(JMenu reduceMenu, String label, double amountToReduceBy, Ability ability) {
+		ReducedActivationAction reduceAction = new ReducedActivationAction(label, amountToReduceBy);
+		reduceAction.setAbility(ability);
+    	JMenuItem menuItem = new JMenuItem(reduceAction);
+    	menuItem.enableInputMethods(false);
+        reduceMenu.add(menuItem);
+	}
     
     public JMenu createManeuverMenu() {
         JMenu menu = new MyMenu2("Maneuvers");
@@ -1368,6 +1395,79 @@ public class ATAbilityNode extends ATNode implements PropertyChangeListener, Abi
                 if ( be == null ) be =  new BattleEvent(  ability );
                 
                 Battle.currentBattle.addEvent( be );
+            }
+        }
+        
+        public void setAbility(Ability ability) {
+            this.ability = ability;
+        }
+    }
+    
+    static protected class ReducedActivationAction extends AbstractAction {
+        private Ability ability;
+		private double reduction;
+        public ReducedActivationAction(String label, double d) {
+        	
+            super("Activate at " + label +" power");
+            this.reduction =d;
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e ) {
+        	BattleEvent be = null;
+            if ( ability != null ) {
+            	String damageDice;
+            	if(ability.getValue("Original.DamageDie")!=null)
+            	{
+            	damageDice = (String) ability.getValue("Original.DamageDie");
+            	}
+            	else
+            	{
+            		damageDice = (String) ability.getValue("Power.DAMAGEDIE");
+            	}
+            	ability.add("Original.DamageDie", damageDice,true);
+            	double dice = 0;
+            	
+            	int index = damageDice.indexOf("d6");
+            	damageDice = damageDice.substring(0,index);
+            	
+            	 if(damageDice.contains("+1")) 
+            	{
+            	    index = damageDice.indexOf("+1");
+            		dice = new Double(damageDice.substring(0,index)) * reduction;
+            	}
+            	else
+            	{
+            		dice = new Double(damageDice.substring(0,index)) * reduction;
+            	}
+            	
+            	
+      
+            	
+            	champions.parameters.ParameterList l =  ability.getPower().getParameterList(ability);
+            	dice = Math.round(dice*2)/2.0;
+            	String diceString = new Double(dice).toString();
+            	if(diceString.contains(".0") )
+            	{
+            		index = diceString.indexOf(".0");
+            		diceString = diceString.substring(0,index);
+            	}
+            	
+            	diceString+="d6";
+            	l.setParameterValue("DamageDie", diceString);
+            	//ability.add("Base.DC", dice * reduction,true);
+            	ability.setReduction(reduction);
+            	
+            	ability.getPower().configurePAD(ability, l);
+            	
+            	
+                be = ability.getActivateAbilityBattleEvent(ability, null, null);
+                if ( be == null ) be =  new BattleEvent(  ability );
+
+                be.add("WithReduced", true);
+           	 	Battle.currentBattle.addEvent( be );
+           	 	
+           	// 	ability.add("Base.DC", (double) ability.getValue("Original.DC"),true);
             }
         }
         

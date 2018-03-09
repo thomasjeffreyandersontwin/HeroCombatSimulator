@@ -9,6 +9,7 @@ package champions.powers;
 import champions.*;
 import champions.interfaces.*;
 import champions.event.*;
+import champions.exception.BattleEventException;
 import champions.parameters.ParameterList;
 /**
  *
@@ -130,5 +131,8 @@ static final long serialVersionUID = -8669515522022444649L;
     public String getConfigSummary(Ability ability, int not_used) {
         return "Hold Action";
     }
+
+
+	
     
 }

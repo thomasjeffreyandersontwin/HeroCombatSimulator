@@ -12,6 +12,7 @@ import champions.BattleEvent;
 import champions.Power;
 import champions.SweepBattleEvent;
 import champions.Target;
+import champions.exception.BattleEventException;
 import champions.filters.RangedAbilityFilter;
 import champions.interfaces.ChampionsConstants;
 import champions.parameters.ParameterList;
@@ -216,8 +217,11 @@ public class maneuverRapidFire extends Power implements ChampionsConstants {
         
         return sbe;
     }
-    
-    public static class RapidFireAbilityFilter extends RangedAbilityFilter {
+
+	
+
+
+	public static class RapidFireAbilityFilter extends RangedAbilityFilter {
         Target source;
         
         public RapidFireAbilityFilter(Target source ) {

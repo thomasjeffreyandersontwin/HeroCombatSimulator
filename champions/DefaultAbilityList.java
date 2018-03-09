@@ -42,6 +42,10 @@ implements AbilityList, Serializable {
     protected List<Ability> abilities = new ArrayList<Ability>();
     
     protected Framework framework;
+
+	private boolean collapsed=false;
+
+	private boolean expanded=false;
     
     /** Creates new DefaultAbilityList */
     public DefaultAbilityList() {
@@ -983,5 +987,30 @@ implements AbilityList, Serializable {
         }
         
     }
+
+    //jeff
+	public void setCollapsed(boolean b) {
+		//getSource().add(getName() + "COLLAPSED", true);
+		//getSource().add(getName() + "EXPANDED", false);
+		collapsed = true;
+		expanded = false;
+	}
+	
+	public void setExpanded(boolean b) {
+		//getSource().add(getName() + "COLLAPSED", false);
+		//getSource().add(getName() + "EXPANDED", true);
+		collapsed = false;
+		expanded = true;
+	}
+
+	@Override
+	public boolean getCollapsed() {
+		return collapsed;// (boolean) getSource().getValue(getName() + "COLLAPSED");
+	}
+
+	@Override
+	public boolean getExpanded() {
+		return expanded;//(boolean) getSource().getValue(getName() + "EXPANDED");
+	}
     
 }

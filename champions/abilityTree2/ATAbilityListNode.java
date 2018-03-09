@@ -7,6 +7,10 @@
 package champions.abilityTree2;
 
 import champions.Ability;
+import champions.ActivationInfo;
+import champions.Battle;
+import champions.BattleEvent;
+import champions.abilityTree2.ATAbilityNode.EditAction;
 import champions.interfaces.AbilityList;
 import tjava.Filter;
 import champions.interfaces.Framework;
@@ -30,18 +34,113 @@ import treeTable.TreeTableColumnModel;
 
 
 
-/**
- *
- * @author  twalker
- * @version
- *
- * PADAbilityListNode's hold references to Abilities stored in an AbilityList list.
- * It should not be used for powers/templates which are cached by the PADRoster
- * shared instance mechanism.
- */
 public class ATAbilityListNode extends ATNode implements ChangeListener {
+	static protected class DisableAutoTurnOn extends AbstractAction {
+	    private AbilityList abilityList;
+	    public DisableAutoTurnOn() {
+	        super("Disable Auto Turn On");
+	    }
+	    
+	    @Override
+	    public void actionPerformed(ActionEvent e ) {
+	        
+	        if ( abilityList != null ) {
+	            Iterator<Ability> it = abilityList.getAbilities(true);
+	            while(it.hasNext()) {
+	                Ability a = it.next();
+	                a.setNormallyOn(false);
+	                if(a.isActivated(a.getSource())==true){
+	                	a.deactivate();
+	                }
+	               
+	            }
+	        }
+	    }
+	    
+	    public void setAbilityList(AbilityList abilityList) {
+	        this.abilityList = abilityList;
+	    }
+	}
+	
+	static protected class EnableAutoTurnOn extends AbstractAction {
+	    private AbilityList abilityList;
+	    public EnableAutoTurnOn() {
+	        super("Enable Auto Turn On");
+	    }
+	    
+	    @Override
+	    public void actionPerformed(ActionEvent e ) {
+	        
+	        if ( abilityList != null ) {
+	            Iterator<Ability> it = abilityList.getAbilities(true);
+	            while(it.hasNext()) {
+	                Ability a = it.next();
+	                a.setNormallyOn(true);
+	                if(a.isActivated(a.getSource())==false){
+	                	a.activate();
+	                }
+	               
+	            }
+	        }
+	    }
+	    
+	    public void setAbilityList(AbilityList abilityList) {
+	        this.abilityList = abilityList;
+	    }
+	}
+	static protected class ActivateAllAbilities extends AbstractAction {
+	    private AbilityList abilityList;
+	    public ActivateAllAbilities() {
+	        super("Activate All Abilities");
+	    }
+	    
+	    @Override
+	    public void actionPerformed(ActionEvent e ) {
+	        
+	        if ( abilityList != null ) {
+	            Iterator<Ability> it = abilityList.getAbilities(true);
+	            while(it.hasNext()) {
+	                Ability a = it.next();
+	                if(a.isActivated(a.getSource())==false){
+	                	a.activate();
+	                }
+	               
+	            }
+	        }
+	    }
+	    
+	    public void setAbilityList(AbilityList abilityList) {
+	        this.abilityList = abilityList;
+	    }
+	}
     
-    /** Holds value of property abilityList. */
+	static protected class DeactivateAllAbilities extends AbstractAction {
+	    private AbilityList abilityList;
+	    public DeactivateAllAbilities() {
+	        super("Deactivate All Abilities");
+	    }
+	    
+	    @Override
+	    public void actionPerformed(ActionEvent e ) {
+	        
+	        if ( abilityList != null ) {
+	            Iterator<Ability> it = abilityList.getAbilities(true);
+	            while(it.hasNext()) {
+	                Ability a = it.next();
+	                if(a.isActivated(a.getSource())==true){
+	                	a.deactivate();
+	                }
+	               
+	            }
+	        }
+	    }
+	    
+	    public void setAbilityList(AbilityList abilityList) {
+	        this.abilityList = abilityList;
+	    }
+	}
+    
+	/** Holds value of property abilityList. */
     private AbilityList abilityList;
     
     /** Indicates this should be a flat structure without sublists */
@@ -56,19 +155,10 @@ public class ATAbilityListNode extends ATNode implements ChangeListener {
     
     static private Icon frameworkOpenIcon = null;
     static private Icon frameworkClosedIcon = null;
-    
-   // private static RemoveAbilityListAction deleteAction = null;
-   // private static DebugAction debugAction = null;
-    
-//    /** Creates new PADAbilityListNode */
-//    public ATAbilityListNode(ATNodeFactory nodeFactory, AbilityList abilityList) {
-//        this(nodeFactory, abilityList, null, false, false);
-//    }
-//    
-//    /** Creates new PADAbilityListNode */
-//    public ATAbilityListNode(ATNodeFactory nodeFactory, AbilityList abilityList, Filter<Object> nodeFilter) {
-//        this(nodeFactory, abilityList, nodeFilter, false, false);
-//    } 
+    protected static DisableAutoTurnOn disableAutoTurnAction = new DisableAutoTurnOn();
+    protected static EnableAutoTurnOn enableAutoTurnAction = new EnableAutoTurnOn();
+    protected static ActivateAllAbilities activateAllAction= new ActivateAllAbilities();
+    protected static DeactivateAllAbilities deactivateAllAction = new DeactivateAllAbilities();
     
     /** Creates new PADAbilityListNode */
     public ATAbilityListNode(AbilityList abilityList, boolean flat, ATNodeFactory nodeFactory, Filter<Object> nodeFilter, boolean pruned) {
@@ -261,27 +351,28 @@ public class ATAbilityListNode extends ATNode implements ChangeListener {
      * @param popup The JPopupMenu which is being built.  Always non-null and initialized.
      * @return True if menus where added, False if menus weren't.
      */
+    
+    //ability.isNormallyOn()
     public boolean invokeMenu(TreeTable treeTable,TreePath path, JPopupMenu popup) {
         boolean rv = false;
         if ( path.getLastPathComponent() == this ) {
-      /*      if ( deleteEnabled ) {
-                if ( deleteAction == null ) deleteAction = new RemoveAbilityListAction();
-
-                if ( abilityList.getParent() != null ) {
-                    deleteAction.setAbilityList(abilityList);
-                    popup.add(deleteAction);
-                    rv = true;
-                }
-            }
-            
-            if ( Battle.debugLevel >= 0 ) {
-                if ( rv ) popup.addSeparator();
+        	if ( this.abilityList != null ) 
+        	{
+        		disableAutoTurnAction.setAbilityList(abilityList);
+                popup.add(disableAutoTurnAction);
                 
-                if ( debugAction == null ) debugAction = new DebugAction();
-                debugAction.setAbilityList(abilityList);
-                popup.add(debugAction);
+                enableAutoTurnAction.setAbilityList(abilityList);
+                popup.add(enableAutoTurnAction);
+                
+                activateAllAction.setAbilityList(abilityList);
+                popup.add(activateAllAction);
+                
+                deactivateAllAction.setAbilityList(abilityList);
+                popup.add(deactivateAllAction);
+                
+                
                 rv = true;
-            }*/
+            }
         }
         return rv;
     }
@@ -408,6 +499,8 @@ public class ATAbilityListNode extends ATNode implements ChangeListener {
             }
         };
     }
+
+	
     
 
 }

@@ -14,34 +14,7 @@ import champions.exception.*;
 import champions.event.*;
 import champions.attackTree.*;
 import champions.parameters.ParameterList;
-/**
- *
- * @author  unknown
- * @version
- *
- * To Convert from old format powers, to new format powers:
- *
- * 1) Add implements ChampionsConstants to class definition.<P>
- * 2) Copy and Fill in Power Definition Variables. <P>
- * 3) Move Parameter Information to parameterArray. <P>
- * 4) Delete getParameters method (unless special parameter handling is necessary.<P>
- * 5) Change configurePAD(Ability,DetailList) method to configurePAD(Ability ability, ParameterList parameterList).<P>
- * 6) Edit configurePAD method to use format specified below.<P>
- * 7) Change checkParameter method to checkParameter(Ability ability, <i>int padIndex</i>,
- * String key, Object value, Object oldValue);
- * 8) Edit getConfigSummary method to use parameterList instead of parseParameter methods.<P>
- * 9) Change all instances of parseParameter to getParameterValue.<P>
- * 10) Add getParameterArray method.<P>
- * 11) Edit getName method to return powerName variable.
- * 12) Change serialVersionUID by some amount.
- * 13) Add patterns array and define import patterns.<P>
- * 14) Add getImportPatterns() method.<P>
- *
- * The Following Steps must be performed to upgrade Power to Reconfigurable Format:
- * 1) Create costArray.
- * 2) Add the getCostArray() method, returning costArray.
- * 3) Remove existing calculateCPCost.
- */
+
 public class powerEB extends Power implements ChampionsConstants {
     static final long serialVersionUID =5295848483348707401L;
     
@@ -94,50 +67,28 @@ public class powerEB extends Power implements ChampionsConstants {
     /** Creates new powerHandToHandAttack */
     public powerEB()  {
     }
-    
-    /* Returns an array which can be used to create the parameterList.
-     */
+
     public Object[][] getParameterArray() {
         return parameterArray;
     }
     
-    /** Get the English name of the PAD.
-     * @return name of PAD
-     */
     public String getName() {
         return powerName;
     }
-    
-    /** Configures the ability according to the parameters in parameterList.
-     * The parameterList should be stored with the ability for configuration
-     * later on. If an existing parameterList alread exists, it should be
-     * replaced with this one.
-     *
-     * All value/pairs should be copied into the ability for direct access.
-     */
+
     public boolean configurePAD(Ability ability, ParameterList parameterList) {
-        // Fail immediately if ability is null
-        if ( ability == null ) return false;
-        
-        // Always Set the ParameterList to the parameterList
+        if ( ability == null ) return false;    
         setParameterList(ability,parameterList);
         
-        // Read in any parameters that will be needed to configure the power or
-        // Determine the validity of the power configuration.  Read the parameters
-        // from the parameterList, instead of directly from the ability, since the
-        // Ability isn't configured yet.
+
         String die = (String)parameterList.getParameterValue("DamageDie");
         String defense = (String)parameterList.getParameterValue("Defense");
         boolean stunOnly = (Boolean)parameterList.getParameterValue("StunOnly");
-        
-        //remove when there is a better mechanism for spreading and beam limitation
+       
         String beamattackoverride = ability.getStringValue("Ability.BEAMATTACKOVERRIDE");
         
-        // Check for the validity of the parameters that will be set.  If the parameters
-        // Fail for any reason, return false from the method immediately, indicating a
-        // failure to configure
+
         String keyword = "d6";
-     
         int index = die.indexOf(keyword);
         int count =1;
         int last =0;
@@ -158,15 +109,8 @@ public class powerEB extends Power implements ChampionsConstants {
         if (!die.endsWith("d6")) {
             parameterList.setParameterValue("DamageDie", die + "d6");
         }
-        // Always copy the configuration parameters directly into the ability.  This will
-        // take the parameters stored in the parameter list and copy them into the
-        // ability using the appropriate keys and values.
         parameterList.copyValues(ability);
         
-        // Start to Actually Configure the Power.
-        // The Add Power Info should always be executed to add information to the ability.
-        // All of this information should be set in the Power Definition Variables at the
-        // top of this file
         ability.addPowerInfo( this, powerName, targetType, persistenceType, activationTime);
         if ( attackType != null ) {
             ability.addAttackInfo( attackType,damageType );
@@ -228,23 +172,7 @@ public class powerEB extends Power implements ChampionsConstants {
         return true;
     }
     
-    /** Returns the Character Power Cost of currently configured parameters.
-     * Only the Power cost should be considered by this method.  Advantage/Limitation modifications will
-     * be applied later.
-     * @param ability Ability to calculate CP cost for.
-     * @return integer representing Character Power Cost of the Power for Ability.
-     */
- /*   public int calculateCPCost(Ability ability) {
-        ParameterList pl = getParameterList(ability);
-        String die = (String)pl.getParameterValue("DamageDie");
-        try {
-            Dice d = new Dice( die );
-            return d.getD6() * 5;
-        }
-        catch (BadDiceException bde) {
-            return 0;
-        }
-    } */
+
     
     public String getConfigSummary(Ability ability, int not_used) {
         ParameterList parameterList = getParameterList(ability);
@@ -257,10 +185,7 @@ public class powerEB extends Power implements ChampionsConstants {
         return die + " EB (" + defense + stunString + ")";
     }
     
-    /** Attempt to identify power
-     * This method is called when an unknown AbilityImport exists and the CharacterImport is trying to
-     * determine the correct power to assign to it.
-     */
+
     public int identifyPower(Ability template, AbilityImport ai) {
         String power = ai.getPowerName();
         
@@ -270,23 +195,7 @@ public class powerEB extends Power implements ChampionsConstants {
         return 0;
     }
     
-    /** Returns the patterns necessary to import the Power from CW.
-     * The Object[][] returned should be in the following format:
-     * patterns = Object[][] {
-     *  { "PATTERN" , new Object[] { "PARAMETER1", parameter1.class, "PARAMETER2", parameter2.class, ... },
-     *  ...
-     *  }
-     *
-     * PATTERN should be a regular expression pattern.  For every PARAMETER* where should be one
-     * parathesis group in the expression. The PARAMETERS sub-array can be null, if the line has no parameter
-     * and is just informational.
-     *
-     * By default, the importPower will check each line of the getImportPatterns() array and if a match is
-     * found, the specified parameters will be set in the powers parameter list.  It is assumed that each
-     * PATTERN will only occur once.  If the pattern can occur multiple times in a valid import, a custom
-     * importPower method will have to be used.
-     */
-    
+        
     public Object[][] getImportPatterns() {
         return patterns;
     }
@@ -294,26 +203,15 @@ public class powerEB extends Power implements ChampionsConstants {
         return costArray;
     }
     
-    /** Returns a Description of the Power
-     */
     public String getDescription() {
         return description;
     }
     
-    /** Returns whether power can be dynamcially reconfigured.
-     */
+
     public boolean isDynamic() {
         return dynamic;
     }
     
-    /**
-     * Returns a String[] of Caveats about the Power
-     * Power uses this method to automatically build the getCaveats()
-     * String.  The Strings returns by getCaveatArray() will be assembled into
-     * list form and returned via getCaveats().
-     * 
-     * Return an empty array if there are no known caveats for this power.
-     */
     public String[] getCaveatArray() {
         return caveats;
     }

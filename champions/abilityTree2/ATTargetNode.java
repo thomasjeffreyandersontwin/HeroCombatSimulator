@@ -46,7 +46,10 @@ import treeTable.TreeTable;
 import treeTable.TreeTableCellEditor;
 import treeTable.TreeTableCellRenderer;
 import VirtualDesktop.*;
+import VirtualDesktop.Character.CharacterAdaptor;
+import VirtualDesktop.Character.CharacterAdaptor.CombatStance;
 import VirtualDesktop.Legacy.MessageExporter;
+import VirtualDesktop.Legacy.MobActions;
 
 
 /**
@@ -85,8 +88,14 @@ public class ATTargetNode extends ATNode implements PropertyChangeListener, Acti
     private ATTargetEffectNode effectNode = null;
     
     protected boolean flat;
+
+	private MessageExporter.VirtualDesktopControllerAction toggleMobModeAction;
+
+	private static ATTargetNode.OffensiveStance offensiveCombatStance;
+	private static ATTargetNode.BalancedStance balancedCombatStance;
     
     protected static ATTargetNode.EditCharacterAction editTarget;
+    protected static ATTargetNode.DefensiveStance defensiveCombatStance;
     protected static ATTargetNode.DebugCharacterAction debugTarget;
     protected static ATTargetNode.SaveCharacterAction saveAction;
     protected static ATTargetNode.SaveAsCharacterAction saveAsAction;
@@ -133,6 +142,10 @@ public class ATTargetNode extends ATNode implements PropertyChangeListener, Acti
      *
      */
     private void setupActions() {
+    	if ( toggleMobModeAction  == null ) toggleMobModeAction= MobActions.GetMobLeaderToggleAction(target);
+    	if ( defensiveCombatStance == null ) defensiveCombatStance = new DefensiveStance();
+    	if ( offensiveCombatStance == null ) offensiveCombatStance = new OffensiveStance();
+    	if ( balancedCombatStance == null ) balancedCombatStance = new BalancedStance();
         if ( editTarget == null ) editTarget = new EditCharacterAction();
         if ( debugTarget == null ) debugTarget = new DebugCharacterAction();
         if ( saveAction == null ) saveAction = new SaveCharacterAction();
@@ -371,30 +384,7 @@ public class ATTargetNode extends ATNode implements PropertyChangeListener, Acti
         }
     }
     
-//    public boolean isExpandedByDefault() {
-//        return ( highlightActiveTarget && Battle.currentBattle != null && Battle.currentBattle.getActiveTarget() == getTarget() );
-//    }
-    
-   /* public boolean startDrag(TreeTable tree, TreePath path, DragSourceListener listener, DragGestureEvent dge) {
-        if ( target != null ) {
-    
-            Target o = (Target)target.clone();
-    
-            if ( o != null ) {
-                Transferable t = new ObjectTransferable(o, Target.class);
-    
-                Point p = dge.getDragOrigin();
-                Rectangle bounds = tree.getPathBounds(path);
-                Point offset = new Point(p.x - bounds.x, p.y - bounds.y);
-    
-                BufferedImage i = ((DefaultTreeTable)tree).buildDragImage(path);
-                DefaultTreeTable.startDrag(i, offset);
-    
-                dge.startDrag(null,i,offset, t, listener);
-            }
-        }
-    } */
-    
+
     public void handleDoubleClick(ATTree tree, TreePath targetPath) {
     	ATNode node = (ATNode) targetPath.getLastPathComponent();
     	Target t = node.getTarget();
@@ -419,10 +409,23 @@ public class ATTargetNode extends ATNode implements PropertyChangeListener, Acti
      * @param popup The JPopupMenu which is being built.  Always non-null and initialized.
      * @return True if menus where added, False if menus weren't.
      */
+    
+    //jeff
     public boolean invokeMenu(TreeTable treeTable,TreePath path, JPopupMenu popup) {
         boolean rv = false;
         if ( path.getLastPathComponent() == this ) {
-            
+        	toggleMobModeAction.setTarget(target);
+            popup.add( toggleMobModeAction );
+        	
+        	 offensiveCombatStance.setTarget(target);
+             popup.add( offensiveCombatStance );
+             balancedCombatStance.setTarget(target);
+             popup.add( balancedCombatStance );
+             
+             defensiveCombatStance.setTarget(target);
+             popup.add( defensiveCombatStance );
+             popup.addSeparator();
+             
             abortAction.setTarget(target);
             popup.add( abortAction );
             abortAction.setEnabled( target.isAbortable() );
@@ -430,8 +433,7 @@ public class ATTargetNode extends ATNode implements PropertyChangeListener, Acti
             popup.add( hipshotAction );
             hipshotAction.setEnabled( target.isAbortable() );
             
-            popup.addSeparator();
-            
+            popup.addSeparator(); 
             
             addGenericEffect.setTarget(target);
             popup.add( addGenericEffect);
@@ -448,7 +450,6 @@ public class ATTargetNode extends ATNode implements PropertyChangeListener, Acti
                 popup.addSeparator();
             }
             
-            
             saveAction.setTarget(target);
             popup.add( saveAction);
             
@@ -461,31 +462,27 @@ public class ATTargetNode extends ATNode implements PropertyChangeListener, Acti
             popup.addSeparator();
             ATRosterNode parent=null;
             
-//            if(getParent().getClass() == ATRosterNode.class) {
-            	parent= ((ATRosterNode)getParent());
-            	Roster r= parent.getRoster();
-                target.setRoster(r);
-                spawnTarget.setTarget(target);
-                popup.add( spawnTarget );
-                
-                targetTarget.setTarget(target);
-                popup.add( targetTarget );
-                
-                moveTargetToCamera.setTarget(target);
-                popup.add( moveTargetToCamera );
-                
-                manageAnimationsForTarget.setTarget(target);
-                popup.add( manageAnimationsForTarget );
-                
-                if ( target.getRoster() != null ) {
-                    removeTarget.setTarget(target);
-                    removeTarget.setRoster(target.getRoster());
-                    popup.add( removeTarget );
-                }
+        	parent= ((ATRosterNode)getParent());
+        	Roster r= parent.getRoster();
+            target.setRoster(r);
+            //spawnTarget.setTarget(target);
+            //popup.add( spawnTarget );
+            
+            //targetTarget.setTarget(target);
+            //popup.add( targetTarget );
+            
+            //moveTargetToCamera.setTarget(target);
+            //popup.add( moveTargetToCamera );
+            
+            //manageAnimationsForTarget.setTarget(target);
+            //popup.add( manageAnimationsForTarget );
+            
+            if ( target.getRoster() != null ) {
+                removeTarget.setTarget(target);
+                removeTarget.setRoster(target.getRoster());
+                popup.add( removeTarget );
             }
-            
-            
-       // }
+        }
         return rv;
     }
     
@@ -786,6 +783,75 @@ public class ATTargetNode extends ATNode implements PropertyChangeListener, Acti
             this.target = target;
         }
     }
+    
+ public static class DefensiveStance extends AbstractAction {
+        
+        private Target target;
+        
+        public DefensiveStance() {
+            super("Defensive Stance");
+        }
+        public void actionPerformed(ActionEvent e) {
+            
+            if ( target != null ) {
+            	new CharacterAdaptor(target).ChangeCombatStance(CombatStance.DEFENSIVE);
+            }
+        }
+        
+        public Target getTarget() {
+            return target;
+        }
+        
+        public void setTarget(Target target) {
+            this.target = target;
+        }
+    }
+ 
+ public static class OffensiveStance extends AbstractAction {
+     
+     private Target target;
+     
+     public OffensiveStance() {
+         super("Offensive Stance");
+     }
+     public void actionPerformed(ActionEvent e) {
+         
+         if ( target != null ) {
+         	new CharacterAdaptor(target).ChangeCombatStance(CombatStance.OFFENSIVE);
+         }
+     }
+     
+     public Target getTarget() {
+         return target;
+     }
+     
+     public void setTarget(Target target) {
+         this.target = target;
+     }
+ }
+ 
+public static class BalancedStance extends AbstractAction {
+     
+     private Target target;
+     
+     public BalancedStance() {
+         super("Balanced Stance");
+     }
+     public void actionPerformed(ActionEvent e) {
+         
+         if ( target != null ) {
+         	new CharacterAdaptor(target).ChangeCombatStance(CombatStance.BALANCED);
+         }
+     }
+     
+     public Target getTarget() {
+         return target;
+     }
+     
+     public void setTarget(Target target) {
+         this.target = target;
+     }
+ }
     
     public static class HipshotAction extends AbstractAction {
         

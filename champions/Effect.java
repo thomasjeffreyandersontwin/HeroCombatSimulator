@@ -17,6 +17,7 @@ import champions.exception.BattleEventException;
 import champions.interfaces.ChampionsConstants;
 import champions.interfaces.IndexIterator;
 import champions.interfaces.Undoable;
+import champions.powers.advantageCumulative;
 import champions.powers.effectCannotBeStunned;
 import champions.powers.effectDoesNotBleed;
 import champions.powers.effectDying;
@@ -154,6 +155,8 @@ public class Effect extends DetailList implements ChampionsConstants, Serializab
     public String name;
     protected String ctype;
     protected Color effectColor = null;
+	private Ability sourceAbility;
+	public advantageCumulative SetCumulative;
 
     /** Creates new EffectAdapter */
     public Effect(String name) {
@@ -210,6 +213,7 @@ public class Effect extends DetailList implements ChampionsConstants, Serializab
      */
     public boolean addEffect(BattleEvent be, Target target)
             throws BattleEventException {
+    	setSourceAbility(be.getAbility());
         String ctype;
         int index;
 
@@ -319,6 +323,10 @@ public class Effect extends DetailList implements ChampionsConstants, Serializab
 
     public void removeEffect(BattleEvent be, Target target)
             throws BattleEventException {
+    	if(SetCumulative!=null)
+    	{
+    		SetCumulative.PreviousEffect=null;
+    	}
         boolean targetHasEffect = target.hasEffect(this);
 
         String ctype = getCType();
@@ -368,72 +376,23 @@ public class Effect extends DetailList implements ChampionsConstants, Serializab
             existingEffect = target.getEffect(i);
             existingEffect.posteffect(be, this, target);
         }
-
+        
+        this.setSourceAbility(be.getAbility());
     // Let target respond to getting an effect...
     //target.posteffect(be, this);
     }
 
-    /*public void adjustEffectSublist(Target target, boolean added) {
-    int index;
-    if ( isCritical() ) {
-    if ( added ) {
-    index = target.createIndexed( "CriticalEffect","EFFECT", this ,false);
-    target.fireIndexedChanged("CriticalEffect");
-    }
-    else {
-    index = target.findIndexed( "CriticalEffect","EFFECT", this);
-    if ( index != -1 ) {
-    target.removeAllIndexed(index, "CriticalEffect",false);
-    target.fireIndexedChanged("CriticalEffect");
-    }
-    }
-    }
-    else if ( isHidden() ) {
-    if ( added ) {
-    index = target.createIndexed( "HiddenEffect","EFFECT", this ,false);
-    target.fireIndexedChanged("HiddenEffect");
-    }
-    else {
-    index = target.findIndexed( "HiddenEffect","EFFECT", this);
-    if ( index != -1 ) {
-    target.removeAllIndexed(index, "HiddenEffect",false);
-    target.fireIndexedChanged("HiddenEffect");
-    }
-    }
-    }
-    else {
-    if ( added ) {
-    index = target.createIndexed( "NoncriticalEffect","EFFECT", this ,false);
-    target.fireIndexedChanged("NoncriticalEffect");
-    }
-    else {
-    index = target.findIndexed( "NoncriticalEffect","EFFECT", this);
-    if ( index != -1 ) {
-    target.removeAllIndexed(index, "NoncriticalEffect",false);
-    target.fireIndexedChanged("NoncriticalEffect");
-    }
-    }
-    }
-    }*/
-    /* The following functions are run every time an attack occurs, in the following order:
-    getDefenses
-    defending character's -> predefense
-    attacking character's -> preattack
-    advantages/limitation -> prepower
-    applyDefenses
-    defending character's -> postdefense
-    attacking character's -> postattack
-    advantages/limitation -> postpower
-    
-    Additional, effects have priorities from 0 to 5:
-    0 can look at subeffects prior to any changes by other effects
-    1
-    2 normal priority.  Make changes
-    3 high priority changes.  After normal effects change things
-    4 can change the subeffects any way they want...final say on changes
-    5 view final results
-     */
-    public void preattack(BattleEvent be, Effect effect, Target target, int targetReferenceNumber, String targetGroup, String hitLocationForDamage, boolean finalTarget)
+
+    public void setSourceAbility(Ability ability) {
+		sourceAbility = ability;
+		
+	}
+    public Ability getSourceAbility() {
+		return sourceAbility;
+		
+	}
+
+	public void preattack(BattleEvent be, Effect effect, Target target, int targetReferenceNumber, String targetGroup, String hitLocationForDamage, boolean finalTarget)
             throws BattleEventException {
     }
 
@@ -1821,4 +1780,6 @@ public class Effect extends DetailList implements ChampionsConstants, Serializab
         BattleEvent be = new BattleEvent(BattleEvent.REMOVE_EFFECT, this, this.getTarget());
         Battle.currentBattle.addEvent(be);
     }
+
+	
 }

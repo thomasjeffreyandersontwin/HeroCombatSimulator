@@ -200,4 +200,6 @@ public class powerOffGround extends Power implements ChampionsConstants{
     public String[] getCaveatArray() {
         return caveats;
     }
+
+
 }

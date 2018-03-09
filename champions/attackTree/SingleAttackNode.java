@@ -72,10 +72,10 @@ public class SingleAttackNode extends DefaultAttackTreeNode implements BattleMes
                     	node.setTargetReferenceNumber(1); 
                     }
                     //jeff required for usable on others fuck who knows why
-                    if(battleEvent.getAbility().findAdvantage(new advantageUsableByOthers().getName())>-1)
-                    {
-                    	node.setTargetReferenceNumber(1);
-                    }
+                    //if(battleEvent.getAbility().findAdvantage(new advantageUsableByOthers().getName())>-1)
+                    //{
+                    //	node.setTargetReferenceNumber(1);
+                    //}
                     node.setPrimaryTargetNumber(primaryTargetNumber);
                     nextNode = node;
                 }
@@ -98,19 +98,19 @@ public class SingleAttackNode extends DefaultAttackTreeNode implements BattleMes
         String nextNodeName = null;
         
         if ( previousNodeName == null ) {
-        	if(getBattleEvent().getAbility().findAdvantage(new advantageUsableByOthers().getName())>-1)
-        	{
-        		 nextNodeName = "Single Target";
-        	}
-        	else
-        	{
+        //	if(getBattleEvent().getAbility().findAdvantage(new advantageUsableByOthers().getName())>-1)
+        //	{
+        //		 nextNodeName = "Single Target";
+        //	}
+        //	else
+       // 	{
         		if ( isSelfTargeting() == false ) {
         			nextNodeName = "Single Target";
         		}
         		else {
         			nextNodeName = "Effect";
         		}
-        	}
+        //	}
         }
         else if ( previousNodeName.equals("Single Target") ) {
             BattleEvent be = getBattleEvent();

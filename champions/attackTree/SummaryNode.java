@@ -8,6 +8,11 @@ package champions.attackTree;
 
 import javax.swing.UIManager;
 
+import VirtualDesktop.Mob.MobEffect;
+import champions.Ability;
+import champions.Roster;
+import champions.Target;
+
 /**
  *
  * @author  twalker
@@ -39,6 +44,18 @@ public class SummaryNode extends DefaultAttackTreeNode {
             attackTreePanel.setInstructions("Hit Okay to finish...");
             
             activateNode = true;
+        }
+        
+        if(getBattleEvent().getActivationInfo()!=null)
+        {
+        	Target attacker = getBattleEvent().getActivationInfo().getSource();
+        	Roster r = attacker.getRoster();
+        	Ability a=getBattleEvent().getActivationInfo().getAbility();
+        	if(r!=null &&r.MobMode==true && attacker==r.MobLeader  && a!=null) {
+        		MobEffect me = (MobEffect) attacker.getEffect("Mob Effect");
+        		me.ActivationInfo = getBattleEvent().getActivationInfo();
+			
+	    	}
         }
         
         return activateNode;

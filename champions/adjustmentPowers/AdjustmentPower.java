@@ -12,6 +12,7 @@ package champions.adjustmentPowers;
 import champions.Ability;
 import champions.Characteristic;
 import champions.parameters.ParameterList;
+import champions.powers.advantageMultipleSpecialEffects;
 import champions.Power;
 import champions.Target;
 import champions.interfaces.AbilityIterator;
@@ -35,6 +36,16 @@ public abstract class AdjustmentPower extends Power {
         public ArrayList<Adjustable> getAvailableAdjustables(Ability sourceAbility, Target target, String adjustableParameter) {
             ArrayList<Adjustable> adjustableList = new ArrayList<Adjustable>();
         
+        if(sourceAbility.findAdvantage(new advantageMultipleSpecialEffects().getName())!=-1)
+        {
+        	ParameterList p = getParameterList(sourceAbility);
+        	int level = (int) sourceAbility.getValue("Ability.ADJUSTMENTEFFECTLEVEL");
+        	if(level==4)
+        	{
+        		
+        	}
+        	
+        }
         // First Grab all of the Abilities
         int index, count;
         

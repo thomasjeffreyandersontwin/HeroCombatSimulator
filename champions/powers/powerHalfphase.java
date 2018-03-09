@@ -9,6 +9,7 @@ package champions.powers;
 import champions.*;
 import champions.interfaces.*;
 import champions.event.*;
+import champions.exception.BattleEventException;
 import champions.parameters.ParameterList;
 /**
  *
@@ -129,4 +130,6 @@ static final long serialVersionUID = -8559515533022444649L;
         return "Half Phase Action";
     }
 
+
+	
 }

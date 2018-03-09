@@ -1,50 +1,10 @@
 
 character:
-	name:Ogun
+	name:Cyclops
 	costume:
 	model:
-	MaxStun:27
-	MaxEndurance:36
-	CurrStun:27
-	CurrEndurance:36
+	MaxStun:40
+	MaxEndurance:40
+	CurrStun:24
+	CurrEndurance:40
 Activate: True
-
-	Crowd: 
-		Name:heroes
-		Characters:
-			Ogun:
-				name:Ogun
-				costume:
-				model:
-			Pre-Emptive Strike:
-				name:Pre-Emptive Strike
-				costume:
-				model:
-			City gates, small:
-				name:City gates, small
-				costume:
-				model:
-			Off-Road:
-				name:Off-Road
-				costume:
-				model:
-			Spyder:
-				name:Spyder
-				costume:
-				model:
-			Blind Justice:
-				name:Blind Justice
-				costume:
-				model:
-			Airlock Door:
-				name:Airlock Door
-				costume:
-				model:
-			Magnetic lock:
-				name:Magnetic lock
-				costume:
-				model:
-			Spider-Man:
-				name:Spider-Man
-				costume:
-				model:

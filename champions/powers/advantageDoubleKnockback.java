@@ -7,6 +7,7 @@
 package champions.powers;
 
 import champions.*;
+import champions.exception.BattleEventException;
 import champions.interfaces.*;
 import champions.parameters.ParameterList;
 
@@ -142,5 +143,11 @@ public class advantageDoubleKnockback extends AdvantageAdapter implements Champi
     public Object[][] getImportPatterns() {
         return patterns;
     }
+
+	@Override
+	public void postTrigger(BattleEvent be, Ability ability, Target target) throws BattleEventException {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

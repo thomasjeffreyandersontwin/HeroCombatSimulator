@@ -11,29 +11,7 @@ import champions.interfaces.*;
 import champions.event.*;
 import champions.parameters.ParameterList;
 
-/**
- *
- * @author  unknown
- * @version
- *
- * * To Convert from old format limitation, to new format limitation:
- *
- * 1) Add implements ChampionsConstants to class definition.<P>
- * 2) Copy and Fill in Limitation Definition Variables. <P>
- * 3) Move Parameter Information to parameterArray. <P>
- * 4) Delete getParameters method (unless special parameter handling is necessary.<P>
- * 5) Change configurePAD(Ability,DetailList) method to configurePAD(Ability ability, ParameterList parameterList).<P>
- * 6) Edit configurePAD method to use format specified below.<P>
- * 7) Change checkParameter method to checkParameter(Ability ability, <i>int padIndex</i>,
- * String key, Object value, Object oldValue);
- * 8) Edit getConfigSummary method to use parameterList instead of parseParameter methods.<P>
- * 9) Change all instances of parseParameter to getParameterValue.<P>
- * 10) Add getParameterArray method.<P>
- * 11) Add isUnique method.<P>
- * 12) Edit getName method to return limitationName variable.
- * 13) Add patterns array and define import patterns.<P>
- * 14) Add getImportPatterns() method.<P>
- */
+
 public class limitationFocus extends LimitationAdapter
 implements ChampionsConstants {
     

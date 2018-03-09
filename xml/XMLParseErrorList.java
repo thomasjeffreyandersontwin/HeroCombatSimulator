@@ -27,6 +27,7 @@ public class XMLParseErrorList implements XMLParseError {
      * Creates a new instance of XMLParseErrorList 
      */
     public XMLParseErrorList() {
+    	int i=0;
     }
     
     public XMLParseErrorList(String errorDescription) {

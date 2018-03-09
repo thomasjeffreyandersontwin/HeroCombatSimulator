@@ -277,5 +277,13 @@ public interface AbilityList extends Serializable{
      */
     public boolean isFrameworkSet();
 
+	public boolean getCollapsed();
+
+	public boolean getExpanded();
+
+	
+
+	
+
 }
 

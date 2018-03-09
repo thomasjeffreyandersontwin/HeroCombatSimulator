@@ -424,4 +424,6 @@ implements ChampionsConstants {
         
         super.importPower(ability, ai);
     }
+
+	
 }

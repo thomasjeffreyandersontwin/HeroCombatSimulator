@@ -17,16 +17,24 @@ import champions.parameters.ParameterList;
 public class advantageUsableByOthers extends AdvantageAdapter implements ChampionsConstants {
     static final long serialVersionUID = -6399128353213532419L;
 
-    static private Object[][] parameterArray = {};
+    static private Object[][] parameterArray = {
+    		{"UsableOption","Power.USABLEOPTION", String.class, "Usable By Other", "UsableOption", COMBO_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED, "OPTIONS", 
+    			new String[] {"Usable By Other","Usable Simultaneously", "Usable As Attack"}},
+    		{"Targets","Power.TARGETS", String.class, 1, "Targets", INTEGER_PARAMETER, VISIBLE, ENABLED, NOTREQUIRED},
+            
+            
+    };
     
     // Advantage Definition Variables
-    public static String advantageName = "Advantage Usable By Others"; // The Name of the Advantage
+    public static String advantageName = "Usable By Others"; // The Name of the Advantage
     private static boolean affectsDC = false; // Indicates the Advantage affects the cost of damage classes
     private static boolean unique = true; // Indicates whether multiple copies can be added to ability
 
    // Import Patterns Definitions
     private static Object[][] patterns = {
-        { advantageName +".*", null}
+        { advantageName +".*", null},
+        {"Usable By Options: (.*)", new Object[]{"UsableOption", String.class}},
+        { "([0-9]*d6) *.*", new Object[] { "Targets", String.class}},
     };
     
     /** Creates new advCombatModifier */
@@ -50,15 +58,25 @@ public class advantageUsableByOthers extends AdvantageAdapter implements Champio
         if ( ability == null ) return false;
         
         int index = ability.addAdvantageInfo(this, advantageName, parameterList);
+        
         this.setAffectsDC(affectsDC);
         
-       /* String ptype;
-        if ( (ptype = ability.getPType()) != null ) {
-            if ( ptype.equals( "INSTANT" ) ) {
-                ability.setPType("CONSTANT", true);
-            }
+        String option = (String)parameterList.getParameterValue("UsableOption");
+        if(option.equals("Usable By Other"))
+        	ability.setAType("SINGLE",true);
+        
+        if(option.equals("Usable Simultaneously")){
+        	Integer targets = (Integer)parameterList.getParameterValue("Targets");
+        	ability.setAType("SINGLE",true);
+        	ability.add("Ability.ISAUTOFIRE", "TRUE" , true );
+            ability.add("Ability.MAXSHOTS",  targets , true);
+        	//parameterList.addIntegerParameter("MaxShots", "MaxShots", null, targets);
+  
+        	
         }
-        */
+        
+        ability.setActivationTime("ATTACK",true);
+        
         ability.setRequiresTarget(true);
         setDescription( getConfigSummary() );
         return true;
@@ -66,8 +84,21 @@ public class advantageUsableByOthers extends AdvantageAdapter implements Champio
 
 
     public double calculateMultiplier() {
-
-        return .25;
+    	String option = (String)parameterList.getParameterValue("UsableOption");
+    	if(option.equals("Usable As Attack")){
+        	Integer targets = (Integer)parameterList.getParameterValue("Targets");
+        	double levels = Math.log(targets)/Math.log(2);
+        	return levels *.25 +1;
+        }
+        if(option.equals("Usable Simultaneously")){
+        	Integer targets = (Integer)parameterList.getParameterValue("Targets");
+        	double levels = Math.log(targets)/Math.log(2);
+        	return levels *.25 +.5;
+        }
+        else {
+        	return .25;
+        }
+        	
     }
 
     public String getConfigSummary() {

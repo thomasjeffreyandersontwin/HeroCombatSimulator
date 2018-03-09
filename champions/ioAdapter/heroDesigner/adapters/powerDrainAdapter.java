@@ -7,6 +7,7 @@
 package champions.ioAdapter.heroDesigner.adapters;
 
 import champions.Ability;
+import champions.BattleEngine;
 import champions.Characteristic;
 import champions.PADRoster;
 import champions.parameters.ParameterList;
@@ -19,7 +20,13 @@ import champions.ioAdapter.heroDesigner.HDImportError;
 import champions.ioAdapter.heroDesigner.PowerXMLAdapter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.w3c.dom.Node;
+
+import com.sun.org.apache.xml.internal.security.keys.content.KeyValue;
+
 import xml.XMLParseError;
 import xml.XMLParseErrorList;
 
@@ -82,52 +89,25 @@ public class powerDrainAdapter extends AbstractPowerXMLAdapter implements PowerX
         ArrayList drainFromAbilities = new ArrayList();
         
         ParameterList pl = ability.getPower().getParameterList(ability, -1);
+        boolean found =false;
         for(int index = 0; index < pl.getIndexedParameterSize("DrainFrom"); index++) {
             String drainFromString = (String)pl.getIndexedParameterValue("DrainFrom", index);
-
-            
-            SpecialEffect s;
-            boolean found = false;
-            if ( (s = PADRoster.getSharedSpecialEffectInstance(drainFromString)) != null ) {
-                if (s != null) {
-                    drainFromAbilities.add(s);
-                    found = true;
-                }
+            if((drainFromString.contains(","))){
+            	String[] adjusted = drainFromString.split(",");          
+            	 for(int j = 0; j < adjusted.length; j++) {
+            		 found = configureAdjusted(source, abilities, drainFromAbilities, adjusted[j].trim());
+            	 }
+            }            
+            if(!found)
+            {
+            	found = configureAdjusted( source, abilities, drainFromAbilities, drainFromString);
             }
-           
-            if ( !found && source.hasStat( drainFromString.toUpperCase() )) {
-                drainFromAbilities.add(Characteristic.createCharacteristic(drainFromString.toUpperCase(), false));
-                found = true;
-            }
-            
             if ( !found ) {
-                Ability drainFromAbility = abilities.getAbility(drainFromString,true);
-
-                if ( drainFromAbility != null ) {
-                    drainFromAbilities.add(drainFromAbility);
-                    found = true;
-                }
-            }
-            
-            if ( ! found ) {
-                // Not a stat, so iterate through the Powers Types...
-                Iterator i = PADRoster.getAbilityIterator();
-                while(i.hasNext()) {
-                    String name = (String)i.next();
-                    if ( name.equals( drainFromString ) ){
-                        Ability a = PADRoster.getSharedAbilityInstance(name);
-                        Power p = a.getPower();
-                        drainFromAbilities.add(p);
-                        found = true;
-                    }
-                }
-            }
-            
-            if ( !found ) {
-                if ( errorList == null ) errorList = new XMLParseErrorList();
-                errorList.addXMLParseError( new HDImportError("Drain source \"" + drainFromString + "\" not recognized during import", HDImportError.IMPORT_ERROR));
-            }
+    		    if ( errorList == null ) errorList = new XMLParseErrorList();
+    		    errorList.addXMLParseError( new HDImportError("Drain source \"" + drainFromString + "\" not recognized during import", HDImportError.IMPORT_ERROR));
+    		}
         }
+        
         
         pl.removeAllIndexedParameterValues("DrainFrom");
         
@@ -139,4 +119,50 @@ public class powerDrainAdapter extends AbstractPowerXMLAdapter implements PowerX
         
         return errorList;
     }
+
+	private boolean configureAdjusted(Target source, AbilityList abilities,ArrayList drainFromAbilities, String drainFromString) {
+		SpecialEffect s;
+		boolean found = false;
+		s=PADRoster.getSharedSpecialEffectInstance(drainFromString);
+	    if (s != null) {
+	        drainFromAbilities.add(s);
+	        found = true;
+	   }
+         
+		if ( !found && source.hasStat( drainFromString.toUpperCase() )) {
+		    drainFromAbilities.add(Characteristic.createCharacteristic(drainFromString.toUpperCase(), false));
+		    found = true;
+		}
+		
+		if ( !found ) {
+		    Ability drainFromAbility = abilities.getAbility(drainFromString,true);
+
+		    if ( drainFromAbility != null ) {
+		        drainFromAbilities.add(drainFromAbility);
+		        found = true;
+		    }
+		}
+		
+		if ( ! found ) {
+		    // Not a stat, so iterate through the Powers Types...
+		    Iterator i = PADRoster.getAbilityIterator();
+		    while(i.hasNext()) {
+		        String name = (String)i.next();
+		        if ( name.equals( drainFromString ) ){
+		            Ability a = PADRoster.getSharedAbilityInstance(name);
+		            Power p = a.getPower();
+		            drainFromAbilities.add(p);
+		            found = true;
+		        }
+		    }
+		}
+		if ( !found ) 
+		{
+			s = new SpecialEffect(drainFromString);
+			PADRoster.AddSpecialEffect(drainFromString, "Special Effects", null);
+			found = true;
+		}
+		
+		return found;
+	}
 }

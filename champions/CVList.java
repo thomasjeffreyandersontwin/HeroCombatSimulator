@@ -6,6 +6,7 @@
 
 package champions;
 
+import champions.exception.BattleEventException;
 import champions.interfaces.*;
 /**
  *
@@ -478,5 +479,7 @@ public class CVList extends DetailList
     public String getSourceType(int index) {
         return getIndexedStringValue(index, sourceIndex, "TYPE");
     }
+
+
     
 }

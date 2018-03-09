@@ -766,7 +766,8 @@ public class powerAbsorption extends AdjustmentPower implements ChampionsConstan
         return "AbsorbTo";
     }
     
-    public class ChangeAbsorptionTypeAction extends AbstractAction {
+  
+	public class ChangeAbsorptionTypeAction extends AbstractAction {
         
         /** Holds value of property ability. */
         private Ability ability;     

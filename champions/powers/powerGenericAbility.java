@@ -154,5 +154,7 @@ static final long serialVersionUID = -8669515533022224649L;
     public BattleEvent getActivateAbilityBattleEvent(Ability ability, Ability maneuver, Target source) {
         return new GenericAbilityBattleEvent();
     }
+
+
     
 }

@@ -223,7 +223,7 @@ public class MessageExporter {
 	        BufferedWriter bw = new BufferedWriter(fw);
 	        bw.write(character + "\r\nActivate: True\r\n");
 	        
-	        bw.write(buildRosterFromR(roster));
+	       // bw.write(buildRosterFromR(roster));
 	 
 	        bw.close();
         }catch (Exception e) {

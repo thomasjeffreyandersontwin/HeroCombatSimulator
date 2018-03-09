@@ -312,5 +312,6 @@ implements ChampionsConstants{
     public Object[][] getImportPatterns() {
       return patterns;
     }
-    
+
+
 }

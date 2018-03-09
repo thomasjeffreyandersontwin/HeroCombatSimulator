@@ -197,5 +197,7 @@ implements ChampionsConstants {
         }
         
         be.add("Maneuver.DC", new Double( ChampionsUtilities.strToDCs(str.intValue())), true);
-    } 
+    }
+
+
 }

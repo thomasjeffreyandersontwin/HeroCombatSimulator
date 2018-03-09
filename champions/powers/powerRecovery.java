@@ -263,5 +263,7 @@ implements ChampionsConstants {
     public String getConfigSummary(Ability ability, int not_used) {
         return "Recovery";
     }
+
+
     
 }

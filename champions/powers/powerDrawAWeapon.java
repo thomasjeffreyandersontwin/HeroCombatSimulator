@@ -7,7 +7,10 @@
 package champions.powers;
 
 import champions.Ability;
+import champions.BattleEvent;
 import champions.Power;
+import champions.Target;
+import champions.exception.BattleEventException;
 import champions.interfaces.ChampionsConstants;
 import champions.parameters.ParameterList;
 
@@ -132,6 +135,8 @@ public class powerDrawAWeapon extends Power implements ChampionsConstants {
     public String getConfigSummary(Ability ability, int not_used) {
         return "Draw A Weapon";
     }
+
+
     
  
 }

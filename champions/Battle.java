@@ -579,7 +579,23 @@ public class Battle extends Object implements RosterListener, TargetingListener,
     public DetailListEditor dle = null;
     
     public AddBattleEventUndoable addEvent(BattleEvent be) {
-        return addEvent(be,false);
+    	if(be.getValue("WithReduced")==null)
+    	{
+    		if(be.getAbility()!=null && be.getAbility().getValue("Original.DamageDie")!=null)
+    		{	
+    			String od =(String) be.getAbility().getValue("Original.DamageDie");
+    			be.getAbility().add("POWER.DamageDie", be.getAbility().getValue("Original.DamageDie"),true);
+    			be.getAbility().remove("Original.DamageDie");
+    			champions.parameters.ParameterList l =  be.getAbility().getPower().getParameterList(be.getAbility());
+    			l.setParameterValue("DamageDie", od);
+    			be.getAbility().getPower().configurePAD(be.getAbility(), l);
+    		}
+    	}
+   		else {
+   			be.remove("WithReduced");
+    	}
+    	
+	        return addEvent(be,false);
     }
     
     public AddBattleEventUndoable addEvent(BattleEvent be, boolean first) {

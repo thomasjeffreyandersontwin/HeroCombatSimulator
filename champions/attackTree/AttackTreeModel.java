@@ -6,7 +6,9 @@
 
 package champions.attackTree;
 
+import champions.Ability;
 import champions.BattleEvent;
+import champions.Target;
 import champions.exception.BattleEventException;
 import java.util.Enumeration;
 import javax.swing.JTree;
@@ -17,6 +19,8 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+
+import VirtualDesktop.Mob.MobEffect;
 
 
 
@@ -1093,6 +1097,7 @@ implements TreeModel {
                 }
             });
             
+         
             // Wait until the gui is finished somehow...
             while ( isAttackTreeModelLocked() ) {
                 try {
@@ -1102,6 +1107,7 @@ implements TreeModel {
                     
                 }
             }
+     	   }
             
             // Check the error status and throw it if it is set...
             if ( getError() != null ) {
@@ -1112,7 +1118,7 @@ implements TreeModel {
             
             attackTreePanel.deactivateAttackTree();
             //inlineView.hideBattleView( JOptionPane.OK_OPTION );
-        }
+        
     }
     
     private void lockAttackTreeModel() {

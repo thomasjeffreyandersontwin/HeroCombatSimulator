@@ -27,6 +27,7 @@ import champions.powers.SpecialParameterOCVModifier;
 import champions.powers.SpecialParameterWeapon;
 import champions.powers.advantageReducedEndurance;
 import champions.powers.effectInterruptible;
+import champions.powers.limitationLockout;
 import champions.powers.powerArmor;
 import champions.powers.powerAutomaton;
 import champions.powers.powerDamageResistance;
@@ -398,6 +399,10 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
      * @return  */
     
     public int DamageDiceOverride=0;
+
+	boolean enabled=true;
+
+	double reduction=0;
     public double getDamageDie(Ability maneuver) {
     	BattleEvent be=null;	
         return getDamageDieForBattleEvent(be, maneuver);
@@ -416,7 +421,6 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
             if ( maneuver != null ) {
                 be.setManeuver(maneuver);
             }
-            
             try {
             	if(DamageDiceOverride==0) {
             		be.add("Normal.STR",  new Integer( source.getCurrentStat("STR")), true, false);
@@ -448,8 +452,10 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
                 }
                 
                 ChampionsUtilities.calculateDCs(be);
-                
-                return be.getDC();
+                if(reduction > 0)
+                	return be.getDC() * reduction;
+                else
+                	be.getDC();
             }
             catch ( BattleEventException bee ) {
             }
@@ -841,6 +847,7 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
      * @return 
      */
     public boolean isEnabled(Target source, boolean checkTime) {
+    	
         abilityIsEnabled++;
         
         setEnableMessage(null);
@@ -1611,10 +1618,15 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
         return limitations.indexOf(lim);
     }
     
-    /** Search for a limitation by name.
-     *
-     *  Finds the first limitation with the name <Code>limitationName</Code>.
-     */
+    public Limitation getLimitation(String name)
+    {
+    	int index = findLimitation(name);
+    	if(index>-1)
+    	{
+    		return getLimitation(index);
+    	}
+    	return null;
+    }
     public int findLimitation(String limitationName) {
         for(int i = 0; i < getLimitationCount(); i++) {
             if ( getLimitation(i).getName().equals(limitationName) ) return i;
@@ -4406,40 +4418,8 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
         Integer i = getIntegerValue("Linked.PRIORITY");
         return i==null?0:i.intValue();
     }
-    
-    /**
-     * @param a
-     * @return  */
-//    public boolean hasAdvantage(Advantage a) {
-//        if ( a == null ) return false;
-//        
-//        int count,index;
-//        Advantage b;
-//        String name = a.getName();
-//        count = getIndexedSize("Advantage");
-//        for(index=0;index<count;index++) {
-//            b = (Advantage)getAdvantage(index);
-//            if ( name.equals(b.getName()) ) return true;
-//        }
-//        return false;
-//    }
-    
-    /**
-     * @param a
-     * @return  */
-//    public boolean hasAdvantage(String advantageName) {
-//        if ( advantageName == null ) return false;
-//        
-//        int count,index;
-//        Advantage b;
-//        count = getIndexedSize("Advantage");
-//        for(index=0;index<count;index++) {
-//            b = (Advantage)getAdvantage(index);
-//            if ( advantageName.equals(b.getName()) ) return true;
-//        }
-//        return false;
-//    }
-    
+ 
+  
     /** Return the index of the first advantage with name, -1 if the advantage does not exist...
      * @param a
      * @return  */
@@ -5121,7 +5101,11 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
      * abilities will remain active until the shut down themselves.
      */
     public void shutdownActivated(BattleEvent be, boolean forceAll) throws BattleEventException{
-        int count = getActivationCount();
+    	if(be.getAbility()!=null && be.getAbility().getLimitation(new limitationLockout().getName())!=null)
+    	{
+    		be.getAbility().getSource().LockingLimitation=null;
+    	}
+    	int count = getActivationCount();
         for(int i = 0; i < count; i++) {
             ActivationInfo ai = getActivationInfo(i);
             if ( ai.isActivated() ) {
@@ -5142,7 +5126,7 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
      * The Ability.ADJUSTEDCPCOST and Ability.ADJUSTEDPOWERCOST contain the information
      * regarding the current adjusted CP cost of the ability.
      *
-     * The Ability will automatically be reconfigured to accommodate the newly adjusted CP costs.
+     * The Ability will automatically be reconfigured to accommodate the newly adjusted CP costs.isenabled
      */
   /*  public void setAdjustedCPCost(int cost) {
         
@@ -5370,7 +5354,7 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
      *  Not that this method runs the event synchronously, in the 
      * thread that triggered the event. 
      */
-    protected void fireTargetAdjustedEvent() {
+    public void fireTargetAdjustedEvent() {
         if ( getSource() != null ) getSource().targetAdjusted();
     }
     
@@ -5443,10 +5427,6 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
         add("Ability.CREATEDAUTOMATICALLY", createdAutomatically ? "TRUE" : "FALSE", true, false);
     }
     
-//    public void activationStateChanged(ActivationInfo ai, String oldState, String newState) {
-//        AbilityInstanceGroup aig = getInstanceGroup();
-//        if ( aig != null ) aig.activationStateChanged(this, ai, oldState, newState);
-//    }
     
     /** Returns where this instance of the ability can be modified by the battleEngine.
      *
@@ -6178,8 +6158,61 @@ public class Ability extends DetailList implements ChampionsConstants, Adjustabl
         
         }
     }
+    
+    //jeff
+	public void deactivate() {
+		Iterator<ActivationInfo> it = getActivations( getSource());
+		while(it.hasNext()) {
+            ActivationInfo ai = it.next();
+            BattleEvent be =  new BattleEvent(  BattleEvent.DEACTIVATE,ai);
+            Battle.currentBattle.addEvent(be);
+		}
+	}
+
+	public void activate() {
+		
+		BattleEvent battleEvent = getActivateAbilityBattleEvent(this, null, null);
+		Battle battle = Battle.currentBattle;
+		battle.addEvent( battleEvent );
+		
+	}
+
+	public void setReduction(double reduction) {
+		this.reduction = reduction;
+		
+	}
 
 
+ 
+/*
+	public void setEnabled(boolean b)
+	{
+		ParameterList p = getPower().getParameterList(this);
+		if(p.contains("Enabled"))
+		{
+			p.setParameterValue("Enabled", b);
+		}
+		else
+		{
+			p.addBooleanParameter("Enabled", "Enabled", "Enabled", b);
+		}
+		
+	}
+	public boolean getEnabled()
+	{
+		ParameterList p = getPower().getParameterList(this);
+		if(p.contains("Enabled"))
+		{
+			return (boolean) p.getParameterValue("Enabled");
+		}
+		else
+		{
+			p.addBooleanParameter("Enabled", "Enabled", "Enabled", true);
+			return true;
+		}
+	}
+
+*/
 
     
 }

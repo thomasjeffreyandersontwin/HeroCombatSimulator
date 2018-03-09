@@ -86,7 +86,10 @@ public class maneuverThrowAdapter extends AbstractManeuverXMLAdapter implements 
      */
     public void dcSpecial(Ability ability, Node node, String attrValue, ParameterList pl, String parameterName, String specialData) {
             if (!attrValue.equals("0")) {
-                pl.setParameterValue("DamageDie", attrValue + "d6");  
+            	if(!pl.contains("DamageDie"))
+            		pl.addStringParameter("DamageDie", "DamageDie", "DamageDie", attrValue + "d6");
+            	else
+            		pl.setParameterValue("DamageDie", attrValue + "d6");  
             }
     }
     

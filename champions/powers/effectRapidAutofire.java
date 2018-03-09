@@ -34,7 +34,7 @@ public class effectRapidAutofire extends LinkedEffect {
     }
     
        public boolean addEffect(BattleEvent be, Target target)
-    throws BattleEventException {
+    		   throws BattleEventException {
         if ( super.addEffect(be,target ) ){
             be.addBattleMessage( new champions.battleMessage.LegacyBattleMessage(target.getName() + " is now " + getName(), BattleEvent.MSG_NOTICE )); // .addBattleMessage( new champions.battleMessage.LegacyBattleMessage(target.getName() + " is now " + getName(), BattleEvent.MSG_NOTICE )); // .addMessage(target.getName() + " is now " + getName(), BattleEvent.MSG_NOTICE );
             return true;
